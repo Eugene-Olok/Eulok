@@ -1,0 +1,7 @@
+Date: 2026-10-10
+Disposable file: 17193a1f-939a-80b5-8008-c5215ecd24ae (revn 0, verified)
+Policy: targets.disposable.yaml (production 52a5041f-08a1-80f1-8008-c50e307f3ef4 DENIED by id/name; scratch DENIED)
+Transport: JSON /api/main/methods/update-file + get-file (confirmed)
+First live validation: ensure_page dispatch + read_back returned observation matching {op_id,target,fields}
+Evidence: probe-add-page.json
+NOTE: update-file schema marked INTERNAL/UNDOCUMENTED/UNVERIFIED per founder Option 1. No production write.

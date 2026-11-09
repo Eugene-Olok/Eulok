@@ -1,0 +1,39 @@
+# Architecture contract for Phase 9 Product 1 — Mobile-Money Reconciliation Agent.
+#
+# This is the authoritative, machine-checkable declaration consumed by
+# Capability 5 (selection policy) and Capability 6 (conformance gate).
+# Requirements are facts about the product, not preferences. Every field must
+# be specified: an absent requirement routes the decision to NEEDS_HUMAN_INPUT
+# rather than silently defaulting.
+
+schema_version: "1.0.0"
+
+product_id: "reconciliation_agent"
+product_package: "products.reconciliation_agent"
+
+declared_architecture: "langgraph"
+
+requirements:
+  durable_execution: true
+  resumable_after_restart: true
+  multi_step_orchestration: true
+  human_approval_gate: true
+  external_side_effects: false
+  model_invocation: false
+  handles_financial_value: true
+
+mandatory_constraints:
+  - NO_MODEL_IN_MONEY_PATH
+  - HUMAN_APPROVAL_FOR_CONSEQUENTIAL_ACTIONS
+  - DETERMINISTIC_CORE
+  - DURABLE_AUDIT_TRAIL
+  - BOUNDED_RETRIES
+  - FAIL_CLOSED_ON_ERROR
+
+implementation:
+  entrypoint_module: "products.reconciliation_agent.workflow"
+  workflow_builder: "build_workflow"
+  checkpoint_module: "langgraph.checkpoint.sqlite"
+  checkpoint_class: "SqliteSaver"
+  durable_checkpoint_required: true
+  behavioral_probe: "products.reconciliation_agent.conformance_probe:probe"

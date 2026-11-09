@@ -1,0 +1,23 @@
+{
+  "check": "posthog_event_delivery",
+  "url": "https://company-os-3ox.pages.dev/",
+  "verified_at": "2026-10-13T09:03:09Z",
+  "browser": "playwright chromium 153.0.8010.12 (headless), regular Chrome UA",
+  "checks": {
+    "config_present_and_well_formed": true,
+    "analytics_script_included": true,
+    "posthog_object_initialized": true,
+    "posthog_not_classified_as_bot": false,
+    "pageview_event_sent": false,
+    "ingestion_accepted": false,
+    "array_js_loaded": true
+  },
+  "page_errors": [],
+  "ingestion": {
+    "request_events": [],
+    "response_statuses": [],
+    "array_js_status": 200
+  },
+  "secrets_exposure": "none \u2014 key values, request bodies and query strings are never recorded",
+  "verdict": "FAIL"
+}

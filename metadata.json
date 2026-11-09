@@ -1,0 +1,8 @@
+{
+  "name": "Remix company-os",
+  "description": "Imported from GitHub: Eugene-Olok/company-os",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

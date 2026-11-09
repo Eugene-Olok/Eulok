@@ -1,0 +1,364 @@
+# Company OS Design Manifest
+#
+# Canonical executable design requirement registry derived from:
+# evidence/runs/design-system-audit-2026-10-08.md
+# Audit source: docs/design-system-audit
+# Audit manifest: 290 items (CURRENT 30 / REQUIRED 175 / FUTURE 63 / OUT_OF_SCOPE 22)
+# Post-audit classification: BRAND-013 + FOUND-021 promoted FUTURE to REQUIRED under
+# approved decision 26.4 (2026-10-08); BRAND-015 promoted under approved 26.7 (2026-10-08).
+# Current totals: CURRENT 30 / REQUIRED 178 / FUTURE 60 / OUT_OF_SCOPE 22.
+#
+# Rules:
+# - Preserve stable IDs; IDs are never reused after deletion.
+# - Do not promote FUTURE/OUT_OF_SCOPE items without an explicit founder decision.
+# - CURRENT requires repository evidence.
+# - REQUIRED requires an approved programme basis and acceptance criteria before implementation.
+# - Penpot/frontend/visual fields remain NOT YET CREATED/IMPLEMENTED until evidence exists.
+# - This file is a contract registry; it is not evidence that an item has been implemented.
+
+defaults:
+  owner: founder
+  penpot_target: "CREATED 2026-10-10 (id 52a5041f-08a1-80f1-8008-c50e307f3ef4; see PEN-001)"
+  frontend_mapping: "NOT YET IMPLEMENTED"
+  visual_baseline: "NOT YET CREATED"
+
+items:
+  # ── BASE: current site platform (5) ──────────────────────────────
+  - {id: BASE-001, title: "Single-page static site as the only surface", status: CURRENT, priority: P2, basis: "[S]", evidence: "business/site/index.html (50 lines)", notes: "No routing, no build step, no second page."}
+  - {id: BASE-002, title: "Inline single-block stylesheet", status: CURRENT, priority: P2, basis: "[S]", evidence: "business/site/index.html:11-13", notes: "All styling lives in one <style> block; no external CSS file exists."}
+  - {id: BASE-003, title: "Deploy-time inert analytics pattern (PostHog)", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/config.js; business/site/analytics.js", notes: "Guard-before-init is test- and gate-enforced (test_site_content.py:67-88)."}
+  - {id: BASE-004, title: "Cloudflare Pages deploy, pages.dev endpoint only", status: CURRENT, priority: P1, basis: "[S]", evidence: "scripts/deploy-site.sh:13-23; gates-phase8.sh [website]", notes: "Four states build/attempted/verified/unavailable; custom-domain config is gate-forbidden, reaffirmed by 26.12 (2026-10-08) — pages.dev-only until the founder records an intended domain and the gate is updated + verified first."}
+  - {id: BASE-005, title: "Zero brand/media/font assets in repository", status: CURRENT, priority: P2, basis: "[S]", evidence: "repo survey (find for *.css/*.svg/*.png/*.ico/*.woff*/*.ttf → none)", notes: "Negative finding is reproducible; see §5.1."}
+
+  # ── BRAND: identity (15) ─────────────────────────────────────────
+  - {id: BRAND-001, title: "Logo (none exists)", status: CURRENT, priority: P1, basis: "[S]", evidence: "repo survey", notes: "Gap: REQUIRED counterpart is BRAND-009."}
+  - {id: BRAND-002, title: "Wordmark as plain nav text", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:16", notes: "<strong>COM-OS</strong> is the entire brand mark today (26.1 option A, approved 2026-10-11, wordmark-only); product name Company OS retained in <title>/og:title."}
+  - {id: BRAND-003, title: "Favicon / touch icons (absent)", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:2-10", notes: "No <link rel=icon>; no icon files."}
+  - {id: BRAND-004, title: "Imagery and illustration (absent)", status: CURRENT, priority: P2, basis: "[S]", evidence: "repo survey; index.html is text-only", notes: "Defensible for an evidence-first brand; policy still required (BRAND-012)."}
+  - {id: BRAND-005, title: "Icon set (absent)", status: CURRENT, priority: P2, basis: "[S]", evidence: "repo survey", notes: "No icon library, sprite, or inline SVGs."}
+  - {id: BRAND-006, title: "Colour palette with named roles", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12 (7 unroled literals)", notes: "NOT ESTABLISHED: palette direction — owner decision §26.3."}
+  - {id: BRAND-007, title: "Typography scale specification", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12 (h1 clamp only)", notes: "h2/h3/body are browser defaults today."}
+  - {id: BRAND-008, title: "Font loading strategy (Inter named, never loaded)", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12; no font files in repo", notes: "Effective family is system-ui today. Owner decision §26.2 (self-host vs system stack)."}
+  - {id: BRAND-009, title: "Logo and wordmark design", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap vs BRAND-001/002", notes: "26.1 option A (approved 2026-10-11): wordmark-only — the canonical mark is the typeset text COM-OS; no symbol, no agent-generated artwork. Spec: docs/design/BRAND_ASSET_SPEC.md. Feeds nav; favicon (BRAND-010) and OG image (PAGE-027) are future derivations, not produced here."}
+  - {id: BRAND-010, title: "Favicon, apple-touch, and site icon set", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap vs BRAND-003", notes: "Derivable from the approved typeset text wordmark (26.1 option A, approved 2026-10-11); no artwork produced. Derivation spec in docs/design/BRAND_ASSET_SPEC.md §7. No *.ico committed today is fine; adding files is additive."}
+  - {id: BRAND-011, title: "Iconography system (set, sizes, stroke, usage)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap vs BRAND-005", notes: "Vector icon set only; no raster icons."}
+  - {id: BRAND-012, title: "Imagery / photography policy", status: REQUIRED, priority: P2, basis: "[K]", evidence: "sops/case-study/SKILL.md (future visuals)", notes: "26.14 (approved 2026-10-08, option B): abstract SVG only — no photography/stock in v1; text-led; mark separate; record provenance+licence (GOV-013); responsive + aspect-ratio (RESP-008); alt-text policy first (A11Y-008, in ACCESSIBILITY_SPEC.md); count against 26.15 budgets; founder approval before any asset is published; media tokens evidenced only. Must state: no stock-photo fabrication, no client material without approval (AGENTS.md client isolation)."}
+  - {id: BRAND-013, title: "Dark theme", status: REQUIRED, priority: P1, basis: "[S]", evidence: "decision §26.4 APPROVED 2026-10-08 (option B — both light and dark)", notes: "First-class theme architecture required (26.4): both themes WCAG 2.2 AA, no light-only component literals, prefers-color-scheme + explicit override, visual regression covers both themes, dark CSS within §26.15 budgets. Token foundation delivered in DESIGN_TOKENS.yaml (themes + value_dark); frontend theme NOT YET IMPLEMENTED. Promoted FUTURE to REQUIRED under approved 26.4 (manifest rule 10)."}
+  - {id: BRAND-014, title: "Density modes (comfortable / compact)", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Only matters once product UI (OPS) exists."}
+  - {id: BRAND-015, title: "Motion language (durations, easing, reduced-motion rules)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "decision §26.7 APPROVED 2026-10-08 (minimal, reduced-motion-safe)", notes: "Motion language defined by 26.7: fast 150ms / normal 250ms / slow 400ms, ease cubic-bezier(0.2,0,0,1); motion optional per component, never mandatory decoration; prefers-reduced-motion mandatory (A11Y-007). Tokens delivered (FOUND-016). Promoted FUTURE to REQUIRED under approved 26.7 for consistency with its already-REQUIRED token counterpart (manifest rule 10)."}
+
+  # ── FOUND: foundations (24) ──────────────────────────────────────
+  - {id: FOUND-001, title: "Colour tokens (primitive + semantic roles)", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12", notes: "Replaces 7 bare literals; naming per GOV-002."}
+  - {id: FOUND-002, title: "Surface / border / text hierarchy tokens", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12", notes: "bg #fafafa, surface #fff, text #151515, borders #ddd/#bbb/#111 exist unroled."}
+  - {id: FOUND-003, title: "Contrast targets (WCAG 2.2 AA: 4.5:1 text, 3:1 non-text)", status: REQUIRED, priority: P0, basis: "1.4.3 / 1.4.11", evidence: "gap; defect recorded A11Y-004", notes: "Must be enforced by TEST-006, not by review alone."}
+  - {id: FOUND-004, title: "Font family tokens (body, mono)", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12", notes: "Paired with BRAND-008 loading strategy; mono needed by COMP-DAT-011."}
+  - {id: FOUND-005, title: "Type scale (size/line-height/weight steps)", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap (h1 clamp only)", notes: "Fluid behaviour defined per-step, not only for h1."}
+  - {id: FOUND-006, title: "Heading scale h1–h6", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap; h1 index.html:18, h2 index.html:12", notes: "Heading-skip invariant must keep passing (test_site_content.py:124-139)."}
+  - {id: FOUND-007, title: "Body and prose styles (measure, rhythm, lists)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:12 (line-height 1.6 only)", notes: "Prose measure ≈65–75ch; max-width 800px exists only on h1."}
+  - {id: FOUND-008, title: "Fluid type (clamp) behaviour", status: CURRENT, priority: P2, basis: "[S]", evidence: "index.html:12 (h1 clamp)", notes: "Extending clamp to the whole scale turns this into FOUND-005."}
+  - {id: FOUND-009, title: "Spacing scale", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12 (literals 4/8/10/12/16/18/20/24/48/64/72)", notes: "Extract into a named scale; multiples of 4 with two optical exceptions."}
+  - {id: FOUND-010, title: "Layout container (max 980px, gutter 24px)", status: CURRENT, priority: P1, basis: "[S]", evidence: "index.html:12", notes: "Gutters must become responsive (RESP-005)."}
+  - {id: FOUND-011, title: "Grid system (auto-fit minmax(220px,1fr), gap 16px)", status: CURRENT, priority: P1, basis: "[S]", evidence: "index.html:12", notes: "Inherently responsive; no breakpoints needed for this rule."}
+  - {id: FOUND-012, title: "Radius scale (14px card, 999px pill)", status: CURRENT, priority: P1, basis: "[S]", evidence: "index.html:12", notes: "Needs a full scale (sm/md/lg/pill), not two values."}
+  - {id: FOUND-013, title: "Border tokens (1px #ddd / #bbb / #111)", status: CURRENT, priority: P1, basis: "[S]", evidence: "index.html:12", notes: "#bbb badge border fails 3:1 — replacement is REQUIRED (FOUND-003)."}
+  - {id: FOUND-014, title: "Elevation / shadow tokens", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap (no shadows exist)", notes: "Needed for overlays (COMP-OVL) before they ship."}
+  - {id: FOUND-015, title: "Breakpoint tokens", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap (@media count: 0)", notes: "NOT ESTABLISHED: values — owner decision §26.8; proposal in §18.2."}
+  - {id: FOUND-016, title: "Motion duration / easing tokens", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "No animation exists; tokens land with first interactive states."}
+  - {id: FOUND-017, title: "Focus-visible tokens and ring spec", status: REQUIRED, priority: P0, basis: "2.4.7 / 2.4.11", evidence: "gap (:focus count: 0)", notes: "UA default outline is currently not overridden — standardise it before adding interactive elements."}
+  - {id: FOUND-018, title: "z-index / layering scale", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Required before overlays (COMP-OVL) exist."}
+  - {id: FOUND-019, title: "Icon size tokens", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Paired with BRAND-011."}
+  - {id: FOUND-020, title: "Density tokens", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Pairs with BRAND-014."}
+  - {id: FOUND-021, title: "Dark palette", status: REQUIRED, priority: P1, basis: "[S]", evidence: "decision §26.4 APPROVED 2026-10-08; dark semantic roles in DESIGN_TOKENS.yaml (themes + value_dark + dark contrast pairs)", notes: "Complete dark semantic counterpart of every colour role, contrast-validated (26.4). Neutrals + accent/action/focus/inverse/status delivered; overlay (scrim/rgba) form still open. Pairs with BRAND-013. Promoted FUTURE to REQUIRED under approved 26.4 (manifest rule 10)."}
+  - {id: FOUND-022, title: "Selection and scrollbar styling", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Cosmetic; low leverage on a text-led site."}
+  - {id: FOUND-023, title: "Data-visualisation colour sequence", status: FUTURE, priority: P3, basis: "[D]", evidence: "deferred", notes: "Only needed when OPS-007-style reporting UI is reconsidered."}
+  - {id: FOUND-024, title: "Code / mono type tokens", status: REQUIRED, priority: P2, basis: "[K]", evidence: "PAGE-013 engineering standards content", notes: "Needed for inline code and evidence excerpts."}
+
+  # ── COMP-ACT: actions (11) ───────────────────────────────────────
+  - {id: COMP-ACT-01, title: "Button — primary", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap (no <button> exists)", notes: "First interactive element the site gains."}
+  - {id: COMP-ACT-02, title: "Button — secondary", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: ""}
+  - {id: COMP-ACT-03, title: "Button — ghost / tertiary", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Used for low-emphasis actions in nav and forms."}
+  - {id: COMP-ACT-04, title: "Button — danger / destructive", status: REQUIRED, priority: P2, basis: "[D]", evidence: "gap; destructive domain transitions exist (domain.py _TRANSITIONS)", notes: "Product UI (OPS) needs it; website uses it rarely."}
+  - {id: COMP-ACT-05, title: "Button size scale (sm / md / lg)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Sizes must satisfy A11Y-011 target sizes at the smallest step."}
+  - {id: COMP-ACT-06, title: "Icon button (icon-only, labelled)", status: REQUIRED, priority: P2, basis: "4.1.2", evidence: "gap", notes: "Requires accessible name — never icon-only without aria-label."}
+  - {id: COMP-ACT-07, title: "Button loading / pending state", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Paired with FRM-012 submitting state."}
+  - {id: COMP-ACT-08, title: "Button group", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: ""}
+  - {id: COMP-ACT-09, title: "Split / menu button", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Only if product navigation needs it."}
+  - {id: COMP-ACT-10, title: "Inline link", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap (zero <a> tags today)", notes: "Must define visited/hover/focus states; first focusable content on the site."}
+  - {id: COMP-ACT-11, title: "Standalone / arrow link (CTA)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "CTA target for PAGE-002…010; the PAGE-010 contact CTA is the WhatsApp deep link per §26.9 (approved 2026-10-11)."}
+
+  # ── COMP-TXT: typography & text (9) ──────────────────────────────
+  - {id: COMP-TXT-01, title: "Paragraph / prose block", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:19 (inline <p> only)", notes: "Prose rules from FOUND-007."}
+  - {id: COMP-TXT-02, title: "Heading components (h1–h6 styling contract)", status: REQUIRED, priority: P0, basis: "[S]", evidence: "index.html:12,18,21,28,38,41", notes: "Heading-skip and single-h1 invariants must keep passing."}
+  - {id: COMP-TXT-03, title: "Eyebrow / overline label", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Section labels replace bare h2 usage on inner pages."}
+  - {id: COMP-TXT-04, title: "Lead / intro paragraph", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:19 (hero lede)", notes: "Hero lede is gate-adjacent copy (§27.C) — treat as governed."}
+  - {id: COMP-TXT-05, title: "Caption / small text", status: REQUIRED, priority: P2, basis: "[S]", evidence: "index.html:12 (footer .9rem, badge .85rem)", notes: "Minimum size floor: 14px (legibility)."}
+  - {id: COMP-TXT-06, title: "Blockquote / pull quote", status: FUTURE, priority: P3, basis: "[K]", evidence: "deferred", notes: "Possible future case-study element."}
+  - {id: COMP-TXT-07, title: "Definition list pattern", status: FUTURE, priority: P3, basis: "[D]", evidence: "deferred", notes: "Useful for state/enum documentation pages."}
+  - {id: COMP-TXT-08, title: "Mark / highlight", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: ""}
+  - {id: COMP-TXT-09, title: "Text utilities (truncate, measure, align)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap (max-width: 800px exists as a one-off on h1)", notes: "Replace the h1-specific rule with a reusable measure utility."}
+
+  # ── COMP-SEL: selection controls (14) ────────────────────────────
+  - {id: COMP-SEL-01, title: "Text input", status: REQUIRED, priority: P0, basis: "[P]", evidence: "gap; intake questions 1–6 need free text (sops/intake/SKILL.md:29-38)", notes: "States: default, hover, focus, filled, error, disabled."}
+  - {id: COMP-SEL-02, title: "Textarea", status: REQUIRED, priority: P0, basis: "[P]", evidence: "gap; 'What breaks today?' / 'What have you already tried?' need room", notes: "Auto-grow optional; resize handle allowed."}
+  - {id: COMP-SEL-03, title: "Select / dropdown", status: REQUIRED, priority: P0, basis: "[P]", evidence: "gap; budget range and deadline choices", notes: "Prefer native <select> until combobox need is proven."}
+  - {id: COMP-SEL-04, title: "Checkbox", status: REQUIRED, priority: P0, basis: "[P]", evidence: "gap; consent/approval confirmations", notes: "Used for 'who else must approve' multi-select."}
+  - {id: COMP-SEL-05, title: "Radio", status: REQUIRED, priority: P1, basis: "[P]", evidence: "gap; single-choice dispositions", notes: "Maps to IntakeDisposition GO / NO-GO / NEEDS INFORMATION (domain.py:14-17)."}
+  - {id: COMP-SEL-06, title: "Radio group / segmented control", status: REQUIRED, priority: P1, basis: "[D]", evidence: "gap; ScopeDecision IN SCOPE / CHANGE ORDER / OUT OF SCOPE (domain.py:20-23)", notes: "Product UI first; website reuse likely on intake form."}
+  - {id: COMP-SEL-07, title: "Toggle / switch", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Consent-style settings only; no settings UI exists yet."}
+  - {id: COMP-SEL-08, title: "Range slider", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Budget range could eventually use it; not first release."}
+  - {id: COMP-SEL-09, title: "Date picker", status: FUTURE, priority: P3, basis: "[P]", evidence: "intake question 5 asks for a deadline date", notes: "Native <input type=date> first; custom picker only if proven insufficient."}
+  - {id: COMP-SEL-10, title: "File upload", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Needs a storage/classification story (AGENTS.md RESTRICTED rules) before any use."}
+  - {id: COMP-SEL-11, title: "Search input", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "No content volume to search yet."}
+  - {id: COMP-SEL-12, title: "Combobox / autocomplete", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Complex ARIA; defer until native select fails."}
+  - {id: COMP-SEL-13, title: "Input with prefix / suffix adornment", status: REQUIRED, priority: P2, basis: "[P]", evidence: "gap; budget currency and date affordances", notes: "Adornment must not reduce the accessible name."}
+  - {id: COMP-SEL-14, title: "Field hint / help text", status: REQUIRED, priority: P0, basis: "3.3.2", evidence: "gap", notes: "Every intake field needs an example or clarification (SOP: preserve meaning, separate facts from assumptions)."}
+
+  # ── COMP-FRM: forms (14) ─────────────────────────────────────────
+  - {id: COMP-FRM-01, title: "Form layout / vertical stack", status: REQUIRED, priority: P0, basis: "[P]", evidence: "gap", notes: "One column on mobile; labels above fields."}
+  - {id: COMP-FRM-02, title: "Label + required / optional marker", status: REQUIRED, priority: P0, basis: "3.3.2", evidence: "gap", notes: "Required state must be programmatically set (aria-required), not symbol-only."}
+  - {id: COMP-FRM-03, title: "Validation message (error / success / hint)", status: REQUIRED, priority: P0, basis: "3.3.1", evidence: "gap", notes: "Text + icon + role=status; colour never the only cue (A11Y-013)."}
+  - {id: COMP-FRM-04, title: "Fieldset / legend grouping", status: REQUIRED, priority: P1, basis: "1.3.1", evidence: "gap", notes: "Groups the six intake questions into logical sections."}
+  - {id: COMP-FRM-05, title: "Form actions row (submit / cancel)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Submit label states the outcome ('Send request'), never 'Submit' alone."}
+  - {id: COMP-FRM-06, title: "Multi-step form", status: FUTURE, priority: P3, basis: "[P]", evidence: "deferred", notes: "Six questions fit one page; split only if completion data justifies it."}
+  - {id: COMP-FRM-07, title: "Inline validation behaviour (when to validate)", status: REQUIRED, priority: P1, basis: "3.3.1", evidence: "gap", notes: "Validate on blur/submit, never on first keystroke."}
+  - {id: COMP-FRM-08, title: "Error summary banner (focusable)", status: REQUIRED, priority: P1, basis: "3.3.1", evidence: "gap", notes: "Appears on failed submit; receives focus; links to fields."}
+  - {id: COMP-FRM-09, title: "Character counter", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Only if a field gains a length limit."}
+  - {id: COMP-FRM-10, title: "Dependent field reveal", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "e.g. 'other approver' name field."}
+  - {id: COMP-FRM-11, title: "Disabled / read-only form state", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Distinct visuals for disabled vs read-only; contrast exemptions documented."}
+  - {id: COMP-FRM-12, title: "Submitting / pending state", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Disables double submit; announces progress."}
+  - {id: COMP-FRM-13, title: "Success confirmation panel", status: REQUIRED, priority: P1, basis: "[E]", evidence: "gap; email §34 BLOCKED so confirmation cannot promise a reply channel that does not exist", notes: "Copy must state what actually happens next — NOT ESTABLISHED until §26.9."}
+  - {id: COMP-FRM-14, title: "Honeypot / anti-spam field", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "No CAPTCHA dependency; hidden field only, must not break keyboard flow."}
+
+  # ── COMP-DAT: data display (15) ──────────────────────────────────
+  - {id: COMP-DAT-01, title: "Stat / metric card", status: REQUIRED, priority: P2, basis: "[K]", evidence: "gap", notes: "For verified case-study outcomes only — never for invented numbers (AGENTS.md)."}
+  - {id: COMP-DAT-02, title: "Definition table", status: REQUIRED, priority: P2, basis: "[D]", evidence: "gap", notes: "Documents domain enums and states."}
+  - {id: COMP-DAT-03, title: "Sortable data table", status: FUTURE, priority: P3, basis: "[D]", evidence: "deferred", notes: "Product dashboards first (OPS)."}
+  - {id: COMP-DAT-04, title: "Pagination", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "No list exceeds one page today."}
+  - {id: COMP-DAT-05, title: "Tag / chip", status: REQUIRED, priority: P1, basis: "[D]", evidence: "gap", notes: "Labels scope decisions, client states."}
+  - {id: COMP-DAT-06, title: "Status badge / pill", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:16 (.badge)", notes: "Exists but border #bbb fails 3:1 — rebuild under FOUND-003."}
+  - {id: COMP-DAT-07, title: "Avatar", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "No identity UI until §8.2 text is recovered (§27.A)."}
+  - {id: COMP-DAT-08, title: "Progress bar", status: FUTURE, priority: P3, basis: "[D]", evidence: "deferred", notes: "Delivery progress display for product UI."}
+  - {id: COMP-DAT-09, title: "Timeline", status: FUTURE, priority: P2, basis: "[D]", evidence: "domain.py lifecycle states PROSPECT…CLOSED", notes: "Client lifecycle visualisation in product UI."}
+  - {id: COMP-DAT-10, title: "Checklist", status: REQUIRED, priority: P2, basis: "[P]", evidence: "sops (weekly-close, incident) are checklist-shaped", notes: "Also used by design QA checklist (GOV-014)."}
+  - {id: COMP-DAT-11, title: "Code block and inline code", status: REQUIRED, priority: P2, basis: "[K]", evidence: "PAGE-013 engineering standards; gate output excerpts", notes: "Needs FOUND-024 mono tokens."}
+  - {id: COMP-DAT-12, title: "Divider", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap (footer border-top is the only rule today)", notes: "Uses border tokens; must not be the sole section separator on mobile."}
+  - {id: COMP-DAT-13, title: "Key-value row", status: REQUIRED, priority: P1, basis: "[P]", evidence: "gap", notes: "Evidence records, invoice metadata, timestamps."}
+  - {id: COMP-DAT-14, title: "Empty state", status: REQUIRED, priority: P1, basis: "[S]", evidence: "pattern already exists in prose: 'None published yet'", notes: "The honesty pattern becomes a reusable component."}
+  - {id: COMP-DAT-15, title: "File / attachment row", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Blocked by classification rules for uploads (COMP-SEL-10)."}
+
+  # ── COMP-FBK: feedback (13) ──────────────────────────────────────
+  - {id: COMP-FBK-01, title: "Alert — info", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: ""}
+  - {id: COMP-FBK-02, title: "Alert — success", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Pairs with FRM-13."}
+  - {id: COMP-FBK-03, title: "Alert — warning", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: ""}
+  - {id: COMP-FBK-04, title: "Alert — error", status: REQUIRED, priority: P1, basis: "3.3.1", evidence: "gap", notes: "Icon + text + role=alert; colour not the only cue."}
+  - {id: COMP-FBK-05, title: "Toast / transient notification", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Accessibility cost is high; prefer persistent alerts first."}
+  - {id: COMP-FBK-06, title: "Page-level banner", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Reserved for service notices; never auto-dismiss."}
+  - {id: COMP-FBK-07, title: "Skeleton loader", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Static site has nothing to load yet."}
+  - {id: COMP-FBK-08, title: "Spinner / busy indicator", status: REQUIRED, priority: P1, basis: "4.1.3", evidence: "gap", notes: "Paired with FRM-012; reduced-motion safe (A11Y-007)."}
+  - {id: COMP-FBK-09, title: "No-results / empty query state", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Needed when search (COMP-SEL-11) or filters arrive."}
+  - {id: COMP-FBK-10, title: "Form progress stepper", status: FUTURE, priority: P3, basis: "[P]", evidence: "deferred", notes: "Only if COMP-FRM-06 ships."}
+  - {id: COMP-FBK-11, title: "Inline status dot", status: REQUIRED, priority: P2, basis: "[D]", evidence: "gap", notes: "Always accompanied by a text label."}
+  - {id: COMP-FBK-12, title: "Dismissible message", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Dismissal must be keyboard-reachable when introduced."}
+  - {id: COMP-FBK-13, title: "Evidence status chips (PASS / BLOCKED / FAIL / SKIP)", status: REQUIRED, priority: P2, basis: "[P]", evidence: "gates-phase8.sh statuses; PHASE8-CLOSURE status vocabulary", notes: "Internal reporting UI vocabulary; public site must not expose internal gate states."}
+
+  # ── COMP-OVL: overlays (9) ───────────────────────────────────────
+  - {id: COMP-OVL-01, title: "Modal / dialog", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Focus trap, Esc, restore focus, aria-modal (see OVL-08)."}
+  - {id: COMP-OVL-02, title: "Confirmation dialog (destructive actions)", status: REQUIRED, priority: P1, basis: "[D]", evidence: "domain transitions are irreversible-ish (e.g. VOID, TERMINATED)", notes: "Destructive confirmations must name the object and the consequence."}
+  - {id: COMP-OVL-03, title: "Drawer / side panel", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: ""}
+  - {id: COMP-OVL-04, title: "Popover", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Defers until a real info-density need appears."}
+  - {id: COMP-OVL-05, title: "Dropdown menu", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Needed for multi-page nav overflow / footer link groups."}
+  - {id: COMP-OVL-06, title: "Tooltip", status: REQUIRED, priority: P2, basis: "1.4.13", evidence: "gap", notes: "Must be hover- AND focus-triggered, dismissible, persistent."}
+  - {id: COMP-OVL-07, title: "Full-screen sheet (mobile)", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Mobile nav (NAV-05) may need a simple version first."}
+  - {id: COMP-OVL-08, title: "Overlay behaviour contract (focus trap, Esc, scroll lock, focus restore)", status: REQUIRED, priority: P0, basis: "2.4.3 / 2.1.2", evidence: "gap", notes: "Written contract applies to every overlay; verified by TEST-005."}
+  - {id: COMP-OVL-09, title: "Bottom sheet", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: ""}
+
+  # ── COMP-NAV: navigation (12) ────────────────────────────────────
+  - {id: COMP-NAV-01, title: "Top navigation bar", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:16", notes: "Exists as wordmark + badge with NO links; redesign adds real navigation."}
+  - {id: COMP-NAV-02, title: "Breadcrumb", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Site depth is 2 levels; revisit if it grows."}
+  - {id: COMP-NAV-03, title: "Tabs", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "For service-page content switching; ARIA tabs pattern required."}
+  - {id: COMP-NAV-04, title: "In-page anchor navigation (section links)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Replaces 'jump to section' affordances as pages lengthen."}
+  - {id: COMP-NAV-05, title: "Mobile navigation (collapse / menu)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; nav is flex with no breakpoint behaviour", notes: "Simple disclosure first; no drawer until OVL-07 exists."}
+  - {id: COMP-NAV-06, title: "Skip-to-content link", status: REQUIRED, priority: P0, basis: "2.4.1", evidence: "gap (no links exist so none needed yet — becomes P0 the moment nav gains links)", notes: "Must be first focusable element; visible on focus."}
+  - {id: COMP-NAV-07, title: "Pagination navigation (page-level)", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Component D04 pagination is separate."}
+  - {id: COMP-NAV-08, title: "Sidebar navigation", status: FUTURE, priority: P3, basis: "[D]", evidence: "deferred", notes: "Candidate for internal workspace UIs (OPS)."}
+  - {id: COMP-NAV-09, title: "Footer link groups", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:44-46 footer has no links today", notes: "Footer must link to privacy/security/accessibility/contact once those pages exist."}
+  - {id: COMP-NAV-10, title: "Section jump list (on-page)", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Overlaps NAV-04; keep one, not both, if only one is needed."}
+  - {id: COMP-NAV-11, title: "Back / wayfinder link", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: ""}
+  - {id: COMP-NAV-12, title: "Active navigation state indicator", status: REQUIRED, priority: P1, basis: "1.4.1", evidence: "gap", notes: "Active state must be conveyed by more than colour (underline or weight too)."}
+
+  # ── COMP-CON: containers & layout (12) ───────────────────────────
+  - {id: COMP-CON-01, title: "Card", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:12 (.card)", notes: "Border 1px #ddd, radius 14px, padding 20px, surface #fff — extract to tokens."}
+  - {id: COMP-CON-02, title: "Section wrapper with heading group", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:21,28,38,41 (bare h2 sections)", notes: "Standardises h2 + lede + spacing (currently h2 margin-top: 64px)."}
+  - {id: COMP-CON-03, title: "Page hero / header block", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:18-19", notes: "Hero copy is gate-pinned (§27.C); layout is free, copy is not."}
+  - {id: COMP-CON-04, title: "Footer container", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:44-46", notes: "margin-top 72px, border-top, .9rem — will gain link groups (NAV-09)."}
+  - {id: COMP-CON-05, title: "Process step list (numbered)", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html:29-36 (.steps)", notes: "Six-step intake→invoice process; counter-reset pattern with 2px rule."}
+  - {id: COMP-CON-06, title: "Panel / inset surface", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "For callouts inside prose (e.g. honesty notes)."}
+  - {id: COMP-CON-07, title: "Page shell (nav / main / footer landmarks)", status: REQUIRED, priority: P0, basis: "1.3.1", evidence: "index.html:15-49; enforced by test_site_content.py:140-144", notes: "Shell is the invariant that every page template must instantiate."}
+  - {id: COMP-CON-08, title: "Two-column content layout", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Single-column reading order is the current and default model."}
+  - {id: COMP-CON-09, title: "Sidebar layout", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Pairs with NAV-08."}
+  - {id: COMP-CON-10, title: "Full-bleed band", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Would break the 980px container; use sparingly if at all."}
+  - {id: COMP-CON-11, title: "Figure / caption", status: FUTURE, priority: P3, basis: "[K]", evidence: "deferred", notes: "Arrives with imagery (BRAND-012)."}
+  - {id: COMP-CON-12, title: "Well / nested container spacing", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Prevents double-margin bugs when containers nest."}
+
+  # ── COMP-SYS: system & production semantics (12) ─────────────────
+  - {id: COMP-SYS-01, title: "Data classification label (PUBLIC / INTERNAL / CONFIDENTIAL / RESTRICTED)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "AGENTS.md Data Classification", notes: "Renders only in internal UIs; public site never shows client classifications."}
+  - {id: COMP-SYS-02, title: "State label (generic, vocabulary supplied by caller)", status: REQUIRED, priority: P1, basis: "[D]", evidence: "domain.py enums (ClientStatus, DeliveryStatus, …)", notes: "One component, many vocabularies; never hardcode state names in markup."}
+  - {id: COMP-SYS-03, title: "Evidence badge (verified / unverified / proposed)", status: REQUIRED, priority: P1, basis: "[P]", evidence: "EvidenceStatus PROPOSED/RECORDED/VERIFIED/DISPUTED (domain.py:90-95)", notes: "Directly encodes the AGENTS.md evidence bar."}
+  - {id: COMP-SYS-04, title: "Scope status chip (IN SCOPE / CHANGE ORDER / OUT OF SCOPE)", status: REQUIRED, priority: P1, basis: "[D]", evidence: "ScopeDecision (domain.py:20-23)", notes: "Core visual for scope-conversation UIs."}
+  - {id: COMP-SYS-05, title: "Approval state indicator (REQUIRED / APPROVED / DECLINED)", status: REQUIRED, priority: P1, basis: "[D]", evidence: "ApprovalState (domain.py:26-35)", notes: "Must never visually imply PROPOSED == approved (domain docstring warning)."}
+  - {id: COMP-SYS-06, title: "Pass / fail / blocked / skipped indicator", status: REQUIRED, priority: P2, basis: "[P]", evidence: "gates-phase8.sh do_pass/do_fail/do_blocked vocabulary", notes: "Colour + icon + text; BLOCKED must be visually distinct from FAIL."}
+  - {id: COMP-SYS-07, title: "Version / release stamp", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Footer could carry a build stamp later."}
+  - {id: COMP-SYS-08, title: "Audit trail / activity feed", status: FUTURE, priority: P3, basis: "[D]", evidence: "domain transitions are auditable by design", notes: "Product UI (OPS) scope."}
+  - {id: COMP-SYS-09, title: "Timestamp with timezone", status: REQUIRED, priority: P1, basis: "[P]", evidence: "evidence files use UTC stamps throughout evidence/runs/", notes: "Always render timezone; never ambiguous local-only times."}
+  - {id: COMP-SYS-10, title: "Money / amount display", status: FUTURE, priority: P3, basis: "[D]", evidence: "InvoiceStatus/PaymentStatus, FinancialAmountState (domain.py:72-104)", notes: "Empty is not zero — UNKNOWN/NOT_RECORDED must render distinctly."}
+  - {id: COMP-SYS-11, title: "Redaction / secret placeholder", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gates: 'key values never printed'; AGENTS.md no-secrets rule", notes: "Any UI surfaceing config must render •••• by construction."}
+  - {id: COMP-SYS-12, title: "Print styles", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Overlaps RESP-009 — implement once, reference from both."}
+
+  # ── COMP-SPC: spacing primitives (9) ─────────────────────────────
+  - {id: COMP-SPC-01, title: "Spacing scale utilities", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap (literals scattered in index.html:12)", notes: "Single source = FOUND-009; utilities reference tokens only."}
+  - {id: COMP-SPC-02, title: "Stack (vertical rhythm with gap)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap (margin-based today)", notes: "Replaces margin-collapsing hacks."}
+  - {id: COMP-SPC-03, title: "Cluster (horizontal wrap group)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:12 nav uses raw flex", notes: "Nav, badges, and action rows all become clusters."}
+  - {id: COMP-SPC-04, title: "Inline gap", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "For icon+label pairs."}
+  - {id: COMP-SPC-05, title: "Aspect-ratio box", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Image layouts only."}
+  - {id: COMP-SPC-06, title: "Container queries", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Adopt when components are embedded in varying-width parents."}
+  - {id: COMP-SPC-07, title: "Wrap utilities", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "For badge/cluster rows."}
+  - {id: COMP-SPC-08, title: "Centering utilities", status: REQUIRED, priority: P2, basis: "[S]", evidence: "index.html:12 (margin: 0 auto on body)", notes: "Tokenise the existing centring pattern."}
+  - {id: COMP-SPC-09, title: "Overflow scroll container", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Paired with RESP-007 table overflow."}
+
+  # ── PAGE: pages & templates (30) ─────────────────────────────────
+  - {id: PAGE-001, title: "Home page", status: CURRENT, priority: P1, basis: "[S]", evidence: "business/site/index.html", notes: "Content is gate-pinned (title, hero, honesty line) — redesign must preserve or change the gate first (§27.C)."}
+  - {id: PAGE-002, title: "Services index", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap (services are three cards on home, index.html:21-26)", notes: "Entry point to the three service details."}
+  - {id: PAGE-003, title: "Service detail — Finance integrations", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:23 card copy", notes: "Scope, deliverables, boundaries, outcomes — content owner-supplied; no invented capabilities."}
+  - {id: PAGE-004, title: "Service detail — Reconciliation", status: REQUIRED, priority: P2, basis: "[S]", evidence: "index.html:24 card copy", notes: "Content contract as PAGE-003."}
+  - {id: PAGE-005, title: "Service detail — Performance builds", status: REQUIRED, priority: P2, basis: "[S]", evidence: "index.html:25 card copy", notes: "Content contract as PAGE-003."}
+  - {id: PAGE-006, title: "About page", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; ETHOS.md supplies truthful source material", notes: "Ethos-derived, not marketing-invented."}
+  - {id: PAGE-007, title: "Process / How we work page", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:29-36 six-step block", notes: "Extracting the step list to its own page keeps home leaner; component CON-05 carries the visuals."}
+  - {id: PAGE-008, title: "Case studies index", status: REQUIRED, priority: P1, basis: "[K]", evidence: "index.html:41-42; sops/case-study/SKILL.md", notes: "Must render the honest empty state (COMP-DAT-14) until a study is approved."}
+  - {id: PAGE-009, title: "Case study detail template", status: REQUIRED, priority: P1, basis: "[K]", evidence: "sops/case-study/SKILL.md (authoritative inputs, BLOCK conditions)", notes: "Publishable only with recorded evidence + client approval; metrics verified, never invented."}
+  - {id: PAGE-010, title: "Contact / intake page (WhatsApp path)", status: REQUIRED, priority: P1, basis: "[P]", evidence: "sops/intake/SKILL.md:29-38 (six required questions)", notes: "26.9 approved 2026-10-11 (option E): direct WhatsApp deep link https://wa.me/256760779160; no form, no backend, no email. mailto: is test-forbidden. The prior §34/Email blocker is resolved by choosing a path that needs no email."}
+  - {id: PAGE-011, title: "Privacy & analytics disclosure page", status: REQUIRED, priority: P1, basis: "[S]", evidence: "PostHog deployed (BASE-003); gates verify live config", notes: "Must state what is collected, that session recording is config-controlled, and how to opt out. 26.11 (approved 2026-10-11): delivered via the owner-managed legal workstream; engineering publishes no legal text or legal assertions."}
+  - {id: PAGE-012, title: "Security & data-handling page", status: REQUIRED, priority: P2, basis: "[S]", evidence: "ETHOS.md §6; AGENTS.md classification rules", notes: "States handling commitments without exposing client specifics (client isolation rule)."}
+  - {id: PAGE-013, title: "Engineering standards page", status: REQUIRED, priority: P2, basis: "[S]", evidence: "index.html:38-39 delivery standard; AGENTS.md evidence rules", notes: "Turns the four-sentence standard into a durable, linkable statement."}
+  - {id: PAGE-014, title: "Accessibility statement", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; conformance target A11Y-001", notes: "States target, known gaps, and contact route — honest, not aspirational."}
+  - {id: PAGE-015, title: "404 / not-found page", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap (no routing exists today)", notes: "Required the moment a second page exists; must include nav back to home."}
+  - {id: PAGE-016, title: "Blog", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no editorial pipeline, no CMS, no authoring workflow exists", notes: "Excluded §25.1; confirmed OUT_OF_SCOPE by 26.13 (approved 2026-10-08). Re-evaluate only when ALL three are evidenced: recurring long-form demand, a named authoring/review/publication owner, and a defined cadence."}
+  - {id: PAGE-017, title: "Terms & conditions", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no legal text or counsel review established", notes: "Excluded §25.2; legal copy must not be agent-invented. 26.11 (approved 2026-10-11): stays OUT_OF_SCOPE; owner handles legal privately (declared excluded)."}
+  - {id: PAGE-018, title: "Cookie / analytics consent banner", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no consent decision or jurisdiction analysis on record", notes: "Excluded §25.3; 26.11 (approved 2026-10-11) resolved: banner stays OUT_OF_SCOPE, owner-managed legal, analytics remains enabled (declared excluded)."}
+  - {id: PAGE-019, title: "Maintenance / downtime page", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "static Pages deployment has no maintenance mode", notes: "Excluded §25.4."}
+  - {id: PAGE-020, title: "Careers page", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no hiring activity or roles on record", notes: "Excluded §25.5."}
+  - {id: PAGE-021, title: "Press / newsroom", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no press activity on record", notes: "Excluded §25.6."}
+  - {id: PAGE-022, title: "Newsletter signup", status: OUT_OF_SCOPE, priority: P3, basis: "[E]", evidence: "no email sending capability (§34 BLOCKED)", notes: "Excluded §25.7 — cannot function without email."}
+  - {id: PAGE-023, title: "Legal imprint", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no registered-entity details established for publication", notes: "Excluded §25.8."}
+  - {id: PAGE-024, title: "Pricing page", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "commercial terms are per-engagement (proposal SOP); no published price sheet exists", notes: "Excluded §25.9 — publishing prices would contradict the proposal-based model."}
+  - {id: PAGE-025, title: "Testimonials page", status: OUT_OF_SCOPE, priority: P3, basis: "[K]", evidence: "no approved testimonials exist; fabrication forbidden (AGENTS.md)", notes: "Excluded §25.10."}
+  - {id: PAGE-026, title: "Sitemap and robots.txt", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap; multi-page launch makes crawl surface non-trivial", notes: "Generated or hand-maintained; must list every published page."}
+  - {id: PAGE-027, title: "OG / social share image template", status: REQUIRED, priority: P1, basis: "[S]", evidence: "og:title/description exist (index.html:8-10); og:image absent", notes: "26.1 option A mark decided 2026-10-11 (typeset text COM-OS); og:image artwork is not produced here. Derivation spec in docs/design/BRAND_ASSET_SPEC.md §7. Uses logo (BRAND-009); template, not a one-off export."}
+  - {id: PAGE-028, title: "Multi-language selector / localized pages", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "site is English-only; no translation workflow", notes: "Excluded §25.11."}
+  - {id: PAGE-029, title: "Client portal / login page", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no product UI in scope; Identity §8.2 text unretrievable (§27.A)", notes: "Excluded §25.12 — must stay excluded until §8.2 is recovered."}
+  - {id: PAGE-030, title: "Public status page", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no hosted public service to report availability for", notes: "Excluded §25.13."}
+
+  # ── RESP: responsive behaviour (11) ──────────────────────────────
+  - {id: RESP-001, title: "Breakpoint system (mobile-first)", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap (@media count: 0)", notes: "Values NOT ESTABLISHED — owner decision §26.8; proposal §18.2."}
+  - {id: RESP-002, title: "Fluid grid behaviour", status: CURRENT, priority: P2, basis: "[S]", evidence: "index.html:12 (auto-fit minmax)", notes: "Already reflows without breakpoints."}
+  - {id: RESP-003, title: "Fluid type behaviour (clamp)", status: CURRENT, priority: P2, basis: "[S]", evidence: "index.html:12 (h1 clamp)", notes: "Pattern exists for h1; extend via FOUND-005."}
+  - {id: RESP-004, title: "Navigation collapse behaviour", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; nav has no breakpoint logic", notes: "Depends on NAV-05; disclosure pattern, not a drawer, first."}
+  - {id: RESP-005, title: "Container width and gutter behaviour per breakpoint", status: REQUIRED, priority: P1, basis: "[S]", evidence: "index.html:12 (fixed 24px gutter)", notes: "Gutters step up at larger widths; never below 16px."}
+  - {id: RESP-006, title: "Touch target sizing (≥44×44 CSS px recommended; ≥24px WCAG 2.5.8 floor)", status: REQUIRED, priority: P1, basis: "2.5.8", evidence: "gap (no interactive elements exist yet)", notes: "Must hold at the smallest breakpoint."}
+  - {id: RESP-007, title: "Table / wide-content overflow handling", status: REQUIRED, priority: P2, basis: "1.4.10", evidence: "gap", notes: "Horizontal scroll containers must be keyboard-scrollable and labelled."}
+  - {id: RESP-008, title: "Media sizing rules (max-width 100%, aspect preservation)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap (no media exists)", notes: "Rule lands before imagery does (BRAND-012)."}
+  - {id: RESP-009, title: "Print layout", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Implement once, referenced by SYS-12."}
+  - {id: RESP-010, title: "Wide-screen behaviour (>1440px)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "index.html:12 (980px cap already constrains growth)", notes: "Cap holds; only vertical rhythm and type scale change."}
+  - {id: RESP-011, title: "Reflow at 320px / 400% zoom without two-dimensional scrolling", status: REQUIRED, priority: P0, basis: "1.4.10", evidence: "currently satisfied by accident (no fixed widths except 800px max on h1)", notes: "Must remain true after redesign; covered by TEST-009."}
+
+  # ── A11Y: accessibility (16) ─────────────────────────────────────
+  - {id: A11Y-001, title: "WCAG 2.2 Level AA conformance target", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap (no accessibility document exists)", notes: "Declared in PAGE-014; measured by TEST-004/006/013."}
+  - {id: A11Y-002, title: "Keyboard operability for all interactive components", status: REQUIRED, priority: P0, basis: "2.1.1", evidence: "gap (zero interactive elements today)", notes: "Verified by TEST-005 before any interactive component ships."}
+  - {id: A11Y-003, title: "Focus visibility and focus order policy", status: REQUIRED, priority: P0, basis: "2.4.7 / 2.4.3", evidence: "gap (:focus count: 0)", notes: "Backed by FOUND-017 tokens."}
+  - {id: A11Y-004, title: "Contrast remediation of existing badge border (#bbb ≈1.9:1)", status: REQUIRED, priority: P0, basis: "1.4.11", evidence: "index.html:12 (measured, §5.2)", notes: "Known live defect; fixed by FOUND-003/FOUND-013 replacement."}
+  - {id: A11Y-005, title: "Landmark and heading structure", status: CURRENT, priority: P0, basis: "1.3.1 / 2.4.6", evidence: "test_site_content.py:120-144", notes: "Already enforced — must not regress during redesign."}
+  - {id: A11Y-006, title: "Form label and error association (programmatic)", status: REQUIRED, priority: P0, basis: "3.3.2 / 3.3.1", evidence: "gap (no forms exist)", notes: "Blocks PAGE-010; verified in TEST-004."}
+  - {id: A11Y-007, title: "Reduced-motion support (prefers-reduced-motion)", status: REQUIRED, priority: P1, basis: "2.3.3", evidence: "gap (nothing animates)", notes: "Must exist before the first transition ships (BRAND-015)."}
+  - {id: A11Y-008, title: "Alternative text policy for imagery", status: REQUIRED, priority: P1, basis: "1.1.1", evidence: "gap (no imagery)", notes: "Policy first: decorative vs informative; no alt-text invention for unseen images."}
+  - {id: A11Y-009, title: "Document language declaration", status: CURRENT, priority: P1, basis: "3.1.1", evidence: "index.html:15; test_site_content.py:116-118", notes: "Enforced by test."}
+  - {id: A11Y-010, title: "Zoom to 200% without loss of content or function", status: REQUIRED, priority: P1, basis: "1.4.4", evidence: "satisfied today by rem-like layout; untested", notes: "Added to TEST-009 matrix."}
+  - {id: A11Y-011, title: "Consistent navigation and help placement", status: REQUIRED, priority: P1, basis: "3.2.3 / 3.2.6", evidence: "single page today, so trivially consistent — multi-page raises the bar", notes: "Shell (CON-07) guarantees consistency across templates."}
+  - {id: A11Y-012, title: "Error prevention for reversible/legal-financial actions", status: REQUIRED, priority: P1, basis: "3.3.4", evidence: "[D] invoice/approval domain actions", notes: "Confirmation dialog (OVL-02) before any irreversible action."}
+  - {id: A11Y-013, title: "Colour is never the only information carrier", status: REQUIRED, priority: P0, basis: "1.4.1", evidence: "gap (no colour-coded states yet)", notes: "Applies to FBK, SYS, NAV-12 active states; enforced by TEST-006 review."}
+  - {id: A11Y-014, title: "Automated accessibility scanning (axe-core) in CI", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap (no a11y tooling in tests/)", notes: "See TEST-004 for the verification item."}
+  - {id: A11Y-015, title: "Manual screen-reader test protocol (VoiceOver + NVDA)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Scripted pass over every page template; recorded under evidence/."}
+  - {id: A11Y-016, title: "Plain-language / cognitive accessibility review", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "VOX-005/006 already push plain language; formal review is depth."}
+
+  # ── GOV: design governance (14) ──────────────────────────────────
+  - {id: GOV-001, title: "Design-system source-of-truth document in the repository", status: REQUIRED, priority: P0, basis: "[S]", evidence: "docs/design/ package + DESIGN_TOKENS.md", notes: "Satisfied by 26.17 (approved 2026-10-08): canonical location is in-repo docs/design/, Git is source of truth, no external authority."}
+  - {id: GOV-002, title: "Token naming convention", status: REQUIRED, priority: P0, basis: "[S]", evidence: "gap", notes: "One scheme for CSS, tokens file, and Penpot variable names (§21)."}
+  - {id: GOV-003, title: "Component contribution workflow (propose → review → approve → implement → verify)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "AGENTS.md Engineering Workflow exists for code; none for design", notes: "Mirrors the existing 8-step workflow with a design review stage."}
+  - {id: GOV-004, title: "Founder approval gate for design changes", status: REQUIRED, priority: P0, basis: "[S]", evidence: "AGENTS.md (founder remains accountable; agents propose)", notes: "No design decision is self-approved by an agent."}
+  - {id: GOV-005, title: "Visual regression policy (when snapshots are required)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Every component and page template; see TEST-003."}
+  - {id: GOV-006, title: "Component deprecation policy", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "No deprecation risk until a second consumer exists."}
+  - {id: GOV-007, title: "Token storage format (W3C Design Tokens–compatible JSON)", status: REQUIRED, priority: P0, basis: "[S]", evidence: "docs/design/DESIGN_TOKENS.yaml (diffable in git)", notes: "Resolved by 26.17 (approved 2026-10-08): canonical machine-readable storage = docs/design/DESIGN_TOKENS.yaml, without changing approved token values or bypassing pending decisions."}
+  - {id: GOV-008, title: "Penpot ↔ repository sync contract (direction, frequency, conflict rule)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "§8.5 text unretrievable — contract cannot cite it (§27.A)", notes: "26.17 (2026-10-08) fixes direction: repo is canonical (§21.4); full contract (frequency, conflict rule) remains provisional until §8.5 text is recovered."}
+  - {id: GOV-009, title: "Accessibility review gate for design changes", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Design review includes contrast, focus, target size, reading order."}
+  - {id: GOV-010, title: "Copy / claim review gate (evidence-based wording)", status: REQUIRED, priority: P1, basis: "[K]", evidence: "AGENTS.md evidence bar; case-study BLOCK conditions", notes: "No metric, client name, or outcome ships without recorded evidence."}
+  - {id: GOV-011, title: "Design-system versioning and change log", status: FUTURE, priority: P3, basis: "[S]", evidence: "deferred", notes: "Start when external consumers exist."}
+  - {id: GOV-012, title: "Design ownership / RACI record", status: REQUIRED, priority: P1, basis: "[S]", evidence: "decisions/ has no design record", notes: "Founder = accountable; agents = propose/implement; recorded as a decision file."}
+  - {id: GOV-013, title: "Vetted third-party asset policy (fonts, icons, images — licence + provenance)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; requirements-pinned.txt shows dependency discipline exists for code", notes: "No asset enters the repo without licence + provenance recorded."}
+  - {id: GOV-014, title: "Per-page design QA checklist", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Runs before any page is declared done (AGENTS.md evidence bar)."}
+
+  # ── TEST: verification requirements (14) ─────────────────────────
+  - {id: TEST-001, title: "Preserve tests/test_site_content.py invariants through the redesign", status: REQUIRED, priority: P0, basis: "[S]", evidence: "tests/test_site_content.py (19 assertions)", notes: "Extend for new pages; never weaken. Multi-page changes must update assertions meaningfully (§27.G)."}
+  - {id: TEST-002, title: "Preserve gates-phase8.sh website checks", status: REQUIRED, priority: P0, basis: "[S]", evidence: "scripts/gates-phase8.sh [website]", notes: "Gate stays green after every design change."}
+  - {id: TEST-003, title: "Visual regression snapshots (page × breakpoint)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "visual_baseline default (§14.3) becomes populated per template."}
+  - {id: TEST-004, title: "Automated accessibility scan (axe-core) in CI", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap (tests/ has no a11y runner)", notes: "Zero serious/critical violations as the pass bar; BLOCKED if tooling unavailable — never skipped silently."}
+  - {id: TEST-005, title: "Keyboard navigation test protocol", status: REQUIRED, priority: P1, basis: "2.1.1", evidence: "gap", notes: "Scripted tab/enter/escape paths per template; includes OVL-08 contract."}
+  - {id: TEST-006, title: "Colour-contrast automated check", status: REQUIRED, priority: P0, basis: "1.4.3 / 1.4.11", evidence: "gap; live defect already exists (A11Y-004)", notes: "Must fail the build on any text <4.5:1 (normal) / non-text <3:1 (essential)."}
+  - {id: TEST-007, title: "Performance budgets (LCP, CLS, total JS, total CSS, transfer size)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; ETHOS §9 (simple systems) implies restraint", notes: "Values NOT ESTABLISHED — owner decision §26.15; current site is ~4 KB inline so budgets start strict."}
+  - {id: TEST-008, title: "Cross-browser verification matrix (Chromium, Firefox, WebKit)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Mobile Safari included via WebKit; recorded in evidence/."}
+  - {id: TEST-009, title: "Responsive screenshot matrix (320 / 768 / 1024 / 1440)", status: REQUIRED, priority: P1, basis: "1.4.10", evidence: "gap", notes: "Includes reflow assertions from RESP-011 and zoom checks (A11Y-010)."}
+  - {id: TEST-010, title: "Internal link integrity check", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap (no links exist today, so nothing to check — required at multi-page launch)", notes: "Fails on broken internal hrefs; external links checked for status."}
+  - {id: TEST-011, title: "HTML validation (parser-clean, no duplicate IDs)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Complements the HTMLParser-based structure tests already present."}
+  - {id: TEST-012, title: "Token-conformance lint (no raw hex/magic numbers in components)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; today the whole stylesheet is raw literals", notes: "Enforces §21.3; exceptions must be declared in the tokens file."}
+  - {id: TEST-013, title: "Manual screen-reader pass recorded as evidence", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Implements A11Y-015; results stored under evidence/runs/ like other gates."}
+  - {id: TEST-014, title: "Design-to-code parity review (Penpot ↔ implementation)", status: FUTURE, priority: P2, basis: "[S]", evidence: "deferred until Penpot exists", notes: "Blocked by PEN programme; revisit after §23."}
+
+  # ── PEN: Penpot tooling (8) ──────────────────────────────────────
+  - {id: PEN-001, title: "Penpot workspace creation", status: REQUIRED, priority: P1, basis: "[S]", evidence: "contract approved 2026-10-10 via founder §8.5 restatement (26.16), Penpot Cloud; historical §8.5 text unrecoverable (§27.A); no Penpot artefacts in repo or history; Company OS design file created via the Penpot Cloud command API 2026-10-10 (id 52a5041f-08a1-80f1-8008-c50e307f3ef4, project Company-Os, revn 0)", notes: "Programme tool per founder scope; contract citation now rests on the 2026-10-10 restatement (26.16), not recovered §8.5 history; file creation is automated by tools/penpot_provision.py (command API create-file; find-or-create, --decision gated, scratch-rejecting, read-back verified). The Plugin API has no createFile; connecting the created file to the MCP plugin remains a founder action."}
+  - {id: PEN-002, title: "Library file structure (foundations / components / pages)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "One library, three sections, mirroring §16 layers."}
+  - {id: PEN-003, title: "Shared styles & variables imported from the token file", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "One-way import code → Penpot for values; manual re-entry forbidden (drift risk §27)."}
+  - {id: PEN-004, title: "Core component library in Penpot (P0/P1 components)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap", notes: "Mirrors the 81 REQUIRED components; FUTURE components excluded from v1."}
+  - {id: PEN-005, title: "Page templates / mockups in Penpot", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "All 17 REQUIRED pages; used as the visual baseline source."}
+  - {id: PEN-006, title: "Design QA flow (inspect, export, handoff notes)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap", notes: "Feeds GOV-003 contribution workflow."}
+  - {id: PEN-007, title: "Automated Penpot ↔ repo sync mechanism", status: FUTURE, priority: P2, basis: "[S]", evidence: "deferred", notes: "Manual parity reviews (TEST-014) first; automate only if drift recurs."}
+  - {id: PEN-008, title: "Self-hosted Penpot deployment decision & setup", status: FUTURE, priority: P3, basis: "[S]", evidence: "DECIDED 2026-10-10 (26.16) — Penpot Cloud selected; self-host not chosen", notes: "Owner decision §26.16; self-hosting adds infrastructure to maintain (ETHOS §9)."}
+
+  # ── VOX: voice & content patterns (8) ────────────────────────────
+  - {id: VOX-001, title: "Hero / value proposition block (gate-pinned copy)", status: CURRENT, priority: P0, basis: "[S]", evidence: "index.html:18-19; gates live check greps 'Software that survives production'", notes: "Copy changes require a gate change first (§27.C)."}
+  - {id: VOX-002, title: "Delivery-standard statement", status: CURRENT, priority: P1, basis: "[S]", evidence: "index.html:38-39", notes: "'Scope before code. Tests before release…' — four-sentence standard."}
+  - {id: VOX-003, title: "Honesty pattern (empty-state disclosure)", status: CURRENT, priority: P0, basis: "[K]", evidence: "index.html:42; test_site_content.py:58-63", notes: "'None published yet…' is required by test AND gate; becomes COMP-DAT-14."}
+  - {id: VOX-004, title: "Service card copy (three services)", status: CURRENT, priority: P1, basis: "[S]", evidence: "index.html:23-25", notes: "Finance integrations / Reconciliation / Performance builds."}
+  - {id: VOX-005, title: "Plain-language writing standard (short sentences, no jargon)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; current copy already conforms informally", notes: "Codifies what the site already does."}
+  - {id: VOX-006, title: "Claim/evidence phrasing rules (no invented metrics, no fake urgency)", status: REQUIRED, priority: P0, basis: "[K]", evidence: "AGENTS.md evidence bar; case-study BLOCK conditions", notes: "Applies to every page; gate keeps the placeholder class out."}
+  - {id: VOX-007, title: "Terminology / glossary (Company OS vocabulary)", status: REQUIRED, priority: P2, basis: "[S]", evidence: "gap (terms like engagement, acceptance, change order are domain-defined in domain.py)", notes: "Aligns site language with domain enum vocabulary."}
+  - {id: VOX-008, title: "Tone-of-voice guide (register, first-person plural, no hype)", status: REQUIRED, priority: P1, basis: "[S]", evidence: "gap; ETHOS + current copy imply a register but nothing is written", notes: "Short document; must be approved by founder (GOV-004)."}
+
+  # ── OPS: product/ops UI surfaces (7) ─────────────────────────────
+  - {id: OPS-001, title: "Client workspace dashboard (STATUS.md as UI)", status: FUTURE, priority: P3, basis: "[D]", evidence: "ClientStatus enum (domain.py:133-151); no UI exists", notes: "Deferred until the website programme closes; §8.2 identity text needed first."}
+  - {id: OPS-002, title: "Intake workspace UI", status: FUTURE, priority: P3, basis: "[P]", evidence: "sops/intake/SKILL.md runs without UI", notes: "SOP is agent-driven today; UI is a later efficiency, not a need."}
+  - {id: OPS-003, title: "Scope & proposal review UI", status: FUTURE, priority: P3, basis: "[P]", evidence: "sops/proposal, sops/scope-guard", notes: ""}
+
+  - {id: OPS-004, title: "Delivery & evidence tracker UI", status: FUTURE, priority: P3, basis: "[P]", evidence: "EvidenceStatus + delivery states (domain.py)", notes: ""}
+
+  - {id: OPS-005, title: "Invoice & payment status UI", status: FUTURE, priority: P3, basis: "[D]", evidence: "InvoiceStatus/PaymentStatus (domain.py:72-89)", notes: "Financial UI carries financial-correctness priority (AGENTS.md priority order)."}
+
+  - {id: OPS-006, title: "Incident timeline UI", status: FUTURE, priority: P3, basis: "[P]", evidence: "sops/incident", notes: ""}
+
+  - {id: OPS-007, title: "Turnover / reporting UI (Zoho Books)", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "evidence/runs/zoho-books-turnover-audit-2026-10-08.md; UI-only runbook exists", notes: "Excluded §25.14 — reporting is a UI-only runbook outside the design-system programme."}
+
+  # ── EXCL: explicit capability exclusions (8) ─────────────────────
+  - {id: EXCL-001, title: "Custom domain configuration", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "gates-phase8.sh requires NO custom_domain marker; deploy-site.sh header 'pages.dev endpoint only'", notes: "Excluded §25.15 — confirmed OUT_OF_SCOPE by 26.12 (approved 2026-10-08): deploy-site.sh stays pages.dev-only, Phase 8 gate preserved, no domain/DNS/TLS. Reopen only when the founder records the intended domain and authorizes the change; gate updated and verified before any custom-domain deploy."}
+  - {id: EXCL-002, title: "Native mobile application", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no mobile toolchain, no product to wrap", notes: "Excluded §25.16 — responsive web only."}
+  - {id: EXCL-003, title: "Email sending UI / newsletter machinery", status: OUT_OF_SCOPE, priority: P3, basis: "[E]", evidence: "PHASE8-CLOSURE §34 BLOCKED — no sending domain, no provider", notes: "Excluded §25.17 — revisit only when §34 unblocks."}
+  - {id: EXCL-004, title: "Authentication / accounts portal", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "Identity §8.2 text unretrievable", notes: "Excluded §25.18 — no login UI until §8.2 is recovered and decided (§27.A)."}
+  - {id: EXCL-005, title: "E-commerce / checkout", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "engagement + proposal model; no self-serve purchase exists", notes: "Excluded §25.19."}
+  - {id: EXCL-006, title: "Advertising and retargeting pixels", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "only analytics is PostHog, inert-by-default (BASE-003)", notes: "Excluded §25.20 — no ad tracking; would also break the placeholder/key gates if mishandled."}
+  - {id: EXCL-007, title: "CMS / editorial pipeline", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "no authoring workflow exists", notes: "Excluded §25.21 — prerequisite for PAGE-016 blog; both stay excluded together, confirmed by 26.13 (2026-10-08). Re-evaluate only with the three evidenced conditions (recurring demand, named owner, defined cadence)."}
+  - {id: EXCL-008, title: "Third-party chat widget", status: OUT_OF_SCOPE, priority: P3, basis: "[S]", evidence: "third-party scripts are test-forbidden (test_site_content.py:166-178)", notes: "Excluded §25.22 — a chat widget would violate the local-script-only invariant."}

@@ -1,0 +1,280 @@
+{
+  "status": "PASS",
+  "blocked_reason": null,
+  "generated_at": "2026-10-12T17:21:31Z",
+  "pages": [
+    "PAGE-004"
+  ],
+  "viewports": [
+    320,
+    480,
+    768,
+    1024,
+    1440
+  ],
+  "axe_version": "4.14.0",
+  "screenshots": [
+    "evidence/runs/browser-verify-2026-10-12/PAGE-004-320.png",
+    "evidence/runs/browser-verify-2026-10-12/PAGE-004-480.png",
+    "evidence/runs/browser-verify-2026-10-12/PAGE-004-768.png",
+    "evidence/runs/browser-verify-2026-10-12/PAGE-004-1024.png",
+    "evidence/runs/browser-verify-2026-10-12/PAGE-004-1440.png"
+  ],
+  "findings": [
+    {
+      "check": "target_size",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 320,
+      "message": "4 interactive control(s) under 24px",
+      "detail": {
+        "controls": [
+          {
+            "tag": "a",
+            "text": "Privacy",
+            "width": 45.32,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Security",
+            "width": 51,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Accessibility",
+            "width": 76.62,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Engineering standards",
+            "width": 144.65,
+            "height": 21.75
+          }
+        ]
+      }
+    },
+    {
+      "check": "reduced_motion",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 320,
+      "message": "99 element(s) declare motion under prefers-reduced-motion",
+      "detail": {
+        "tags": [
+          "html",
+          "head",
+          "meta",
+          "meta",
+          "title"
+        ]
+      }
+    },
+    {
+      "check": "target_size",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 480,
+      "message": "4 interactive control(s) under 24px",
+      "detail": {
+        "controls": [
+          {
+            "tag": "a",
+            "text": "Privacy",
+            "width": 45.32,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Security",
+            "width": 51,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Accessibility",
+            "width": 76.62,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Engineering standards",
+            "width": 144.65,
+            "height": 21.75
+          }
+        ]
+      }
+    },
+    {
+      "check": "reduced_motion",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 480,
+      "message": "99 element(s) declare motion under prefers-reduced-motion",
+      "detail": {
+        "tags": [
+          "html",
+          "head",
+          "meta",
+          "meta",
+          "title"
+        ]
+      }
+    },
+    {
+      "check": "target_size",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 768,
+      "message": "4 interactive control(s) under 24px",
+      "detail": {
+        "controls": [
+          {
+            "tag": "a",
+            "text": "Privacy",
+            "width": 45.32,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Security",
+            "width": 51,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Accessibility",
+            "width": 76.62,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Engineering standards",
+            "width": 144.65,
+            "height": 21.75
+          }
+        ]
+      }
+    },
+    {
+      "check": "reduced_motion",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 768,
+      "message": "99 element(s) declare motion under prefers-reduced-motion",
+      "detail": {
+        "tags": [
+          "html",
+          "head",
+          "meta",
+          "meta",
+          "title"
+        ]
+      }
+    },
+    {
+      "check": "target_size",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 1024,
+      "message": "4 interactive control(s) under 24px",
+      "detail": {
+        "controls": [
+          {
+            "tag": "a",
+            "text": "Privacy",
+            "width": 45.32,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Security",
+            "width": 51,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Accessibility",
+            "width": 76.62,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Engineering standards",
+            "width": 144.65,
+            "height": 21.75
+          }
+        ]
+      }
+    },
+    {
+      "check": "reduced_motion",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 1024,
+      "message": "99 element(s) declare motion under prefers-reduced-motion",
+      "detail": {
+        "tags": [
+          "html",
+          "head",
+          "meta",
+          "meta",
+          "title"
+        ]
+      }
+    },
+    {
+      "check": "target_size",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 1440,
+      "message": "4 interactive control(s) under 24px",
+      "detail": {
+        "controls": [
+          {
+            "tag": "a",
+            "text": "Privacy",
+            "width": 45.32,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Security",
+            "width": 51,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Accessibility",
+            "width": 76.62,
+            "height": 21.75
+          },
+          {
+            "tag": "a",
+            "text": "Engineering standards",
+            "width": 144.65,
+            "height": 21.75
+          }
+        ]
+      }
+    },
+    {
+      "check": "reduced_motion",
+      "severity": "warn",
+      "page": "PAGE-004",
+      "viewport": 1440,
+      "message": "99 element(s) declare motion under prefers-reduced-motion",
+      "detail": {
+        "tags": [
+          "html",
+          "head",
+          "meta",
+          "meta",
+          "title"
+        ]
+      }
+    }
+  ]
+}

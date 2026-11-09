@@ -1,0 +1,133 @@
+# Company OS — Page / Template Map
+#
+# Canonical mapping of the 30 PAGE manifest items to the six §17.1 templates.
+# Templates are instances of the shell (COMP-CON-07); pages are instances of
+# templates (§17.1).
+#
+# Status model: VALIDATED_PARTIALLY_APPROVED — the §17.3 IA structure
+# encoded here is approved under decision 26.10 (nav, page hierarchy,
+# templates, footer links, utility pages). PAGE-027's template mapping is
+# CONFIRMED under Utility by founder decision (GOV-004, 2026-10-09); its
+# og:image content stays BLOCKED on the approved mark (26.1/26.5). Full
+# Gate 2 package sign-off remains pending; agents never set APPROVED.
+
+schema_version: 1
+status: VALIDATED_PARTIALLY_APPROVED
+ia_approval:
+  decision: "26.10"
+  status: APPROVED
+  approved_date: "2026-10-08"
+  scope: "Full §17.3 IA (nav, page hierarchy, templates, footer links, utility pages) — structure only"
+  constraints: "Dependencies stay BLOCKED; IA approval does not imply implementation or launch readiness; test_site_content.py extended not weakened; 26.13 blog/CMS kept separate"
+source:
+  audit: evidence/runs/design-system-audit-2026-10-08.md
+  section: "§17 Page architecture (17.1 templates, 17.2 page-level rules, 17.3 IA)"
+  manifest: docs/design/DESIGN_MANIFEST.yaml
+
+shell: COMP-CON-07
+
+templates:
+  Landing:
+    described_by_audit_tree: true
+    required_families: [COMP-CON, COMP-NAV, COMP-TXT, COMP-ACT, COMP-SPC, COMP-FBK]
+    basis: "§17.1 'Landing — home'; hero/CTA composition"
+  Marketing:
+    described_by_audit_tree: true
+    required_families: [COMP-CON, COMP-NAV, COMP-TXT, COMP-ACT, COMP-SPC, COMP-FBK]
+    basis: "§17.1 'Marketing — services index, service detail ×3, about, process'"
+    breadcrumb: true
+  Content:
+    described_by_audit_tree: true
+    required_families: [COMP-CON, COMP-NAV, COMP-TXT, COMP-SPC, COMP-FBK]
+    basis: "§17.1 'Content — case studies index, case study detail, engineering standards, security, privacy, accessibility statement'"
+    breadcrumb: true
+  Form:
+    described_by_audit_tree: true
+    required_families: [COMP-CON, COMP-NAV, COMP-FRM, COMP-SEL, COMP-ACT, COMP-FBK, COMP-TXT, COMP-SPC]
+    basis: "§17.1 'Form — contact / intake'; consumes PATTERN-INTAKE-FORM"
+    pattern: PATTERN-INTAKE-FORM
+  Utility:
+    described_by_audit_tree: true
+    required_families: [COMP-CON, COMP-NAV, COMP-TXT, COMP-SPC]
+    basis: "§17.1 'Utility — 404, sitemap'"
+  Excluded:
+    described_by_audit_tree: true
+    required_families: []
+    basis: "§17.1 '(Excluded) — blog, pricing, careers, portal, … (OUT_OF_SCOPE, §25)'"
+    rule: "May not be implemented without an explicit founder decision that changes the manifest status (manifest rules)."
+
+mapping_confidence:
+  CONFIRMED:
+    rule: "Template explicitly named in the §17.1 tree, or status/out-of-scope pair from §25."
+  PROPOSED:
+    rule: "Derivation not enumerated in the audit tree — surfaced as a validator warning for founder review; never silently CONFIRMED."
+
+pages:
+  - {id: PAGE-001, title: "Home page",                             status: CURRENT,      template: Landing,  mapping: CONFIRMED}
+  - {id: PAGE-002, title: "Services index",                        status: REQUIRED,     template: Marketing, mapping: CONFIRMED}
+  - {id: PAGE-003, title: "Service detail — Finance integrations", status: REQUIRED,     template: Marketing, mapping: CONFIRMED}
+  - {id: PAGE-004, title: "Service detail — Reconciliation",       status: REQUIRED,     template: Marketing, mapping: CONFIRMED}
+  - {id: PAGE-005, title: "Service detail — Performance builds",   status: REQUIRED,     template: Marketing, mapping: CONFIRMED}
+  - {id: PAGE-006, title: "About page",                            status: REQUIRED,     template: Marketing, mapping: CONFIRMED}
+  - {id: PAGE-007, title: "Process / How we work page",            status: REQUIRED,     template: Marketing, mapping: CONFIRMED}
+  - {id: PAGE-008, title: "Case studies index",                    status: REQUIRED,     template: Content,  mapping: CONFIRMED}
+  - {id: PAGE-009, title: "Case study detail template",            status: REQUIRED,     template: Content,  mapping: CONFIRMED}
+  - {id: PAGE-010, title: "Contact / intake page (WhatsApp path)", status: REQUIRED,     template: Form,     mapping: CONFIRMED}
+  - {id: PAGE-011, title: "Privacy & analytics disclosure page",   status: REQUIRED,     template: Content,  mapping: CONFIRMED}
+  - {id: PAGE-012, title: "Security & data-handling page",         status: REQUIRED,     template: Content,  mapping: CONFIRMED}
+  - {id: PAGE-013, title: "Engineering standards page",            status: REQUIRED,     template: Content,  mapping: CONFIRMED}
+  - {id: PAGE-014, title: "Accessibility statement",               status: REQUIRED,     template: Content,  mapping: CONFIRMED}
+  - {id: PAGE-015, title: "404 / not-found page",                  status: REQUIRED,     template: Utility,  mapping: CONFIRMED}
+  - {id: PAGE-016, title: "Blog",                                  status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-017, title: "Terms & conditions",                    status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-018, title: "Cookie / analytics consent banner",     status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-019, title: "Maintenance / downtime page",           status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-020, title: "Careers page",                          status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-021, title: "Press / newsroom",                      status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-022, title: "Newsletter signup",                     status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-023, title: "Legal imprint",                         status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-024, title: "Pricing page",                          status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-025, title: "Testimonials page",                     status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-026, title: "Sitemap and robots.txt",                status: REQUIRED,     template: Utility,  mapping: CONFIRMED}
+  - id: PAGE-027
+    title: "OG / social share image template"
+    status: REQUIRED
+    template: Utility
+    mapping: CONFIRMED
+    note: >-
+      Template placement CONFIRMED by founder (GOV-004, 2026-10-09): grouped
+      under Utility as the closest non-shell template for this asset-rendering
+      item (Utility is enumerated in the §17.1 tree; IA structure approved
+      26.10). This confirms only the page-to-template mapping — the OG image
+      CONTENT remains BLOCKED on an approved BRAND-009 mark + canonical
+      wordmark (26.1/26.5, C1). No brand asset is approved and no
+      brand-dependent blocker is lifted by this mapping.
+  - {id: PAGE-028, title: "Multi-language selector / localized pages", status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-029, title: "Client portal / login page",                status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+  - {id: PAGE-030, title: "Public status page",                        status: OUT_OF_SCOPE, template: Excluded, mapping: CONFIRMED}
+
+counts:
+  total: 30
+  by_template: {Landing: 1, Marketing: 6, Content: 6, Form: 1, Utility: 3, Excluded: 13}
+  proposed_mappings: 0
+
+rules:
+  # §17.2 page-level rules
+  - "One h1 per page; no heading-level skips (already test-enforced — TEST-001)."
+  - "Landmarks nav / main / footer exact and unique (test-enforced)."
+  - "No inline event handlers, no javascript: URLs (test-enforced)."
+  - "Every page passes the per-page QA checklist (GOV-014) before 'done'."
+  - "Gate-pinned strings on home must match gates-phase8.sh exactly until the gate is changed by decision (§27.C)."
+
+ia_note: >-
+  Primary nav (proposed): Services · Work · About · Contact. Footer mirrors
+  nav plus Privacy and Accessibility statement links (A11Y-011 / 3.2.6).
+  Breadcrumb appears only below Marketing/Content templates (§17.3).
+
+validation:
+  checks:
+    - "all 30 PAGE ids from DESIGN_MANIFEST.yaml appear exactly once, with identical status"
+    - "template exists in the templates block; Excluded ⇔ manifest status OUT_OF_SCOPE"
+    - "required_families ⊆ families declared in COMPONENT_DEPENDENCIES.yaml"
+    - "mapping CONFIRMED pages sit on templates enumerated by the §17.1 tree (or Excluded via §25)"
+    - "PROPOSED mappings are reported as warnings, never silently confirmed"

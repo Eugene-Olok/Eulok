@@ -1,0 +1,56 @@
+# DECISION → MANIFEST EFFECTS MAP
+#
+# Machine-readable companion to DESIGN_DECISIONS.md §3 and DESIGN_MANIFEST.yaml.
+# For every APPROVED decision, the §3 "Affected manifest IDs" line is the source of
+# truth for which manifest items the decision touches. An item that still carries
+# status FUTURE or OUT_OF_SCOPE while its governing decision is APPROVED is a
+# policy violation UNLESS this file declares it an authorized deferral/exclusion.
+#
+#   deferred:   item stays FUTURE by explicit design of the cited decision.
+#   excluded:   item is OUT_OF_SCOPE by explicit design of the cited decision.
+#
+# Editing rule: a deferral/exclusion may only be added here by an explicit founder
+# decision; removing an entry happens by promoting the item in DESIGN_MANIFEST.yaml,
+# never by silently deleting the entry here (audit trail preserved via git).
+# tools/validate_decision_manifest.py enforces both directions and fails closed.
+#
+# The dark-theme (26.4) and motion (26.7) drift was resolved by promotion BEFORE
+# this guard existed; it now prevents recurrence (evidence/runs/design-gate2-manifest-reconciliation-2026-10-11.md).
+version: 1
+decisions:
+  "26.6":
+    deferred:
+      - id: BRAND-014
+        rationale: "26.6 selected one comfortable density default and explicitly declined a compact scale 'at this stage' (2026-10-08)."
+      - id: FOUND-020
+        rationale: "Density tokens pair with BRAND-014; both stay deferred with the declined compact scale."
+  "26.11":
+    excluded:
+      - id: PAGE-017
+        rationale: "26.11 (approved 2026-10-11) keeps terms OUT_OF_SCOPE for the initial release; the owner handles the legal work privately."
+      - id: PAGE-018
+        rationale: "26.11 (approved 2026-10-11) keeps the cookie/analytics consent banner OUT_OF_SCOPE; owner-managed legal; analytics stays enabled."
+      - id: EXCL-006
+        rationale: "26.11 (approved 2026-10-11) confirms advertising/retargeting pixels stay excluded; analytics remains the sole, enabled measurement."
+  "26.12":
+    excluded:
+      - id: EXCL-001
+        rationale: "26.12 ratified the pages.dev-only deployment gate; custom domain explicitly declined, reopen only per §25.15 conditions."
+  "26.13":
+    excluded:
+      - id: PAGE-016
+        rationale: "26.13 confirmed the blog exclusion; re-evaluate only with the three evidenced §25.1 conditions."
+      - id: EXCL-007
+        rationale: "26.13 confirmed the CMS/editorial pipeline exclusion; prerequisite of PAGE-016, so both stay excluded together."
+  "26.14":
+    deferred:
+      - id: COMP-CON-11
+        rationale: "26.14 keeps figure/caption FUTURE until an evidenced need exists; the decision authorizes policy, not asset creation."
+      - id: COMP-SPC-05
+        rationale: "26.14 keeps the aspect-ratio box FUTURE until image layouts are evidenced."
+  "26.16":
+    deferred:
+      - id: PEN-008
+        rationale: "26.16 selected Penpot Cloud (option A); self-hosted deployment was not chosen."
+      - id: TEST-014
+        rationale: "26.16 defers the design-to-code parity review until live Penpot design work exists."

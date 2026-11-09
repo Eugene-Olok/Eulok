@@ -1,0 +1,192 @@
+{
+  "title": "Bifrost privileged-ops installation + post-install verification (2026-10-19)",
+  "date": "2026-10-19",
+  "classification": "INTERNAL",
+  "secrets": "none (no credential value read, printed or stored; provider/key names only)",
+  "authorization": "installation of the reviewed dispatcher + sudoers policy ONLY; migration explicitly NOT authorized",
+  "preflight": {
+    "repo": "/home/genie/company",
+    "branch": "fix/business-evidence-placeholder-guard",
+    "head": "fbed5fd91d5afa61d6693014fd7ca3d056b9885f",
+    "installer_sha256": "877a6385bf90a49ecd092ae481e98af512bb18828bfe91b868133a5f2b9f88f2",
+    "source_digests_vs_manifest": "all 7 OK",
+    "static_gates": "bash -n OK; shellcheck OK; visudo -cf OK; ruff clean; focused 73 passed",
+    "install_targets_before": "all three absent (clean first install)"
+  },
+  "install": {
+    "command": "sudo /home/genie/company/deploy/bifrost-ops/install.sh",
+    "operator_supplied_sudo_password": true,
+    "exit_status": 0,
+    "output_markers": [
+      "== verifying source digests ==",
+      "== installing root-owned operations ==",
+      "== verifying installed digests ==",
+      "== installing sudoers (validated + verified) ==",
+      "== installed (root-owned, digest-verified) ==",
+      "done."
+    ],
+    "installed_digests_match_manifest": true
+  },
+  "post_install_verification": {
+    "installed_ownership_permissions": {
+      "result": "PASS",
+      "observed": {
+        "/usr/local/sbin/company-os-bifrost-ops": "0755 root:root",
+        "/usr/local/lib/company-os": "0755 root:root",
+        "/usr/local/lib/company-os/bifrost-ops": "0755 root:root",
+        "/usr/local/lib/company-os/bifrost-ops/seeds": "0755 root:root",
+        "modules_and_seeds": "0644 root:root",
+        "/etc/sudoers.d/company-os-bifrost-ops": "0440 root:root"
+      },
+      "group_or_world_writable": "none (find -perm /022 returned nothing)"
+    },
+    "installed_hashes": {
+      "result": "PASS",
+      "evidence": "sha256 of all six installed artifacts equal SHA256SUMS; sudoers digest fae698c0... equal to manifest (read via installer as root)"
+    },
+    "interpreter_and_isolation": {
+      "result": "PASS",
+      "observed": "PY=/usr/bin/python3; exec /usr/bin/env -i; \"$PY\" -I -B; symlink rejection [ ! -L ] present; OPS_DIR fixed"
+    },
+    "sudoers_scope": {
+      "result": "PASS",
+      "observed": "exactly the six reviewed invocations, all NOPASSWD for genie; no wildcard, no passthrough",
+      "note": "other NOPASSWD entries (mintdrivers/mintupdate) are pre-existing and unrelated; not introduced by this install"
+    },
+    "installed_tree_contents": {
+      "result": "PASS",
+      "observed": "exactly the 3 modules + seeds/ + 2 seed files; no extra files"
+    },
+    "live_configuration_unchanged": {
+      "result": "PASS",
+      "observed": {
+        "config_json_present": false,
+        "db_exists": true,
+        "db_mode": "0o600",
+        "db_owner": "997:986",
+        "providers": [
+          "mistral"
+        ],
+        "keys": [
+          "MISTRAL_API_KEY_auto_detected"
+        ],
+        "enforce_auth_on_inference": false
+      },
+      "source_proof": "install.sh writes only /usr/local/lib/company-os, /usr/local/sbin/company-os-bifrost-ops, /etc/sudoers.d/company-os-bifrost-ops; it never references /var/lib/company-os, config.json, config.db, providers.env, the encryption key, the canonical backup, the manifest or the unit"
+    },
+    "service_health_and_no_restart": {
+      "result": "PASS",
+      "observed": {
+        "ActiveState": "active",
+        "MainPID": 1280,
+        "NRestarts": 0,
+        "ExecMainStartTimestamp": "Sun 2026-10-18 11:21:30 EAT",
+        "ActiveEnterTimestamp": "Sun 2026-10-18 11:21:30 EAT",
+        "health": 200
+      },
+      "conclusion": "start time predates the install => the installer did not restart or reconfigure the service"
+    },
+    "rollback_anchor_readiness": {
+      "result": "PASS (after remediation, 2026-10-19)",
+      "observed": {
+        "backup": "/var/lib/company-os/backups/config.db.pre-restore.bak",
+        "backup_exists": true,
+        "manifest": null,
+        "manifest_found": false,
+        "digest_matches_manifest": null,
+        "rollback_ready": false
+      },
+      "root_cause": "the canonical manifest /var/lib/company-os/backups/bifrost-pre-restore.manifest.json was never written. The prior backup run wrote its sanitized manifest into repo evidence (evidence/runs/bifrost-live-pre-restore-manifest-2026-10-18.json), not to the canonical path the dispatcher reads.",
+      "consequence": "rollback now refuses (exit 2) because digest verification is unconditional (D6). The safety net is INOPERABLE until the manifest is installed at the canonical path.",
+      "manifest_candidate_in_repo": {
+        "path": "evidence/runs/bifrost-live-pre-restore-manifest-2026-10-18.json",
+        "file_sha256": "a6945f67eb67afd4ad4d16f24f2e9da26422d4b1691cd929b32c3a1a82c6c7b5",
+        "recorded_backup": "/var/lib/company-os/backups/config.db.pre-restore.bak",
+        "recorded_backup_sha256": "78b281f6cd624fcbb06cf7027b11d4dfcd0fe7cf3747b05ac1ae649a259c3871",
+        "matches_owner_verified_digest": true,
+        "recorded_size_bytes": 34340864,
+        "integrity_check": "ok",
+        "restore_test_ok": true,
+        "contains_sensitive_values": false
+      },
+      "not_verified": null,
+      "remediation": {
+        "authorization": "founder-executed remediation of a failed checkpoint; no migration",
+        "prechecks": {
+          "repo_manifest_sha256_ok": true,
+          "repo_manifest_sha256": "a6945f67eb67afd4ad4d16f24f2e9da26422d4b1691cd929b32c3a1a82c6c7b5",
+          "canonical_manifest_absent_before_write": true
+        },
+        "install": {
+          "command": "sudo install -o root -g root -m 0644 evidence/runs/bifrost-live-pre-restore-manifest-2026-10-18.json /var/lib/company-os/backups/bifrost-pre-restore.manifest.json",
+          "operator_supplied_sudo_password": true,
+          "exit_status": 0,
+          "installed_manifest_sha256": "a6945f67eb67afd4ad4d16f24f2e9da26422d4b1691cd929b32c3a1a82c6c7b5",
+          "installed_manifest_sha256_verified_by": "sudo sha256sum (operator)"
+        },
+        "post_remediation_inspect": {
+          "source": "reviewer-executed `sudo -n company-os-bifrost-ops inspect`",
+          "manifest": "/var/lib/company-os/backups/bifrost-pre-restore.manifest.json",
+          "manifest_found": true,
+          "digest_matches_manifest": true,
+          "rollback_ready": true,
+          "backup_exists": true
+        },
+        "scope": "wrote one root-owned 0644 JSON manifest; did NOT modify the backup bytes, config.db, config.json, credentials, encryption key, or the unit",
+        "not_reverified": "manifest mode/owner were not re-stat'd by the reviewer (live backups dir is 0750 and the dispatcher exposes no stat); they are set explicitly by the install invocation above"
+      }
+    }
+  },
+  "migration": "NOT STARTED (not authorized)",
+  "repo_changes_this_session": [
+    "chmod 0755 deploy/bifrost-ops/install.sh (content unchanged; sha256 unchanged)",
+    "tests/test_bifrost_ops_security.py: +2 executable-bit guards",
+    "tests/test_bifrost_ops_security.py: +CanonicalPathContractTests (pins canonical db/app/backup/manifest paths across ops/backup/rollback/dispatcher; resolves launcher constants through bash rather than a second parser)"
+  ],
+  "verdict": "INSTALLATION PASS. ROLLBACK ANCHOR READY (remediated; digest equality proven deterministically by inspect). Migration NOT STARTED (not authorized); awaiting explicit migration authorization.",
+  "post_remediation_state": {
+    "manifest_found": true,
+    "digest_matches_manifest": true,
+    "rollback_ready": true,
+    "config_json_present": false,
+    "providers": [
+      "mistral"
+    ],
+    "enforce_auth_on_inference": false,
+    "service": {
+      "ActiveState": "active",
+      "MainPID": 1280,
+      "NRestarts": 0,
+      "ExecMainStartTimestamp": "Sun 2026-10-18 11:21:30 EAT",
+      "health": 200
+    },
+    "unit_restarted_by_remediation": false
+  },
+  "migration_preflight": {
+    "status": "PREFLIGHT PASS; migration still NOT executed",
+    "unit_env_wiring": "ExecStart sources $CREDENTIALS_DIRECTORY/providers.env with `set -a`; process env is therefore the resolution source for `env.*` seed refs",
+    "credential_source": "/home/genie/company-os/secrets/providers.env (root:root 0600, 3063 bytes)",
+    "seeds_enabled": "step1: 2 refs (BIFROST_ADMIN_USERNAME, BIFROST_ADMIN_PASSWORD); step2: 9 refs (adds CLOUDFLARE_API_TOKEN, GOOGLE_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, OPENROUTER_API_KEY, ZAI_API_KEY)",
+    "reviewer_can_read_credential_file": false,
+    "name_only_check_recommended": "sudo grep -oE '^(BIFROST_ADMIN_USERNAME|BIFROST_ADMIN_PASSWORD|CLOUDFLARE_API_TOKEN|GOOGLE_API_KEY|GROQ_API_KEY|MISTRAL_API_KEY|NVIDIA_API_KEY|OPENROUTER_API_KEY|ZAI_API_KEY)=' /home/genie/company-os/secrets/providers.env   # names only, no values",
+    "reference_store_observation": "genie-readable reference store holds 8 providers and 9 encrypted key rows (cloudflare-primary, google-ai-studio-primary, groq-primary, mistral-primary, nvidia-primary, openrouter-primary, zai-primary, MISTRAL/OPENAI auto-detected); config_env_keys is empty there, so env names cannot be confirmed from it",
+    "implication": "a missing env name does not fail `seed` (additive config write succeeds) but breaks that provider at request time; confirm names before migrating",
+    "canonical_name_check_2026-10-19": {
+      "command": "sudo grep -oE '^(BIFROST_ADMIN_USERNAME|...|ZAI_API_KEY)=' providers.env",
+      "result": "ALL 10 required names present: BIFROST_ADMIN_USERNAME, BIFROST_ADMIN_PASSWORD, BIFROST_ENCRYPTION_KEY, CLOUDFLARE_API_TOKEN, GOOGLE_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, OPENROUTER_API_KEY, ZAI_API_KEY",
+      "interpretation": "NOT yet a conclusion: the pattern anchors at column 0 with no `export ` prefix, while the repo's canonical parser (load_secrets_file) explicitly accepts `export KEY=value` and surrounding whitespace. A 3063-byte file is far larger than two admin vars, so the keys are plausibly present under the export form.",
+      "state": "READY: all required names present and non-empty",
+      "next": "enumerate variable names only (no values) and compare to the 9 seed refs; then check PRESENT vs EMPTY",
+      "note": "GOOGLE_GENERATIVE_AI_API_KEY is also present but the seed uses GOOGLE_API_KEY; no alias substitution is performed by the runtime for seed refs, so the canonical name must itself be populated",
+      "emptiness_check": {
+        "command": "sudo grep -nE ...names...[^A-Za-z0-9]*$ providers.env | sed s/=.*/=REDACTED_EMPTY/",
+        "output": "empty (grep exit 1) => no empty/quote-only assignment",
+        "method": "matches only values containing no alphanumeric character; fixture-tested for bare, whitespace, \"\", and '' forms; all-populated control yields 0"
+      }
+    },
+    "migration": "still NOT STARTED",
+    "blocking_conditions": [
+      "none"
+    ]
+  }
+}

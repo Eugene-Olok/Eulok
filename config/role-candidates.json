@@ -1,0 +1,102 @@
+{
+  "router": [
+    {
+      "provider": "google_free",
+      "model": "gemini-3.6-flash"
+    },
+    {
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b"
+    }
+  ],
+  "research": [
+    {
+      "provider": "google_free",
+      "model": "gemini-3.8-flash"
+    },
+    {
+      "provider": "nim",
+      "model": "nemotron-3-ultra-550b-a55b"
+    }
+  ],
+  "architect": [
+    {
+      "provider": "nim",
+      "model": "nemotron-3-ultra-550b-a55b"
+    },
+    {
+      "provider": "zai",
+      "model": "glm-4.7-flash"
+    }
+  ],
+  "implement": [
+    {
+      "provider": "nim",
+      "model": "nemotron-3-super-120b-a12b"
+    },
+    {
+      "provider": "openrouter_free",
+      "model": "cohere/north-mini-code:free"
+    }
+  ],
+  "tests": [
+    {
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b"
+    },
+    {
+      "provider": "cloudflare",
+      "model": "@cf/openai/gpt-oss-120b"
+    }
+  ],
+  "review": [
+    {
+      "provider": "zai",
+      "model": "glm-4.7-flash"
+    },
+    {
+      "provider": "google_free",
+      "model": "gemini-3.8-flash"
+    },
+    {
+      "provider": "mistral",
+      "model": "mistral-small-2603"
+    }
+  ],
+  "security": [
+    {
+      "provider": "nim",
+      "model": "nemotron-3-ultra-550b-a55b"
+    },
+    {
+      "provider": "zai",
+      "model": "glm-4.7-flash"
+    }
+  ],
+  "vision_qa": [
+    {
+      "provider": "google_free",
+      "model": "gemini-3.8-flash"
+    },
+    {
+      "provider": "nim",
+      "model": "meta/muse-glimmer-30b"
+    }
+  ],
+  "summarise": [
+    {
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b"
+    },
+    {
+      "provider": "google_free",
+      "model": "gemini-3.6-flash"
+    }
+  ],
+  "embeddings": [
+    {
+      "provider": "local",
+      "model": "fastembed"
+    }
+  ]
+}

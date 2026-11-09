@@ -1,0 +1,72 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": "tests",
+    "case": null
+  },
+  "case_count": 3,
+  "results": [
+    {
+      "id": "tests-01",
+      "role": "tests",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 2033,
+      "observable_sha256": "381cfb724e5256c1b5a065bfd622bb0e3c3366f68efad5fd6d0f5c65c5a17b56",
+      "quality_pass": false,
+      "failed_checks": [
+        "concurrency OR concurrent OR parallel OR race",
+        "idempotency OR idempotent OR duplicate-safe OR duplicate event",
+        "reversal OR reverse OR reversed OR rollback correction"
+      ]
+    },
+    {
+      "id": "tests-02",
+      "role": "tests",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 2200,
+      "observable_sha256": "f8f3815be5b3ab9d3eb88c8770484c29dc31f442daa6b3bf7348956431c90438",
+      "quality_pass": false,
+      "failed_checks": [
+        "inactive",
+        "database"
+      ]
+    },
+    {
+      "id": "tests-03",
+      "role": "tests",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1871,
+      "observable_sha256": "2f1e673a82963f77b856bdb76838b0f2da8504192287bd31a4440b63e43e5b26",
+      "quality_pass": false,
+      "failed_checks": [
+        "reviewer OR review model OR review vendor",
+        "cost OR zero-cost OR zero cost OR budget OR paid"
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

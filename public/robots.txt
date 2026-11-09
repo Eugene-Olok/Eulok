@@ -1,0 +1,11 @@
+# EULOK robots.txt
+# https://eulok.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Canonical XML Sitemap
+Sitemap: https://eulok.com/sitemap.xml
+
+# Crawl-delay for polite indexation
+Crawl-delay: 5

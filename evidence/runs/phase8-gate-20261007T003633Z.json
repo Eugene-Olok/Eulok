@@ -1,0 +1,116 @@
+{
+  "phase": "8",
+  "status": "PASS",
+  "deployment": "PASS",
+  "allow_blocked": false,
+  "commit": "19052f1b28523c206a6273824bdacadea5138dab",
+  "started_at": "2026-10-07T00:33:48Z",
+  "finished_at": "2026-10-07T00:36:33Z",
+  "tests": {
+    "count": 621,
+    "baseline": 406,
+    "preserved": true
+  },
+  "checks": [
+    {
+      "name": "git repository",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "unit tests",
+      "status": "PASS",
+      "detail": "621 tests, 0 failures"
+    },
+    {
+      "name": "baseline preserved",
+      "status": "PASS",
+      "detail": "621 >= 406"
+    },
+    {
+      "name": "business domain import and deterministic transitions",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "template directory is not a valid client",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "business invariants",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "financial guards",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "evidence contracts",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "ci configuration",
+      "status": "PASS",
+      "detail": "structure checks + actionlint clean"
+    },
+    {
+      "name": "secret hygiene",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "website files present",
+      "status": "PASS",
+      "detail": "index.html, analytics.js, config.js"
+    },
+    {
+      "name": "website placeholders",
+      "status": "PASS",
+      "detail": "no placeholder markers, no committed analytics keys"
+    },
+    {
+      "name": "analytics inert without config",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "deploy targets pages.dev only",
+      "status": "PASS",
+      "detail": "no custom domain configuration"
+    },
+    {
+      "name": "site deploy builds",
+      "status": "PASS",
+      "detail": "deploy-site.sh --build-only reached state=build"
+    },
+    {
+      "name": "bash syntax",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "cloudflare credentials",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "posthog credentials",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "live site verification",
+      "status": "PASS",
+      "detail": "https://company-os-3ox.pages.dev answered with expected content"
+    },
+    {
+      "name": "live analytics configuration",
+      "status": "PASS",
+      "detail": "config.js carries a key and host (values not printed)"
+    }
+  ]
+}

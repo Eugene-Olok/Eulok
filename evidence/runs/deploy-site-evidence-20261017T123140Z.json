@@ -1,0 +1,11 @@
+{
+  "phase": "8",
+  "state": "build",
+  "exit_code": 0,
+  "mode": "build",
+  "commit": "8c4a94c16e86de5ed5f13156d92bbaaada9b0ae2",
+  "started_at": "2026-10-17T12:31:39Z",
+  "finished_at": "2026-10-17T12:31:40Z",
+  "url": "https://company-os.pages.dev",
+  "reason": "build-only mode: site staged, deploy not attempted"
+}

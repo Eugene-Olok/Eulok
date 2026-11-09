@@ -1,0 +1,70 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": "security",
+    "case": null
+  },
+  "case_count": 3,
+  "results": [
+    {
+      "id": "security-01",
+      "role": "security",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1667,
+      "observable_sha256": "b8126fca0717fc98a7dabe0b14f71309cd9251034915fe20c22b7c2b39823a80",
+      "quality_pass": false,
+      "failed_checks": [
+        "database OR db OR row-level security OR rls",
+        "isolation OR tenant isolation OR cross-tenant"
+      ]
+    },
+    {
+      "id": "security-02",
+      "role": "security",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1382,
+      "observable_sha256": "0a1f0c403bfe1726cf76e1d4f30dee8f1cca11e51496f913b13d3136fb87c5b6",
+      "quality_pass": false,
+      "failed_checks": [
+        "free OR public OR free-provider OR free provider"
+      ]
+    },
+    {
+      "id": "security-03",
+      "role": "security",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1708,
+      "observable_sha256": "75a96a3b954858eaea4bfcef95e47f091ce6bbc934637e22fdefa4b911c6c2f7",
+      "quality_pass": false,
+      "failed_checks": [
+        "compensating OR corrective OR reversal OR offsetting",
+        "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

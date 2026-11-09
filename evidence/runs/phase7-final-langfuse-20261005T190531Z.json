@@ -1,0 +1,37 @@
+{
+  "endpoint": "/api/public/v2/observations",
+  "generated_at": "2026-10-05T19:00:59+00:00",
+  "host": "https://cloud.langfuse.com",
+  "kind": "langfuse-evidence",
+  "public_key_fingerprint": "pk-l...e537",
+  "reason": "a matching observation was read back from the Langfuse API",
+  "schema_version": 1,
+  "trace": {
+    "expected_logical_role": null,
+    "found": {
+      "end_time": "2026-10-05T18:55:25.549Z",
+      "latency_ms": 5.527,
+      "metadata": {
+        "company_os.attempt_error_classes": "provider_error,rate_limited",
+        "company_os.attempts": 3,
+        "company_os.boundary": "company-os-control-plane",
+        "company_os.http_status": 200,
+        "company_os.lane": "internal",
+        "company_os.logical_role": "implement",
+        "company_os.provider": "openrouter_free",
+        "company_os.route_duration_ms": 5525,
+        "company_os.stream": false,
+        "company_os.upstream_model": "poolside/laguna-s-2.1:free",
+        "company_os.wire_model": "poolside/laguna-s-2.1:free"
+      },
+      "observation_id": "0f4a531fd07ee6a1",
+      "start_time": "2026-10-05T18:55:20.022Z",
+      "trace_id": "e04d931dd8d0025d8feeeb83c621eb87"
+    },
+    "name": "company_os.boundary.request",
+    "observations_inspected": 14,
+    "window_minutes": 60
+  },
+  "verdict": "pass",
+  "verified": true
+}

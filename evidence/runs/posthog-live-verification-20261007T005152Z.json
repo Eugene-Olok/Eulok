@@ -1,0 +1,28 @@
+{
+  "phase": "8",
+  "check": "posthog_event_path",
+  "url": "https://company-os-3ox.pages.dev/",
+  "verified_at": "2026-10-07T00:51:37.943Z",
+  "browser": "playwright chromium headless (node), regular Chrome UA",
+  "checks": {
+    "config_present_and_well_formed": true,
+    "analytics_script_included": true,
+    "posthog_object_initialized": true,
+    "posthog_not_classified_as_bot": true,
+    "pageview_event_sent": true,
+    "ingestion_accepted": true,
+    "array_js_loaded": true
+  },
+  "page_errors": [],
+  "ingestion": {
+    "request_events": [
+      "$pageview"
+    ],
+    "response_statuses": [
+      200
+    ],
+    "array_js_status": 200
+  },
+  "secrets_exposure": "none — key values, bodies and query strings never recorded",
+  "verdict": "PASS"
+}

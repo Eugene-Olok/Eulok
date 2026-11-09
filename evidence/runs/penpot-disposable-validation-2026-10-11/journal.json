@@ -1,0 +1,165 @@
+{
+  "run": "penpot-disposable-validation-2026-10-11",
+  "date": "2026-10-11",
+  "lane": "Penpot MCP plugin lane (live session)",
+  "lane_note": "Command API lane is reachability-blocked (Cloudflare HTTP 403 error 1010 for non-browser clients; no bypass attempted per standing boundary). The founder confirmed the MCP plugin is active; validation executed over the sanctioned plugin lane instead of the command lane planned in run-plan.md. Target file = disposable 'Company OS cmd-lane validation B' (pre-existing disposable target, distinct from production and scratch).",
+  "target": {
+    "file_id": "52a5041f-08a1-80f1-8008-c52b2fa4c31b",
+    "name": "Company OS cmd-lane validation B"
+  },
+  "guarded_refs": {
+    "production": "52a5041f-08a1-80f1-8008-c50e307f3ef4",
+    "scratch": "52a5041f-08a1-80f1-8008-c383654a1095"
+  },
+  "entries": [
+    {
+      "step": 1,
+      "kind": "ensure_page",
+      "intent": "4ca2e57c0a702afd",
+      "lane": "penpot-plugin-mcp",
+      "target_file_id": "52a5041f-08a1-80f1-8008-c52b2fa4c31b",
+      "target_name": "Company OS cmd-lane validation B",
+      "dispatch": {
+        "status": "noop-existing",
+        "detail": "page company-os-validation already present (pre-existing); no duplicate created"
+      },
+      "read_back": {
+        "page_id": "a5638d4c-45cd-80b5-8008-c5fd8d50d778",
+        "page_name": "company-os-validation",
+        "match": true
+      },
+      "security": {
+        "production_guarded": true,
+        "scratch_guarded": true
+      },
+      "decision": "26.16 + evidence/runs/penpot-disposable-validation-2026-10-11/AUTHORIZATION.md"
+    },
+    {
+      "step": 2,
+      "kind": "create_node",
+      "intent": "75fdc339d629154c",
+      "lane": "penpot-plugin-mcp",
+      "target_file_id": "52a5041f-08a1-80f1-8008-c52b2fa4c31b",
+      "target_name": "Company OS cmd-lane validation B",
+      "dispatch": {
+        "status": "applied",
+        "shape_id": "9e3b270f-68c8-80f8-8008-c6012508bb08"
+      },
+      "read_back": {
+        "name": "validation.probe.frame",
+        "type": "board",
+        "width": 1280,
+        "height": 720,
+        "match": true
+      },
+      "security": {
+        "production_guarded": true,
+        "scratch_guarded": true
+      },
+      "decision": "26.16 + evidence/runs/penpot-disposable-validation-2026-10-11/AUTHORIZATION.md"
+    },
+    {
+      "step": 3,
+      "kind": "create_component",
+      "intent": "64b25841783ba923",
+      "lane": "penpot-plugin-mcp",
+      "target_file_id": "52a5041f-08a1-80f1-8008-c52b2fa4c31b",
+      "target_name": "Company OS cmd-lane validation B",
+      "dispatch": {
+        "status": "applied",
+        "component_id": "9e3b270f-68c8-80f8-8008-c601316a17ad"
+      },
+      "read_back": {
+        "name": "validation.probe.component",
+        "main_instance_name": "validation.probe.component",
+        "main_instance_id": "9e3b270f-68c8-80f8-8008-c6013168bf9e",
+        "match": true
+      },
+      "security": {
+        "production_guarded": true,
+        "scratch_guarded": true
+      },
+      "decision": "26.16 + evidence/runs/penpot-disposable-validation-2026-10-11/AUTHORIZATION.md"
+    },
+    {
+      "step": 4,
+      "kind": "create_variable",
+      "intent": "5f9751018270d446",
+      "lane": "penpot-plugin-mcp",
+      "target_file_id": "52a5041f-08a1-80f1-8008-c52b2fa4c31b",
+      "target_name": "Company OS cmd-lane validation B",
+      "dispatch": {
+        "status": "applied",
+        "token_name": "validation.color.probe",
+        "set": "validation-set"
+      },
+      "read_back": {
+        "name": "validation.color.probe",
+        "type": "color",
+        "value": "#32A1CE",
+        "match": true
+      },
+      "security": {
+        "production_guarded": true,
+        "scratch_guarded": true
+      },
+      "decision": "26.16 + evidence/runs/penpot-disposable-validation-2026-10-11/AUTHORIZATION.md"
+    },
+    {
+      "step": 5,
+      "kind": "independent_verify",
+      "intent": "sweep-readable",
+      "lane": "penpot-plugin-mcp",
+      "target_file_id": "52a5041f-08a1-80f1-8008-c52b2fa4c31b",
+      "target_name": "Company OS cmd-lane validation B",
+      "dispatch": {
+        "status": "verified"
+      },
+      "read_back": {
+        "pass": true,
+        "frame": "1280x720 childCount=1",
+        "component_present": true,
+        "token_value": "#32A1CE"
+      },
+      "security": {
+        "production_guarded": true,
+        "scratch_guarded": true
+      },
+      "decision": "26.16 + evidence/runs/penpot-disposable-validation-2026-10-11/AUTHORIZATION.md"
+    },
+    {
+      "step": 6,
+      "kind": "idempotency_redispatch",
+      "intent": "noops",
+      "lane": "penpot-plugin-mcp",
+      "target_file_id": "52a5041f-08a1-80f1-8008-c52b2fa4c31b",
+      "target_name": "Company OS cmd-lane validation B",
+      "dispatch": {
+        "status": "noop-verified",
+        "frame_count": 1,
+        "component_count": 1,
+        "token_set_count": 1,
+        "token_count": 1,
+        "rect_count_in_frame": 1,
+        "duplicate": false
+      },
+      "read_back": {
+        "match": true
+      },
+      "security": {
+        "production_guarded": true,
+        "scratch_guarded": true
+      },
+      "decision": "26.16 + evidence/runs/penpot-disposable-validation-2026-10-11/AUTHORIZATION.md"
+    }
+  ],
+  "summary": {
+    "ops_applied": 3,
+    "ops_noop": 1,
+    "reads_verified": 6,
+    "guard_denials_exercised": "production=refused-target_not_allowed, scratch=refused-target_denied+target_denied_scratch+target_not_allowed, unknown=refused-target_not_allowed+target_project_not_allowed (checked via tools/penpot_target_guard.check_target against docs/design/PENPOT_TARGETS.yaml)",
+    "note": "Plugin lane is bound to the current file only; targeting production/scratch is impossible over the plugin, and the guard denial matrix was exercised deterministically against the policy."
+  },
+  "secrets": "none referenced or serialized",
+  "journal_generated_at": "2026-10-11T12:36:36.738487+00:00"
+}

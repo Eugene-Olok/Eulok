@@ -1,0 +1,67 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": "security",
+    "case": null
+  },
+  "case_count": 3,
+  "results": [
+    {
+      "id": "security-01",
+      "role": "security",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1559,
+      "observable_sha256": "b0e5aaa93006e2c2a622715bca0367048cc2259639536b99d1068b4fe8ab34ce",
+      "quality_pass": false,
+      "failed_checks": [
+        "database OR db OR row-level security OR rls",
+        "isolation OR tenant isolation OR cross-tenant"
+      ]
+    },
+    {
+      "id": "security-02",
+      "role": "security",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "PASS",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1467,
+      "observable_sha256": "9f9e3f1bd0b9b918d2fe22e8c0b37150c8deeb1891b413d7aac305d8492149d0",
+      "quality_pass": true,
+      "failed_checks": []
+    },
+    {
+      "id": "security-03",
+      "role": "security",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1704,
+      "observable_sha256": "ac578e841d0236e3c9e9432b58ea01ff8a5fca252196b6df28e57b1afef4e12d",
+      "quality_pass": false,
+      "failed_checks": [
+        "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

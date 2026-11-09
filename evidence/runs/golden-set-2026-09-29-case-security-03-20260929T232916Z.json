@@ -1,0 +1,153 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": null,
+    "case": "security-03"
+  },
+  "candidate_requested": "nim/nemotron-3-ultra",
+  "fallback_allowed": false,
+  "repeat": 5,
+  "repeat_state_isolated": true,
+  "case_count": 1,
+  "results": [
+    {
+      "id": "security-03",
+      "role": "security",
+      "candidate_requested": "nim/nemotron-3-ultra",
+      "fallback_allowed": false,
+      "state": "UNSTABLE",
+      "repeat_count": 5,
+      "pass_count": 2,
+      "pass_rate": 0.4,
+      "stable": false,
+      "providers": [
+        "nim"
+      ],
+      "models": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "failed_checks_union": [
+        "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+      ],
+      "run_states": [
+        "QUALITY_FAIL",
+        "PASS",
+        "QUALITY_FAIL",
+        "QUALITY_FAIL",
+        "PASS"
+      ],
+      "runs": [
+        {
+          "id": "security-03",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3716,
+          "observable_sha256": "b73946b523f44865a57b012eeafd030a57efb0e45b2ad53c8dc219852b2462a2",
+          "quality_pass": false,
+          "failed_checks": [
+            "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+          ],
+          "run_index": 1,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3766,
+          "observable_sha256": "d93bec2aa0b4272e2f08b97b7178292160faf090daebacc50f5855022ec50dbf",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 2,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3814,
+          "observable_sha256": "f49e28f3b233fae46cc4720a49019987021b02bd1e7d52fb6706e7d9d1ec376e",
+          "quality_pass": false,
+          "failed_checks": [
+            "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+          ],
+          "run_index": 3,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3740,
+          "observable_sha256": "9b6f57aa5c2de14c4774e306f0a781b125714da128b1b2c2b89e90344db93637",
+          "quality_pass": false,
+          "failed_checks": [
+            "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+          ],
+          "run_index": 4,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3637,
+          "observable_sha256": "d02f47428260fda926f9b0385ea48b23f8b6e05b6b1f9f77c2202436d7ae3cdd",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 5,
+          "health_state_isolated": true
+        }
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

@@ -1,0 +1,64 @@
+[Unit]
+# TEMPLATE — reference target for scripts/isolate-secrets.sh. NOT installed by
+# the repository; installation requires root. See docs/runbooks/secrets-isolation.md.
+#
+# SYSTEM unit (migrated from the user unit of the same name). The boundary runs
+# as the dedicated unprivileged `company-os` identity with no direct read access
+# to the secrets file; provider credentials are supplied to it at runtime.
+Description=Company OS OpenAI-compatible inference boundary (127.0.0.1:8090)
+Documentation=file:///home/genie/company/company_os/control_plane/boundary.py
+Wants=company-os-bifrost.service
+After=network-online.target company-os-bifrost.service
+PartOf=company-os-bifrost.service
+
+[Service]
+Type=simple
+User=company-os
+Group=company-os
+# Read-only access to the repository (owned by genie:genie, mode 0775) for
+# configuration; traversal of /home/genie is granted by scripts/isolate-secrets.sh
+# as a single revocable setfacl ACE (u:company-os:--x) — traversal only, never
+# supplementary group membership.
+WorkingDirectory=/home/genie/company
+LoadCredential=providers.env:/home/genie/company-os/secrets/providers.env
+ExecStart=/bin/bash -lc 'set -a; source "$CREDENTIALS_DIRECTORY/providers.env"; set +a; exec /home/genie/company/.venv/bin/python -B /home/genie/company/tools/company_os_control_plane.py --state /var/lib/company-os/control-plane'
+# State lives under /var/lib/company-os/control-plane (ReadWritePaths). Passed
+# explicitly via --state because the boundary otherwise derives it from
+# Path.home(); the company-os passwd home is /home/company-os, which
+# ProtectHome=read-only makes unwritable ("Read-only file system:
+# '/home/company-os'"). HOME is set as well, for any other Path.home() use.
+Environment=HOME=/var/lib/company-os/control-plane
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=always
+RestartSec=5
+TimeoutStopSec=15
+KillSignal=SIGTERM
+UMask=0077
+
+# Hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/company-os/control-plane
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+
+[Install]
+WantedBy=multi-user.target

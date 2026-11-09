@@ -1,0 +1,11 @@
+{
+  "phase": "8",
+  "state": "verified",
+  "exit_code": 0,
+  "mode": "full",
+  "commit": "19052f1b28523c206a6273824bdacadea5138dab",
+  "started_at": "2026-10-07T00:53:28Z",
+  "finished_at": "2026-10-07T00:54:01Z",
+  "url": "https://company-os-3ox.pages.dev",
+  "reason": "deploy succeeded; live URL answered with expected content"
+}

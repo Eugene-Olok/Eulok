@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "checks": {
+    "site_loads": true,
+    "config_js_configured": true,
+    "analytics_js_loads": true,
+    "no_forbidden_content": true,
+    "analytics_script_tag_present": true
+  },
+  "url": "https://company-os-3ox.pages.dev/",
+  "verified_at": "2026-10-12T16:50:39Z"
+}

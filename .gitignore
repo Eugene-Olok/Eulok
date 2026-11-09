@@ -1,0 +1,18 @@
+artifacts/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+.aider*
+
+# Local Python virtual environment
+.venv/
+
+# Local database
+config.db
+
+# Hermes local skills
+.hermes/
+
+# local wrangler cache (created by deploy/gate live checks)
+.wrangler/

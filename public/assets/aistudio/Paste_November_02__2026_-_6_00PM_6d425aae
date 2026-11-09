@@ -1,0 +1,1600 @@
+# EULOK — FAANG-grade website improvement blueprint
+
+The objective is to combine the strongest design, interaction, conversion, and content patterns from all six references into one coherent EULOK website—not reproduce six different websites or turn EULOK into a generic software-agency template.
+
+The result should have five defining characteristics:
+
+1. Premium visual design: distinctive typography, strong composition, generous but purposeful spacing, sophisticated layouts, and consistent visual language.
+2. Mobile-first engineering: every page designed for small screens first, not a compressed desktop layout.
+3. Conversion engineering: clear service discovery, guided project intake, and an unobstructed path to WhatsApp.
+4. Technical credibility: real engineering evidence, transparent limitations, and no fabricated statistics, testimonials, certifications, or client logos.
+5. Production quality: semantic HTML, accessibility, performance budgets, SEO consistency, automated testing, and documented design-system rules.
+
+Two requirements are non-negotiable:
+
+- Keep WhatsApp as a contact option. Never expose your personal WhatsApp number in visible page content. Use a controlled WhatsApp link that opens the conversation without printing the number anywhere on the page.
+- Do not constrain the website to a narrow centered column. Use the available viewport intelligently, with full-width sections, expansive compositions, and controlled content widths inside individual sections. Full-width does not mean stretching every paragraph across the screen.
+
+## 1. What each reference contributes to EULOK
+
+The six references should not have equal influence. Each contributes a different part of the final experience.
+
+[Phenomenon Studio: The Hidden ROI Formula Behind Modern Web Development Company Success](https://images.openai.com/static-rsc-4/g0sgVTOxAtQ9Z0hbKRVCD_JDk22TQfv0vskBHaPZHPY42LdZ-GPVrnsXWFOyYr2kWEcv-pPFVsYwAjNeUzMVdsf2CJKR-P7flPwVJQeAfRBjI3tTStzUjNwMaGny_8CQkVSqmpKRLutLAm7Ivvqk4G5aYD9Y56vmcXT6w-umnD8?purpose=inline)
+
+1\. Phenomenon Studio — visual storytelling and service discovery
+
+High priority
+
+- Sophisticated visual hierarchy.
+- Guided service discovery.
+- Strong project presentation.
+- Editorial case-study layouts.
+- Clear separation between launch, evolution, and extension services.
+
+Adopt its information architecture and project-card rhythm, not its large-agency claims.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://phenomenonstudio.com\&sz=32)
+
+Phenomenon Studio+1
+
+
+
+[A Better Lou Inquiry Contact Design | Contact Section Design Design](https://images.openai.com/static-rsc-4/GDEbTtZMRh4aZ5mVBSSuB5AQZMX_72XuJ06LQ75oxih5SMfhKOffudj3lrv6nLlqPiA_fLBcGyfuB6LPSiZZOeE82eBpDOC66W7LKNiSGJr4fGwg9JqcBoN0ce-SBXqhQ2CDrJtH7KELjC-oD8bS-82QnL_WnHFObkP6q725500?purpose=inline)
+
+2\. Eloqwnt — conversion and lead qualification
+
+High priority
+
+- Project-budget selection.
+- Service-interest selection.
+- Structured contact form.
+- Strong typography and section headings.
+- Direct conversion-focused messaging.
+
+Adopt its guided qualification, but make the form shorter and more mobile-friendly.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.eloqwnt.com\&sz=32)
+
+Get a Quote
+
+
+
+[AI Digital Transformation Services](https://images.openai.com/static-rsc-4/zDZYKEJ1ATSNBDNs4ZDu3l_11EI2DRFjwm5wo2J1enWdVPnLjitu58VIWNc632WZjcZ7jI7RSyRyKZ760Bf_Ig3EQ1MUM8hA7m-_wiouegmi7d1-w1GmJVG0tnQRgn4sMaeExboTb0iNMhQyugT3WingkE11EQ1pS9Jdff6RGJg?purpose=inline)
+
+3\. Ailoitte — engineering positioning
+
+High priority
+
+- Explain the delivery model.
+- Explain why engineering decisions matter.
+- Put governance and security into the delivery story.
+- Explain what the company will and will not promise.
+- Show a defined path from discovery to production.
+
+Adopt the positioning structure, not unsupported speed or compliance claims.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.ailoitte.com\&sz=32)
+
+Ailoitte
+
+
+
+[Dribbble - softwaremind_70.png by Mateusz Madura](https://images.openai.com/static-rsc-4/FYjxKo4Ts-dSzciKSR1fNRJbnbWfYXArp1ErLhotkv7yhD2w1_4R5KwN_ExIP8DTWH7eQLq3-RhRRrrCT_KYU1sZXg_gW0XE3VSZPpLvHPt9Yf3QooCpvwMquNFpyKqJxNI17h1yHg_t2PYN93pIpf4usqwdLn0o9KnsWJ8GNKk?purpose=inline)
+
+4\. Software Mind — delivery lifecycle and proof
+
+High priority
+
+- Consistent delivery stages.
+- Case studies structured around real problems.
+- Technology and implementation details.
+- Named client testimonials when genuine.
+- Clear descriptions of what changed.
+
+Adopt the lifecycle and case-study structure.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://softwaremind.com\&sz=32)
+
+Software Mind+2
+
+
+
+[Top Software Testing Companies in Utah in 2026](https://images.openai.com/static-rsc-4/TCkMshuxDsh15XD-jjl24tIrT0kG2BAUSWi1nez9jZ5w4Nc0ukXjURmkQuyZAh1tcv0CAKQ7m8NAKi8_ICcRaIV-hap-9bHP7HUUxA7Gt_NU1u-hIfQ7EFia15w5bcqlMzCPOVJGmizKjnaHPG8Bt3kQ22G17EAs_AGO_7vbClc?purpose=inline)
+
+5\. ScienceSoft — information architecture
+
+High priority
+
+- Organize services by business need.
+- Organize solutions by industry.
+- Show the full software lifecycle.
+- Connect services to relevant use cases.
+- Provide detailed technical explanations.
+
+Adopt its organization without importing its enterprise-scale menus or volume claims.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://www.scnsoft.com\&sz=32)
+
+ScienceSoft+1
+
+
+
+[Hexacore -  IT Consulting Animation by Nija Design for Nija Works on Dribbble](https://images.openai.com/static-rsc-4/hNsjrZTWaO_J8XfZVmoIbBPqpVB2WO8V1Bzq6wtfuNhpBWIXbLzO5i5WgMYb-ac1r7RYVnjMEdr7nyI7VgOvFjTXdxLo-7IdS1PVAVk8MkpPAd0LvMiigWhR-7L62X8asRx5PIYxFd19yMXRoriCpiwOGdrhJT5wG2pF4JD3ztM?purpose=inline)
+
+6\. HEXACORE — visual direction
+
+High priority
+
+- Dark technical aesthetic.
+- Restrained color palette.
+- Strong contrast.
+- Premium technology-company presentation.
+- A recognizable visual identity.
+
+Its published palette includes near-black, navy, blue, warm off-white, and muted neutral tones. Use that as inspiration rather than copying the design.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://dribbble.com\&sz=32)
+
+dribbble.com+1
+
+
+
+My recommended combination: Phenomenon's visual storytelling + Eloqwnt's conversion engineering + Ailoitte's technical positioning + Software Mind's delivery narrative + ScienceSoft's information architecture + HEXACORE's visual atmosphere.
+
+# 2. The overall EULOK design direction
+
+# EULOK should look like a premium global engineering company.
+
+Not a conventional local web-design agency. Not a template-based SaaS landing page. Not an imitation of a large enterprise.
+
+[NexusDev Engineering Platform - Landing Pages Templates - v0 by Vercel](https://images.openai.com/static-rsc-4/2DKl3PDwxexH2pEFd7QoKucZkxs7B6YfO0BJTKyLxiCZyznFtSs1ujxrmd0BfKfq2hWuXr6eot0I-Ojw8Zq81d-QAPWAkFHLnGHMm2bXAWASkbjRZ9ethOaTmZdMLi-8EGc_nX8AcL23ak010mcxzkDnpITuqIGdqEyHjiuk59M?purpose=inline)
+
+[Fleming Collective — Building Scalable SaaS Platforms](https://images.openai.com/static-rsc-4/SkEybMYEoqjx8CFxmEKbMaZpX88OjZHpsEfYepJbpJ3XRikKMYEBJruXyhRXW_41cbjZqjADrtFW2jjULeh2Rfc9dZcvZXSvFBx8PcAk6Ue1TL_hjXGB4nL0CFOoO68zGeklMpVK45vjyNgmplI6o1v4FTCVwAhc8BzbNFQGFaw?purpose=inline)
+
+[Scalable Infrastructure · Skematic NYC — Architecture & DevOps](https://images.openai.com/static-rsc-4/48sOnrw4qwRBef-LA0QTTqXlKNV4WTTdgCRkJJ_GsOh1RdYGDVq8iDCEtzgOwJWORi5xgnXDBxCWRebywIaMbKI7lrVPxH0gI_4w5vs6c9lG_9iLaFI2r-6B1I0Iyy8U7gbaVjZWQMJFqKklDObMhjaUPxOHE4q0oB4zZIPO350?purpose=inline)
+
+11
+
+### Visual identity
+
+I recommend a controlled combination of:
+
+| Element              | Direction                                              |
+| -------------------- | ------------------------------------------------------ |
+| Primary background   | Deep navy / near-black                                 |
+| Secondary background | Warm off-white                                         |
+| Primary accent       | Restrained electric blue                               |
+| Secondary accent     | Muted steel blue                                       |
+| Typography           | Modern grotesk sans-serif                              |
+| Technical typography | IBM Plex Mono-style                                    |
+| Cards                | Subtle borders and layered surfaces                    |
+| Graphics             | Original engineering diagrams                          |
+| Motion               | Restrained, purposeful                                 |
+| Photography          | Minimal; product and engineering visuals take priority |
+
+Avoid making every page dark. A deliberate alternation between dark editorial sections and light information-heavy sections will provide visual rhythm.
+
+### Typography
+
+Use a two-family system:
+
+- Display and body: Archivo or a similarly distinctive contemporary sans-serif.
+- Technical labels: IBM Plex Mono.
+
+Typography hierarchy:
+
+- Oversized hero headline.
+- Medium section headlines.
+- Compact uppercase technical labels.
+- Highly readable body copy.
+- Monospaced metadata and step identifiers.
+
+Do not use large typography everywhere. Large type should communicate hierarchy, not decoration.
+
+### The full-width rule
+
+This is particularly important given your previous feedback.
+
+Wrong: narrow centered website
+
+Excessive unused horizontal space; every section is trapped in one narrow column.
+
+Correct: expansive, controlled composition
+
+Full-width sections, expansive grids, and content-specific maximum widths.
+
+Recommended layout constraints:
+
+- Main page sections: approximately 100% available width.
+- Desktop horizontal gutters: responsive, approximately 48–80px.
+- Mobile horizontal gutters: approximately 20–24px.
+- Hero composition: expansive, potentially split into two columns.
+- Service grids: three columns on suitable desktop widths, two on tablets, one on narrow mobile.
+- Content-heavy paragraphs: controlled reading width.
+- Technical diagrams: dedicated full-width containers.
+
+Never apply one global `max-width` to the entire page wrapper. That is how websites become visually compressed.
+
+# 3. Homepage — the most important redesign
+
+The homepage must communicate what EULOK does, whom it helps, why its engineering approach is different, and what the visitor should do next.
+
+I recommend the following complete section order.
+
+01 — Navigation
+
+Essential
+
+[Top 27 International Ad Agencies in 2025 — Jake Jorgovan](https://images.openai.com/static-rsc-4/KBApdgOwSafufV8d7sp9jPdtYL1m5qzdH7pHqrNzkgHmNGOaLsn1d8B4nye0Maib9V4z9N9O79FCNYcqppVNWPVQHUOb5IgG7AJy14hp-Fv7g4_zUzc-krR3Zlx6RW8P3xpqBGwUfeulfnoe5d-09wyGJbKMFGv4U8KQMdiTYgI?purpose=inline)
+
+[jake-jorgovan.com](https://jake-jorgovan.com/blog/international-ad-agencies?utm_source=chatgpt.com)
+
+Add:
+
+- EULOK logo on the left.
+- Services.
+- Work.
+- How We Work.
+- About.
+- Contact.
+- One dominant Start a project CTA.
+
+Keep the navigation flat. No mega-menu.
+
+On mobile, use a compact, accessible navigation disclosure rather than a full-screen takeover.
+
+02 — Hero
+
+Highest impact
+
+[NexusDev Engineering Platform - Landing Pages Templates - v0 by Vercel](https://images.openai.com/static-rsc-4/2DKl3PDwxexH2pEFd7QoKucZkxs7B6YfO0BJTKyLxiCZyznFtSs1ujxrmd0BfKfq2hWuXr6eot0I-Ojw8Zq81d-QAPWAkFHLnGHMm2bXAWASkbjRZ9ethOaTmZdMLi-8EGc_nX8AcL23ak010mcxzkDnpITuqIGdqEyHjiuk59M?purpose=inline)
+
+[v0.app](https://v0.app/templates/nexusdev-engineering-platform-eeR5zOHnjjr?utm_source=chatgpt.com)
+
+Recommended content:
+
+Eyebrow: `INDEPENDENT SOFTWARE ENGINEERING`
+
+Headline:
+
+Software built for the realities of business.
+
+Supporting text:
+
+EULOK designs, builds, repairs and improves software systems for businesses that need dependable technology—not another unfinished project.
+
+Primary CTA: `Discuss a project`
+
+Secondary CTA: `Rescue a stalled project`
+
+Add a visual: an original technical illustration showing inputs, deterministic processing, verification, and delivery. Avoid generic AI-generated robot imagery.
+
+Remove the third co-equal hero CTA for email.
+
+03 — Engineering position
+
+[How graph8 Uses PropelAuth to Power Their AI-first GTM Operating System | PropelAuth](https://images.openai.com/static-rsc-4/a0n0D4DwLn9rhRHbJAFT5lKBBIVoBDF5YE2g3SQ98S1p7fcsRdHPqwYDz1uhC5JoozrgZFCyUcm8gJ2Z2MO2mWGAkoxyeDDPhx14u6d2GYhqs1L9gFt9O8-4HbwiVfJLIBHjMxQlwlQ2_Qaz-PUoDE6aPEAasxcw8ctS19OPk1Y?purpose=inline)
+
+[propelauth.com](https://www.propelauth.com/post/how-graph8-uses-propelauth-to-power-their-ai-first-gtm-operating-system?utm_source=chatgpt.com)
+
+Introduce the core principle:
+
+# Models propose. Deterministic systems decide.
+
+Explain how EULOK separates probabilistic AI assistance from authoritative business logic.
+
+Three supporting principles:
+
+- Deterministic business rules.
+- Explicit verification and testing.
+- Human approval where decisions carry risk.
+
+This should be a distinctive visual section, not three generic icon cards.
+
+04 — Services overview
+
+Use six consistent service cards with numbering, short descriptions, clear audiences, and links.
+
+| Service                          | Stage    |
+| -------------------------------- | -------- |
+| Business websites                | Build    |
+| Custom software                  | Build    |
+| Software rescue                  | Recover  |
+| AI and workflow automation       | Automate |
+| Integrations and APIs            | Connect  |
+| Financial reconciliation systems | Operate  |
+
+Every service card needs a specific buyer-oriented description.
+
+Example:
+
+Financial reconciliation systems
+
+For finance teams matching mobile-money collections, bank statements, and business records.
+
+CTA: `Explore reconciliation systems`.
+
+05 — How EULOK works
+
+[KI Softwareentwicklung 2026: Wo sie wirklich beschleunigt | hafencity.dev](https://images.openai.com/static-rsc-4/2EBAz2qMMomhkuzUEqwC5FXgm4ACFQA6CKI9Ijx4TgezEeEQ9gW60StnufgnzPwhXkg0eUnS1CqwUrNwYM4DvRArh5PoXqu56vJEOncBpmwICBufaRGaK71DIc3PHbSdc9HPEgTsIy8xm9Kkb6TiLgzlpy2F0Jou3lEYlEfQmnk?purpose=inline)
+
+[hafencity.dev](https://hafencity.dev/blog/ki-beschleunigt-softwareentwicklung?utm_source=chatgpt.com)
+
+Introduce a consistent delivery spine:
+
+01 Discover → 02 Scope → 03 Design → 04 Build and verify → 05 Hand over and support.
+
+Each stage should have:
+
+- Its purpose.
+- What EULOK does.
+- What the client receives.
+- Its exit condition.
+
+Link to the detailed How We Work page.
+
+06 — Where we help
+
+[Nexora Group | Rise Studio](https://images.openai.com/static-rsc-4/TWwdI3l3Gwg0zpOA5kaJJqxR4Kc9Kd-9AMh_X9IupWns85WD54WrbWn2q8438-Q-bfbOIkBzpngURW-FlpnszgsNwdQfvWAedcW-MGbvadCjRYDw298SU3Ufawuv9fWerKWGA0cMQD8_3B1uvAC7AB4D51G8T6qmzJQfMi8SQx8?purpose=inline)
+
+[werise.design](https://www.werise.design/portfolio-collections/our-work/nexora-group?utm_source=chatgpt.com)
+
+Build a visually consistent industry grid:
+
+- Finance and payments.
+- Schools and education.
+- SACCOs and financial cooperatives.
+- Retail and commerce.
+- NGOs and service organizations.
+- Technology businesses.
+
+Each card should explain a concrete operational problem and link to the relevant service.
+
+Don't imply established sector experience that hasn't yet been demonstrated.
+
+07 — Technical proof / engineering demonstration
+
+This is where EULOK should be visibly different.
+
+[Bento Section 1 - Full Stack Development by Ela Design on Dribbble](https://images.openai.com/static-rsc-4/rqFCE-6bnRpkdRr5lUmP3QPPcam_0FbhyjENVLQX_SCSeWFPZtSwkelymBg-JYYL9PPVG75WjNdpGRdVaAHWydMZEp38k1Av5lYpj6QA19RTbj4a1YJPFkkZ_oP7Eju4Bpl6tDmfhOM_nfnLBP5iL39fOOngtqZ9VrzVnM3vMlo?purpose=inline)
+
+[dribbble.com](https://dribbble.com/shots/27210452-Bento-Section-1-Full-Stack-Development?utm_source=chatgpt.com)
+
+Show real engineering artifacts:
+
+- Reconciliation architecture.
+- Idempotency handling.
+- Approval boundaries.
+- Testing strategy.
+- Failure recovery.
+- Deployment verification.
+
+Make it clear which demonstrations are illustrative and which have been implemented and verified.
+
+08 — Case studies and evidence
+
+Build a proper case-study card system, even if the first published client case studies are not yet available.
+
+[Engineering Platform Web Design – ZeBeyond by Phenomenon Labs for Phenomenon Studio on Dribbble](https://images.openai.com/static-rsc-4/mNU2nduSduRXY0Rx3RmX7NlFnH8WDZ_XqBMGb_60-OCoSjJ-imsjdCN6koiLIzTt6akoAf6c1UfmDgydDWpnCjcUgBffkBv0RgroGxzbvizWfaZt7hBcwiAgKqhovgOxBPgC-YDqdyU8JOUNy46vIqeeE5WfXeJszftYWk_72o0?purpose=inline)
+
+[dribbble.com](https://dribbble.com/shots/26978736-Engineering-Platform-Web-Design-ZeBeyond?utm_source=chatgpt.com)
+
+Each future case study should follow:
+
+1. Client and industry, where disclosure is permitted.
+2. Initial business problem.
+3. Scope of responsibility.
+4. Engineering decisions.
+5. Delivered solution.
+6. Verification.
+7. Measured results, when independently supportable.
+
+Until real case studies are publishable, use a deliberate empty state:
+
+First case study publishing after the EFRIS pilot closes. Scope and date, not scope and spin.
+
+Do not fabricate a large number to fill the visual space.
+
+09 — Why EULOK
+
+Introduce a restrained principles section:
+
+- Evidence over adjectives.
+- Explicit scope and acceptance criteria.
+- Security and privacy considered from the start.
+- Automated verification.
+- Clear ownership and handover.
+- No unnecessary infrastructure.
+
+Link each principle to actual documentation or implementation evidence where possible.
+
+10 — Final conversion section
+
+[Strategrity Partners](https://images.openai.com/static-rsc-4/hj8WHtvbS4Fqg4X9uwXX2riMuK5SmCeKN46hFrLtP3rIzx33wYpCyVtsPdba7Vq_GiWlrXt_5zxAyUklJLtNJZbOJNbZSxlGMCq1HmqaA0C6G8yrjDIPhbElUTV-Q0mGzrfLhVEeGsWh_iZ4xuokWOpc7O8KG1Z-EfnRPnaUCUU?purpose=inline)
+
+[strategritypartners.com](https://strategritypartners.com/contact?utm_source=chatgpt.com)
+
+Headline:
+
+Have a system that needs to work better?
+
+Supporting text:
+
+Tell us what you're building, what is broken, or what your business needs to improve.
+
+Primary CTA: `Start a conversation`
+
+Secondary option: WhatsApp.
+
+Keep this section visually distinct from the footer.
+
+# 4. Services page — turn the service catalogue into a product experience
+
+The Services page should not be six disconnected boxes. It should help a buyer recognize their problem, understand the service, and identify the appropriate next step.
+
+Phenomenon Studio's grouping of services into launch, evolve, rebrand, and extend is useful because it organizes services around a client's situation rather than just technical disciplines.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://phenomenonstudio.com\&sz=32)
+
+Phenomenon Studio+1
+
+
+
+## Recommended structure
+
+### A. Services hero
+
+Headline:
+
+Engineering for the problems that matter.
+
+Supporting copy:
+
+From a new business website to a critical financial workflow, EULOK builds and improves software around real operational requirements.
+
+Include:
+
+- Browse services.
+- Discuss a project.
+- A compact list of service categories.
+
+### B. Guided service discovery
+
+Borrow Phenomenon's Smart Search concept.
+
+[Web UI - AdWords by Dstudio on Dribbble](https://images.openai.com/static-rsc-4/tJ_gOTJSyjKcTY5lpJIoWflUT5MBZMoLTPtPKAPb9ok2iPmkDQyv0pa3rWzeLkJo1yiQwtPoqNoqAowdBsOO2tJbHA4hSAiBPszr7Lvo3yuo1t7bIhZRM4u-244aFMgL2xleFBfTFP4b9Y5gZu-PJWtHUVuMlgUpcSMiMwHAMME?purpose=inline)
+
+[dribbble.com](https://dribbble.com/shots/17788420-Web-UI-AdWords?utm_source=chatgpt.com)
+
+Create a simple filter interface:
+
+- What are you trying to do?
+- What type of system?
+- What industry?
+
+For example:
+
+| Filter   | Options                                    |
+| -------- | ------------------------------------------ |
+| Goal     | Build / Fix / Automate / Integrate         |
+| System   | Website / Web app / Financial system / API |
+| Industry | Finance / Education / Retail / Other       |
+
+The results should filter the existing six services. They should not introduce a second service catalogue.
+
+Important: This is optional discovery, not a mandatory gate. Every service remains visible without interacting with filters.
+
+### C. Six detailed service sections
+
+Use a consistent design for all six services.
+
+01 / BUILD
+
+Service example
+
+# Business websites
+
+Build a credible digital presence that communicates your business clearly and converts visitors into enquiries.
+
+Who this is for
+
+Businesses replacing outdated websites or launching a new digital presence.
+
+What we deliver
+
+- Responsive website architecture.
+- Conversion-focused page design.
+- Accessible interactions.
+- SEO foundations.
+- Performance optimization.
+- Deployment and documentation.
+
+Engineering considerations
+
+Semantic markup, responsive image delivery, caching, security headers and automated checks.
+
+CTA: Discuss a website project
+
+Apply the same component structure to:
+
+| Number | Service                    | Buyer-oriented description                                            |
+| ------ | -------------------------- | --------------------------------------------------------------------- |
+| 01     | Business websites          | Businesses needing a professional, high-performing online presence    |
+| 02     | Custom software            | Organizations replacing spreadsheets and fragmented processes         |
+| 03     | Software rescue            | Businesses with stalled, unreliable or difficult-to-maintain software |
+| 04     | AI and workflow automation | Teams eliminating repetitive operational work                         |
+| 05     | Integrations and APIs      | Businesses connecting disconnected systems                            |
+| 06     | Financial reconciliation   | Finance teams improving payment and collection verification           |
+
+### D. Service comparison
+
+Add a simple comparison section showing:
+
+- When the service is appropriate.
+- What problem it addresses.
+- Typical deliverables.
+- Whether it requires an existing system.
+- What information is needed to estimate scope.
+
+Avoid artificial pricing tables.
+
+### E. Related engineering demonstrations
+
+Every service should link to at least one relevant technical explanation, where available.
+
+For example:
+
+- Reconciliation → reconciliation architecture.
+- Software rescue → system assessment and recovery process.
+- Integrations → API reliability and idempotency.
+- Websites → performance and accessibility standards.
+
+This connects marketing content to engineering evidence.
+
+# 5. Work / Case Studies page — build an evidence system
+
+This is one of the most valuable long-term additions.
+
+Phenomenon presents projects with outcomes, technology, location, and project details. Software Mind provides a useful problem → implementation → result narrative.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://phenomenonstudio.com\&sz=32)
+
+Phenomenon+2
+
+
+
+EULOK should combine both.
+
+## Recommended layout
+
+[Case - Portfolio Theme for Astro | Astro](https://images.openai.com/static-rsc-4/-kI5goK8BzlYM6viMpVQCzJl4lsIpaIL51kT7CmmepgottkaJWPPoLAx7a0AGaGTMda5tfkVMvnkeAjW52yTLLnXjUDfLYoghKsTq37ez5nz8wpBF-PjD2fQDdjnqOXGlUof0wNGVf3DAiDIxmQorFG8zrtXTDWAQKjFKdhxLdM?purpose=inline)
+
+[astro.build](https://astro.build/themes/details/case-portfolio-theme-for-astro/?utm_source=chatgpt.com)
+
+### A. Work discovery
+
+Use lightweight filters:
+
+- All work.
+- Financial systems.
+- Business software.
+- Websites.
+- Automation.
+- Integrations.
+
+Don't build filters for a portfolio with only one or two entries unless they provide real value. The interface should gracefully accommodate an empty category.
+
+### B. Three content types
+
+Separate these explicitly:
+
+1\. Client case studies
+
+Actual client work with permission to publish.
+
+2\. Engineering demonstrations
+
+Internally developed technical examples, clearly identified as such.
+
+3\. Technical articles
+
+Explanations of engineering decisions, architecture and reliability.
+
+This prevents prospective clients from confusing an internal demonstration with a deployed client system.
+
+### C. Case-study visual format
+
+Illustrative layout — not a published client result
+
+[Finance Automation: Streamline payment operations end-to-end](https://images.openai.com/static-rsc-4/ED9WXCQxxVCvwYMdj3GUPsJBz7mf1NljIju_NoPownqtLy0SMBAz6xjMBZ5MAWlCf3BzYaPKaX9to_XMWRG_Jm-5i1J-gFLzTjYyZgq41yNX2RD2fZgoZCLspMdFqGsoyTw_sXfF8NaMFAJUIsYzASoGvDI66IQx18GI98dIF0E?purpose=inline)
+
+[payrails.com](https://www.payrails.com/automations?utm_source=chatgpt.com)
+
+FINANCIAL SYSTEMS / ENGINEERING DEMONSTRATION
+
+# Mobile-money reconciliation architecture
+
+A system for comparing incoming collections against authoritative financial records.
+
+The problem
+
+Payment records can arrive through different channels and require reliable matching.
+
+The engineering approach
+
+- Decimal-based financial calculations.
+- Deterministic matching rules.
+- Duplicate-event protection.
+- Explicit human approval.
+- Auditable decisions.
+
+Evidence
+
+Link to verified implementation, tests and technical documentation when publicly available.
+
+No client outcome or production deployment is implied by this demonstration.
+
+### D. Reserve space for real proof
+
+Eventually, each case study should have:
+
+- A strong cover image.
+- Industry and solution tags.
+- Client-approved description.
+- Scope and timeline.
+- Before/after architecture.
+- Real results.
+- Technology stack.
+- Testing and deployment approach.
+- Lessons learned.
+
+Do not use client logos without permission. Do not invent testimonials. Do not turn internal tests into customer-impact metrics.
+
+# 6. How We Work — make the delivery process tangible
+
+This page should communicate that EULOK is an engineering partner with a defined operating system.
+
+Software Mind's lifecycle storytelling is a useful model, while Ailoitte's explanation of governance as part of delivery reinforces the technical positioning.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://softwaremind.com\&sz=32)
+
+Software Mind+1
+
+
+
+[Finora - Finance App :: Behance](https://images.openai.com/static-rsc-4/gr81RMKWfx992QHfJNTUTQJQYQPJKrHdCS8jVnll8R6bN0Raz0plR5HVEh7h_m8D37Td0Dnd-p91EeFfXNn1GQ9BHJrDTRrAgP-HWLdZWGptlAve-sRK6yJKJ9nNmcsO7ERA3eboUpKmJr46t6jGIftrwIHOezp5uZi6eUqeSyU?purpose=inline)
+
+[behance.net](https://www.behance.net/gallery/226655739/Finora-Finance-App?utm_source=chatgpt.com)
+
+## The six-stage EULOK delivery model
+
+1. 01 — Discover
+
+   Understand the business problem.
+
+   Deliverables:
+   - Initial requirements.
+   - Existing-system assessment.
+   - Stakeholder needs.
+   - Constraints and risks.
+   Exit condition: problem and intended outcome are sufficiently understood.
+2. 02 — Scope
+
+   Define the work before implementation.
+
+   Deliverables:
+   - Scope document.
+   - Acceptance criteria.
+   - Explicit exclusions.
+   - Technical assumptions.
+   - Cost and delivery estimate.
+   Exit condition: agreed scope and approval.
+3. 03 — Design
+
+   Design the system before committing to implementation details.
+
+   Deliverables:
+   - Architecture.
+   - Data model.
+   - User journeys.
+   - Security considerations.
+   - Integration contracts.
+   Exit condition: architecture and interfaces reviewed.
+4. 04 — Build and verify
+
+   Implement in controlled increments.
+
+   Deliverables:
+   - Working software.
+   - Automated tests.
+   - Security checks.
+   - Technical documentation.
+   - Review evidence.
+   Exit condition: agreed acceptance gates pass.
+5. 05 — Deploy and hand over
+
+   Release responsibly.
+
+   Deliverables:
+   - Deployment.
+   - Configuration documentation.
+   - Operational instructions.
+   - Source and ownership transfer as agreed.
+   - Known limitations.
+   Exit condition: delivery and acceptance verified.
+6. 06 — Operate and improve
+
+   Continue improving where contracted.
+
+   Deliverables:
+   - Maintenance.
+   - Monitoring.
+   - Incident resolution.
+   - Performance improvements.
+   - Planned enhancements.
+   Exit condition: defined service obligations are fulfilled.
+
+### Additional addition: show the actual engineering gates
+
+A section called What must pass before release:
+
+| Gate                 | What it verifies                          |
+| -------------------- | ----------------------------------------- |
+| Unit tests           | Business logic                            |
+| Integration tests    | System interactions                       |
+| Browser tests        | Real user workflows                       |
+| Accessibility        | Keyboard and assistive technology support |
+| Security             | Vulnerabilities and configuration         |
+| Performance          | Defined budgets                           |
+| Release verification | Actual deployed behavior                  |
+
+Only display green/pass states when evidence exists and is current.
+
+This is more convincing than saying EULOK follows best practices.
+
+# 7. Contact and intake — one conversion system
+
+This is a high-priority functional correction.
+
+The existing audit identifies a genuine inconsistency: the homepage has a guided intake wizard, while the main navigation sends prospects to a separate static contact page.
+
+The correct solution is one shared intake component with multiple entry points.
+
+## Recommended user journey
+
+## Start a project
+
+PROJECT INTAKE · EXAMPLE OF THE PROPOSED EXPERIENCE
+
+1\. What do you need?
+
+Build something new
+
+Fix or rescue existing software
+
+Automate a business process
+
+Connect existing systems
+
+2\. What type of system?
+
+Custom software
+
+3\. Approximate budget
+
+$500–$2,000
+
+Indicative planning range, not a quoted price or eligibility requirement.
+
+4\. Tell us more (optional)
+
+&#x20; Copy enquiry
+
+Demonstration only. No data is submitted or stored, and this preview does not initiate WhatsApp.
+
+The actual implementation should follow these rules:
+
+### Intake design
+
+- One canonical wizard component.
+- Homepage and Contact page use the same component and validation.
+- Nav CTA opens the same flow.
+- Relevant service pages preselect the service.
+- Preserve progress when moving between steps.
+- Allow users to go backwards and edit answers.
+- Explain why optional questions are requested.
+- No backend or storage unless explicitly implemented and disclosed.
+
+### WhatsApp integration
+
+Keep WhatsApp
+
+WhatsApp should remain a first-class contact option.
+
+The implementation should:
+
+- Open the conversation using a properly encoded WhatsApp deep link.
+- Never display the underlying phone number as visible text.
+- Never place the number in a copyable message or page content.
+- Avoid exposing it in rendered labels, metadata, structured data, or logs.
+- Keep the contact CTA labelled `Continue on WhatsApp`.
+- Draft the user's enquiry before opening WhatsApp.
+- Allow the user to review the message first.
+- Offer email as an alternative.
+
+A technical reality: a `wa.me` link contains a phone number in its URL. It is therefore impossible to guarantee that the number is hidden from someone inspecting the link or browser network traffic while using that conventional direct-link method. The requirement should be interpreted as never printing or displaying your number to visitors, not as making the number cryptographically secret. If stronger concealment is required, use a server-controlled redirect or business messaging integration.
+
+### Email integration
+
+Replace plain text with:
+
+- A functional `mailto:` link.
+- A copy-email control.
+- Eventually, an EULOK-domain business mailbox.
+
+The current Gmail address can remain as a temporary fallback until the company-domain inbox is operational.
+
+### Budget qualification
+
+Use budget bands as an optional scoping signal, not an automatic rejection mechanism.
+
+The form should allow:
+
+- Unknown budget.
+- Early-stage idea.
+- Existing budget.
+- Custom explanation.
+
+This matters for businesses in Uganda and other markets where project budgets can differ significantly from the international agency pricing model.
+
+# 8. About page — credibility without pretending to be a large team
+
+EULOK should look like an established engineering organization in its presentation, while remaining truthful about its actual structure.
+
+[Topology - landing.love](https://images.openai.com/static-rsc-4/A9EK112cq7BOEiO1SeNkJVdkTXrjgSxOvp8mKjMXdT2gtM7PH-Rtg2kh1B2w_qB7ozLFTj0Ui5buWYWmpIiDBmeMGK1hzZGF9c8y8hYmsGtdcxtHkrQUdPOZRwoczeM0tXZPqybtjrlkgg4z3Sin40szSy2Xo3qlRnmHf53Yz3Y?purpose=inline)
+
+[landing.love](https://www.landing.love/sites/topology/?utm_source=chatgpt.com)
+
+Recommended additions:
+
+### A. Company positioning
+
+Explain:
+
+- What EULOK builds.
+- Which business problems it addresses.
+- Its engineering philosophy.
+- How it works with clients worldwide.
+
+### B. Engineering principles
+
+Give each principle its own section:
+
+1. Deterministic systems.
+2. Explicit accountability.
+3. Verifiable quality.
+4. Security and privacy.
+5. Maintainability.
+6. Honest communication.
+
+### C. Leadership
+
+Use a simple byline such as:
+
+Engineering leadership
+
+Founder & Lead Engineer
+
+Link to a dedicated profile or professional background page when ready.
+
+No artificial team grid.
+
+### D. Proof and transparency
+
+Add three deliberately separate sections:
+
+- Published client evidence.
+- Engineering demonstrations.
+- Certifications and registrations.
+
+Only display genuine, verifiable information.
+
+### E. Reserved testimonial area
+
+Don't publish invented testimonials. Keep the design system capable of supporting genuine, approved client statements later.
+
+# 9. Add an engineering insights / technical journal
+
+This is a valuable addition because EULOK's positioning depends on demonstrating technical depth.
+
+[Pulsar Lite | Astro](https://images.openai.com/static-rsc-4/asI5CIJ_2a-AjPi1_NkHt0JoKTsQAeD05TQ44GzwT60g2thwvXfltrpEnDAMTMEJFHXyi0k7Kb4QPgZ3Uu5vgYCu8jiYCML2m9r5VN6otwinej-diICOIuouXYnHmUdeqlzPR9KcrPO8f8rArA8dHtqVGav_L5077Fn8mrDkbMI?purpose=inline)
+
+[astro.build](https://astro.build/themes/details/pulsar-lite/?utm_source=chatgpt.com)
+
+Create a section called Engineering Notes or Insights.
+
+Initial topics:
+
+| Article                                                          | What it demonstrates                        |
+| ---------------------------------------------------------------- | ------------------------------------------- |
+| Why financial systems need deterministic calculations            | Financial engineering                       |
+| Idempotency and duplicate payment events                         | Reliability                                 |
+| Designing human approval into automation                         | AI governance                               |
+| How to rescue a stalled software project                         | Technical assessment                        |
+| Why a successful deployment is not proof of production readiness | Release engineering                         |
+| Building for unreliable network conditions                       | Mobile and African infrastructure awareness |
+| What a good software handover actually contains                  | Operational maturity                        |
+
+Each article should contain:
+
+- Author.
+- Publication date.
+- Reading time.
+- Technical category.
+- A useful original diagram or example.
+- Related services.
+- References when making factual claims.
+
+Do not publish generic AI-generated SEO articles. A small number of substantial technical articles is better.
+
+# 10. The HEXACORE-inspired visual system
+
+HEXACORE is particularly useful as a direction for the site's visual identity. Its published palette includes near-black `#010305`, navy `#263449`, deep blue `#1A445D`, off-white `#F1F1EF`, and muted neutrals.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://dribbble.com\&sz=32)
+
+dribbble.com
+
+
+
+I would translate that into a more refined EULOK design system.
+
+Proposed EULOK palette
+
+Obsidian
+
+\#090E17
+
+Deep navy
+
+\#172337
+
+Steel blue
+
+\#234B70
+
+Mist
+
+\#E9EDF2
+
+Warm white
+
+\#F3F1EC
+
+Accent blue
+
+\#527CA3
+
+Proposed design tokens, not a finalized brand palette. Check contrast for every actual foreground/background combination.
+
+## Design tokens
+
+Build a centralized design system rather than styling individual pages independently.
+
+| Token group | Requirements                                         |
+| ----------- | ---------------------------------------------------- |
+| Colors      | Semantic light/dark surfaces, text, borders, accents |
+| Typography  | Display, heading, body, mono                         |
+| Spacing     | Consistent responsive scale                          |
+| Layout      | Fluid gutters, section widths, grid                  |
+| Radius      | Small, medium, large                                 |
+| Shadows     | Restrained elevation                                 |
+| Motion      | Duration, easing, reduced-motion fallback            |
+| Components  | Buttons, links, cards, forms, navigation             |
+| Breakpoints | Content-driven responsive thresholds                 |
+
+### Original visual elements
+
+EULOK should develop a recognizable visual language using:
+
+- Technical flow diagrams.
+- Data reconciliation illustrations.
+- System boundary diagrams.
+- Numbered engineering stages.
+- Subtle grid structures.
+- Abstract geometry derived from the EULOK logo.
+- Small monospaced engineering annotations.
+
+Avoid:
+
+- Random glowing orbs.
+- Excessive glassmorphism.
+- Endless gradients.
+- Stock photographs of people pointing at laptops.
+- Generic AI robot illustrations.
+- Unnecessary 3D effects.
+
+The visual identity should communicate engineering precision, not visual noise.
+
+# 11. Mobile UX — design it as a separate first-class experience
+
+This is not optional. EULOK's mobile experience should be designed and evaluated independently.
+
+Non-negotiable
+
+## A. Mobile navigation
+
+[Now Code Software development - Awwwards Nominee](https://images.openai.com/static-rsc-4/R8XyTh1zyWl0h81x5ybfNaL9wLI_eAupje3V1nbCtEadiCZAsIU7X0-G0pMiRIh9wFRA0cXBl_8BwbDm_BzOw3EC2tNC4jdqKMcbXWMJKO_GIizKMymAEhMf1v3d5kap81gWJtu5yi4t-5dDT_QFa5TBIyFFNNjQtJgQLjv5Dn8?purpose=inline)
+
+[awwwards.com](https://www.awwwards.com/sites/now-code-software-development?utm_source=chatgpt.com)
+
+Requirements:
+
+- Compact header.
+- Logo remains legible.
+- Navigation opens as an accessible disclosure.
+- No mega-menu.
+- No horizontal overflow.
+- Clear close control.
+- Escape-key support.
+- Focus remains managed correctly.
+- Body scrolling behaves predictably.
+- WhatsApp remains accessible without covering content.
+
+## B. Mobile hero
+
+The hero should not simply stack the desktop elements in the same order if that creates a long, repetitive first screen.
+
+Recommended sequence:
+
+1. Eyebrow.
+2. Headline.
+3. Short supporting copy.
+4. Primary CTA.
+5. Secondary text link.
+6. Compact engineering illustration.
+
+The illustration must remain meaningful at small sizes.
+
+## C. Mobile service cards
+
+[Venpa AI - Enterprise Bottlenecks to Engineering Elegance | Product Hunt Launch Dashboard](https://images.openai.com/static-rsc-4/JslMEBL9uGdfXwnSKcS6rrHLgTD_H6mSiKA9hhRfnrLVPaVnDr5JD-O888bKKMQCIX3vqhzVRIcpsBhjWakNxBgXplPAxa1YoNDMCDQSW-Tvz4ZRMip-aJjtBM7ORITVDtNHwAG5s2YwpPSKFu4O4rju5ZeZ7RTqYGvbhHRw2ls?purpose=inline)
+
+[hunted.space](https://hunted.space/dashboard/venpa-ai?utm_source=chatgpt.com)
+
+- One card per row on narrow screens.
+- No tiny icons as the only interactive target.
+- Entire cards are clickable only when appropriate.
+- Consistent card spacing.
+- No forced horizontal scrolling.
+- Avoid excessive text truncation.
+
+## D. Mobile technical diagrams
+
+This deserves dedicated engineering effort.
+
+[Create a Powerful Lifecycle Marketing Strategy in 5 Steps | Customer.io](https://images.openai.com/static-rsc-4/VMLN9-RpVtWpe157ErQ7Fr8P-Cw7QD1vkZwH5dhA6xwwR0vd2VCm4_UaFkBjiIA77N1fPpp3NxBSBsmIvxIs8dT82BGYfLMOhI5ZtNKXWhAeHVrbSrfiB8SR9nXe3rAjuPl46HFAUVjUyWF0hWMo8rRZKoTU7300ZExcm6-LjJQ?purpose=inline)
+
+[customer.io](https://customer.io/learn/lifecycle-marketing/strategy?utm_source=chatgpt.com)
+
+A five-stage reconciliation architecture should become a readable vertical or carefully grouped flow.
+
+Example:
+
+01 — Payment event
+
+Incoming payment record
+
+02 — Validation
+
+Validate identity and amount
+
+03 — Deterministic matching
+
+Apply explicit matching rules
+
+04 — Human review
+
+Escalate uncertain decisions
+
+05 — Auditable outcome
+
+Record the result and evidence
+
+The mobile diagram must not depend on horizontal scrolling, hover, or tiny labels.
+
+## E. Mobile intake
+
+Test on:
+
+- 320px.
+- 360px.
+- 375px.
+- 390px.
+- 414px.
+
+Also test at a realistic low-height viewport.
+
+Requirements:
+
+- No clipped fields.
+- Native keyboard compatibility.
+- Visible labels.
+- Clear error messages.
+- Persistent progress indication.
+- No accidental form reset.
+- No fixed button obscuring content.
+- WhatsApp handoff works correctly.
+
+The wizard need not fit entirely above the fold. The important requirement is that the next action is obvious and the form never traps the user.
+
+## F. Persistent WhatsApp contact
+
+Use a discreet floating WhatsApp control:
+
+- Bottom-right on desktop and mobile.
+- Respects safe-area insets.
+- Does not cover primary CTAs.
+- Accessible name: `Contact EULOK on WhatsApp`.
+- No visible number.
+- Opens an appropriately encoded message.
+- No aggressive pulsing or animation.
+
+It should be available throughout the site without becoming the dominant visual element.
+
+# 12. Technical production standards
+
+A beautiful website that fails under real conditions is not FAANG-grade.
+
+The following is the acceptance standard I recommend.
+
+## A. SEO and domain integrity
+
+The issues in your audit must be treated as release blockers.
+
+| Area                | Required outcome                                        |
+| ------------------- | ------------------------------------------------------- |
+| Production hostname | One verified canonical hostname                         |
+| Navigation          | All links use the canonical origin                      |
+| Canonical tags      | Self-referencing per indexable page                     |
+| Open Graph          | Correct production URLs and images                      |
+| Robots              | Deliberate, consistent indexation policy                |
+| Sitemap             | Only canonical, indexable URLs                          |
+| Robots.txt          | Matches intended indexing policy                        |
+| Redirects           | Preview and obsolete aliases handled deliberately       |
+| Metadata            | Unique page titles and descriptions                     |
+| Structured data     | Only truthful Organization, WebSite and relevant schema |
+| Social previews     | Valid image, title and description                      |
+
+One important qualification: preview environments may legitimately be `noindex`. The production site should not inherit that setting accidentally. Do not blindly remove `noindex` from preview deployments.
+
+The branch-preview hostname should never become the canonical production identity.
+
+## B. Performance engineering
+
+Set explicit budgets rather than just saying "fast."
+
+Core Web Vitals targets
+
+# LCP
+
+# ≤2.5s
+
+Largest Contentful Paint
+
+# INP
+
+# ≤200ms
+
+Interaction to Next Paint
+
+# CLS
+
+# ≤0.1
+
+Cumulative Layout Shift
+
+These are Google's good Core Web Vitals thresholds, measured at the 75th percentile of real-user visits.
+
+Additional budgets:
+
+- Initial JavaScript: keep exceptionally small; target under 100 KB compressed where architecture permits.
+- Initial CSS: target under 50 KB compressed.
+- No unnecessary third-party scripts.
+- Responsive AVIF/WebP imagery.
+- Explicit image dimensions.
+- Lazy-load below-the-fold images.
+- Prioritize the actual hero asset.
+- Self-host optimized fonts where practical.
+- `font-display: swap`.
+- Avoid loading multiple font weights unnecessarily.
+- No layout shifts from late-loading content.
+
+Don't treat these numbers as achieved results until measured.
+
+## C. Accessibility
+
+Target WCAG 2.2 AA.
+
+Required:
+
+- Semantic landmarks.
+- Correct heading hierarchy.
+- Skip link.
+- Keyboard navigation.
+- Visible focus indicators.
+- Accessible form labels.
+- Error identification and recovery.
+- Appropriate live announcements.
+- Color contrast.
+- Reduced-motion support.
+- Correct dialog/disclosure behavior.
+- Screen-reader testing.
+
+Specifically test the intake wizard using:
+
+- Keyboard only.
+- NVDA with Firefox.
+- VoiceOver with Safari, where available.
+
+Automated axe checks cannot replace manual testing.
+
+## D. Security and privacy
+
+- No exposed secrets.
+- No personal WhatsApp number printed in the UI.
+- No unnecessary tracking.
+- No collection of project details without disclosure.
+- Correct security headers.
+- Safe link handling.
+- Dependency auditing.
+- Content Security Policy compatible with the actual site.
+- No unsafe DOM insertion.
+- No unnecessary client-side dependencies.
+
+## E. Cross-browser verification
+
+Test:
+
+- Chrome.
+- Firefox.
+- Safari.
+- Edge.
+- Android Chrome.
+- iOS Safari.
+
+Test both touch and keyboard interaction.
+
+## F. Automated CI gates
+
+Every change should pass:
+
+| Gate            | Requirement                                      |
+| --------------- | ------------------------------------------------ |
+| HTML validation | No material markup errors                        |
+| Link checker    | No broken internal links                         |
+| Unit tests      | All pass                                         |
+| Browser tests   | Critical journeys pass                           |
+| Accessibility   | No unresolved critical/serious violations        |
+| SEO tests       | Metadata, canonicals, robots and sitemap correct |
+| Performance     | Defined budgets respected                        |
+| Security        | Dependency and configuration checks pass         |
+| Build           | Reproducible production build                    |
+| Deployment      | Live production smoke tests pass                 |
+
+The site must not declare itself release-ready because the local build succeeded.
+
+# 13. Footer — make it a proper company navigation system
+
+[Footer | Resend](https://images.openai.com/static-rsc-4/A4R3UsCmg5GdtiR__MntR6t9FUfdeLsAarTGWlvx9cqVw45qIhnPcKREToz6fyiRSr3h8h-5awX9YbStcdY4Lf8zlwAbNmtwvDX0xDq4aW3aPK1LSBAKzm684adk0_7vfKPl_QV5osyV3HmLNPS8nfWPtlAiR7wCG-wdGai986E?purpose=inline)
+
+[footer.design](https://www.footer.design/sites/resend?utm_source=chatgpt.com)
+
+Recommended layout:
+
+Column 1 — EULOK
+
+- Logo.
+- Short company description.
+- Kampala, Uganda.
+- Remote worldwide.
+
+Column 2 — Explore
+
+- Home.
+- Services.
+- Work.
+- How We Work.
+- About.
+
+Column 3 — Engineering
+
+- Engineering Notes.
+- Reconciliation.
+- Software rescue.
+- Technical demonstrations.
+
+Column 4 — Contact
+
+- WhatsApp.
+- Email.
+- Start a project.
+
+Bottom row:
+
+- Privacy policy.
+- Accessibility.
+- Copyright.
+- Current year.
+
+WhatsApp should be represented by a link and icon, never your exposed telephone number.
+
+# 14. Additional additions that would make EULOK stand out
+
+These are not copied from the references. They are opportunities to make EULOK's own positioning more distinctive.
+
+| Addition                         | Value                                       | Priority            |
+| -------------------------------- | ------------------------------------------- | ------------------- |
+| Interactive engineering diagrams | Makes technical capabilities understandable | High                |
+| Project rescue landing page      | Targets businesses with immediate problems  | High                |
+| Engineering Notes                | Builds long-term technical authority        | High                |
+| Service discovery filters        | Helps buyers find relevant services         | Medium              |
+| Real CI evidence                 | Demonstrates engineering discipline         | High                |
+| Architecture explainers          | Differentiates EULOK from ordinary agencies | High                |
+| Budget qualification             | Improves project intake                     | Medium              |
+| Downloadable project brief       | Helps qualified prospects prepare           | Medium              |
+| Technology and tools page        | Shows engineering decisions and constraints | Medium              |
+| Real client case studies         | Establishes commercial credibility          | High when available |
+| Genuine testimonials             | Establishes social proof                    | When available      |
+| Interactive project timeline     | Makes delivery expectations understandable  | Medium              |
+
+## Particularly valuable: Rescue a stalled project
+
+This deserves its own landing page.
+
+[Resilience — SRE Monitoring Landing Page Template | Build Fully Functional Applications with Rocket](https://images.openai.com/static-rsc-4/OU-eNNjxy3G0CkkSpMjLnWINbgp4DGzk7KQJ9bbZLDG724-LM3DEwO4rrebDWEyULTIr07n7uR2UgucdxHxMHQq-j5wEccxSwA8bFxTSAeajHA8XR5sSu0xO8OTTpP3hkPxTshH_nvkE2NG9niYASfHK8tvaZ-7iBukB9fZL-fc?purpose=inline)
+
+[rocket.new](https://www.rocket.new/templates/resilience-sre-monitoring-landing-page-template?utm_source=chatgpt.com)
+
+Suggested headline:
+
+Your software is stuck. Let's establish why.
+
+Cover:
+
+- Failed deployments.
+- Unreliable integrations.
+- Unmaintainable code.
+- Unfinished software projects.
+- Performance problems.
+- Missing documentation.
+- Unclear system ownership.
+
+Show the rescue process:
+
+1. Establish the current state.
+2. Identify critical risks.
+3. Assess the architecture.
+4. Establish recovery priorities.
+5. Agree on a recovery scope.
+6. Execute and verify.
+
+CTA: `Discuss a software rescue`
+
+This is more differentiated than simply advertising generic software development.
+
+# 15. What we should deliberately avoid
+
+A premium website is not a collection of fashionable effects.
+
+| Avoid                            | Why                                           |
+| -------------------------------- | --------------------------------------------- |
+| Mega-menus                       | Unnecessary complexity for six services       |
+| Three equally dominant hero CTAs | Weakens conversion hierarchy                  |
+| Artificial statistics            | Contradicts EULOK's credibility               |
+| Fake testimonials                | Destroys trust                                |
+| Fake client logos                | Misrepresentation                             |
+| Unsupported certifications       | Compliance and reputation risk                |
+| Excessive animations             | Performance and accessibility costs           |
+| Horizontal mobile scrolling      | Poor usability                                |
+| Narrow global page containers    | Creates the compressed appearance you dislike |
+| Generic stock photography        | Makes the company look interchangeable        |
+| Repeated identical card grids    | Creates visual monotony                       |
+| Overloaded navigation            | Makes discovery harder                        |
+| Unnecessary carousels            | Hides information                             |
+| Aggressive WhatsApp popups       | Interrupts the user                           |
+
+One additional point: don't try to make every section look visually spectacular. A premium site needs contrast between visually dominant sections and quiet, information-rich sections.
+
+# 16. Complete page-by-page implementation specification
+
+This is the consolidated target architecture.
+
+| Page            | Required additions                                                                                                                              |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Home            | New hero hierarchy, engineering positioning, service overview, delivery lifecycle, industries, technical proof, case-study section, unified CTA |
+| Services        | Guided discovery, six detailed services, stage labels, audience descriptions, service comparisons, related demonstrations                       |
+| Work            | Case-study architecture, demonstration distinction, technical articles, evidence disclosure                                                     |
+| How We Work     | Six-stage lifecycle, deliverables, exit conditions, release gates, handover                                                                     |
+| About           | Company positioning, principles, leadership, truthful proof, reserved testimonial area                                                          |
+| Contact         | Shared intake wizard, budget qualification, email links, WhatsApp handoff                                                                       |
+| Accessibility   | WCAG 2.2 AA target, testing methodology, known limitations, reporting procedure                                                                 |
+| Insights        | Technical journal, architecture articles, engineering explanations                                                                              |
+| Software Rescue | Dedicated problem-led landing page                                                                                                              |
+| Privacy         | Accurate privacy and data-handling disclosure                                                                                                   |
+
+## Navigation recommendation
+
+Keep the main navigation simple:
+
+`EULOK | Services | Work | How We Work | About | Contact | Start a project`
+
+Insights can live in the footer initially and gain a primary navigation position when enough substantial articles exist.
+
+# 17. Implementation acceptance checklist
+
+This is the standard I would use to determine whether the redesign is actually finished.
+
+EULOK website release criteria
+
+0/51 verified
+
+Interactive acceptance checklist. Checking an item here records your review, not an automated test result.
+
+Visual design
+
+A distinctive EULOK design system exists
+
+The website uses the full available viewport intelligently
+
+No narrow global centered container
+
+Consistent typography and spacing tokens
+
+Original engineering illustrations
+
+Distinctive hero composition
+
+Consistent page-to-page components
+
+Light and dark sections have deliberate rhythm
+
+No generic placeholder visuals
+
+Homepage and content
+
+Hero has one dominant CTA
+
+All six services are represented correctly
+
+Engineering philosophy is clearly explained
+
+Delivery stages are consistent
+
+Industry sections explain actual problems
+
+Technical demonstrations distinguish illustrative from deployed work
+
+Case-study empty state is deliberate
+
+No fabricated metrics or testimonials
+
+Conversion
+
+One shared intake component
+
+Navigation CTA reaches the intake
+
+Homepage and Contact use the same wizard
+
+Budget qualification supports unknown budgets
+
+Email is a working mailto link
+
+WhatsApp opens a correctly drafted message
+
+WhatsApp number is never visibly printed
+
+Form data handling is accurately disclosed
+
+Mobile
+
+320px viewport verified
+
+360px viewport verified
+
+375px viewport verified
+
+390px viewport verified
+
+414px viewport verified
+
+Navigation keyboard and touch accessible
+
+No horizontal overflow
+
+Technical diagrams reflow properly
+
+Forms work with native mobile keyboards
+
+WhatsApp control respects safe areas
+
+No fixed elements obscure content
+
+Technical production
+
+Canonical hostname verified
+
+Branch preview is not the production identity
+
+Robots directives are intentional
+
+Sitemap and robots.txt verified
+
+Open Graph metadata verified
+
+Lighthouse mobile measurements captured
+
+Core Web Vitals monitored
+
+WCAG 2.2 AA audit performed
+
+Manual keyboard testing completed
+
+NVDA and VoiceOver checks completed where available
+
+Cross-browser tests pass
+
+Security and dependency checks pass
+
+CI release gates pass
+
+Production deployment smoke tests pass
+
+Documentation updated
+
+51 items remaining
+
+Reset checklist
+
+# 18. Final strategic recommendation
+
+I would make the following decisions for EULOK:
+
+| Decision              | Final direction                                    |
+| --------------------- | -------------------------------------------------- |
+| Overall design        | Premium dark/light editorial engineering aesthetic |
+| Layout                | Expansive, full-width, responsive composition      |
+| Visual reference      | Phenomenon + HEXACORE                              |
+| Service architecture  | Phenomenon + ScienceSoft                           |
+| Engineering narrative | Ailoitte + Software Mind                           |
+| Conversion            | Eloqwnt, simplified                                |
+| Case studies          | Phenomenon structure, EULOK evidence standard      |
+| Mobile                | Purpose-designed, not desktop compression          |
+| Navigation            | Flat, simple, accessible                           |
+| Contact               | One shared wizard                                  |
+| WhatsApp              | Retained, number never printed                     |
+| Trust                 | Verifiable engineering artifacts                   |
+| Performance           | Explicit budgets and real measurements             |
+| Accessibility         | WCAG 2.2 AA target, manually tested                |
+
+The most important distinction: EULOK should not look like a small company pretending to be a 500-person consultancy. It should look like a highly disciplined engineering company whose presentation, software, communication, and delivery standards are all exceptionally mature.
+
+## 19. What is required to turn this into the finished implementation
+
+The research and specification above are complete. However, I cannot honestly claim the existing site has been changed, tested, or deployed: this conversation does not currently provide the repository files or a writable repository session.
+
+The project repository is the necessary source of truth. The implementation must begin by inspecting the actual current branch, uncommitted work, site structure, existing design tokens, logos, tests, Cloudflare configuration, and deployment workflow.
+
+The following must be preserved during implementation:
+
+- Existing EULOK branding and logo variants.
+- Working WhatsApp contact functionality.
+- Your actual service descriptions and technical demonstrations.
+- The existing accessibility work.
+- All genuine engineering evidence.
+- Existing working deployment and CI gates.
+
+The changes must then be implemented across the entire site, not merely demonstrated in a homepage mockup.
+
+Repository: `Eugene-Olok/company-os`

@@ -1,0 +1,37 @@
+{
+  "endpoint": "/api/public/v2/observations",
+  "generated_at": "2026-10-05T19:52:32+00:00",
+  "host": "https://cloud.langfuse.com",
+  "kind": "langfuse-evidence",
+  "public_key_fingerprint": "pk-l...e537",
+  "reason": "a matching observation was read back from the Langfuse API",
+  "schema_version": 1,
+  "trace": {
+    "expected_logical_role": null,
+    "found": {
+      "end_time": "2026-10-05T19:41:46.909Z",
+      "latency_ms": 3405.0,
+      "latency_seconds": 3.405,
+      "metadata": {
+        "company_os.attempts": 2,
+        "company_os.boundary": "company-os-control-plane",
+        "company_os.http_status": 200,
+        "company_os.lane": "internal",
+        "company_os.logical_role": "research",
+        "company_os.provider": "nim",
+        "company_os.route_duration_ms": 3401,
+        "company_os.stream": false,
+        "company_os.upstream_model": "nvidia/nemotron-3-ultra-550b-a55b",
+        "company_os.wire_model": "nvidia/nemotron-3-ultra-550b-a55b"
+      },
+      "observation_id": "164973dd879a8825",
+      "start_time": "2026-10-05T19:41:43.504Z",
+      "trace_id": "a8d69605129338983545a3c131b1b48e"
+    },
+    "name": "company_os.boundary.request",
+    "observations_inspected": 14,
+    "window_minutes": 60
+  },
+  "verdict": "pass",
+  "verified": true
+}

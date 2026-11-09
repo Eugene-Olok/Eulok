@@ -1,0 +1,181 @@
+version: 1
+documented_by: u/tools/design_gate_verifier.py
+
+# Gate sequence for the Company OS design package.
+#
+# A gate's status is DERIVED every run from:
+#   - prerequisites: if any prerequisite gate is not PASS, the gate is BLOCKED
+#     (it cannot be evaluated or passed out of sequence).
+#   - checks: tool exit codes / evidence files / register closure.
+#
+# Hard rules:
+#   * No gate may be PASS while a prerequisite is not PASS.
+#   * A check that returns BLOCKED (not FAIL) means "genuinely not executable
+#     yet" — the gate inherits BLOCKED. Downstream gates inherit it too.
+#   * OUT_OF_SCOPE work is not tracked here. This file only sequences the
+#     headers that gate the design package's deterministic acceptance.
+
+gates:
+
+  - id: GATE-1
+    name: Design Audit & Baseline
+    summary: >
+      The baseline audit exists on disk and is dated; the current design
+      package evolved from a recorded baseline, not from memory.
+    prerequisites: []
+
+  - id: GATE-2
+    name: Design-System Contract & Readiness
+    summary: >
+      Token, graph, manifest, decision-effects and contract-spec validators
+      all pass deterministically; the §12/§15 reconciliation evidence exists.
+    prerequisites: [GATE-1]
+
+  - id: PENPOT-PROTOCOL-SUBGATE
+    name: Penpot Write-Protocol Subgate
+    summary: >
+      Live-writes into Penpot are permitted only when a disposable target is
+      authorized AND the update-file contract is verified. Currently BLOCKED:
+      no disposable target exists and the write surface is unverified.
+    prerequisites: [GATE-2]
+
+  - id: GATE-3
+    name: Decision Closure & Token Establishment
+    summary: >
+      All decisions required for token establishment are APPROVED in the
+      §26 register and the token set is closed. Exists once the subgate and
+      founder decisions permit claiming it.
+    prerequisites: [GATE-2, PENPOT-PROTOCOL-SUBGATE]
+
+  - id: GATE-4
+    name: Component Contract
+    summary: >
+      Component specs validate against the component-contract schema
+      (tools/design_spec.py) and the offline spec set is internally
+      consistent.
+    prerequisites: [GATE-3]
+
+  - id: GATE-5
+    name: Page & Template Scope
+    summary: >
+      The page/template map is present and its entries resolve to defined
+      design work.
+    prerequisites: [GATE-3]
+
+  - id: GATE-6
+    name: Implementation & Parity
+    summary: >
+      Implemented pages match their design contract (visual/behavioral parity
+      evidence recorded per page).
+    prerequisites: [GATE-4, GATE-5]
+
+  - id: GATE-7
+    name: Ship & Evidence (Phase 8)
+    summary: >
+      Production gates pass or are recorded BLOCKED with evidence; the §16
+      final report is written and archived.
+    prerequisites: [GATE-6]
+
+checks:
+
+  - key: baseline_evidence
+    gate: GATE-1
+    kind: evidence
+    note: presence of the 2026-10-08 baseline audit
+    path: evidence/runs/design-system-audit-2026-10-08.md
+
+  - key: manifest_validates
+    gate: GATE-2
+    kind: tool
+    note: manifest structure + deep per-item schema
+    command: [python3, tools/validate_design_manifest.py]
+
+  - key: tokens_validates
+    gate: GATE-2
+    kind: tool
+    note: token + decision register + contrast validation
+    command: [python3, tools/validate_design_tokens.py]
+
+  - key: graph_validates
+    gate: GATE-2
+    kind: tool
+    note: decision dependency graph acyclic check
+    command: [python3, tools/validate_design_graph.py]
+
+  - key: decision_effects_validates
+    gate: GATE-2
+    kind: tool
+    note: authorized deferrals/exclusions reference real items
+    command: [python3, tools/validate_decision_manifest.py]
+
+  - key: contract_specs_validate
+    gate: GATE-2
+    kind: tool
+    note: responsive + accessibility contract anchors present
+    command: [python3, tools/validate_design_specs.py]
+
+  - key: gate2_reconciliation_evidence
+    gate: GATE-2
+    kind: evidence
+    note: the §12/§15 reconciliation doc exists
+    path: evidence/runs/design-gate2-manifest-reconciliation-2026-10-11.md
+
+  - key: gate2_verification_evidence
+    gate: GATE-2
+    kind: evidence
+    note: the originally-verified gate-2 doc exists
+    path: evidence/runs/design-gate2-verification-2026-10-08.md
+
+  - key: penpot_target_policy_parses
+    gate: PENPOT-PROTOCOL-SUBGATE
+    kind: tool
+    note: the fail-closed target policy loads without error
+    command: [python3, tools/penpot_target_guard.py]
+
+  - key: penpot_subgate_status
+    gate: PENPOT-PROTOCOL-SUBGATE
+    kind: evidence_status
+    note: independent run documenting the subgate state
+    path: evidence/runs/design-penpot-protocol-subgate-2026-10-11.md
+
+  - key: token_register_closed
+    gate: GATE-3
+    kind: register
+    note: decisions required for token establishment are APPROVED
+    required_statuses:
+      "26.1": APPROVED
+      "26.5": APPROVED
+      "26.8": APPROVED
+      "26.9": APPROVED
+      "26.11": APPROVED
+
+  - key: component_specs_validate
+    gate: GATE-4
+    kind: tool
+    note: component specs validate against the contract schema
+    command: [python3, tools/design_spec.py]
+
+  - key: component_offline_evidence
+    gate: GATE-4
+    kind: evidence
+    note: COMPONENT_SPEC.md offline-verified state is recorded
+    path: docs/design/COMPONENT_SPEC.md
+    contains: "IMPLEMENTED_AND_TESTED (offline)"
+
+  - key: page_template_map_present
+    gate: GATE-5
+    kind: evidence
+    note: the page/template map exists
+    path: docs/design/PAGE_TEMPLATE_MAP.yaml
+
+  - key: parity_evidence
+    gate: GATE-6
+    kind: evidence_status
+    note: per-page rendered parity evidence record
+    path: evidence/runs/design-parity-2026-10-11.md
+
+  - key: phase8_gate_evidence
+    gate: GATE-7
+    kind: evidence
+    note: the phase-8 gate run is recorded
+    path: evidence/runs/design-phase8-gate-2026-10-11.md

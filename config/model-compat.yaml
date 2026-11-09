@@ -1,0 +1,88 @@
+transports:
+  google_free: gemini
+  groq: groq
+  nim: nvidia
+  zai: zai
+  openrouter_free: openrouter
+  cloudflare: cloudflare
+  mistral: mistral
+  local: local
+aliases:
+  google_free:
+    gemini-flash-lite:
+      target: gemini-3.6-flash
+      reason: current-certified-free-target
+    gemini-flash:
+      target: gemini-3.8-flash
+      reason: current-certified-free-target
+    gemini-2.5-pro:
+      target: gemini-3.8-flash
+      reason: zero-cost-policy-compatibility
+  groq:
+    qwen3.6-27b:
+      target: qwen/qwen3.8-27b
+      reason: provider-deprecation-replacement
+    gpt-oss-20b:
+      target: openai/gpt-oss-20b
+      reason: certified-provider-model-id
+  nim:
+    nemotron-3-super-120b:
+      target: nvidia/nemotron-3-super-120b-a12b
+      reason: certified-provider-model-id
+    nemotron-3-ultra:
+      target: nvidia/nemotron-3-ultra-550b-a55b
+      reason: certified-provider-model-id
+    nemotron-3.5-lightning:
+      target: nvidia/nemotron-3.5-lightning-30b-a3b
+      reason: certified-provider-model-id
+    meta/muse-glimmer-30b:
+      target: meta/muse-glimmer-30b
+      reason: certified-provider-model-id
+    nemotron-3.5-super-vl-120b:
+      target: nvidia/nemotron-3.5-super-vl-120b-a12b
+      reason: certified-provider-model-id
+  cloudflare:
+    gpt-oss-120b:
+      target: "@cf/openai/gpt-oss-120b"
+      reason: certified-provider-model-id
+free_providers:
+- google_free
+- groq
+- nim
+- zai
+- openrouter_free
+- cloudflare
+free_models:
+  mistral: []
+  local:
+  - fastembed
+
+generation_limits:
+  roles:
+    router: 512
+  models:
+    "groq/qwen/qwen3.8-27b": 1000
+  reasoning:
+    # Reasoning-style models spend the output budget on hidden reasoning
+    # before any assistant text exists. For the roles listed below, a
+    # candidate in this set is skipped without a provider call when the
+    # effective max_tokens is smaller than its minimum: calling it would only
+    # burn the budget and return empty content, which is not a provider
+    # outage. Skipping is deterministic, auditable in the attempts list, and
+    # still reports client_truncated when no adequate candidate remains.
+    models:
+      - "nim/nvidia/nemotron-3.5-lightning-30b-a3b"
+      - "nim/nvidia/nemotron-3-ultra-550b-a55b"
+      - "nim/nvidia/nemotron-3-super-120b-a12b"
+      - "groq/openai/gpt-oss-20b"
+      - "groq/openai/gpt-oss-120b"
+      - "openrouter_free/cohere/north-mini-code:free"
+      - "openrouter_free/nvidia/nemotron-3.5-lightning:free"
+      - "openrouter_free/minimax/minimax-m3.1-flash:free"
+    minimum_output_tokens:
+      implement: 768
+    model_minimum_output_tokens:
+      # Measured on 2026-10-20: this model spent ~1.7k tokens on reasoning
+      # before emitting content for a short coding prompt, and returned empty
+      # at 1024. A per-model floor overrides the role minimum.
+      "openrouter_free/minimax/minimax-m3.1-flash:free": 2048

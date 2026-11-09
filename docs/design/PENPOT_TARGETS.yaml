@@ -1,0 +1,41 @@
+# Penpot execution target allow/deny policy (fail-closed).
+#
+# Authoritative, version-controlled allow-list for which Penpot documents an
+# automated executor may mutate. Consumed by tools/penpot_target_guard.py and
+# enforced by the preflight gate (tools/execute_design_plan.py) and the live
+# runtimes. An empty/absent allow-list authorizes nothing; the scratch file is
+# always denied. Repository is authoritative; Penpot is downstream-only
+# (decision 26.16, approved 2026-10-10).
+#
+# The same identities are described in prose in
+# docs/design/PENPOT_IMPLEMENTATION_MAP.yaml (readiness blockers) and
+# docs/design/DESIGN_MANIFEST.yaml (PEN-001). This file is the machine-readable
+# source the guard loads.
+
+allowed_file_ids:
+  - 52a5041f-08a1-80f1-8008-c50e307f3ef4   # Company OS (production target)
+
+allowed_project_ids:
+  - 52a5041f-08a1-80f1-8008-c380b5126f44   # Company-Os
+
+denied_file_ids:
+  - 52a5041f-08a1-80f1-8008-c383654a1095   # Test File (scratch — never target)
+
+denied_names:
+  - Test File
+
+# Purpose-scoped validation buckets. A file listed here is recorded as the
+# disposable target authorized for protocol validation (PENPOT-PROTOCOL-SUBGATE
+# requirement 1) but NEVER becomes writable here: check_target only permits
+# allowed_file_ids, so a disposable id an executor supplies answers
+# target_not_allowed. Writes to a disposable file happen only through its own
+# separate, scoped jail policy.
+disposable_file_ids:
+  # 2026-10-11 live-verified over the Penpot MCP plugin lane (file B from the
+  # 2026-10-10 command-lane validation run — "Company OS cmd-lane validation B").
+  # All four protocol ops applied with matching independent read-back and no
+  # duplicate on re-dispatch; safe ref = production file, safe ref = scratch.
+  # See evidence/runs/penpot-disposable-validation-2026-10-11/journal.json.
+  - 52a5041f-08a1-80f1-8008-c52b2fa4c31b
+
+require_project: true

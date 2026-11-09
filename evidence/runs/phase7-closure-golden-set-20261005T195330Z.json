@@ -1,0 +1,4267 @@
+{
+  "base_url": "http://127.0.0.1:43969",
+  "cases": [
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "poolside/laguna-s-2.1:free",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "poolside/laguna-s-2.1:free",
+            "provider": "openrouter_free",
+            "transport_provider": "openrouter",
+            "vendor": "openrouter"
+          },
+          {
+            "actual_model": "cohere/north-mini-code:free",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "cohere/north-mini-code:free",
+            "provider": "openrouter_free",
+            "transport_provider": "openrouter",
+            "vendor": "openrouter"
+          }
+        ],
+        "primary": {
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "nemotron-3-super-120b",
+          "provider": "nim",
+          "transport_provider": "nvidia",
+          "vendor": "nvidia"
+        },
+        "role": "implement"
+      },
+      "id": "routing-role-implement",
+      "input": {
+        "role": "implement"
+      },
+      "justification": "The implement role resolves to its declared primary (nim) then its two declared free fallbacks, in declared order.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "poolside/laguna-s-2.1:free",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "poolside/laguna-s-2.1:free",
+            "provider": "openrouter_free",
+            "transport_provider": "openrouter",
+            "vendor": "openrouter"
+          },
+          {
+            "actual_model": "cohere/north-mini-code:free",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "cohere/north-mini-code:free",
+            "provider": "openrouter_free",
+            "transport_provider": "openrouter",
+            "vendor": "openrouter"
+          }
+        ],
+        "primary": {
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "nemotron-3-super-120b",
+          "provider": "nim",
+          "transport_provider": "nvidia",
+          "vendor": "nvidia"
+        },
+        "role": "implement"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": false,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3-ultra",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          },
+          {
+            "actual_model": "qwen3.5",
+            "cost_mode": "paid",
+            "free_eligible": false,
+            "logical_model": "qwen3.5",
+            "provider": "ovh",
+            "transport_provider": "ovh",
+            "vendor": "ovh"
+          }
+        ],
+        "primary": {
+          "actual_model": "gemini-3.8-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gemini-flash",
+          "provider": "google_free",
+          "transport_provider": "gemini",
+          "vendor": "google"
+        },
+        "role": "research"
+      },
+      "id": "routing-role-research",
+      "input": {
+        "role": "research"
+      },
+      "justification": "The research role resolves to google_free primary, nim fallback, then the paid ovh fallback which is still declared but ineligible at zero cost.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": false,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3-ultra",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          },
+          {
+            "actual_model": "qwen3.5",
+            "cost_mode": "paid",
+            "free_eligible": false,
+            "logical_model": "qwen3.5",
+            "provider": "ovh",
+            "transport_provider": "ovh",
+            "vendor": "ovh"
+          }
+        ],
+        "primary": {
+          "actual_model": "gemini-3.8-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gemini-flash",
+          "provider": "google_free",
+          "transport_provider": "gemini",
+          "vendor": "google"
+        },
+        "role": "research"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3-ultra",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          },
+          {
+            "actual_model": "glm-4.7-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "glm-4.7-flash",
+            "provider": "zai",
+            "transport_provider": "zai",
+            "vendor": "zai"
+          }
+        ],
+        "primary": {
+          "actual_model": "minimax-m3",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "minimax-m3",
+          "provider": "nim",
+          "transport_provider": "nvidia",
+          "vendor": "nvidia"
+        },
+        "role": "architect"
+      },
+      "id": "routing-role-architect",
+      "input": {
+        "role": "architect"
+      },
+      "justification": "The architect role resolves to nim minimax-m3 primary then nim and zai fallbacks; the primary has no alias and keeps its declared model id.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3-ultra",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          },
+          {
+            "actual_model": "glm-4.7-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "glm-4.7-flash",
+            "provider": "zai",
+            "transport_provider": "zai",
+            "vendor": "zai"
+          }
+        ],
+        "primary": {
+          "actual_model": "minimax-m3",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "minimax-m3",
+          "provider": "nim",
+          "transport_provider": "nvidia",
+          "vendor": "nvidia"
+        },
+        "role": "architect"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "gpt-oss-120b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gpt-oss-120b",
+            "provider": "cloudflare",
+            "transport_provider": "cloudflare",
+            "vendor": "cloudflare"
+          },
+          {
+            "actual_model": "gemini-3.8-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gemini-flash",
+            "provider": "google_free",
+            "transport_provider": "gemini",
+            "vendor": "google"
+          }
+        ],
+        "primary": {
+          "actual_model": "qwen/qwen3.8-27b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "qwen3.6-27b",
+          "provider": "groq",
+          "transport_provider": "groq",
+          "vendor": "groq"
+        },
+        "role": "tests"
+      },
+      "id": "routing-role-tests",
+      "input": {
+        "role": "tests"
+      },
+      "justification": "The tests role maps groq qwen3.6-27b through its certified replacement alias qwen/qwen3.8-27b rather than the deprecated id.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "gpt-oss-120b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gpt-oss-120b",
+            "provider": "cloudflare",
+            "transport_provider": "cloudflare",
+            "vendor": "cloudflare"
+          },
+          {
+            "actual_model": "gemini-3.8-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gemini-flash",
+            "provider": "google_free",
+            "transport_provider": "gemini",
+            "vendor": "google"
+          }
+        ],
+        "primary": {
+          "actual_model": "qwen/qwen3.8-27b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "qwen3.6-27b",
+          "provider": "groq",
+          "transport_provider": "groq",
+          "vendor": "groq"
+        },
+        "role": "tests"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": false,
+        "candidate_count": 4,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3-ultra",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          },
+          {
+            "actual_model": "gemini-3.8-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gemini-2.5-pro",
+            "provider": "google_free",
+            "transport_provider": "gemini",
+            "vendor": "google"
+          },
+          {
+            "actual_model": "mistral-small-2603",
+            "cost_mode": "paid",
+            "free_eligible": false,
+            "logical_model": "mistral-small-2603",
+            "provider": "mistral",
+            "transport_provider": "mistral",
+            "vendor": "mistral"
+          }
+        ],
+        "primary": {
+          "actual_model": "glm-4.7-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "glm-4.7-flash",
+          "provider": "zai",
+          "transport_provider": "zai",
+          "vendor": "zai"
+        },
+        "role": "review"
+      },
+      "id": "routing-role-review",
+      "input": {
+        "role": "review"
+      },
+      "justification": "The review role declares four candidates and its last one, mistral, is paid and therefore not free-eligible at the configured zero budget.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": false,
+        "candidate_count": 4,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3-ultra",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          },
+          {
+            "actual_model": "gemini-3.8-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gemini-2.5-pro",
+            "provider": "google_free",
+            "transport_provider": "gemini",
+            "vendor": "google"
+          },
+          {
+            "actual_model": "mistral-small-2603",
+            "cost_mode": "paid",
+            "free_eligible": false,
+            "logical_model": "mistral-small-2603",
+            "provider": "mistral",
+            "transport_provider": "mistral",
+            "vendor": "mistral"
+          }
+        ],
+        "primary": {
+          "actual_model": "glm-4.7-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "glm-4.7-flash",
+          "provider": "zai",
+          "transport_provider": "zai",
+          "vendor": "zai"
+        },
+        "role": "review"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "config/provider-policy.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "glm-4.7-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "glm-4.7-flash",
+            "provider": "zai",
+            "transport_provider": "zai",
+            "vendor": "zai"
+          }
+        ],
+        "primary": {
+          "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "nemotron-3-ultra",
+          "provider": "nim",
+          "transport_provider": "nvidia",
+          "vendor": "nvidia"
+        },
+        "role": "security"
+      },
+      "id": "routing-role-security",
+      "input": {
+        "role": "security"
+      },
+      "justification": "The security role resolves to nim nemotron-3-ultra primary then zai.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "glm-4.7-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "glm-4.7-flash",
+            "provider": "zai",
+            "transport_provider": "zai",
+            "vendor": "zai"
+          }
+        ],
+        "primary": {
+          "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "nemotron-3-ultra",
+          "provider": "nim",
+          "transport_provider": "nvidia",
+          "vendor": "nvidia"
+        },
+        "role": "security"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "inclusionai/ling-3.0-flash-vl:free",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "inclusionai/ling-3.0-flash-vl:free",
+            "provider": "openrouter_free",
+            "transport_provider": "openrouter",
+            "vendor": "openrouter"
+          }
+        ],
+        "primary": {
+          "actual_model": "gemini-3.8-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gemini-flash",
+          "provider": "google_free",
+          "transport_provider": "gemini",
+          "vendor": "google"
+        },
+        "role": "vision_qa"
+      },
+      "id": "routing-role-vision-qa",
+      "input": {
+        "role": "vision_qa"
+      },
+      "justification": "The vision_qa role resolves to google_free gemini-flash then the free openrouter vision fallback.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "inclusionai/ling-3.0-flash-vl:free",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "inclusionai/ling-3.0-flash-vl:free",
+            "provider": "openrouter_free",
+            "transport_provider": "openrouter",
+            "vendor": "openrouter"
+          }
+        ],
+        "primary": {
+          "actual_model": "gemini-3.8-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gemini-flash",
+          "provider": "google_free",
+          "transport_provider": "gemini",
+          "vendor": "google"
+        },
+        "role": "vision_qa"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "gemini-3.6-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gemini-flash-lite",
+            "provider": "google_free",
+            "transport_provider": "gemini",
+            "vendor": "google"
+          }
+        ],
+        "primary": {
+          "actual_model": "openai/gpt-oss-20b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gpt-oss-20b",
+          "provider": "groq",
+          "transport_provider": "groq",
+          "vendor": "groq"
+        },
+        "role": "summarise"
+      },
+      "id": "routing-role-summarise",
+      "input": {
+        "role": "summarise"
+      },
+      "justification": "The summarise role resolves to groq gpt-oss-20b then google_free gemini-flash-lite, giving the fallback proof two distinct providers.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "gemini-3.6-flash",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gemini-flash-lite",
+            "provider": "google_free",
+            "transport_provider": "gemini",
+            "vendor": "google"
+          }
+        ],
+        "primary": {
+          "actual_model": "openai/gpt-oss-20b",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gpt-oss-20b",
+          "provider": "groq",
+          "transport_provider": "groq",
+          "vendor": "groq"
+        },
+        "role": "summarise"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "openai/gpt-oss-20b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gpt-oss-20b",
+            "provider": "groq",
+            "transport_provider": "groq",
+            "vendor": "groq"
+          },
+          {
+            "actual_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3.5-lightning",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          }
+        ],
+        "primary": {
+          "actual_model": "gemini-3.6-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gemini-flash-lite",
+          "provider": "google_free",
+          "transport_provider": "gemini",
+          "vendor": "google"
+        },
+        "role": "router"
+      },
+      "id": "routing-role-router",
+      "input": {
+        "role": "router"
+      },
+      "justification": "The router role resolves to three candidates so a router decision can itself fail over deterministically.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 3,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "openai/gpt-oss-20b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "gpt-oss-20b",
+            "provider": "groq",
+            "transport_provider": "groq",
+            "vendor": "groq"
+          },
+          {
+            "actual_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "nemotron-3.5-lightning",
+            "provider": "nim",
+            "transport_provider": "nvidia",
+            "vendor": "nvidia"
+          }
+        ],
+        "primary": {
+          "actual_model": "gemini-3.6-flash",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "gemini-flash-lite",
+          "provider": "google_free",
+          "transport_provider": "gemini",
+          "vendor": "google"
+        },
+        "role": "router"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "config/model-compat.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "bge",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "bge",
+            "provider": "cloudflare",
+            "transport_provider": "cloudflare",
+            "vendor": "cloudflare"
+          }
+        ],
+        "primary": {
+          "actual_model": "fastembed",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "fastembed",
+          "provider": "local",
+          "transport_provider": "local",
+          "vendor": "local"
+        },
+        "role": "embeddings"
+      },
+      "id": "routing-role-embeddings-configured-not-exposed",
+      "input": {
+        "role": "embeddings"
+      },
+      "justification": "embeddings is a configured role for local fastembed but is deliberately not a client-visible logical model; configuration is not exposure.",
+      "observation": {
+        "actual_models_unique": true,
+        "all_candidates_free_eligible": true,
+        "candidate_count": 2,
+        "configured": true,
+        "fallback": [
+          {
+            "actual_model": "bge",
+            "cost_mode": "free",
+            "free_eligible": true,
+            "logical_model": "bge",
+            "provider": "cloudflare",
+            "transport_provider": "cloudflare",
+            "vendor": "cloudflare"
+          }
+        ],
+        "primary": {
+          "actual_model": "fastembed",
+          "cost_mode": "free",
+          "free_eligible": true,
+          "logical_model": "fastembed",
+          "provider": "local",
+          "transport_provider": "local",
+          "vendor": "local"
+        },
+        "role": "embeddings"
+      },
+      "observation_source": "control_plane_config",
+      "property": "role_routing",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/boundary.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "advertised_count": 9,
+        "advertised_models": [
+          "architect",
+          "implement",
+          "research",
+          "review",
+          "router",
+          "security",
+          "summarise",
+          "tests",
+          "vision_qa"
+        ],
+        "configured_not_advertised": [
+          "embeddings"
+        ],
+        "every_advertised_model_is_routable": true,
+        "routable_advertised": [
+          "architect",
+          "implement",
+          "research",
+          "review",
+          "router",
+          "security",
+          "summarise",
+          "tests",
+          "vision_qa"
+        ],
+        "unroutable_advertised": []
+      },
+      "id": "registry-every-advertised-model-is-routable",
+      "input": {},
+      "justification": "Every logical model the boundary advertises to clients resolves to at least one configured candidate. An advertised-but-unconfigured model would be accepted from a client and then fail to route, which reads as an outage rather than a configuration defect. Configured-but-unadvertised roles such as embeddings are reported and are deliberately not a violation.",
+      "observation": {
+        "advertised_count": 9,
+        "advertised_models": [
+          "architect",
+          "implement",
+          "research",
+          "review",
+          "router",
+          "security",
+          "summarise",
+          "tests",
+          "vision_qa"
+        ],
+        "configured_not_advertised": [
+          "embeddings"
+        ],
+        "every_advertised_model_is_routable": true,
+        "routable_advertised": [
+          "architect",
+          "implement",
+          "research",
+          "review",
+          "router",
+          "security",
+          "summarise",
+          "tests",
+          "vision_qa"
+        ],
+        "unroutable_advertised": []
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "registry_consistency",
+      "source": [
+        "company_os/control_plane/boundary.py",
+        "config/models.yaml",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": true,
+        "advertised_by_boundary": true,
+        "code": null,
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": 1024,
+        "default_temperature": 0.0,
+        "model": "implement",
+        "param": null,
+        "resolved_role": "implement",
+        "status": 200,
+        "x_company_os_role": "implement"
+      },
+      "id": "exposure-valid-logical-role",
+      "input": {
+        "model": "implement"
+      },
+      "justification": "A valid logical role is accepted, resolves to itself, and carries the pinned deterministic temperature of 0.",
+      "observation": {
+        "accepted": true,
+        "advertised_by_boundary": true,
+        "code": null,
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": 1024,
+        "default_temperature": 0.0,
+        "model": "implement",
+        "param": null,
+        "resolved_role": "implement",
+        "status": 200,
+        "x_company_os_role": "implement"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "model_not_found",
+        "configured_in_models_yaml": false,
+        "control_plane_lookup_error": "Unknown role: does-not-exist",
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "does-not-exist",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "id": "exposure-unknown-logical-role",
+      "input": {
+        "model": "does-not-exist"
+      },
+      "justification": "An unknown model is refused with 400 model_not_found at the boundary and is unroutable by the control plane.",
+      "observation": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "model_not_found",
+        "configured_in_models_yaml": false,
+        "control_plane_lookup_error": "Unknown role: does-not-exist",
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "does-not-exist",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py",
+        "company_os/control_plane/config.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "model_not_found",
+        "configured_in_models_yaml": false,
+        "control_plane_lookup_error": "Unknown role: nemotron-3-ultra",
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "nemotron-3-ultra",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "id": "exposure-physical-model-not-a-role",
+      "input": {
+        "model": "nemotron-3-ultra"
+      },
+      "justification": "A physical model id is refused: clients select logical roles, and a physical model is never a client-selectable model name.",
+      "observation": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "model_not_found",
+        "configured_in_models_yaml": false,
+        "control_plane_lookup_error": "Unknown role: nemotron-3-ultra",
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "nemotron-3-ultra",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "invalid_type",
+        "configured_in_models_yaml": false,
+        "control_plane_lookup_error": "Unknown role: ",
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "id": "exposure-empty-model",
+      "input": {
+        "model": ""
+      },
+      "justification": "An empty model is refused with 400 invalid_type rather than defaulting to any role.",
+      "observation": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "invalid_type",
+        "configured_in_models_yaml": false,
+        "control_plane_lookup_error": "Unknown role: ",
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "model_not_found",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "embeddings",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "id": "exposure-configured-role-not-exposed",
+      "input": {
+        "model": "embeddings"
+      },
+      "justification": "A role that exists in models.yaml is refused at the boundary because it is not advertised as a client-visible logical model.",
+      "observation": {
+        "accepted": false,
+        "advertised_by_boundary": false,
+        "code": "model_not_found",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "embeddings",
+        "param": "model",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": false,
+        "advertised_by_boundary": true,
+        "code": "unsupported_parameter",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "implement",
+        "param": "provider",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "id": "exposure-rejects-provider-field",
+      "input": {
+        "extra_fields": {
+          "provider": "nim"
+        },
+        "model": "implement"
+      },
+      "justification": "An unknown request field naming a provider is rejected, not ignored, so a client cannot steer physical provider selection.",
+      "observation": {
+        "accepted": false,
+        "advertised_by_boundary": true,
+        "code": "unsupported_parameter",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "implement",
+        "param": "provider",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": false,
+        "advertised_by_boundary": true,
+        "code": "unsupported_parameter",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "implement",
+        "param": "lane",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "id": "exposure-rejects-lane-field",
+      "input": {
+        "extra_fields": {
+          "lane": "restricted"
+        },
+        "model": "implement"
+      },
+      "justification": "A client cannot select a lane; without this rejection a client could attempt to request the restricted lane.",
+      "observation": {
+        "accepted": false,
+        "advertised_by_boundary": true,
+        "code": "unsupported_parameter",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "implement",
+        "param": "lane",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "accepted": false,
+        "advertised_by_boundary": true,
+        "code": "unsupported_parameter",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "implement",
+        "param": "base_url",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "id": "exposure-rejects-base-url-field",
+      "input": {
+        "extra_fields": {
+          "base_url": "http://127.0.0.1:1"
+        },
+        "model": "implement"
+      },
+      "justification": "A provider base_url field is rejected so a client cannot redirect inference to an endpoint outside Company OS policy.",
+      "observation": {
+        "accepted": false,
+        "advertised_by_boundary": true,
+        "code": "unsupported_parameter",
+        "configured_in_models_yaml": true,
+        "control_plane_lookup_error": null,
+        "default_max_tokens": null,
+        "default_temperature": null,
+        "model": "implement",
+        "param": "base_url",
+        "resolved_role": null,
+        "status": 400,
+        "x_company_os_role": "unknown"
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "role_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "default_lane": "internal",
+        "default_lane_is_permitted": true,
+        "forbidden_lanes": [
+          "restricted"
+        ],
+        "health_lane": "internal",
+        "health_models": [
+          "architect",
+          "implement",
+          "research",
+          "review",
+          "router",
+          "security",
+          "summarise",
+          "tests",
+          "vision_qa"
+        ],
+        "lane_field_error_code": "unsupported_parameter",
+        "lane_field_http_status": 400,
+        "lane_field_rejected_by_boundary": true,
+        "restricted_denies_automation": true,
+        "restricted_is_client_selectable": false,
+        "restricted_lane_declared": true
+      },
+      "id": "lane-exposure-restricted-unreachable-from-agents",
+      "input": {},
+      "justification": "The restricted lane is declared and denies automation, the boundary default lane is internal, and no request field can select a lane, so the restricted lane is unreachable from an automated agent surface.",
+      "observation": {
+        "default_lane": "internal",
+        "default_lane_is_permitted": true,
+        "forbidden_lanes": [
+          "restricted"
+        ],
+        "health_lane": "internal",
+        "health_models": [
+          "architect",
+          "implement",
+          "research",
+          "review",
+          "router",
+          "security",
+          "summarise",
+          "tests",
+          "vision_qa"
+        ],
+        "lane_field_error_code": "unsupported_parameter",
+        "lane_field_http_status": 400,
+        "lane_field_rejected_by_boundary": true,
+        "restricted_denies_automation": true,
+        "restricted_is_client_selectable": false,
+        "restricted_lane_declared": true
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "lane_exposure",
+      "source": [
+        "company_os/control_plane/boundary.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed_providers": [],
+        "decisions": {
+          "cloudflare": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "google_free": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "groq": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "local": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "nim": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "openrouter_free": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "ovh": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "zai": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          }
+        },
+        "denial_reasons": [
+          "restricted_lane_denies_automation"
+        ],
+        "denied_count": 9,
+        "denied_providers": [
+          "cloudflare",
+          "google_free",
+          "groq",
+          "local",
+          "mistral",
+          "nim",
+          "openrouter_free",
+          "ovh",
+          "zai"
+        ],
+        "denies_every_provider": true,
+        "lane": "restricted",
+        "provider_count": 9
+      },
+      "id": "lane-matrix-restricted-denies-every-provider",
+      "input": {
+        "lane": "restricted"
+      },
+      "justification": "deny_all_automation denies every provider Company OS can name, including local, so no provider can serve the restricted lane automatically.",
+      "observation": {
+        "allowed_providers": [],
+        "decisions": {
+          "cloudflare": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "google_free": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "groq": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "local": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "nim": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "openrouter_free": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "ovh": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          },
+          "zai": {
+            "allowed": false,
+            "reason": "restricted_lane_denies_automation"
+          }
+        },
+        "denial_reasons": [
+          "restricted_lane_denies_automation"
+        ],
+        "denied_count": 9,
+        "denied_providers": [
+          "cloudflare",
+          "google_free",
+          "groq",
+          "local",
+          "mistral",
+          "nim",
+          "openrouter_free",
+          "ovh",
+          "zai"
+        ],
+        "denies_every_provider": true,
+        "lane": "restricted",
+        "provider_count": 9
+      },
+      "observation_source": "control_plane_config",
+      "property": "lane_matrix",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed_providers": [
+          "cloudflare",
+          "google_free",
+          "groq",
+          "nim",
+          "openrouter_free",
+          "zai"
+        ],
+        "decisions": {
+          "cloudflare": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "google_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "groq": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "local": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_internal"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_internal"
+          },
+          "nim": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "openrouter_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "ovh": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_internal"
+          },
+          "zai": {
+            "allowed": true,
+            "reason": "allowed"
+          }
+        },
+        "denial_reasons": [
+          "provider_not_allowed_in_internal"
+        ],
+        "denied_count": 3,
+        "denied_providers": [
+          "local",
+          "mistral",
+          "ovh"
+        ],
+        "denies_every_provider": false,
+        "lane": "internal",
+        "provider_count": 9
+      },
+      "id": "lane-matrix-internal-allowlist",
+      "input": {
+        "lane": "internal"
+      },
+      "justification": "The internal lane permits exactly the six declared providers and denies local, mistral and ovh.",
+      "observation": {
+        "allowed_providers": [
+          "cloudflare",
+          "google_free",
+          "groq",
+          "nim",
+          "openrouter_free",
+          "zai"
+        ],
+        "decisions": {
+          "cloudflare": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "google_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "groq": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "local": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_internal"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_internal"
+          },
+          "nim": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "openrouter_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "ovh": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_internal"
+          },
+          "zai": {
+            "allowed": true,
+            "reason": "allowed"
+          }
+        },
+        "denial_reasons": [
+          "provider_not_allowed_in_internal"
+        ],
+        "denied_count": 3,
+        "denied_providers": [
+          "local",
+          "mistral",
+          "ovh"
+        ],
+        "denies_every_provider": false,
+        "lane": "internal",
+        "provider_count": 9
+      },
+      "observation_source": "control_plane_config",
+      "property": "lane_matrix",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed_providers": [
+          "cloudflare",
+          "groq",
+          "local",
+          "ovh",
+          "zai"
+        ],
+        "decisions": {
+          "cloudflare": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "google_free": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "groq": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "local": {
+            "allowed": true,
+            "reason": "local_provider_allowed"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "nim": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "openrouter_free": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "ovh": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "zai": {
+            "allowed": true,
+            "reason": "allowed"
+          }
+        },
+        "denial_reasons": [
+          "provider_denied_in_confidential"
+        ],
+        "denied_count": 4,
+        "denied_providers": [
+          "google_free",
+          "mistral",
+          "nim",
+          "openrouter_free"
+        ],
+        "denies_every_provider": false,
+        "lane": "confidential",
+        "provider_count": 9
+      },
+      "id": "lane-matrix-confidential-denies-free-inference",
+      "input": {
+        "lane": "confidential"
+      },
+      "justification": "The confidential lane denies the free inference providers named in its deny list and permits local explicitly.",
+      "observation": {
+        "allowed_providers": [
+          "cloudflare",
+          "groq",
+          "local",
+          "ovh",
+          "zai"
+        ],
+        "decisions": {
+          "cloudflare": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "google_free": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "groq": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "local": {
+            "allowed": true,
+            "reason": "local_provider_allowed"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "nim": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "openrouter_free": {
+            "allowed": false,
+            "reason": "provider_denied_in_confidential"
+          },
+          "ovh": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "zai": {
+            "allowed": true,
+            "reason": "allowed"
+          }
+        },
+        "denial_reasons": [
+          "provider_denied_in_confidential"
+        ],
+        "denied_count": 4,
+        "denied_providers": [
+          "google_free",
+          "mistral",
+          "nim",
+          "openrouter_free"
+        ],
+        "denies_every_provider": false,
+        "lane": "confidential",
+        "provider_count": 9
+      },
+      "observation_source": "control_plane_config",
+      "property": "lane_matrix",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed_providers": [
+          "cloudflare",
+          "google_free",
+          "groq",
+          "nim",
+          "openrouter_free",
+          "zai"
+        ],
+        "decisions": {
+          "cloudflare": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "google_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "groq": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "local": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_public"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_public"
+          },
+          "nim": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "openrouter_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "ovh": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_public"
+          },
+          "zai": {
+            "allowed": true,
+            "reason": "allowed"
+          }
+        },
+        "denial_reasons": [
+          "provider_not_allowed_in_public"
+        ],
+        "denied_count": 3,
+        "denied_providers": [
+          "local",
+          "mistral",
+          "ovh"
+        ],
+        "denies_every_provider": false,
+        "lane": "public",
+        "provider_count": 9
+      },
+      "id": "lane-matrix-public-allowlist",
+      "input": {
+        "lane": "public"
+      },
+      "justification": "The public lane permits exactly the six declared providers and denies local, mistral and ovh.",
+      "observation": {
+        "allowed_providers": [
+          "cloudflare",
+          "google_free",
+          "groq",
+          "nim",
+          "openrouter_free",
+          "zai"
+        ],
+        "decisions": {
+          "cloudflare": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "google_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "groq": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "local": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_public"
+          },
+          "mistral": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_public"
+          },
+          "nim": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "openrouter_free": {
+            "allowed": true,
+            "reason": "allowed"
+          },
+          "ovh": {
+            "allowed": false,
+            "reason": "provider_not_allowed_in_public"
+          },
+          "zai": {
+            "allowed": true,
+            "reason": "allowed"
+          }
+        },
+        "denial_reasons": [
+          "provider_not_allowed_in_public"
+        ],
+        "denied_count": 3,
+        "denied_providers": [
+          "local",
+          "mistral",
+          "ovh"
+        ],
+        "denies_every_provider": false,
+        "lane": "public",
+        "provider_count": 9
+      },
+      "observation_source": "control_plane_config",
+      "property": "lane_matrix",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": true,
+        "cost_mode": "free",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": true,
+        "max_cost_usd": 0,
+        "provider": "nim",
+        "reason": "free_eligible",
+        "role": "implement"
+      },
+      "id": "cost-free-candidate-allowed",
+      "input": {
+        "provider": "nim",
+        "role": "implement"
+      },
+      "justification": "nim is a declared free provider, so it is allowed at a zero cost budget.",
+      "observation": {
+        "allowed": true,
+        "cost_mode": "free",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": true,
+        "max_cost_usd": 0,
+        "provider": "nim",
+        "reason": "free_eligible",
+        "role": "implement"
+      },
+      "observation_source": "control_plane_config",
+      "property": "candidate_cost",
+      "source": [
+        "config/provider-policy.yaml",
+        "company_os/control_plane/policy.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": false,
+        "cost_mode": "paid",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": false,
+        "max_cost_usd": 0,
+        "provider": "ovh",
+        "reason": "nonzero_cost_blocked",
+        "role": "research"
+      },
+      "id": "cost-zero-budget-blocks-paid-candidate",
+      "input": {
+        "provider": "ovh",
+        "role": "research"
+      },
+      "justification": "ovh is neither a free provider nor free by model, and max_cost_usd is 0, so the paid candidate is blocked rather than silently used.",
+      "observation": {
+        "allowed": false,
+        "cost_mode": "paid",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": false,
+        "max_cost_usd": 0,
+        "provider": "ovh",
+        "reason": "nonzero_cost_blocked",
+        "role": "research"
+      },
+      "observation_source": "control_plane_config",
+      "property": "candidate_cost",
+      "source": [
+        "config/provider-policy.yaml",
+        "company_os/control_plane/policy.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": false,
+        "cost_mode": "paid",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": false,
+        "max_cost_usd": 0,
+        "provider": "mistral",
+        "reason": "mistral_free_entitlement_not_verified",
+        "role": "review"
+      },
+      "id": "cost-mistral-entitlement-unverified",
+      "input": {
+        "provider": "mistral",
+        "role": "review"
+      },
+      "justification": "mistral is paid and its free entitlement is not verified, so it is blocked on the entitlement reason rather than on generic cost.",
+      "observation": {
+        "allowed": false,
+        "cost_mode": "paid",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": false,
+        "max_cost_usd": 0,
+        "provider": "mistral",
+        "reason": "mistral_free_entitlement_not_verified",
+        "role": "review"
+      },
+      "observation_source": "control_plane_config",
+      "property": "candidate_cost",
+      "source": [
+        "config/provider-policy.yaml",
+        "company_os/control_plane/policy.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": true,
+        "cost_mode": "free",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": true,
+        "max_cost_usd": 0,
+        "provider": "local",
+        "reason": "free_eligible",
+        "role": "embeddings"
+      },
+      "id": "cost-local-provider-free",
+      "input": {
+        "provider": "local",
+        "role": "embeddings"
+      },
+      "justification": "The local provider is free-eligible by rule, so the embedding primary is allowed at a zero cost budget.",
+      "observation": {
+        "allowed": true,
+        "cost_mode": "free",
+        "env_mistral_free_mode": "unset",
+        "found_in_role": true,
+        "free_eligible": true,
+        "max_cost_usd": 0,
+        "provider": "local",
+        "reason": "free_eligible",
+        "role": "embeddings"
+      },
+      "observation_source": "control_plane_config",
+      "property": "candidate_cost",
+      "source": [
+        "config/provider-policy.yaml",
+        "company_os/control_plane/policy.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": false,
+        "candidate_vendor": "zai",
+        "implementer_vendor": "zai",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "zai",
+        "reason": "reviewer_vendor_same_as_implementer",
+        "role": "review"
+      },
+      "id": "vendor-reviewer-same-vendor-denied",
+      "input": {
+        "implementer_vendor": "zai",
+        "provider": "zai",
+        "role": "review"
+      },
+      "justification": "A reviewer resolving to the implementer's own vendor is denied reviewer independence.",
+      "observation": {
+        "allowed": false,
+        "candidate_vendor": "zai",
+        "implementer_vendor": "zai",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "zai",
+        "reason": "reviewer_vendor_same_as_implementer",
+        "role": "review"
+      },
+      "observation_source": "control_plane_config",
+      "property": "vendor_separation",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": true,
+        "candidate_vendor": "zai",
+        "implementer_vendor": "nvidia",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "zai",
+        "reason": "allowed",
+        "role": "review"
+      },
+      "id": "vendor-reviewer-different-vendor-allowed",
+      "input": {
+        "implementer_vendor": "nvidia",
+        "provider": "zai",
+        "role": "review"
+      },
+      "justification": "A reviewer on a different vendor from the implementer is allowed.",
+      "observation": {
+        "allowed": true,
+        "candidate_vendor": "zai",
+        "implementer_vendor": "nvidia",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "zai",
+        "reason": "allowed",
+        "role": "review"
+      },
+      "observation_source": "control_plane_config",
+      "property": "vendor_separation",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": false,
+        "candidate_vendor": "nvidia",
+        "implementer_vendor": "nvidia",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "nim",
+        "reason": "reviewer_vendor_same_as_implementer",
+        "role": "review"
+      },
+      "id": "vendor-reviewer-mapped-vendor-same-denied",
+      "input": {
+        "implementer_vendor": "nvidia",
+        "provider": "nim",
+        "role": "review"
+      },
+      "justification": "Separation compares resolved vendors, so nim is denied against implementer vendor nvidia even though the provider names differ.",
+      "observation": {
+        "allowed": false,
+        "candidate_vendor": "nvidia",
+        "implementer_vendor": "nvidia",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "nim",
+        "reason": "reviewer_vendor_same_as_implementer",
+        "role": "review"
+      },
+      "observation_source": "control_plane_config",
+      "property": "vendor_separation",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py",
+        "company_os/control_plane/models.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "allowed": true,
+        "candidate_vendor": "nvidia",
+        "implementer_vendor": "nvidia",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "nim",
+        "reason": "allowed",
+        "role": "implement"
+      },
+      "id": "vendor-non-review-role-exempt",
+      "input": {
+        "implementer_vendor": "nvidia",
+        "provider": "nim",
+        "role": "implement"
+      },
+      "justification": "Vendor separation constrains review only; the implement role is exempt even when its vendor matches.",
+      "observation": {
+        "allowed": true,
+        "candidate_vendor": "nvidia",
+        "implementer_vendor": "nvidia",
+        "lane": "internal",
+        "policy_enabled": true,
+        "provider": "nim",
+        "reason": "allowed",
+        "role": "implement"
+      },
+      "observation_source": "control_plane_config",
+      "property": "vendor_separation",
+      "source": [
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:796799892c3f7b26a3aebf8cfec1798bff18628e026d61edf92d2853996de71d",
+        "observations_identical": true,
+        "repetitions": 3,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from groq",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-groq",
+            "model": "openai/gpt-oss-20b",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "openai/gpt-oss-20b",
+          "ok": true,
+          "provider": "groq",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-primary-success",
+      "input": {
+        "repetitions": 3,
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "success",
+            "provider": "groq"
+          }
+        ]
+      },
+      "justification": "The primary candidate serves the request on the first attempt with no fallback and no retry.",
+      "observation": {
+        "observation_digest": "sha256:796799892c3f7b26a3aebf8cfec1798bff18628e026d61edf92d2853996de71d",
+        "observations_identical": true,
+        "repetitions": 3,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from groq",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-groq",
+            "model": "openai/gpt-oss-20b",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "openai/gpt-oss-20b",
+          "ok": true,
+          "provider": "groq",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:76e3fed276799554605f5ab4c6820e89e453e5ae11b02921709be78a4301ee0f",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 6,
+          "attempted": [
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "google_free"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from google_free",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-google_free",
+            "model": "gemini-3.6-flash",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-retries-then-fails-over",
+      "input": {
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "rate_limited",
+            "provider": "groq"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          }
+        ]
+      },
+      "justification": "rate_limited yields exactly four retries on the same candidate before deterministic fallback to the next candidate.",
+      "observation": {
+        "observation_digest": "sha256:76e3fed276799554605f5ab4c6820e89e453e5ae11b02921709be78a4301ee0f",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 6,
+          "attempted": [
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "google_free"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from google_free",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-google_free",
+            "model": "gemini-3.6-flash",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "company_os/control_plane/bifrost.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:31a32b4d60e40f16360aa460489ce600bb06de48e587628bb4414e79ee4fd3bd",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 4,
+          "attempted": [
+            {
+              "error_class": "transient",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 503
+            },
+            {
+              "error_class": "transient",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 503
+            },
+            {
+              "error_class": "transient",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 503
+            },
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "groq",
+            "groq",
+            "google_free"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from google_free",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-google_free",
+            "model": "gemini-3.6-flash",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-transient-retries-then-fails-over",
+      "input": {
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "transient",
+            "provider": "groq"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          }
+        ]
+      },
+      "justification": "transient yields exactly two retries, fewer than rate_limited, then falls over to the next candidate.",
+      "observation": {
+        "observation_digest": "sha256:31a32b4d60e40f16360aa460489ce600bb06de48e587628bb4414e79ee4fd3bd",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 4,
+          "attempted": [
+            {
+              "error_class": "transient",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 503
+            },
+            {
+              "error_class": "transient",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 503
+            },
+            {
+              "error_class": "transient",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 503
+            },
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "groq",
+            "groq",
+            "google_free"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from google_free",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-google_free",
+            "model": "gemini-3.6-flash",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "company_os/control_plane/bifrost.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:f215e0f9a83d6f8da77c85634b4c1717aef04ee23020ffdce3e002752f873717",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 10,
+          "attempted": [
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "google_free",
+            "google_free",
+            "google_free",
+            "google_free",
+            "google_free"
+          ],
+          "data": {
+            "error": "no_eligible_provider"
+          },
+          "decided_without_contact": [],
+          "error_class": "no_eligible_provider",
+          "health_markers": [],
+          "lane": "internal",
+          "model": null,
+          "ok": false,
+          "provider": null,
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-exhausts-candidates-then-fails",
+      "input": {
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "rate_limited",
+            "provider": "groq"
+          },
+          {
+            "outcome": "rate_limited",
+            "provider": "google_free"
+          }
+        ]
+      },
+      "justification": "When every candidate exhausts its retries the router fails closed with no_eligible_provider rather than returning an unproven result.",
+      "observation": {
+        "observation_digest": "sha256:f215e0f9a83d6f8da77c85634b4c1717aef04ee23020ffdce3e002752f873717",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 10,
+          "attempted": [
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            },
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": true,
+              "status": 429
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "groq",
+            "google_free",
+            "google_free",
+            "google_free",
+            "google_free",
+            "google_free"
+          ],
+          "data": {
+            "error": "no_eligible_provider"
+          },
+          "decided_without_contact": [],
+          "error_class": "no_eligible_provider",
+          "health_markers": [],
+          "lane": "internal",
+          "model": null,
+          "ok": false,
+          "provider": null,
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:44cef45c4712f11e91bc0dd2a6138d3eec28ddfabb12c8bcb29a136d08129b8e",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 2,
+          "attempted": [],
+          "candidate_override": null,
+          "contacted_providers": [],
+          "data": {
+            "error": "no_eligible_provider"
+          },
+          "decided_without_contact": [
+            {
+              "detail": "restricted_lane_denies_automation",
+              "provider": "groq",
+              "state": "BLOCKED"
+            },
+            {
+              "detail": "restricted_lane_denies_automation",
+              "provider": "google_free",
+              "state": "BLOCKED"
+            }
+          ],
+          "error_class": "no_eligible_provider",
+          "health_markers": [],
+          "lane": "restricted",
+          "model": null,
+          "ok": false,
+          "provider": null,
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-restricted-lane-contacts-no-provider",
+      "input": {
+        "lane": "restricted",
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "success",
+            "provider": "zai"
+          },
+          {
+            "outcome": "success",
+            "provider": "nim"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          },
+          {
+            "outcome": "success",
+            "provider": "groq"
+          }
+        ]
+      },
+      "justification": "Every candidate is blocked by lane policy before any provider is contacted, so the restricted lane reaches no provider even when all providers would otherwise succeed.",
+      "observation": {
+        "observation_digest": "sha256:44cef45c4712f11e91bc0dd2a6138d3eec28ddfabb12c8bcb29a136d08129b8e",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 2,
+          "attempted": [],
+          "candidate_override": null,
+          "contacted_providers": [],
+          "data": {
+            "error": "no_eligible_provider"
+          },
+          "decided_without_contact": [
+            {
+              "detail": "restricted_lane_denies_automation",
+              "provider": "groq",
+              "state": "BLOCKED"
+            },
+            {
+              "detail": "restricted_lane_denies_automation",
+              "provider": "google_free",
+              "state": "BLOCKED"
+            }
+          ],
+          "error_class": "no_eligible_provider",
+          "health_markers": [],
+          "lane": "restricted",
+          "model": null,
+          "ok": false,
+          "provider": null,
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:16b89fad35f3294e839fb9f7cc17582752700875d649e1e0c355bb93d9436898",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "google_free"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from google_free",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-google_free",
+            "model": "gemini-3.6-flash",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [
+            {
+              "key": "groq/openai/gpt-oss-20b",
+              "state": "quota_low"
+            }
+          ],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-health-downranks-primary",
+      "input": {
+        "health": [
+          {
+            "key": "groq/openai/gpt-oss-20b",
+            "state": "quota_low"
+          }
+        ],
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "success",
+            "provider": "zai"
+          },
+          {
+            "outcome": "success",
+            "provider": "nim"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          },
+          {
+            "outcome": "success",
+            "provider": "groq"
+          }
+        ]
+      },
+      "justification": "A candidate at or below the low quota threshold is down-ranked, so the fallback is preferred while the primary is still callable.",
+      "observation": {
+        "observation_digest": "sha256:16b89fad35f3294e839fb9f7cc17582752700875d649e1e0c355bb93d9436898",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "google_free"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from google_free",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-google_free",
+            "model": "gemini-3.6-flash",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [
+            {
+              "key": "groq/openai/gpt-oss-20b",
+              "state": "quota_low"
+            }
+          ],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "company_os/control_plane/health.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:3c43e46e44c11445a2c945522ddee28b754940079e639cbb6bac9b2c34cfa1d1",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 429
+            }
+          ],
+          "candidate_override": "groq/gpt-oss-20b",
+          "contacted_providers": [
+            "groq"
+          ],
+          "data": {
+            "error": "rate_limited"
+          },
+          "decided_without_contact": [],
+          "error_class": "rate_limited",
+          "health_markers": [],
+          "lane": "internal",
+          "model": "openai/gpt-oss-20b",
+          "ok": false,
+          "provider": "groq",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-pinned-candidate-disables-fallback",
+      "input": {
+        "candidate_override": "groq/gpt-oss-20b",
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "rate_limited",
+            "provider": "groq"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          }
+        ]
+      },
+      "justification": "A pinned candidate makes one attempt with no retry and no fallback, so certification cannot be masked by a healthy fallback.",
+      "observation": {
+        "observation_digest": "sha256:3c43e46e44c11445a2c945522ddee28b754940079e639cbb6bac9b2c34cfa1d1",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "rate_limited",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 429
+            }
+          ],
+          "candidate_override": "groq/gpt-oss-20b",
+          "contacted_providers": [
+            "groq"
+          ],
+          "data": {
+            "error": "rate_limited"
+          },
+          "decided_without_contact": [],
+          "error_class": "rate_limited",
+          "health_markers": [],
+          "lane": "internal",
+          "model": "openai/gpt-oss-20b",
+          "ok": false,
+          "provider": "groq",
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:646f5da40764220219763dfe770c04745149901a8a5526a9c1d42e7a610bfdcf",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [],
+          "candidate_override": "groq/nonexistent",
+          "contacted_providers": [],
+          "data": {
+            "error": "candidate_not_found"
+          },
+          "decided_without_contact": [
+            {
+              "detail": "candidate_not_found",
+              "provider": null,
+              "state": "BLOCKED"
+            }
+          ],
+          "error_class": "candidate_not_found",
+          "health_markers": [],
+          "lane": "internal",
+          "model": null,
+          "ok": false,
+          "provider": null,
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-pinned-candidate-not-found",
+      "input": {
+        "candidate_override": "groq/nonexistent",
+        "role": "summarise",
+        "transport": [
+          {
+            "outcome": "success",
+            "provider": "zai"
+          },
+          {
+            "outcome": "success",
+            "provider": "nim"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          },
+          {
+            "outcome": "success",
+            "provider": "groq"
+          }
+        ]
+      },
+      "justification": "Pinning a candidate that is not configured for the role fails closed with candidate_not_found and contacts no provider.",
+      "observation": {
+        "observation_digest": "sha256:646f5da40764220219763dfe770c04745149901a8a5526a9c1d42e7a610bfdcf",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [],
+          "candidate_override": "groq/nonexistent",
+          "contacted_providers": [],
+          "data": {
+            "error": "candidate_not_found"
+          },
+          "decided_without_contact": [
+            {
+              "detail": "candidate_not_found",
+              "provider": null,
+              "state": "BLOCKED"
+            }
+          ],
+          "error_class": "candidate_not_found",
+          "health_markers": [],
+          "lane": "internal",
+          "model": null,
+          "ok": false,
+          "provider": null,
+          "role": "summarise"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:0d0a6ee240829e3830383ebda36677b657366975eb9caba9e49225f65125c390",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 2,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "nvidia/nemotron-3-ultra-550b-a55b",
+              "provider": "nim",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "nim"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from nim",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-nim",
+            "model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [
+            {
+              "detail": "reviewer_vendor_same_as_implementer",
+              "provider": "zai",
+              "state": "BLOCKED"
+            }
+          ],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "ok": true,
+          "provider": "nim",
+          "role": "review"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-reviewer-same-vendor-skipped",
+      "input": {
+        "implementer_vendor": "zai",
+        "role": "review",
+        "transport": [
+          {
+            "outcome": "success",
+            "provider": "zai"
+          },
+          {
+            "outcome": "success",
+            "provider": "nim"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          },
+          {
+            "outcome": "success",
+            "provider": "groq"
+          }
+        ]
+      },
+      "justification": "The reviewer candidate on the implementer's vendor is blocked by policy and the next candidate serves the request.",
+      "observation": {
+        "observation_digest": "sha256:0d0a6ee240829e3830383ebda36677b657366975eb9caba9e49225f65125c390",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 2,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "nvidia/nemotron-3-ultra-550b-a55b",
+              "provider": "nim",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "nim"
+          ],
+          "data": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "deterministic response from nim",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1700000000,
+            "id": "chatcmpl-golden-nim",
+            "model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "decided_without_contact": [
+            {
+              "detail": "reviewer_vendor_same_as_implementer",
+              "provider": "zai",
+              "state": "BLOCKED"
+            }
+          ],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "ok": true,
+          "provider": "nim",
+          "role": "review"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "company_os/control_plane/policy.py",
+        "config/models.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:9a67e582a129ffb403f3b5d2e15e552348ab9ebc6f62d489f50ddc45d77c7f1f",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "google_free"
+          ],
+          "data": {
+            "decision": {
+              "reason": "deterministic golden evaluation fixture",
+              "role": "security"
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "router"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-role-contract-satisfied",
+      "input": {
+        "role": "router",
+        "transport": [
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          }
+        ]
+      },
+      "justification": "A router response satisfying the decision contract is reduced to a validated decision rather than relayed as provider prose.",
+      "observation": {
+        "observation_digest": "sha256:9a67e582a129ffb403f3b5d2e15e552348ab9ebc6f62d489f50ddc45d77c7f1f",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 1,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "gemini-3.6-flash",
+              "provider": "google_free",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "google_free"
+          ],
+          "data": {
+            "decision": {
+              "reason": "deterministic golden evaluation fixture",
+              "role": "security"
+            }
+          },
+          "decided_without_contact": [],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "gemini-3.6-flash",
+          "ok": true,
+          "provider": "google_free",
+          "role": "router"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "company_os/control_plane/router_contract.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "observation_digest": "sha256:8be41efb3a3ae20d4a65c826374d6b8b4573306b979f190cc008ae681e63d36c",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 2,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "google_free"
+          ],
+          "data": {
+            "decision": {
+              "reason": "deterministic golden evaluation fixture",
+              "role": "security"
+            }
+          },
+          "decided_without_contact": [
+            {
+              "detail": "router output is not valid JSON",
+              "provider": "google_free",
+              "state": "CONTRACT_INVALID"
+            }
+          ],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "openai/gpt-oss-20b",
+          "ok": true,
+          "provider": "groq",
+          "role": "router"
+        },
+        "transport": "deterministic_double"
+      },
+      "id": "router-role-contract-invalid-fails-over",
+      "input": {
+        "role": "router",
+        "transport": [
+          {
+            "outcome": "router_contract_invalid",
+            "provider": "google_free"
+          },
+          {
+            "outcome": "success",
+            "provider": "groq"
+          }
+        ]
+      },
+      "justification": "A router response that violates the decision contract is recorded as CONTRACT_INVALID and the router fails over instead of accepting prose as a routing decision.",
+      "observation": {
+        "observation_digest": "sha256:8be41efb3a3ae20d4a65c826374d6b8b4573306b979f190cc008ae681e63d36c",
+        "observations_identical": true,
+        "repetitions": 1,
+        "result": {
+          "attempt_count": 2,
+          "attempted": [
+            {
+              "error_class": "",
+              "max_tokens": 64,
+              "model": "openai/gpt-oss-20b",
+              "provider": "groq",
+              "retried": false,
+              "status": 200
+            }
+          ],
+          "candidate_override": null,
+          "contacted_providers": [
+            "groq",
+            "google_free"
+          ],
+          "data": {
+            "decision": {
+              "reason": "deterministic golden evaluation fixture",
+              "role": "security"
+            }
+          },
+          "decided_without_contact": [
+            {
+              "detail": "router output is not valid JSON",
+              "provider": "google_free",
+              "state": "CONTRACT_INVALID"
+            }
+          ],
+          "error_class": null,
+          "health_markers": [],
+          "lane": "internal",
+          "model": "openai/gpt-oss-20b",
+          "ok": true,
+          "provider": "groq",
+          "role": "router"
+        },
+        "transport": "deterministic_double"
+      },
+      "observation_source": "router_fixture",
+      "property": "router_execution",
+      "source": [
+        "company_os/control_plane/router.py",
+        "company_os/control_plane/router_contract.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "attempt_count": 0,
+        "attempted": [],
+        "blocked": true,
+        "contacted_providers": [],
+        "decided_without_contact": [],
+        "declared_argv": [
+          "implement",
+          "--lane",
+          "restricted",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": "restricted_lane_denies_automation",
+        "exit_code": 2,
+        "model": null,
+        "ok": false,
+        "printed_valid_json": true,
+        "provider": null,
+        "role": "implement",
+        "stderr_contains_usage": false
+      },
+      "id": "cli-restricted-lane-denied",
+      "input": {
+        "argv": [
+          "implement",
+          "--lane",
+          "restricted",
+          "--message",
+          "golden evaluation"
+        ]
+      },
+      "justification": "The operator CLI refuses the restricted lane with exit 2 and contacts no provider, matching the lane policy the router would apply.",
+      "observation": {
+        "attempt_count": 0,
+        "attempted": [],
+        "blocked": true,
+        "contacted_providers": [],
+        "decided_without_contact": [],
+        "declared_argv": [
+          "implement",
+          "--lane",
+          "restricted",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": "restricted_lane_denies_automation",
+        "exit_code": 2,
+        "model": null,
+        "ok": false,
+        "printed_valid_json": true,
+        "provider": null,
+        "role": "implement",
+        "stderr_contains_usage": false
+      },
+      "observation_source": "router_fixture",
+      "property": "cli_route",
+      "source": [
+        "company_os/control_plane/cli.py",
+        "config/models.yaml",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "attempt_count": 1,
+        "attempted": [],
+        "blocked": null,
+        "contacted_providers": [],
+        "decided_without_contact": [
+          {
+            "detail": "candidate_not_found",
+            "provider": null,
+            "state": "BLOCKED"
+          }
+        ],
+        "declared_argv": [
+          "summarise",
+          "--candidate",
+          "groq/nonexistent",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": "candidate_not_found",
+        "exit_code": 1,
+        "model": null,
+        "ok": false,
+        "printed_valid_json": true,
+        "provider": null,
+        "role": "summarise",
+        "stderr_contains_usage": false
+      },
+      "id": "cli-pinned-candidate-not-found",
+      "input": {
+        "argv": [
+          "summarise",
+          "--candidate",
+          "groq/nonexistent",
+          "--message",
+          "golden evaluation"
+        ]
+      },
+      "justification": "The CLI surfaces candidate_not_found with exit 1 rather than silently falling back to a different candidate.",
+      "observation": {
+        "attempt_count": 1,
+        "attempted": [],
+        "blocked": null,
+        "contacted_providers": [],
+        "decided_without_contact": [
+          {
+            "detail": "candidate_not_found",
+            "provider": null,
+            "state": "BLOCKED"
+          }
+        ],
+        "declared_argv": [
+          "summarise",
+          "--candidate",
+          "groq/nonexistent",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": "candidate_not_found",
+        "exit_code": 1,
+        "model": null,
+        "ok": false,
+        "printed_valid_json": true,
+        "provider": null,
+        "role": "summarise",
+        "stderr_contains_usage": false
+      },
+      "observation_source": "router_fixture",
+      "property": "cli_route",
+      "source": [
+        "company_os/control_plane/cli.py",
+        "company_os/control_plane/router.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "attempt_count": 2,
+        "attempted": [
+          {
+            "error_class": "",
+            "max_tokens": 1024,
+            "model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "provider": "nim",
+            "retried": false,
+            "status": 200
+          }
+        ],
+        "blocked": null,
+        "contacted_providers": [
+          "nim"
+        ],
+        "decided_without_contact": [
+          {
+            "detail": "reviewer_vendor_same_as_implementer",
+            "provider": "zai",
+            "state": "BLOCKED"
+          }
+        ],
+        "declared_argv": [
+          "review",
+          "--implementer-vendor",
+          "zai",
+          "--lane",
+          "internal",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": null,
+        "exit_code": 0,
+        "model": "nvidia/nemotron-3-ultra-550b-a55b",
+        "ok": true,
+        "printed_valid_json": true,
+        "provider": "nim",
+        "role": "review",
+        "stderr_contains_usage": false
+      },
+      "id": "cli-reviewer-same-vendor-blocked",
+      "input": {
+        "argv": [
+          "review",
+          "--implementer-vendor",
+          "zai",
+          "--lane",
+          "internal",
+          "--message",
+          "golden evaluation"
+        ],
+        "transport": [
+          {
+            "outcome": "success",
+            "provider": "zai"
+          },
+          {
+            "outcome": "success",
+            "provider": "nim"
+          },
+          {
+            "outcome": "success",
+            "provider": "google_free"
+          },
+          {
+            "outcome": "success",
+            "provider": "groq"
+          }
+        ]
+      },
+      "justification": "The CLI enforces reviewer vendor separation and serves the request from a different vendor.",
+      "observation": {
+        "attempt_count": 2,
+        "attempted": [
+          {
+            "error_class": "",
+            "max_tokens": 1024,
+            "model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "provider": "nim",
+            "retried": false,
+            "status": 200
+          }
+        ],
+        "blocked": null,
+        "contacted_providers": [
+          "nim"
+        ],
+        "decided_without_contact": [
+          {
+            "detail": "reviewer_vendor_same_as_implementer",
+            "provider": "zai",
+            "state": "BLOCKED"
+          }
+        ],
+        "declared_argv": [
+          "review",
+          "--implementer-vendor",
+          "zai",
+          "--lane",
+          "internal",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": null,
+        "exit_code": 0,
+        "model": "nvidia/nemotron-3-ultra-550b-a55b",
+        "ok": true,
+        "printed_valid_json": true,
+        "provider": "nim",
+        "role": "review",
+        "stderr_contains_usage": false
+      },
+      "observation_source": "router_fixture",
+      "property": "cli_route",
+      "source": [
+        "company_os/control_plane/cli.py",
+        "company_os/control_plane/router.py",
+        "company_os/control_plane/policy.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "attempt_count": 0,
+        "attempted": [],
+        "blocked": null,
+        "contacted_providers": [],
+        "decided_without_contact": [],
+        "declared_argv": [
+          "implement",
+          "--lane",
+          "not-a-lane",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": null,
+        "exit_code": 2,
+        "model": null,
+        "ok": null,
+        "printed_valid_json": false,
+        "provider": null,
+        "role": null,
+        "stderr_contains_usage": true
+      },
+      "id": "cli-rejects-lane-outside-choices",
+      "input": {
+        "argv": [
+          "implement",
+          "--lane",
+          "not-a-lane",
+          "--message",
+          "golden evaluation"
+        ]
+      },
+      "justification": "The CLI constrains lane selection to the four declared lanes and rejects anything else before any routing occurs.",
+      "observation": {
+        "attempt_count": 0,
+        "attempted": [],
+        "blocked": null,
+        "contacted_providers": [],
+        "decided_without_contact": [],
+        "declared_argv": [
+          "implement",
+          "--lane",
+          "not-a-lane",
+          "--message",
+          "golden evaluation"
+        ],
+        "error_class": null,
+        "exit_code": 2,
+        "model": null,
+        "ok": null,
+        "printed_valid_json": false,
+        "provider": null,
+        "role": null,
+        "stderr_contains_usage": true
+      },
+      "observation_source": "router_fixture",
+      "property": "cli_route",
+      "source": [
+        "company_os/control_plane/cli.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "choice_count": 1,
+        "completion_model": "implement",
+        "completion_object": "chat.completion",
+        "content_present": true,
+        "logical_provider": "nim",
+        "nested_reasoning_stripped": true,
+        "provider_reasoning_keys_exposed": [],
+        "reasoning_stripped_from_public_data": true,
+        "role": "implement",
+        "system_fingerprint_exposed": false,
+        "upstream_model_exposed": false,
+        "usage_present": true,
+        "wire_model": "nvidia/nemotron-3-super-120b-a12b",
+        "wire_model_exposed": false
+      },
+      "id": "translation-provider-and-model-isolation",
+      "input": {
+        "provider": "nim",
+        "role": "implement",
+        "upstream_model": "nvidia/nemotron-3-super-120b-a12b",
+        "wire_model": "nvidia/nemotron-3-super-120b-a12b"
+      },
+      "justification": "The client sees the logical role it requested; neither the physical provider nor the physical model appears in the completion.",
+      "observation": {
+        "choice_count": 1,
+        "completion_model": "implement",
+        "completion_object": "chat.completion",
+        "content_present": true,
+        "logical_provider": "nim",
+        "nested_reasoning_stripped": true,
+        "provider_reasoning_keys_exposed": [],
+        "reasoning_stripped_from_public_data": true,
+        "role": "implement",
+        "system_fingerprint_exposed": false,
+        "upstream_model_exposed": false,
+        "usage_present": true,
+        "wire_model": "nvidia/nemotron-3-super-120b-a12b",
+        "wire_model_exposed": false
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "completion_translation",
+      "source": [
+        "company_os/control_plane/boundary.py",
+        "company_os/control_plane/router.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "diff": [],
+      "diff_truncated": false,
+      "expected": {
+        "choice_count": 1,
+        "completion_model": "review",
+        "completion_object": "chat.completion",
+        "content_present": true,
+        "logical_provider": "zai",
+        "nested_reasoning_stripped": true,
+        "provider_reasoning_keys_exposed": [],
+        "reasoning_stripped_from_public_data": true,
+        "role": "review",
+        "system_fingerprint_exposed": false,
+        "upstream_model_exposed": false,
+        "usage_present": true,
+        "wire_model": "glm-4.7-flash",
+        "wire_model_exposed": false
+      },
+      "id": "translation-provider-reasoning-not-relayed",
+      "input": {
+        "provider": "zai",
+        "role": "review",
+        "upstream_model": "glm-4.7-flash",
+        "wire_model": "glm-4.7-flash"
+      },
+      "justification": "Provider reasoning fields are stripped at the control-plane edge and are not relayed to the client, and the provider system fingerprint is not exposed.",
+      "observation": {
+        "choice_count": 1,
+        "completion_model": "review",
+        "completion_object": "chat.completion",
+        "content_present": true,
+        "logical_provider": "zai",
+        "nested_reasoning_stripped": true,
+        "provider_reasoning_keys_exposed": [],
+        "reasoning_stripped_from_public_data": true,
+        "role": "review",
+        "system_fingerprint_exposed": false,
+        "upstream_model_exposed": false,
+        "usage_present": true,
+        "wire_model": "glm-4.7-flash",
+        "wire_model_exposed": false
+      },
+      "observation_source": "deterministic_boundary",
+      "property": "completion_translation",
+      "source": [
+        "company_os/control_plane/router_contract.py",
+        "company_os/control_plane/boundary.py"
+      ],
+      "status": "PASS"
+    }
+  ],
+  "determinism": {
+    "all_pass_digests_match": true,
+    "declared_order_digest": "sha256:e81fe543dec4c35363667e26853e268e95b9d524ae65996546d0939d4ea0e16b",
+    "digest_algorithm": "sha256 of canonical JSON, cases sorted by id",
+    "order_independent": true,
+    "passes": 3,
+    "repeat_digests_match": true,
+    "reversed_order_digest": "sha256:e81fe543dec4c35363667e26853e268e95b9d524ae65996546d0939d4ea0e16b",
+    "second_declared_order_digest": "sha256:e81fe543dec4c35363667e26853e268e95b9d524ae65996546d0939d4ea0e16b"
+  },
+  "deterministic": true,
+  "exit_code": 0,
+  "finished": "2026-10-05T19:52:03Z",
+  "golden_set": "tests/golden/company-os-golden-set.yaml",
+  "golden_set_sha256": "sha256:15c9ccc007adb1bd903746d5e7dd289cf11347fec99ee65bf7a6524230504535",
+  "judge": "deterministic_equality",
+  "llm_in_judgement": false,
+  "logical_models": [
+    "implement",
+    "research",
+    "architect",
+    "tests",
+    "review",
+    "security",
+    "vision_qa",
+    "summarise",
+    "router"
+  ],
+  "network": "loopback_only",
+  "provider_inference_during_run": false,
+  "repo_commit": "c0c32a97ac4ca680a8fde0455e16c0dc0680363c",
+  "schema": "company-os-golden-set-evidence/v1",
+  "started": "2026-10-05T19:52:02Z",
+  "summary": {
+    "failed": 0,
+    "passed": 49,
+    "total": 49
+  },
+  "tool": "company_os_golden_eval",
+  "transport": "deterministic_boundary",
+  "verdict": "pass"
+}

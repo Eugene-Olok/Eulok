@@ -1,0 +1,117 @@
+{
+  "phase": "8",
+  "status": "BLOCKED",
+  "deployment": "BLOCKED",
+  "allow_blocked": false,
+  "commit": "fbed5fd91d5afa61d6693014fd7ca3d056b9885f",
+  "worktree": "dirty",
+  "started_at": "2026-10-19T13:52:34Z",
+  "finished_at": "2026-10-19T13:58:48Z",
+  "tests": {
+    "count": 1819,
+    "baseline": 406,
+    "preserved": true
+  },
+  "checks": [
+    {
+      "name": "git repository",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "unit tests",
+      "status": "PASS",
+      "detail": "1819 tests, 0 failures"
+    },
+    {
+      "name": "baseline preserved",
+      "status": "PASS",
+      "detail": "1819 >= 406"
+    },
+    {
+      "name": "business domain import and deterministic transitions",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "template directory is not a valid client",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "business invariants",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "financial guards",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "evidence contracts",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "ci configuration",
+      "status": "PASS",
+      "detail": "structure checks + actionlint clean"
+    },
+    {
+      "name": "secret hygiene",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "website files present",
+      "status": "PASS",
+      "detail": "index.html, analytics.js, config.js"
+    },
+    {
+      "name": "website placeholders",
+      "status": "PASS",
+      "detail": "no placeholder markers, no committed analytics keys"
+    },
+    {
+      "name": "analytics inert without config",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "deploy targets pages.dev only",
+      "status": "PASS",
+      "detail": "no custom domain configuration"
+    },
+    {
+      "name": "site deploy builds",
+      "status": "PASS",
+      "detail": "deploy-site.sh --build-only reached state=build"
+    },
+    {
+      "name": "bash syntax",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "cloudflare credentials",
+      "status": "BLOCKED",
+      "detail": "CLOUDFLARE_API_TOKEN not set; site deploy cannot run"
+    },
+    {
+      "name": "posthog credentials",
+      "status": "BLOCKED",
+      "detail": "POSTHOG_KEY not set; site ships with inert analytics config"
+    },
+    {
+      "name": "live site verification",
+      "status": "BLOCKED",
+      "detail": "cannot resolve the canonical project domain (Cloudflare credentials or API unavailable)"
+    },
+    {
+      "name": "live analytics configuration",
+      "status": "BLOCKED",
+      "detail": "cannot resolve the canonical project domain (Cloudflare credentials or API unavailable)"
+    }
+  ]
+}

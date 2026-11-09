@@ -1,0 +1,121 @@
+{
+  "created_at": "2026-10-18T14:04:02.808853+00:00",
+  "source_db": "/var/lib/company-os/bifrost/data/config.db",
+  "app_dir": "/var/lib/company-os/bifrost/data",
+  "backup": "/var/lib/company-os/backups/config.db.pre-restore.bak",
+  "backup_summary": {
+    "path": "/var/lib/company-os/backups/config.db.pre-restore.bak",
+    "size_bytes": 34340864,
+    "sha256": "78b281f6cd624fcbb06cf7027b11d4dfcd0fe7cf3747b05ac1ae649a259c3871",
+    "integrity_check": "ok",
+    "quick_check": "ok",
+    "table_count": 61,
+    "tables": [
+      "batch_jobs",
+      "config_client",
+      "config_env_keys",
+      "config_hashes",
+      "config_keys",
+      "config_log_store",
+      "config_mcp_clients",
+      "config_models",
+      "config_plugins",
+      "config_providers",
+      "config_vector_store",
+      "config_webhook_endpoints",
+      "distributed_locks",
+      "enterprise_mcp_tool_group_virtual_keys",
+      "enterprise_mcp_tool_groups",
+      "feature_flags",
+      "folders",
+      "framework_configs",
+      "governance_budgets",
+      "governance_config",
+      "governance_customers",
+      "governance_model_configs",
+      "governance_model_parameters",
+      "governance_model_pricing",
+      "governance_pricing_overrides",
+      "governance_rate_limits",
+      "governance_teams",
+      "governance_virtual_key_mcp_configs",
+      "governance_virtual_key_provider_config_keys",
+      "governance_virtual_key_provider_configs",
+      "governance_virtual_keys",
+      "mcp_library",
+      "mcp_oauth_flows",
+      "mcp_oauth_tokens",
+      "mcp_per_user_header_credentials",
+      "mcp_per_user_header_flows",
+      "migrations",
+      "notifications",
+      "oauth2_authorize_requests",
+      "oauth2_clients",
+      "oauth2_refresh_tokens",
+      "oauth_configs",
+      "oauth_tokens",
+      "oauth_user_sessions",
+      "oauth_user_tokens",
+      "prompt_session_messages",
+      "prompt_sessions",
+      "prompt_version_messages",
+      "prompt_versions",
+      "prompts",
+      "routing_rules",
+      "routing_targets",
+      "sessions",
+      "sidekiq",
+      "skill_file_blobs",
+      "skill_files",
+      "skill_versions",
+      "skills",
+      "sqlite_sequence",
+      "temp_tokens",
+      "webhook_jobs"
+    ],
+    "weights": {
+      "config_client": 1,
+      "config_keys": 1,
+      "config_log_store": 1,
+      "config_providers": 1,
+      "framework_configs": 1,
+      "governance_config": 2,
+      "governance_model_parameters": 13207,
+      "governance_model_pricing": 5202,
+      "mcp_library": 126,
+      "migrations": 230,
+      "sqlite_sequence": 8
+    }
+  },
+  "inventory": {
+    "providers": [
+      {
+        "name": "mistral",
+        "encryption_status": "plain_text"
+      }
+    ],
+    "keys": [
+      {
+        "name": "MISTRAL_API_KEY_auto_detected",
+        "provider": "mistral",
+        "is_env_ref": true,
+        "weight": 1.0,
+        "enabled": true,
+        "encryption_status": "encrypted"
+      }
+    ],
+    "governance_config_keys": [
+      "complexity_semantic_generations",
+      "restart_required"
+    ],
+    "enforce_auth_on_inference": false
+  },
+  "restore_test": {
+    "restore_path": "/var/lib/company-os/backups/restore-test/config.db.pre-restore.bak",
+    "integrity_check": "ok",
+    "table_count": 61,
+    "inventory_matches": true,
+    "ok": true
+  },
+  "ok": true
+}

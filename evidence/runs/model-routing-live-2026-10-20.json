@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-10-20T15:47:37+00:00",
+  "kind": "model-routing-live-evidence",
+  "posthog": {
+    "event_observed": "$pageview",
+    "evidence": "evidence/runs/posthog-live-verification-20261020T145832Z.json",
+    "ingestion_status": 200,
+    "server_side_query": "not performed: only a phc_ project key is available; /api/projects/ with it returns HTTP 401",
+    "synthetic_event": false,
+    "verdict": "PASS"
+  },
+  "probes": [
+    {
+      "content_len": 62,
+      "content_preview": "```python\ndef add(a: int, b: int) -> int:\n    return a + b\n```",
+      "duration_s": 2.757,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "implement",
+      "role": "implement",
+      "role_header": "implement",
+      "status": 200
+    },
+    {
+      "content_len": 31,
+      "content_preview": "```python\nassert 2 + 2 == 4\n```",
+      "duration_s": 1.325,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "tests",
+      "role": "tests",
+      "role_header": "tests",
+      "status": 200
+    },
+    {
+      "content_len": 102,
+      "content_preview": "This function correctly defines an addition operation by taking two arguments and returning their su",
+      "duration_s": 17.103,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": false,
+      "model": "review",
+      "role": "review",
+      "role_header": "review",
+      "status": 200
+    },
+    {
+      "content_len": 111,
+      "content_preview": "Never trust user input; always validate, sanitize, and encode data before processing, storing, or re",
+      "duration_s": 8.392,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "security",
+      "role": "security",
+      "role_header": "security",
+      "status": 200
+    },
+    {
+      "content_len": 224,
+      "content_preview": "A monolith offers simpler development and deployment at the cost of scalability and fault isolation,",
+      "duration_s": 3.116,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "architect",
+      "role": "architect",
+      "role_header": "architect",
+      "status": 200
+    },
+    {
+      "content_len": 127,
+      "content_preview": "Check the database\u2019s official documentation and release notes for architecture details, version hist",
+      "duration_s": 63.555,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "research",
+      "role": "research",
+      "role_header": "research",
+      "status": 200
+    },
+    {
+      "content_len": 99,
+      "content_preview": "The release introduces analytics, corrects routing issues, and leaves the site otherwise unchanged.",
+      "duration_s": 1.52,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "summarise",
+      "role": "summarise",
+      "role_header": "summarise",
+      "status": 200
+    },
+    {
+      "content_len": 225,
+      "content_preview": "A visual regression check compares the current visual state of a user interface against an approved ",
+      "duration_s": 3.18,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "vision_qa",
+      "role": "vision_qa",
+      "role_header": "vision_qa",
+      "status": 200
+    },
+    {
+      "content_len": 110,
+      "content_preview": "{\"role\": \"tests\", \"reason\": \"Writing unit tests directly falls under the responsibilities of the tes",
+      "duration_s": 13.618,
+      "error": null,
+      "finish_reason": "stop",
+      "implementation_id_present": true,
+      "model": "router",
+      "role": "router",
+      "role_header": "router",
+      "status": 200
+    }
+  ],
+  "reasoning_floor": {
+    "deterministic_coverage": "tests/test_control_plane_acceptance.py::ImplementProviderReliabilityTests",
+    "live_180_max_tokens": "HTTP 200 on cloudflare primary; no reasoning candidate contacted",
+    "minimum_output_tokens": 768,
+    "per_model_floor": {
+      "openrouter_free/minimax/minimax-m3.1-flash:free": 2048
+    },
+    "role": "implement"
+  },
+  "release_commit": "7a3c03a528617547cf610f0d1c81b43858ed5a29",
+  "schema_version": 1,
+  "service": {
+    "active": "active",
+    "bifrost": {
+      "active": "active",
+      "health_status": 200,
+      "unit": "company-os-bifrost.service"
+    },
+    "health_ready": true,
+    "main_pid": 470348,
+    "started_at": "Tue 2026-10-20 18:11:42 EAT",
+    "unit": "company-os-control-plane.service"
+  }
+}

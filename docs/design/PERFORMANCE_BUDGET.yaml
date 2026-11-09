@@ -1,0 +1,145 @@
+# Company OS — Performance Budget
+#
+# Approved 2026-10-08 under decision 26.15 (option A — strict v1 budgets).
+# These are HARD production budgets, not aspirational targets: suited to the
+# current static-site architecture, they give meaningful regression detection
+# without requiring premature optimisation.
+#
+# Measurement tooling DIRECTION is approved (measurement.approach below). The
+# tool is now IMPLEMENTED and OPERATIONAL (tools/check_bundle_budget.py,
+# 2026-10-09): deterministic stdlib-only delivered-byte + zlib gzip checker
+# against the approved budgets, wired into the gate as "bundle budget
+# (TEST-007)" and covered by tests/test_bundle_budget.py. Byte budgets (JS,
+# CSS, transfer) produce reproducible measurements. Real-browser LCP/CLS
+# remain BLOCKED (no browser lane) — never a fabricated pass
+# (DESIGN_DECISIONS.md §26.15).
+
+schema_version: 1
+status: APPROVED
+decision_id: "26.15"
+approved_date: "2026-10-08"
+approval_evidence: >-
+  Gate 3 interactive session 2026-10-08: founder instruction
+  "Approve Option A — strict v1 budgets."
+authority: docs/design/DESIGN_DECISIONS.md
+verification_item: TEST-007
+checked_at: "2026-10-08"
+
+budgets:
+  lcp:
+    metric: "Largest Contentful Paint"
+    threshold: 1.5
+    unit: "s"
+    condition: "on simulated 4G"
+    status: APPROVED
+  cls:
+    metric: "Cumulative Layout Shift"
+    threshold: 0.05
+    unit: "score"
+    status: APPROVED
+  total_js:
+    metric: "Total JavaScript transferred"
+    threshold: 25
+    unit: "KB"
+    status: APPROVED
+  total_css:
+    metric: "Total CSS transferred"
+    threshold: 15
+    unit: "KB"
+    status: APPROVED
+  transfer:
+    metric: "Total page transfer size"
+    threshold: 100
+    unit: "KB"
+    status: APPROVED
+
+measurement:
+  tooling: "stdlib-python-bundle-budget"
+  tooling_status: OPERATIONAL
+  approach_approved: "2026-10-09"
+  operational_on: "2026-10-09"
+  approach: >-
+    Founder-approved 2026-10-09 (lightweight, deterministic, stdlib-only): a Python checker
+    measures delivered bytes plus a zlib gzip estimate against the approved budgets (JS <= 25 KB,
+    CSS <= 15 KB, transfer <= 100 KB), runnable in the existing Python 3.12 CI and local .venv.
+    No Docker, no DB, no paid infrastructure, no browser stack.
+  implementation: "tools/check_bundle_budget.py"
+  unit_coverage: "tests/test_bundle_budget.py"
+  gate_identity: "bundle budget (TEST-007)"
+  reproducible_evidence: >-
+    2026-10-09: three consecutive runs of tools/check_bundle_budget.py were
+    byte-identical (sha256 791723a046a41c41f2da0fb86b8336854550c237e794ff816a5189bac351423b).
+    Measured: index.html 3908 B; js 2624 B (analytics.js + config.js); css 0 B;
+    first-load delivered 6532 B; zlib gzip estimate 2982 B; total_js 2624/25600 PASS,
+    total_css 0/15360 PASS, transfer 6532/102400 PASS.
+  tooling_inspection: >-
+    Local (2026-10-09): business/site/ payload = 6532 B delivered (index.html 3908B +
+    config.js 286B + analytics.js 2338B); node v24.20.0 present; no chromium/Chrome binaries;
+    no Playwright/bs4/requests in .venv. CI = GitHub Actions (ubuntu-latest, Python 3.12 + Node 24).
+  lcp_cls: >-
+    A rendered-output browser lane now exists (2026-10-11, tools/browser_verify.py);
+    LCP/CLS remain unmeasured because no founder-approved LCP/CLS measurement
+    methodology (field data or a stable lab protocol) has been established.
+  tooling_status_note: >-
+    Byte budgets measure reproducibly and PASS. TEST-007 remains PARTIAL-BLOCKED only
+    for LCP/CLS until a founder-approved LCP/CLS measurement methodology exists — never
+    a fabricated pass. The 2026-10-11 browser lane covers rendered correctness, not
+    LCP/CLS budgets.
+  baseline_evidence: "DESIGN_DECISIONS.md §26.15 evidence line; closure report §20"
+  # Re-measurement after the founder-approved decision 26.9 (WhatsApp contact
+  # path) added a Contact section + CTA to business/site/index.html. The
+  # 2026-10-09 figures above remain the historical inspection; these are the
+  # current deterministic measurement pinned by tests/test_bundle_budget.py.
+  remeasured_2026_10_11: >-
+    index.html 4317 B; js 2624 B (config.js 286B + analytics.js 2338B); css 0 B;
+    first-load delivered 6941 B; zlib gzip estimate 3161 B; total_js 2624/25600 PASS,
+    total_css 0/15360 PASS, transfer 6941/102400 PASS. LCP/CLS still BLOCKED
+    (no founder-approved LCP/CLS measurement methodology). index.html grew 400 B
+    from 3908 B when the authorized Contact section + WhatsApp CTA (decision 26.9)
+    were added, then +9 B when the browser lane's token-conformance check caught
+    retired literals #bbbbbb and #dddddd (A11Y-004 / subtle-border) which were
+    replaced with the approved #767676 / #8f8f8f tokens.
+  browser_lane_note: >-
+    2026-10-11: a deterministic rendered-output browser lane now exists
+    (tools/browser_verify.py, Playwright/Firefox + vendored axe-core 4.14.0;
+    docs/design/BROWSER_CHECKS.yaml). It proves automated rendered parity
+    (render, headings, landmarks, overflow/reflow, token conformance, axe).
+    LCP/CLS remain BLOCKED: the lane is a correctness lane, not an approved
+    field/lab LCP/CLS measurement methodology.
+
+reporting_rules:
+  - "Budgets are approved (hard limits). A measured value above the limit is a FAIL."
+  - "threshold null ⇒ TEST-007 reports BLOCKED, not PASS, not FAIL."
+  - "tooling is undefined ⇒ TEST-007 reports BLOCKED even though budgets are approved; TEST-007 is not PASS until tooling is selected and operational."
+  - "A measurement run without operational tooling is recorded as NOT RUN for pass/fail purposes."
+
+# Approval procedure (founder):
+# 1. Edit DESIGN_DECISIONS.md register: 26.15 → status APPROVED, approval approved,
+#    approved_date + approval_evidence.  [DONE 2026-10-08]
+# 2. Set each budget threshold in this file to the approved number and
+#    status: APPROVED (values must match the approved decision text).  [DONE]
+# 3. Implement + verify the approved measurement approach (tooling: stdlib-python-bundle-budget,
+#    approach_approved 2026-10-09), then implement TEST-007. TEST-007 stays BLOCKED until then.
+
+# Historical remeasurement 2026-10-12 — partially invalidated 2026-10-20:
+#   - CSS 7165 B and JS 2624 B were measured correctly.
+#   - The checker selected 404.html (1939 B), not index.html, because it used
+#     lexicographic filename ordering. The recorded 11728 B transfer figure
+#     therefore is NOT a valid homepage first-load measurement.
+#   - The 2026-10-20 redesign corrects index_document() and tests that the
+#     canonical homepage plus its referenced assets are the measured payload.
+remeasured_2026_10_12: >-
+  Historical payload: 404.html 1939 B + js 2624 B + css 7165 B = 11728 B;
+  not a valid homepage transfer measurement. JS 2624/25600 PASS and CSS
+  7165/15360 PASS remain valid for those assets. Homepage transfer must be
+  measured by the current checker. LCP/CLS remain BLOCKED (no approved
+  Core Web Vitals measurement method and valid evidence).
+
+
+# Website redesign remeasurement 2026-10-20:
+# check_bundle_budget.py now prefers index.html for the first-load contract.
+# This fixes the previous lexicographic-selection defect that chose 404.html.
+# Exact byte counts are derived by the regression test from the committed
+# homepage and its referenced local CSS/JS assets. Approved hard budgets above
+# remain unchanged. LCP/CLS remain BLOCKED without the approved measurement
+# method and valid evidence; browser rendering verification is not a CWV test.

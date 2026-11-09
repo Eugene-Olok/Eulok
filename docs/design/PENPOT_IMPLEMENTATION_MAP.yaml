@@ -1,0 +1,99 @@
+# Company OS Penpot implementation map
+#
+# Penpot is downstream of the approved design contract.
+# No mappings are claimed yet.
+
+schema_version: 1
+status: NOT_STARTED
+source_manifest: docs/design/DESIGN_MANIFEST.yaml
+source_tokens: docs/design/DESIGN_TOKENS.yaml
+penpot_contract: APPROVED_2026-10-10   # founder restatement approved verbatim — decision 26.16 APPROVED, Penpot Cloud (see DESIGN_DECISIONS.md §3 26.16); historical §8.5 text remains unrecoverable (§27.A)
+
+# ---------------------------------------------------------------------------
+# Readiness (Gate 2 evidence — checked, not assumed)
+# ---------------------------------------------------------------------------
+readiness:
+  state: PARTIAL
+  checked_at: "2026-10-10"
+  blockers:
+    - id: BLOCKER-1
+      status: RESOLVED
+      resolved_at: "2026-10-10"
+      statement: >-
+        Connectivity blocker cleared: the `penpot_*` MCP tools are exposed and a
+        read-only `penpot_execute_code` probe succeeds against the live instance
+        (Penpot 2.18.3). The connected instance has an EMPTY SCRATCH file focused —
+        "Test File" (id 52a5041f-08a1-80f1-8008-c383654a1095), one page "Page 1",
+        empty root, no token sets — not the Company OS design workspace. The target
+        Company OS file did not exist, so it was CREATED 2026-10-10 by
+        tools/penpot_provision.py over the Penpot Cloud command API (create-file):
+        "Company OS" (id 52a5041f-08a1-80f1-8008-c50e307f3ef4, revn 0) in project
+        "Company-Os" (id 52a5041f-08a1-80f1-8008-c380b5126f44). The Plugin API has
+        no createFile; the REST command API create-file does, and the tool is
+        find-or-create, fail-closed, scratch-rejecting, and read-back verified.
+      evidence: "runtime command-API calls 2026-10-10 (get-profile/get-all-projects/get-project-files; create-file followed by an independent get-file read-back); MCP execute_code probe returned {version:'2.18.3', file:'Test File', page:'Page 1'}; see evidence/runs/design-phaseD-penpot-live-verify-2026-10-10.md"
+      unblock: "connectivity resolved; target file created via API. The remaining founder action is to OPEN the created 'Company OS' file and Connect it via File → MCP Server → Connect (the focused file is what MCP binds — the plugin currently still binds the scratch Test File); URL/token stay secret and are never written to this repo"
+    - id: BLOCKER-2
+      status: RESOLVED
+      resolved_at: "2026-10-10"
+      statement: >-
+        Contract blocker cleared: decision 26.16 is APPROVED. The historical Phase 8
+        §8.5 text remains unrecoverable (audit §27.A), so the founder provided a NEW
+        restated contract (approved verbatim) with Penpot Cloud as hosting. Repo
+        remains authoritative; Penpot is downstream-only.
+      evidence: "docs/design/DESIGN_DECISIONS.md §3/§5 26.16 (APPROVED, approved_date 2026-10-10)"
+      unblock: "resolved"
+    - id: BLOCKER-3
+      status: OPEN
+      statement: >-
+        Scoped exclusion, not a hard blocker: initial modelling is authorized only
+        for the 104 VALID_APPROVED tokens. The 22 VALID_PENDING_DECISION tokens
+        stay excluded from Penpot modelling until their OWN decisions are approved
+        (approved §8.5 contract: "The 104 currently approved tokens remain the only
+        token set eligible for initial modelling. The 22 pending tokens remain
+        excluded until the required decisions are made.").
+      evidence: "tools/validate_design_tokens.py (104 VALID_APPROVED / 22 VALID_PENDING_DECISION / 0 INVALID) + approved contract §3 26.16"
+      unblock: "founder approves the remaining pending/ownerless tokens under GOV-004 when real consumer requirements justify values (explicitly not part of decision 26.16)"
+  rules_when_unblocked:
+    - "No Penpot variable/component is created for a token outside the approved modelling set (currently the 104 VALID_APPROVED tokens; the 22 pending tokens are excluded)."
+    - "The Company OS design file may be created by tools/penpot_provision.py (Penpot Cloud command API create-file; find-or-create, --decision required, read-back verified). The Plugin API has no createFile, and no MCP/plugin operation connects the file: the founder connects it via File → MCP Server → Connect after opening it."
+    - "Any future Penpot workspace URL or token is never written into this repository."
+    - "Gate 2 reports the blocker exactly; it never prints a connection URL or claims a Penpot capability that was not exercised."
+    - "MCP connectivity alone is not proof that a write succeeded; every consequential operation is verified by reading the resulting state back (approved §8.5 — Reliability and auditability)."
+
+# ---------------------------------------------------------------------------
+# Direction of authority
+# ---------------------------------------------------------------------------
+direction: >-
+  Founder decision → canonical token data (DESIGN_TOKENS.yaml) → Penpot variables
+  → frontend CSS custom properties. Nothing flows upstream.
+
+mapping_rules:
+  tokens:
+    - "Every Penpot variable name equals the canonical token name (<layer>.<domain>.<role>)."
+    - "Penpot never originates a value that is absent from the canonical token data."
+    - "A variable is modelled only once its decision is APPROVED (VALID_APPROVED); pending tokens are not modelled."
+    - "Renaming a token requires a canonical rename first; Penpot follows."
+  components:
+    - "Every implemented P0/P1 component maps to exactly one stable manifest ID (COMP-*)."
+    - "Every Penpot component records its manifest ID, layer (L1/L2), and token list from COMPONENT_DEPENDENCIES.yaml."
+    - "Every L2 component has its Penpot counterpart (PEN-004 / rule R5) before implementation is declared done."
+    - "L3 patterns are composed in Penpot from their L2 parts — never drawn as opaque wholes (rule R3)."
+  pages:
+    - "Every Penpot frame maps to a PAGE id and its template from PAGE_TEMPLATE_MAP.yaml."
+    - "Frames for OUT_OF_SCOPE pages are not created (§25)."
+    - "A page/frame reference is evidence only after verification in the configured remote Penpot workspace."
+  verification:
+    - "Visual parity is verified against the frontend implementation; Penpot existence alone is not completion."
+    - "The Penpot map's components/pages/tokens blocks gain entries only with verification evidence attached."
+
+rules:
+  - "Every implemented P0/P1 component maps to exactly one stable manifest ID."
+  - "Every Penpot variable name matches the canonical token naming scheme."
+  - "Penpot never originates a value that is absent from the canonical token data."
+  - "A page/frame reference is evidence only after it is verified in the configured remote Penpot workspace."
+  - "Visual parity is verified against the frontend implementation; Penpot existence alone is not completion."
+
+components: {}
+pages: {}
+tokens: {}

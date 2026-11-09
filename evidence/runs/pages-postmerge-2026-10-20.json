@@ -1,0 +1,49 @@
+{
+  "observed_at": "2026-10-20T18:06:11.127135+00:00",
+  "live_url": "https://company-os-3ox.pages.dev",
+  "project": {
+    "name": "company-os",
+    "production_branch": "main",
+    "canonical_deployment_id": "25c4e60c-a953-4591-80c7-bb344a194331",
+    "canonical_short_id": "25c4e60c",
+    "canonical_created_on": "2026-10-20T14:03:39.825594Z"
+  },
+  "deployment": {
+    "id": "bba343b2-dba2-4e3f-89e1-f353064328a2",
+    "short_id": "bba343b2",
+    "created_on": "2026-10-20T18:01:28.031448Z",
+    "environment": "production",
+    "is_skipped": true,
+    "url": "https://bba343b2.company-os-3ox.pages.dev",
+    "branch": "main",
+    "commit_hash": "cf93b3743ed74eb5b69262ecd561f712c2df843f",
+    "trigger_type": "github:push"
+  },
+  "pages": {
+    "/": {
+      "status": 200,
+      "content_length": 4471,
+      "sha256": "ebb664c9babefcf02b7b5889eb6aa2e1f67e18fff5861eff687c0ede91e770ce"
+    },
+    "/analytics.js": {
+      "status": 200,
+      "content_length": 2338,
+      "sha256": "9e88a515af6004e9810509f166cdcd4322835be9a1b371f10ba3c4d1e2b744a9"
+    },
+    "/config.js": {
+      "status": 200,
+      "content_length": 225,
+      "sha256": "a6408125f6c1bd96616689e98f784326301bc228f840ce888944fc60d0d2a2ea"
+    }
+  },
+  "config": {
+    "armed": true,
+    "host": "https://us.i.posthog.com",
+    "disable_session_recording": true,
+    "key_present": true,
+    "key_fingerprint_algorithm": "sha256",
+    "key_fingerprint_prefix": "b2b0a824",
+    "key_present_in_evidence": false,
+    "well_formed": true
+  }
+}

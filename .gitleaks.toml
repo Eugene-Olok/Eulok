@@ -1,0 +1,28 @@
+# Rationale: `tools/validate_design_specs.py`, `docs/design/DESIGN_GATES.yaml`,
+# and structured verification matrices use `key:` / `"key":` as a dict field
+# name. gitleaks' generic-api-key entropy heuristic reads the field *value* as
+# a candidate credential, so identifier strings such as
+# `gate2_reconciliation_evidence` are reported as leaks. Synthetic test
+# literals (`sk-synthetic-secret-1234567890` and the `-synthetic-` fixtures
+# used by tests/test_secrets_isolation.py) are likewise not credentials.
+#
+# The allowlist below is anchored to those exact values only, so the
+# generic-api-key rule still fires on a real secret anywhere in the repo.
+# Anything not listed here remains a finding.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Design-gate identifiers + synthetic test values (false positives, not credentials)"
+regexes = [
+  '''\bgate2_reconciliation_evidence\b''',
+  '''\bgate2_verification_evidence\b''',
+  '''\bphase8_gate_evidence\b''',
+  '''\bverify_200_zoom\b''',
+  '''\ba11y004_vintage_retired\b''',
+  '''\bsk-synthetic-secret-1234567890\b''',
+  '''cf-synthetic-0123456789abcdef0123456789''',
+  '''phc_synthetic_0123456789abcdef0123456789''',
+  '''nvapi-synthetic-0123456789abcdef''',
+]

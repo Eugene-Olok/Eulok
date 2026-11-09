@@ -1,0 +1,160 @@
+{
+  "status": "PASS",
+  "release_eligibility": "BLOCKED",
+  "release_eligibility_reason": "worktree is dirty; uncommitted changes are not release evidence",
+  "worktree": "dirty",
+  "commit": "fbed5fd91d5afa61d6693014fd7ca3d056b9885f",
+  "started_at": "2026-10-19T13:43:07Z",
+  "finished_at": "2026-10-19T13:52:24Z",
+  "capabilities": {
+    "langfuse": {
+      "mode": "required",
+      "credentials_present": true
+    },
+    "promptfoo": {
+      "bin": "/home/genie/.local/bin/promptfoo",
+      "bin_set": true,
+      "pinned_version": "0.123.1"
+    },
+    "python_interpreter": "/home/genie/company/.venv/bin/python"
+  },
+  "checks": [
+    {
+      "name": "git repository",
+      "status": "PASS"
+    },
+    {
+      "name": "git diff check",
+      "status": "PASS"
+    },
+    {
+      "name": "bash syntax",
+      "status": "PASS"
+    },
+    {
+      "name": "shellcheck",
+      "status": "PASS"
+    },
+    {
+      "name": "GitHub Actions syntax",
+      "status": "PASS"
+    },
+    {
+      "name": "gitleaks",
+      "status": "PASS"
+    },
+    {
+      "name": "trivy filesystem",
+      "status": "PASS"
+    },
+    {
+      "name": "semgrep",
+      "status": "PASS"
+    },
+    {
+      "name": "osv-scanner",
+      "status": "PASS"
+    },
+    {
+      "name": "model compatibility artifact",
+      "status": "PASS"
+    },
+    {
+      "name": "python compile",
+      "status": "PASS"
+    },
+    {
+      "name": "unit tests",
+      "status": "PASS"
+    },
+    {
+      "name": "architecture conformance",
+      "status": "PASS"
+    },
+    {
+      "name": "bundle budget (TEST-007)",
+      "status": "PASS"
+    },
+    {
+      "name": "design manifest",
+      "status": "PASS"
+    },
+    {
+      "name": "decision effects",
+      "status": "PASS"
+    },
+    {
+      "name": "design tokens",
+      "status": "PASS"
+    },
+    {
+      "name": "design graph",
+      "status": "PASS"
+    },
+    {
+      "name": "design contract specs",
+      "status": "PASS"
+    },
+    {
+      "name": "design gate sequence (GATE-2)",
+      "status": "PASS"
+    },
+    {
+      "name": "penpot map (offline)",
+      "status": "PASS"
+    },
+    {
+      "name": "design component specs",
+      "status": "PASS"
+    },
+    {
+      "name": "design compiler (offline)",
+      "status": "PASS"
+    },
+    {
+      "name": "design token export (offline)",
+      "status": "PASS"
+    },
+    {
+      "name": "design diagnostic (offline)",
+      "status": "PASS"
+    },
+    {
+      "name": "golden set",
+      "status": "PASS"
+    },
+    {
+      "name": "trajectory",
+      "status": "PASS"
+    },
+    {
+      "name": "promptfoo",
+      "status": "PASS"
+    },
+    {
+      "name": "langfuse trace",
+      "status": "PASS"
+    },
+    {
+      "name": "ruff",
+      "status": "PASS"
+    },
+    {
+      "name": "ruff format",
+      "status": "PASS"
+    }
+  ],
+  "build": "PASS",
+  "typecheck": "N/A",
+  "lint": "PASS",
+  "security": "PASS",
+  "migration": "NOT_RUN",
+  "tests_passed": true,
+  "tests": "PASS",
+  "golden_set": "PASS",
+  "trajectory": "PASS",
+  "architecture_conformance": "PASS",
+  "promptfoo": "PASS",
+  "langfuse_trace": "PASS",
+  "ci": "LOCAL_ONLY"
+}

@@ -1,0 +1,138 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": null,
+    "case": "security-01"
+  },
+  "repeat": 5,
+  "case_count": 1,
+  "results": [
+    {
+      "id": "security-01",
+      "role": "security",
+      "state": "UNSTABLE",
+      "repeat_count": 5,
+      "pass_count": 2,
+      "pass_rate": 0.4,
+      "stable": false,
+      "providers": [
+        "nim",
+        "zai"
+      ],
+      "models": [
+        "glm-4.7-flash",
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "failed_checks_union": [
+        "database OR db OR row-level security OR rls",
+        "isolation OR tenant isolation OR cross-tenant"
+      ],
+      "run_states": [
+        "QUALITY_FAIL",
+        "PASS",
+        "QUALITY_FAIL",
+        "PASS",
+        "QUALITY_FAIL"
+      ],
+      "runs": [
+        {
+          "id": "security-01",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3696,
+          "observable_sha256": "29db3b9e99122b9cc0c44c0c6cdf442041df6c189c9e492f86513f6062b9dfbf",
+          "quality_pass": false,
+          "failed_checks": [
+            "isolation OR tenant isolation OR cross-tenant"
+          ],
+          "run_index": 1
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3817,
+          "observable_sha256": "3b082ac9a54dc21d89b707377ff4aa62be4e8e399e413a374288e6963c643cd3",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 2
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3498,
+          "observable_sha256": "aafc56475bf2c13fed0a6ca8309cd0669874c43546e0e3acb99f81bbca67c549",
+          "quality_pass": false,
+          "failed_checks": [
+            "database OR db OR row-level security OR rls",
+            "isolation OR tenant isolation OR cross-tenant"
+          ],
+          "run_index": 3
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "zai",
+          "model": "glm-4.7-flash",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 4677,
+          "observable_sha256": "f1dbdefbc980feec3b8bd62302b6094c619fbb7a54b0babd42ab2aa46d99a1a3",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 4
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3836,
+          "observable_sha256": "d1a0408271c7ee5477ee50066e97e644717b4b6ee268d4b570565c2f36dcaed5",
+          "quality_pass": false,
+          "failed_checks": [
+            "database OR db OR row-level security OR rls",
+            "isolation OR tenant isolation OR cross-tenant"
+          ],
+          "run_index": 5
+        }
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

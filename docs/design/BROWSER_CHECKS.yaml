@@ -1,0 +1,126 @@
+version: 1
+description: >-
+  Deterministic rendered-output checks for implemented pages (the "browser
+  lane"), consumed by tools/browser_verify.py. Only pages whose status is
+  CURRENT are executed. The lane proves rendered implementation ↔ design
+  contract parity for the automated criteria; it never claims manual
+  (keyboard-only / screen-reader / zoom) review, which stays human.
+
+# url is relative to the repository root and resolved to a file:// URI, so the
+# lane needs no web server and no network.
+pages:
+  - id: PAGE-001
+    name: Landing
+    status: CURRENT
+    url: business/site/index.html
+    title_prefix: "Company OS"
+
+  - id: PAGE-002
+    name: Services Index
+    status: CURRENT
+    url: business/site/services.html
+    title_prefix: "Services"
+
+  - id: PAGE-003
+    name: Service Detail — Finance Integrations
+    status: CURRENT
+    url: business/site/services/finance-integrations.html
+    title_prefix: "Finance Integrations"
+
+  - id: PAGE-004
+    name: Service Detail — Reconciliation
+    status: CURRENT
+    url: business/site/services/reconciliation.html
+    title_prefix: "Reconciliation"
+
+  - id: PAGE-005
+    name: Service Detail — Performance Builds
+    status: CURRENT
+    url: business/site/services/performance-builds.html
+    title_prefix: "Performance Builds"
+
+  - id: PAGE-006
+    name: About
+    status: CURRENT
+    url: business/site/about.html
+    title_prefix: "About"
+
+  - id: PAGE-007
+    name: How We Work
+    status: CURRENT
+    url: business/site/work.html
+    title_prefix: "How We Work"
+
+  - id: PAGE-008
+    name: Work & Technical Demonstrations
+    status: CURRENT
+    url: business/site/case-studies.html
+    title_prefix: "Work & Technical Demonstrations"
+
+  - id: PAGE-009
+    name: Case Study Detail Template
+    status: CURRENT
+    url: business/site/case-study-template.html
+    title_prefix: "Case Study Template"
+
+  - id: PAGE-010
+    name: Contact / Intake (WhatsApp)
+    status: CURRENT
+    url: business/site/contact.html
+    title_prefix: "Contact"
+
+  - id: PAGE-011
+    name: Privacy & Analytics Disclosure
+    status: CURRENT
+    url: business/site/privacy.html
+    title_prefix: "Privacy"
+
+  - id: PAGE-012
+    name: Security & Data Handling
+    status: CURRENT
+    url: business/site/security.html
+    title_prefix: "Security"
+
+  - id: PAGE-013
+    name: Delivery Commitments
+    status: CURRENT
+    url: business/site/engineering-standards.html
+    title_prefix: "Our Delivery Commitments"
+
+  - id: PAGE-014
+    name: Accessibility Statement
+    status: CURRENT
+    url: business/site/accessibility.html
+    title_prefix: "Accessibility"
+
+  - id: PAGE-015
+    name: 404 Not Found
+    status: CURRENT
+    url: business/site/404.html
+    title_prefix: "Page Not Found"
+
+viewports: [320, 480, 768, 1024, 1440]
+
+# severity: fail → lane STATUS FAIL; warn → advisory only (recorded, not gating)
+checks:
+  render: fail
+  title: fail
+  headings: fail
+  landmarks: fail
+  overflow: fail
+  token_conformance: fail
+  axe: fail
+  target_size: warn
+  keyboard_focus: warn
+  reduced_motion: warn
+
+target_size:
+  min_px: 24        # WCAG 2.2 AA 2.5.8 Target Size (Minimum)
+  recommend_px: 44  # mobile guidance / WCAG 2.1 AAA
+
+overflow_tolerance_px: 1
+
+axe_path: tools/vendor/axe-core/axe.min.js
+axe_sha256: 20c09fe157a8a34a30e241aaa1fcdade657734f08ab379ecfbeb7d45cc46e878
+
+evidence_dir: evidence/runs

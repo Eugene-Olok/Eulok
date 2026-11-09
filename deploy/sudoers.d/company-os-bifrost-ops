@@ -1,0 +1,28 @@
+# Company OS — sudoers fragment for privileged Bifrost operations.
+#
+# Install (review this file first):
+#   sudo install -m 0440 -o root -g root \
+#     deploy/sudoers.d/company-os-bifrost-ops \
+#     /etc/sudoers.d/company-os-bifrost-ops
+#   sudo visudo -cf /etc/sudoers.d/company-os-bifrost-ops
+#
+# Effective privilege: the operator (uid 1000, 'genie') may run the single
+# root-owned dispatcher as root, WITHOUT a password, ONLY for the exact
+# invocations listed below. There is no wildcard and no argument passthrough:
+# sudo itself matches each command line token-for-token, so the dispatcher can
+# never receive an unexpected argument, path or flag. The dispatcher additionally
+# re-validates its own code directory (root-owned, not group/world writable) and
+# argument arity.
+#
+# Why this is narrow: the dispatcher executes root-owned code only
+# (/usr/local/lib/company-os/bifrost-ops, installed by deploy/bifrost-ops/install.sh)
+# with a fixed system interpreter in isolated mode. It cannot run arbitrary
+# commands, and it never executes anything from a caller-writable tree.
+#
+# Revoke by deleting this file.
+genie ALL=(root) NOPASSWD: /usr/local/sbin/company-os-bifrost-ops inspect
+genie ALL=(root) NOPASSWD: /usr/local/sbin/company-os-bifrost-ops status
+genie ALL=(root) NOPASSWD: /usr/local/sbin/company-os-bifrost-ops backup
+genie ALL=(root) NOPASSWD: /usr/local/sbin/company-os-bifrost-ops seed step1
+genie ALL=(root) NOPASSWD: /usr/local/sbin/company-os-bifrost-ops seed step2
+genie ALL=(root) NOPASSWD: /usr/local/sbin/company-os-bifrost-ops rollback

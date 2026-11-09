@@ -1,0 +1,49 @@
+{
+  "title": "Bifrost privileged-operations audit — session re-verification on the exact installed binary",
+  "date": "2026-10-18",
+  "classification": "INTERNAL",
+  "secrets": "none (admin credentials and provider keys are env.<NAME> references; probe credentials are non-secret sentinels)",
+  "code_revision": "fbed5fd91d5afa61d6693014fd7ca3d056b9885f (fix/business-evidence-placeholder-guard)",
+  "method": {
+    "binary": "/home/genie/.cache/bifrost/v2.2.3/bin/bifrost-http-0",
+    "version": "v2.2.3 (from install path; the binary exposes no -version flag)",
+    "isolation": "disposable copy of the reference store under /tmp/opencode; CWD == app-dir; loopback-only; production service and /var/lib/company-os were never touched",
+    "readiness": "waited for GET /health == 200 (model-catalog init ~21-27s)"
+  },
+  "results": {
+    "r1_authentication_enforcement": {
+      "config": "governance.auth_config {is_enabled:true, admin_username:'env.BIFROST_ADMIN_USERNAME', admin_password:'env.BIFROST_ADMIN_PASSWORD'}",
+      "GET /health unauth": 200,
+      "GET /api/providers unauth": 401,
+      "POST /api/providers unauth": 401,
+      "GET /api/providers correct Basic": 200,
+      "POST /api/providers correct Basic": 200,
+      "GET /api/providers wrong Basic": 401,
+      "POST /v1/chat/completions unauth": 400,
+      "chat_400_meaning": "inference is NOT admin-gated (keyless request rejected on model, not 401)",
+      "status": "PASS",
+      "meaning": "Enabling auth enforces it on management READS and WRITES; /health stays open; inference stays available."
+    },
+    "r2_additive_seed": {
+      "input": "disposable store (copy of reference) + config.json listing mistral + six providers + a provider absent from the store ('probeadd')",
+      "providers_after": ["cloudflare", "gemini", "groq", "mistral", "nvidia", "openai", "openrouter", "probeadd", "zai"],
+      "six_present": true,
+      "new_provider_added": true,
+      "pre_existing_provider_preserved": "openai retained (present in store, absent from config.json)",
+      "status": "PASS",
+      "meaning": "Startup reconciles config.json ADDITIVELY: it adds missing providers and never removes existing ones."
+    },
+    "r3_seed_precedence": {
+      "observation": "the reference store's DB already held governance_config.is_auth_enabled='true'; a config.json with is_enabled:false did NOT override it (unauth GET returned 401)",
+      "status": "PASS",
+      "meaning": "config.json seeds a value only where the store lacks it. The live DB has no is_auth_enabled, so the auth seed WILL apply there."
+    }
+  },
+  "not_re_verified_this_session": {
+    "items": [
+      "exact HTTP status matrix for management-API write contract and provider-registry limits",
+      "the three env-form variants of the SecretVar reference (plain string / object ref / object value)"
+    ],
+    "existing_evidence": "evidence/runs/bifrost-api-contract-2026-10-18.json (same binary, v2.2.3)"
+  }
+}

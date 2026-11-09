@@ -1,0 +1,62 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": "architect",
+    "case": null
+  },
+  "case_count": 3,
+  "results": [
+    {
+      "id": "architect-01",
+      "role": "architect",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "PASS",
+      "ok": true,
+      "provider": "zai",
+      "model": "glm-4.7-flash",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 6178,
+      "observable_sha256": "855f4bdbf829eb22a5d03290f2201b509f47221ebb8aec068762c2bf6d0927be",
+      "quality_pass": true,
+      "failed_checks": []
+    },
+    {
+      "id": "architect-02",
+      "role": "architect",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "PASS",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1680,
+      "observable_sha256": "38fc6960c609c9059aad434d98cf21a47dfe708c5a88b1f4498d3e0ecc136562",
+      "quality_pass": true,
+      "failed_checks": []
+    },
+    {
+      "id": "architect-03",
+      "role": "architect",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "PASS",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1667,
+      "observable_sha256": "01f2e8502f641fdef42dfdf4a0b676e751f6d73eebe0a337a629c13084224003",
+      "quality_pass": true,
+      "failed_checks": []
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

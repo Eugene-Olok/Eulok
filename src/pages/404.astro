@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout pageId="home" customTitle="404 — Page Not Found | EULOK">
+  <div class="container-expansive" style="padding: clamp(60px, 10vw, 120px) 0; text-align: center;">
+    <span class="eyebrow">404 EXCEPTION</span>
+    <h1 style="font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 24px;">Route Not Found</h1>
+    <p style="color: var(--text-muted); max-width: 50ch; margin: 0 auto 36px;">
+      The requested route does not exist or has moved. Return to the home page or explore our services.
+    </p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="/" class="button button-primary">Return Home</a>
+      <a href="/services" class="button button-quiet">View Services</a>
+    </div>
+  </div>
+</Layout>

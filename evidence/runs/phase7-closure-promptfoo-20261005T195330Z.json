@@ -1,0 +1,124 @@
+{
+  "config": {
+    "assertion_policy": "deterministic_only",
+    "llm_graded_assertions": 0,
+    "path": "tests/promptfoo/promptfooconfig.yaml",
+    "sha256": "1ddff6a84369b44b7ca29242674906091f721fb50f36005d8ab375d7427b7151"
+  },
+  "counts": {
+    "errored": 0,
+    "failed": 0,
+    "passed": 18,
+    "total": 18
+  },
+  "generated_at": "2026-10-05T19:52:24+00:00",
+  "kind": "promptfoo-evidence",
+  "promptfoo": {
+    "cache": "disabled",
+    "pinned_version": "0.123.1",
+    "version": "0.123.1",
+    "version_matches_pin": true
+  },
+  "results": [
+    {
+      "description": "research completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "architect completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "implement completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "tests completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "review completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "security completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "vision_qa completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "summarise completes",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "router completes and yields a role decision",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "the model field echoes the requested logical role",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "no physical provider or model identity is relayed",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "provider reasoning is not relayed to the client",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "the completion carries a usage report",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "a client-selected physical model is refused",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "an unknown logical role is refused",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "a client-supplied provider field is rejected outright",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "streaming delivers well-formed server-sent events",
+      "error": null,
+      "passed": true
+    },
+    {
+      "description": "a standard OpenAI client receives a usable completion",
+      "error": null,
+      "passed": true
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "boundary_state_dir": "/tmp/company-os-promptfoo-r674n_5x",
+    "boundary_url": "http://127.0.0.1:38505",
+    "label": "deterministic_boundary",
+    "network": "loopback_only",
+    "provider_inference_during_run": false,
+    "transport": "promptfoo_http_and_openai_sdk_clients"
+  },
+  "verdict": "pass"
+}

@@ -1,0 +1,91 @@
+name: deterministic-gates
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gates-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gates:
+    name: Deterministic Engineering Gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # required: missing Langfuse credentials FAIL (historical semantics;
+      #   also what a protected workflow_dispatch request enforces — a live
+      #   verification request must not degrade into a skip).
+      # hermetic: missing credentials record an explicit SKIP and the gate
+      #   evidence carries release_eligibility=BLOCKED; credentials present
+      #   always run the check. PR/push runs use hermetic because GitHub
+      #   secrets are not available to untrusted contexts and the trace
+      #   machinery is already covered hermetically by the unit suite.
+      GATES_LANGFUSE_MODE: ${{ github.event_name == 'workflow_dispatch' && 'required' || 'hermetic' }}
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-pinned.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+
+      - name: Install pinned Python environment
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          # Venv lives in RUNNER_TEMP so trivy/gitleaks never scan it.
+          python -m venv "$RUNNER_TEMP/company-os-venv"
+          "$RUNNER_TEMP/company-os-venv/bin/pip" install \
+            --disable-pip-version-check \
+            -r requirements-pinned.txt
+          printf 'PYTHON_BIN=%s\n' "$RUNNER_TEMP/company-os-venv/bin/python" >> "$GITHUB_ENV"
+
+      - name: Install pinned gate tools
+        shell: bash
+        run: |
+          set -Euo pipefail
+          ./scripts/install-gate-tools-ci.sh \
+            "$RUNNER_TEMP/company-os-gates/bin" \
+            "$RUNNER_TEMP/company-os-gates/work"
+
+      - name: Run deterministic gates
+        shell: bash
+        env:
+          # Mapped so a workflow_dispatch (required-mode) run can actually
+          # verify the live trace instead of failing on credentials it was
+          # never given. Unset secrets resolve to empty strings, which the
+          # gate treats exactly like absent credentials: hermetic runs SKIP,
+          # required runs FAIL. The values are never printed, logged, or
+          # written to evidence.
+          LANGFUSE_HOST: ${{ secrets.LANGFUSE_HOST }}
+          LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+          LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+        run: ./scripts/gates.sh
+
+      - name: Upload gate evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: gate-evidence
+          path: artifacts/
+          if-no-files-found: error
+          retention-days: 14

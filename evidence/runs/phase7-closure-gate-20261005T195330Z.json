@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "release_eligibility": "PASS",
+  "commit": "c0c32a97ac4ca680a8fde0455e16c0dc0680363c",
+  "started_at": "2026-10-05T19:47:33Z",
+  "finished_at": "2026-10-05T19:52:33Z",
+  "checks": [
+    {
+      "name": "git repository",
+      "status": "PASS"
+    },
+    {
+      "name": "git diff check",
+      "status": "PASS"
+    },
+    {
+      "name": "bash syntax",
+      "status": "PASS"
+    },
+    {
+      "name": "shellcheck",
+      "status": "PASS"
+    },
+    {
+      "name": "GitHub Actions syntax",
+      "status": "PASS"
+    },
+    {
+      "name": "gitleaks",
+      "status": "PASS"
+    },
+    {
+      "name": "trivy filesystem",
+      "status": "PASS"
+    },
+    {
+      "name": "semgrep",
+      "status": "PASS"
+    },
+    {
+      "name": "osv-scanner",
+      "status": "PASS"
+    },
+    {
+      "name": "model compatibility artifact",
+      "status": "PASS"
+    },
+    {
+      "name": "python compile",
+      "status": "PASS"
+    },
+    {
+      "name": "unit tests",
+      "status": "PASS"
+    },
+    {
+      "name": "golden set",
+      "status": "PASS"
+    },
+    {
+      "name": "trajectory",
+      "status": "PASS"
+    },
+    {
+      "name": "promptfoo",
+      "status": "PASS"
+    },
+    {
+      "name": "langfuse trace",
+      "status": "PASS"
+    },
+    {
+      "name": "ruff",
+      "status": "PASS"
+    }
+  ],
+  "build": "PASS",
+  "typecheck": "N/A",
+  "lint": "PASS",
+  "security": "PASS",
+  "migration": "NOT_RUN",
+  "tests_passed": true,
+  "tests": "PASS",
+  "golden_set": "PASS",
+  "trajectory": "PASS",
+  "promptfoo": "PASS",
+  "langfuse_trace": "PASS",
+  "ci": "LOCAL_ONLY"
+}

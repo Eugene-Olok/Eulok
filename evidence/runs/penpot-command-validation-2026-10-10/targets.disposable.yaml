@@ -1,0 +1,26 @@
+# Disposable-validation target policy (NOT the production policy).
+#
+# Scopes automated Penpot writes to the single disposable validation file only.
+# The production Company OS file and the scratch "Test File" are explicitly
+# DENIED here, so a mistake in the command-lane runtime cannot reach them
+# (founder Option 1, 2026-10-10: validate the undocumented update-file write
+# schema on a throwaway file before any production write).
+#
+# Loaded via tools/penpot_target_guard.py::load_policy. Fail-closed.
+
+allowed_file_ids:
+  - 52a5041f-08a1-80f1-8008-c52b2fa4c31b   # Company OS cmd-lane validation B (disposable; fresh file 2026-10-10)
+  - 17193a1f-939a-80b5-8008-c5215ecd24ae   # Company OS command-lane validation (disposable; superseded by phantom-page cleanup)
+
+allowed_project_ids:
+  - 52a5041f-08a1-80f1-8008-c380b5126f44   # Company-Os
+
+denied_file_ids:
+  - 52a5041f-08a1-80f1-8008-c50e307f3ef4   # Company OS (PRODUCTION — must never be touched here)
+  - 52a5041f-08a1-80f1-8008-c383654a1095   # Test File (scratch — must never be touched)
+
+denied_names:
+  - Test File
+  - Company OS
+
+require_project: true

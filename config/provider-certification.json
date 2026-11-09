@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-28",
+  "corrections_evidence": "evidence/runs/control-plane-defects-2026-10-20.md",
+  "gateway": "Bifrost 2.2.3",
+  "cost_policy_usd": 0,
+  "certified": [
+    {"provider": "google_free", "model": "gemini-3.8-flash", "status": "pass"},
+    {"provider": "google_free", "model": "gemini-3.6-flash", "status": "pass"},
+    {"provider": "groq", "model": "qwen/qwen3.8-27b", "status": "pass"},
+    {"provider": "groq", "model": "openai/gpt-oss-20b", "status": "pass"},
+    {"provider": "nim", "model": "nemotron-3-ultra-550b-a55b", "status": "pass"},
+    {"provider": "nim", "model": "nemotron-3.5-lightning-30b-a3b", "status": "pass"},
+    {"provider": "nim", "model": "meta/muse-glimmer-30b", "status": "pass"},
+    {"provider": "zai", "model": "glm-4.7-flash", "status": "pass"},
+    {"provider": "cloudflare", "model": "@cf/openai/gpt-oss-120b", "status": "pass"},
+    {"provider": "openrouter_free", "model": "cohere/north-mini-code:free", "status": "pass"},
+    {"provider": "openrouter_free", "model": "nvidia/nemotron-3-ultra-550b-a55b:free", "status": "pass"},
+    {"provider": "openrouter_free", "model": "nvidia/nemotron-3-super-120b-a12b:free", "status": "pass"},
+    {"provider": "openrouter_free", "model": "poolside/laguna-s-2.1:free", "status": "pass"}
+  ],
+  "unavailable_or_unverified": [
+    {"provider": "google_free", "model": "gemini-3.5-flash-lite", "status": "503_high_demand"},
+    {"provider": "openrouter_free", "model": "qwen/qwen3.8-27b:free", "status": "429"},
+    {"provider": "openrouter_free", "model": "inclusionai/ling-3.0-flash-vl:free", "status": "not_free_slug"},
+    {"provider": "mistral", "model": "mistral-small-2603", "status": "429"},
+    {"provider": "nim", "model": "minimax-m3", "status": "404"},
+    {"provider": "nim", "model": "nemotron-3-super-120b-a12b", "status": "404_model_or_route_unavailable"},
+    {"provider": "nim", "model": "z-ai/glm-5.3-flash", "status": "timeout_30s"},
+    {"provider": "nim", "model": "z-ai/glm-5.3", "status": "timeout_30s"},
+    {"provider": "nim", "model": "moonshotai/kimi-k3", "status": "timeout_30s"},
+    {"provider": "nim", "model": "deepseek-ai/deepseek-v4.1-flash", "status": "timeout_30s"},
+    {"provider": "ovh", "model": "qwen3.5", "status": "not_configured_zero_cost_block"}
+  ],
+  "corrections": [
+    {"date": "2026-10-20", "provider": "nim", "model": "nemotron-3-super-120b-a12b", "from": "pass", "to": "404_model_or_route_unavailable", "reason": "live probe through Bifrost; the served catalog no longer routes this model"},
+    {"date": "2026-10-20", "provider": "openrouter_free", "model": "poolside/laguna-s-2.1:free", "from": "429", "to": "pass", "reason": "live probe returned usable content at 180 and 1024 output tokens"}
+  ]
+}

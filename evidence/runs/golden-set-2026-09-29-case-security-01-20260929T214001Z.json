@@ -1,0 +1,33 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": null,
+    "case": "security-01"
+  },
+  "case_count": 1,
+  "results": [
+    {
+      "id": "security-01",
+      "role": "security",
+      "exit_code": 0,
+      "stderr_tail": "",
+      "state": "QUALITY_FAIL",
+      "ok": true,
+      "provider": "nim",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "data_present": true,
+      "extraction_mode": "assistant_content",
+      "content_length": 1670,
+      "observable_sha256": "d3ef2375910160d7cef41744d13e158b60b4047c01f3119e260ba4354efdc7cf",
+      "quality_pass": false,
+      "failed_checks": [
+        "database OR db OR row-level security OR rls",
+        "isolation OR tenant isolation OR cross-tenant"
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

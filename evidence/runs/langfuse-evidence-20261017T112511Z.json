@@ -1,0 +1,57 @@
+{
+  "emission": {
+    "duration_ms": 634.1,
+    "error_code": "model_not_found",
+    "flushed": true,
+    "http_status": 400,
+    "model": "company-os-trace-probe",
+    "provider_reached": false,
+    "shutdown": true,
+    "span_attributes": {
+      "company_os.error_class": "model_not_found",
+      "company_os.http_status": 400,
+      "company_os.logical_role": "unknown",
+      "company_os.route_duration_ms": 1
+    },
+    "span_emitted": true,
+    "spans_closed": 1,
+    "trace_name": "company_os.boundary.request",
+    "tracer": {
+      "enabled": true,
+      "export_timeout_seconds": 30,
+      "flush_interval": 2.0,
+      "host": "[REDACTED]",
+      "public_key_fingerprint": "pk-pk-l...c34d",
+      "reason": "configured"
+    }
+  },
+  "endpoint": "/api/public/v2/observations",
+  "generated_at": "2026-10-17T11:25:11+00:00",
+  "host": "[REDACTED]",
+  "kind": "langfuse-evidence",
+  "public_key_fingerprint": "pk-l...c34d",
+  "reason": "a matching observation was read back from the Langfuse API, for a boundary request this run emitted itself",
+  "schema_version": 1,
+  "trace": {
+    "expected_logical_role": null,
+    "found": {
+      "end_time": "2026-10-17T11:10:56.484Z",
+      "latency_ms": 12.0,
+      "latency_seconds": 0.012,
+      "metadata": {
+        "company_os.error_class": "model_not_found",
+        "company_os.http_status": 400,
+        "company_os.logical_role": "unknown",
+        "company_os.route_duration_ms": 11
+      },
+      "observation_id": "b4597543d2243c04",
+      "start_time": "2026-10-17T11:10:56.472Z",
+      "trace_id": "d5c4af9b9e63f9f08701999168848bad"
+    },
+    "name": "company_os.boundary.request",
+    "observations_inspected": 4,
+    "window_minutes": 60
+  },
+  "verdict": "pass",
+  "verified": true
+}

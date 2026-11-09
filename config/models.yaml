@@ -1,0 +1,139 @@
+roles:
+
+  router:
+    primary:
+      provider: google_free
+      model: gemini-flash-lite
+    fallback:
+      - provider: groq
+        model: gpt-oss-20b
+      - provider: nim
+        model: nemotron-3.5-lightning
+      - provider: cloudflare
+        model: gpt-oss-120b
+
+  research:
+    primary:
+      provider: google_free
+      model: gemini-flash
+    fallback:
+      - provider: nim
+        model: nemotron-3-ultra
+      - provider: ovh
+        model: qwen3.5
+
+  architect:
+    primary:
+      provider: nim
+      model: minimax-m3
+    fallback:
+      - provider: nim
+        model: nemotron-3-ultra
+      - provider: zai
+        model: glm-4.7-flash
+
+  implement:
+    primary:
+      provider: cloudflare
+      model: gpt-oss-120b
+    fallback:
+      - provider: groq
+        model: qwen3.6-27b
+      - provider: openrouter_free
+        model: poolside/laguna-s-2.1:free
+      - provider: openrouter_free
+        model: minimax/minimax-m3.1-flash:free
+
+  tests:
+    primary:
+      provider: groq
+      model: qwen3.6-27b
+    fallback:
+      - provider: cloudflare
+        model: gpt-oss-120b
+      - provider: google_free
+        model: gemini-flash
+
+  review:
+    primary:
+      provider: zai
+      model: glm-4.7-flash
+    fallback:
+      - provider: nim
+        model: nemotron-3-ultra
+      - provider: google_free
+        model: gemini-2.5-pro
+      - provider: mistral
+        model: mistral-small-2603
+
+  security:
+    primary:
+      provider: nim
+      model: nemotron-3-ultra
+    fallback:
+      - provider: zai
+        model: glm-4.7-flash
+
+  vision_qa:
+    primary:
+      provider: google_free
+      model: gemini-flash
+    fallback:
+      - provider: nim
+        model: nemotron-3.5-super-vl-120b
+      - provider: nim
+        model: meta/llama-3.2-11b-vision-instruct
+
+  summarise:
+    primary:
+      provider: groq
+      model: gpt-oss-20b
+    fallback:
+      - provider: google_free
+        model: gemini-flash-lite
+
+  embeddings:
+    primary:
+      provider: local
+      model: fastembed
+    fallback:
+      - provider: cloudflare
+        model: bge
+
+budgets:
+  max_cost_usd: 0
+  max_llm_calls: 25
+  max_runtime_seconds: 900
+
+lanes:
+  public:
+    allowed_providers:
+      - nim
+      - google_free
+      - groq
+      - zai
+      - openrouter_free
+      - cloudflare
+
+  internal:
+    allowed_providers:
+      - nim
+      - google_free
+      - groq
+      - zai
+      - openrouter_free
+      - cloudflare
+
+  confidential:
+    deny_providers:
+      - nim
+      - google_free
+      - openrouter_free
+      - mistral
+
+  restricted:
+    deny_all_automation: true
+policy:
+  reviewer_vendor_must_differ_from_implementer: true
+  paid_calls_allowed_by_default: false
+  models_propose_deterministic_systems_decide: true

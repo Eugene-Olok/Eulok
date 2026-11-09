@@ -1,0 +1,16 @@
+# Company OS robots.txt
+# https://company-os-3ox.pages.dev/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://company-os-3ox.pages.dev/sitemap.xml
+
+# Disallow admin/private paths (none exist on static site)
+# Disallow: /config.js
+# Disallow: /analytics.js
+# Disallow: /styles.css
+
+# Crawl-delay (optional, polite)
+Crawl-delay: 10

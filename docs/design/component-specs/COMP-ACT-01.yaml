@@ -1,0 +1,66 @@
+# Company OS — Example component specification
+#
+# First worked example of the component-spec contract consumed by
+# tools/design_spec.py (validate) and tools/compile_design.py (compile).
+#
+# It references existing governed identifiers only — the COMP id and its
+# manifest status, the component graph family layer, canonical VALID_APPROVED
+# token names, and a PAGE id present in PAGE_TEMPLATE_MAP.yaml. The anatomy
+# below is the ONLY new information; it is the machine-readable structure the
+# manifest does not carry.
+#
+# The declared anatomy represents the component's DEFAULT state. Per-state token
+# overrides are not yet part of schema_version 1 (states are carried as names).
+# No live Penpot artefact exists because of this file — it compiles to operations
+# that still require a verified, human-approved target to execute.
+
+schema_version: 1
+kind: component-spec
+
+component:
+  id: COMP-ACT-01            # "Button — primary" (manifest status: REQUIRED)
+  name: "Button / Primary"
+  layer: L2                  # must equal the COMP-ACT graph family layer
+  page_target: PAGE-001      # Home (template: Landing)
+
+  variants: [size-default, size-compact]
+  states: [default, hover, focus-visible, active, disabled]
+
+  # Every token referenced below, and nothing else (completeness is enforced).
+  tokens:
+    - semantic.color.action.primary
+    - semantic.color.fg.inverse
+    - semantic.radius.md
+    - semantic.space.card-padding
+    - semantic.type.family.body
+    - semantic.type.size.body
+    - semantic.type.weight.bold
+    - semantic.type.leading.body
+
+  accessibility:
+    role: button
+    name_from: content
+    min_target: semantic.space.card-padding
+
+  dependencies: []
+
+  anatomy:
+    - node: root
+      type: frame
+      fill: semantic.color.action.primary
+      radius: semantic.radius.md
+      sizing: {width: hug, height: hug}
+      layout:
+        direction: row
+        align: center
+        padding: semantic.space.card-padding
+      children:
+        - node: label
+          type: text
+          content: "Get started"
+          fill: semantic.color.fg.inverse
+          text:
+            family: semantic.type.family.body
+            size: semantic.type.size.body
+            weight: semantic.type.weight.bold
+            line_height: semantic.type.leading.body

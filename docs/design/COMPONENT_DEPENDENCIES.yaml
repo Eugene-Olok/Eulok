@@ -1,0 +1,239 @@
+# Company OS — Component Dependency Graph
+#
+# Canonical family-level dependency contract for the 130 COMP items.
+# Derived from the design audit (Gate 1); individual items stay authoritative
+# in docs/design/DESIGN_MANIFEST.yaml §15.
+#
+# Status model: DRAFT_PENDING_OWNER_APPROVAL — the founder approves this graph
+# together with the Gate 2 package; agents never set APPROVED.
+
+schema_version: 1
+status: DRAFT_PENDING_OWNER_APPROVAL
+source:
+  audit: evidence/runs/design-system-audit-2026-10-08.md
+  section: "§16 Component architecture (16.1 layer rules, 16.2 build order, 16.3 contract)"
+  manifest: docs/design/DESIGN_MANIFEST.yaml
+  note: >-
+    Family-level graph. Edges are only asserted where audit evidence supports
+    them (title composition, §16.2 step gating, or §16.1 layering). Every edge
+    carries an explicit basis; unproven compositions are deliberately absent
+    rather than invented.
+
+total_items: 130
+family_count: 11
+
+layers:
+  L0:
+    label: Tokens
+    contents: "color, type, space, radius, shadow, motion, focus (docs/design/DESIGN_TOKENS.yaml)"
+    manifest_items: 0
+  L1:
+    label: Primitives
+    contents: "text, icon, divider, spinner, badge — no layout decisions (§16)"
+    manifest_items: 18
+    families: [COMP-SPC, COMP-TXT]
+  L2:
+    label: Components
+    contents: "interactive + content units (buttons, cards, tables, dialogs)"
+    manifest_items: 112
+    families: [COMP-ACT, COMP-FBK, COMP-FRM, COMP-SEL, COMP-NAV, COMP-DAT, COMP-OVL, COMP-CON, COMP-SYS]
+  L3:
+    label: Patterns
+    contents: "composed flows (intake form, confirmation dialog, empty-state block)"
+    manifest_items: 0
+    note: "L3 patterns are compositions of L2 families, not separate manifest items (§16)."
+
+# §16.1 layer rules (verbatim statements)
+rules:
+  - id: R1
+    statement: "A component consumes tokens only — no raw hex, no magic numbers (enforced by TEST-012)."
+  - id: R2
+    statement: "L1 primitives never carry interaction semantics; semantics live in L2+."
+  - id: R3
+    statement: "L3 patterns may compose L2 components but never reach into their internals."
+  - id: R4
+    statement: "Every L2 component declares its states explicitly: default, hover, focus-visible, active, disabled, loading, error (where applicable)."
+  - id: R5
+    statement: "Every L2 component has a Penpot counterpart (PEN-004) before implementation is declared done."
+  - id: R6
+    statement: "Accessibility behaviour (ARIA, keyboard) is part of the component spec, not a later patch (A11Y-002/003)."
+layer_contract: >-
+  A component may only depend on tokens (L0) and on components from the same
+  or lower layer (§16 lead statement). tools/validate_design_graph.py enforces
+  this plus acyclicity and build-order monotonicity.
+
+# §16.2 P0/P1 build order — each step gated on the previous
+build_order:
+  - step: 1
+    name: Tokens first
+    families: []
+    items: "FOUND-001…004, FOUND-017, FOUND-005"
+    note: "Without these, nothing below can conform."
+  - step: 2
+    name: Primitives
+    families: [COMP-SPC, COMP-TXT]
+  - step: 3
+    name: Actions
+    families: [COMP-ACT]
+  - step: 4
+    name: Feedback
+    families: [COMP-FBK]
+  - step: 5
+    name: Forms
+    families: [COMP-FRM, COMP-SEL]
+  - step: 6
+    name: Navigation
+    families: [COMP-NAV, COMP-CON]
+    note: "COMP-CON-07 (page shell) ships in this step; the CON family completes in step 8/9."
+  - step: 7
+    name: Data
+    families: [COMP-DAT]
+  - step: 8
+    name: Overlays + layout containers
+    families: [COMP-OVL]
+    note: "COMP-CON-01…04 ship here."
+  - step: 9
+    name: Remaining REQUIRED
+    families: [COMP-SYS]
+    note: >-
+      COMP-CON-08…12, COMP-SEL-10…14, COMP-FRM-12…14, COMP-DAT-09,
+      COMP-FBK-10…13, COMP-ACT-10…11, COMP-TXT-07…09, COMP-NAV-07…12,
+      COMP-SYS-01…08, COMP-SPC-07…09.
+
+build_order_future_excluded: >-
+  FUTURE components (43) are explicitly excluded from v1 and must not block
+  any page launch (§16.2).
+
+families:
+  - id: COMP-SPC
+    domain: spacing primitives
+    range: "01–09"
+    count: 9
+    layer: L1
+    build_step: 2
+  - id: COMP-TXT
+    domain: typography & text
+    range: "01–09"
+    count: 9
+    layer: L1
+    build_step: 2
+  - id: COMP-ACT
+    domain: actions
+    range: "01–11"
+    count: 11
+    layer: L2
+    build_step: 3
+  - id: COMP-FBK
+    domain: feedback
+    range: "01–13"
+    count: 13
+    layer: L2
+    build_step: 4
+  - id: COMP-FRM
+    domain: forms
+    range: "01–14"
+    count: 14
+    layer: L2
+    build_step: 5
+  - id: COMP-SEL
+    domain: selection controls
+    range: "01–14"
+    count: 14
+    layer: L2
+    build_step: 5
+  - id: COMP-NAV
+    domain: navigation
+    range: "01–12"
+    count: 12
+    layer: L2
+    build_step: 6
+  - id: COMP-CON
+    domain: containers & layout
+    range: "01–12"
+    count: 12
+    layer: L2
+    build_step: 6
+  - id: COMP-DAT
+    domain: data display
+    range: "01–15"
+    count: 15
+    layer: L2
+    build_step: 7
+  - id: COMP-OVL
+    domain: overlays
+    range: "01–09"
+    count: 9
+    layer: L2
+    build_step: 8
+  - id: COMP-SYS
+    domain: system/production semantics
+    range: "01–12"
+    count: 12
+    layer: L2
+    build_step: 9
+
+# Every family consumes L0 tokens by R1; edges below are family-to-family only.
+token_dependency:
+  rule: R1
+  applies_to: [COMP-SPC, COMP-TXT, COMP-ACT, COMP-FBK, COMP-FRM, COMP-SEL,
+               COMP-NAV, COMP-CON, COMP-DAT, COMP-OVL, COMP-SYS]
+
+edges:
+  - from: COMP-CON
+    to: COMP-NAV
+    basis: "title: COMP-CON-07 'Page shell (nav / main / footer landmarks)'; §17.1 shell = nav + main + footer"
+  - from: COMP-CON
+    to: COMP-SPC
+    basis: "evidence: COMP-SPC-08 centring utilities (index.html:12 body margin:0 auto) serve the shell"
+  - from: COMP-NAV
+    to: COMP-SPC
+    basis: "evidence: COMP-SPC-03 'index.html:12 nav uses raw flex → cluster'"
+  - from: COMP-NAV
+    to: COMP-ACT
+    basis: "composition inference: nav links (ACT-10) and mobile disclosure (COMP-NAV-03) are actions; §16.2 step 6 gated on step 3"
+  - from: COMP-ACT
+    to: COMP-TXT
+    basis: "composition inference: button/link labels render text; §16.2 step 3 gated on step 2"
+  - from: COMP-FBK
+    to: COMP-TXT
+    basis: "§16 layering: alerts/badges/empty-state carry L1 text; step 4 gated on step 2"
+  - from: COMP-FRM
+    to: COMP-ACT
+    basis: "§16.2 step 5 'submit' + title pairing: COMP-FRM-12 pending state pairs COMP-ACT-07 loading"
+  - from: COMP-OVL
+    to: COMP-ACT
+    basis: "composition inference: confirmation dialog hosts destructive actions (ACT-04); §16 L3 example"
+  - from: COMP-SYS
+    to: COMP-TXT
+    basis: "composition inference: labels/chips/stamps render text; §16 layering"
+
+# §16 L3 examples — compositions, not manifest items
+patterns:
+  - id: PATTERN-INTAKE-FORM
+    composes: [COMP-FRM, COMP-SEL, COMP-FBK, COMP-ACT]
+    consumed_by: [PAGE-010]
+    basis: "§16 L3 example 'intake form'; PAGE-010 'Contact / intake page (WhatsApp path)' — contact CTA is a WhatsApp deep link per §26.9 (approved 2026-10-11)"
+  - id: PATTERN-CONFIRMATION-DIALOG
+    composes: [COMP-OVL, COMP-ACT, COMP-TXT]
+    consumed_by: []
+    basis: "§16 L3 example 'confirmation dialog'; COMP-OVL-02 title"
+  - id: PATTERN-EMPTY-STATE
+    composes: [COMP-FBK, COMP-TXT, COMP-ACT]
+    consumed_by: []
+    basis: "§16 L3 example 'empty-state block'"
+
+# §16.3 component contract — required fields when a component is implemented
+component_contract_fields:
+  [purpose, layer, tokens_used, states, keyboard_map, aria_pattern,
+   penpot_reference, visual_snapshot_test_id, manifest_id]
+
+# Deterministic checks (tools/validate_design_graph.py)
+validation:
+  checks:
+    - "every family exists in DESIGN_MANIFEST.yaml with matching count and id range"
+    - "declared counts sum to 130"
+    - "every edge endpoint exists; layer(to) <= layer(from) (§16 layer contract)"
+    - "build_step(to) <= build_step(from) (dependency built no later than consumer)"
+    - "edge graph is acyclic"
+    - "every pattern composes only existing L1/L2 families"
+    - "PAGE_TEMPLATE_MAP covers all 30 PAGE ids, agrees with manifest statuses, templates agree with §17.1"

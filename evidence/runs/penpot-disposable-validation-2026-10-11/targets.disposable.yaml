@@ -1,0 +1,33 @@
+# Disposable-validation target policy (NOT the production policy).
+#
+# Scopes automated Penpot writes for the 2026-10-11 disposable validation to the
+# single disposable file only. The production Company OS file and the scratch
+# "Test File" are explicitly DENIED here, so a mistake in the runtime cannot
+# reach them (founder authorization:
+# evidence/runs/penpot-disposable-validation-2026-10-11/AUTHORIZATION.md;
+# decision 26.16).
+#
+# Loaded via tools/penpot_target_guard.py::load_policy. Fail-closed.
+#
+# Lane deviation (recorded honestly): the run executed over the Penpot MCP
+# plugin lane, which is bound to the currently open file and enforces the
+# production/scratch identity check inside each dispatch, rather than over this
+# command-lane jail policy. This file is retained as the staged scoped policy
+# and to exercise the guard's refusal vocabulary deterministically with the
+# verified disposable id. See summary.md.
+
+allowed_file_ids:
+  - 52a5041f-08a1-80f1-8008-c52b2fa4c31b   # Company OS cmd-lane validation B (disposable; verified 2026-10-11)
+
+allowed_project_ids:
+  - 52a5041f-08a1-80f1-8008-c380b5126f44   # Company-Os
+
+denied_file_ids:
+  - 52a5041f-08a1-80f1-8008-c50e307f3ef4   # Company OS (PRODUCTION — must never be touched here)
+  - 52a5041f-08a1-80f1-8008-c383654a1095   # Test File (scratch — must never be touched)
+
+denied_names:
+  - Test File
+  - Company OS
+
+require_project: true

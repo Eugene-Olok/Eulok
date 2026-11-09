@@ -1,0 +1,110 @@
+---
+import { getPageSEO } from '../seo/seoConfig.ts';
+import { buildSEOTags } from '../seo/seoManager.ts';
+import { Navbar } from '../components/Navbar.tsx';
+import { Footer } from '../components/Footer.tsx';
+import { FloatingWhatsApp } from '../components/FloatingWhatsApp.tsx';
+import { IntakeModalWrapper } from '../components/IntakeModalWrapper.tsx';
+import { CommandPalette } from '../components/CommandPalette.tsx';
+import { ClientRouter } from 'astro:transitions';
+import '../index.css';
+
+interface Props {
+  pageId?: string;
+  customTitle?: string;
+  customDescription?: string;
+}
+
+const { pageId = 'home', customTitle, customDescription } = Astro.props;
+
+const config = getPageSEO(pageId);
+if (customTitle) config.title = customTitle;
+if (customDescription) config.description = customDescription;
+
+const seoData = buildSEOTags(config);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0c10" />
+    <title>{seoData.title}</title>
+    <link rel="canonical" id="eulok-canonical-link" href={seoData.canonicalUrl} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    {seoData.metaTags.map((tag) => (
+      tag.attributeName === 'name' ? (
+        <meta name={tag.attributeValue} content={tag.content} />
+      ) : (
+        <meta property={tag.attributeValue} content={tag.content} />
+      )
+    ))}
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23090E17'/><path d='M30 25h40v12H44v13h22v12H44v13h26v12H30z' fill='%23527CA3'/></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script id="eulok-seo-jsonld" type="application/ld+json" set:html={seoData.jsonLd} />
+    <ClientRouter />
+
+    <script is:inline>
+      (function() {
+        try {
+          const stored = localStorage.getItem('eulok_theme');
+          const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+          const theme = stored === 'light' || stored === 'dark' ? stored : (prefersLight ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+          if (theme === 'light') {
+            document.documentElement.style.setProperty('--bg-primary', '#f8fafc');
+            document.documentElement.style.setProperty('--bg-secondary', '#f1f5f9');
+            document.documentElement.style.setProperty('--bg-card', '#ffffff');
+            document.documentElement.style.setProperty('--surface-elevated', '#ffffff');
+            document.documentElement.style.setProperty('--text-main', '#090e17');
+            document.documentElement.style.setProperty('--text-subtle', '#334155');
+            document.documentElement.style.setProperty('--text-muted', '#64748b');
+            document.documentElement.style.setProperty('--line', 'rgba(0, 0, 0, 0.12)');
+            document.documentElement.style.setProperty('--line-strong', 'rgba(0, 0, 0, 0.22)');
+            document.documentElement.style.setProperty('--warm-white', '#090e17');
+            document.documentElement.style.setProperty('--electric-blue', '#0284c7');
+          }
+        } catch (e) {}
+      })();
+      document.addEventListener('astro:after-swap', function() {
+        try {
+          const stored = localStorage.getItem('eulok_theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', stored);
+        } catch (e) {}
+      });
+    </script>
+
+    <script is:inline>
+      if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+
+    <Navbar client:load currentPage={pageId} />
+
+    <main id="main" class="w-full">
+      <slot />
+    </main>
+
+    <Footer client:load />
+    <FloatingWhatsApp client:load />
+    <IntakeModalWrapper client:load />
+    <CommandPalette client:load />
+  </body>
+</html>

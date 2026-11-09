@@ -1,0 +1,58 @@
+[Unit]
+# TEMPLATE — reference target for scripts/isolate-secrets.sh. NOT installed
+# by the repository; installation requires root.
+#
+# SYSTEM unit (migrated from the user unit of the same name by
+# scripts/isolate-secrets.sh). It runs as the dedicated unprivileged
+# `company-os` identity and receives the secrets file through systemd's
+# LoadCredential= mechanism: PID 1 (root) reads the file and exposes it at
+# $CREDENTIALS_DIRECTORY, so the service never needs read access to the
+# on-disk path and the file can be `root:root 0600`.
+#
+# The binary still executes from /home/genie/.cache/... (the relocation to a
+# service-owned /opt path is not implemented), so the service needs traversal
+# of /home/genie. scripts/isolate-secrets.sh grants that as a single revocable
+# setfacl ACE (u:company-os:--x) on traversal directories lacking the
+# other-execute bit — traversal only, not read/list, and never supplementary
+# group membership. This does not expose the secrets file (root:root 0600).
+Description=Company OS Bifrost model gateway
+Requires=company-os-nvidia-proxy.service
+After=company-os-nvidia-proxy.service network-online.target
+Wants=network-online.target
+PartOf=company-os-nvidia-proxy.service
+
+[Service]
+Type=simple
+User=company-os
+Group=company-os
+# Root reads the source file; the credential is delivered to the service
+# directory and is never readable by the ordinary genie/agent identity.
+LoadCredential=providers.env:/home/genie/company-os/secrets/providers.env
+ExecStart=/bin/bash -lc 'set -a; source "$CREDENTIALS_DIRECTORY/providers.env"; set +a; exec /home/genie/.cache/bifrost/v2.2.3/bin/bifrost-http-0 -app-dir /var/lib/company-os/bifrost/data -host 127.0.0.1 -port 8080'
+WorkingDirectory=/var/lib/company-os/bifrost/data
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+UMask=0077
+
+# Hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/company-os/bifrost
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target

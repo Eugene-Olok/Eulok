@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "release_eligibility": "PASS",
+  "commit": "0f00946925fdf8cfe9790be47b95f5136d5c5b1e",
+  "started_at": "2026-10-08T13:59:13Z",
+  "finished_at": "2026-10-08T14:04:29Z",
+  "capabilities": {
+    "langfuse": {
+      "mode": "required",
+      "credentials_present": true
+    },
+    "promptfoo": {
+      "bin": "/home/genie/.local/bin/promptfoo",
+      "bin_set": true,
+      "pinned_version": "0.123.1"
+    },
+    "python_interpreter": "/home/genie/company/.venv/bin/python"
+  },
+  "checks": [
+    {
+      "name": "git repository",
+      "status": "PASS"
+    },
+    {
+      "name": "git diff check",
+      "status": "PASS"
+    },
+    {
+      "name": "bash syntax",
+      "status": "PASS"
+    },
+    {
+      "name": "shellcheck",
+      "status": "PASS"
+    },
+    {
+      "name": "GitHub Actions syntax",
+      "status": "PASS"
+    },
+    {
+      "name": "gitleaks",
+      "status": "PASS"
+    },
+    {
+      "name": "trivy filesystem",
+      "status": "PASS"
+    },
+    {
+      "name": "semgrep",
+      "status": "PASS"
+    },
+    {
+      "name": "osv-scanner",
+      "status": "PASS"
+    },
+    {
+      "name": "model compatibility artifact",
+      "status": "PASS"
+    },
+    {
+      "name": "python compile",
+      "status": "PASS"
+    },
+    {
+      "name": "unit tests",
+      "status": "PASS"
+    },
+    {
+      "name": "golden set",
+      "status": "PASS"
+    },
+    {
+      "name": "trajectory",
+      "status": "PASS"
+    },
+    {
+      "name": "promptfoo",
+      "status": "PASS"
+    },
+    {
+      "name": "langfuse trace",
+      "status": "PASS"
+    },
+    {
+      "name": "ruff",
+      "status": "PASS"
+    }
+  ],
+  "build": "PASS",
+  "typecheck": "N/A",
+  "lint": "PASS",
+  "security": "PASS",
+  "migration": "NOT_RUN",
+  "tests_passed": true,
+  "tests": "PASS",
+  "golden_set": "PASS",
+  "trajectory": "PASS",
+  "promptfoo": "PASS",
+  "langfuse_trace": "PASS",
+  "ci": "LOCAL_ONLY"
+}

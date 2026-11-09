@@ -1,0 +1,14 @@
+{
+  "recipe": "retrieval-reflex",
+  "gbrain_version": "0.53.0.0",
+  "install_kind": "copy-into-host-repo",
+  "copied_at": "2026-09-28T21:59:56.539Z",
+  "files": [
+    {
+      "src": "skills/retrieval-reflex/SKILL.md",
+      "target": "skills/retrieval-reflex/SKILL.md",
+      "sha256": "856b5ac8438ec44f488c4688049f7df4c81ed6c17d4adeff483aa8edf052d67f",
+      "mode": "0644"
+    }
+  ]
+}

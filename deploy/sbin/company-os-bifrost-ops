@@ -1,0 +1,152 @@
+#!/bin/bash
+# Company OS — privileged Bifrost operations entry point (root-owned).
+#
+# ============================================================================
+# TRUST MODEL — review this before installing.
+# ============================================================================
+# This program is meant to run as root (via a narrow sudoers rule). Therefore
+# EVERYTHING it executes must be root-owned and NOT writable by the
+# unprivileged caller:
+#
+#   * The code here, the operations modules and the seeds it runs are installed
+#     ROOT-OWNED by ``deploy/bifrost-ops/install.sh`` into
+#     ``/usr/local/lib/company-os/bifrost-ops``. A privileged entry point that
+#     executed caller-writable code from the developer tree (``~/company``) or a
+#     caller-writable virtualenv would be a local root-privilege-escalation
+#     vector — an unprivileged process could edit the module and get it run as
+#     root. This program therefore treats its own code directory as the trust
+#     boundary and refuses to run if it is not root-owned and not group/world
+#     writable.
+#   * The interpreter is a fixed absolute system path (``/usr/bin/python3``) and
+#     is invoked in isolated mode (``-I``) with a cleared environment
+#     (``env -i``), so ``PYTHONPATH``/``PYTHONHOME``, the working directory, the
+#     user site directory and every inherited variable — including a caller-set
+#     ``PATH`` — cannot influence execution.
+#   * The caller may supply AT MOST one token, ``step1`` or ``step2``. Every
+#     path (database, app-dir, backup, manifest, seeds, unit) is a fixed
+#     constant here. There is no passthrough of caller arguments, no shell
+#     interpretation of caller input, and no reading of an environment override.
+#
+# The sudoers fragment additionally allowlists each exact invocation, so this
+# program only ever receives the forms listed at the bottom of this file.
+# ============================================================================
+set -euo pipefail
+
+OPS_DIR=/usr/local/lib/company-os/bifrost-ops
+PY=/usr/bin/python3
+UNIT=company-os-bifrost.service
+LIVE_DB=/var/lib/company-os/bifrost/data/config.db
+LIVE_APP=/var/lib/company-os/bifrost/data
+BACKUP_DIR=/var/lib/company-os/backups
+CANON_BACKUP=$BACKUP_DIR/config.db.pre-restore.bak
+MANIFEST=$BACKUP_DIR/bifrost-pre-restore.manifest.json
+SEEDS=$OPS_DIR/seeds
+OPS=$OPS_DIR/bifrost_ops.py
+BACKUP_TOOL=$OPS_DIR/backup_bifrost_state.py
+ROLLBACK_TOOL=$OPS_DIR/rollback_bifrost_state.py
+
+refuse() { printf 'company-os-bifrost-ops: refused: %s\n' "$*" >&2; exit 2; }
+
+# Root-owned, not a symlink, and not group/world-writable (mode has no 022
+# bits). Rejecting symlinks matters: stat follows them, so a symlink to a
+# root-owned file would otherwise pass while the link itself lives somewhere a
+# caller could later repoint it.
+_is_trusted_path() {
+  local path="$1" want="$2"
+  [ -e "$path" ] || return 1
+  [ ! -L "$path" ] || return 1
+  [ "$(stat -c '%u' "$path")" = 0 ] || return 1
+  local mode; mode="$(stat -c '%a' "$path")"
+  (( (8#$mode & 8#022) == 0 )) || return 1
+  case "$want" in
+    dir) [ -d "$path" ] || return 1 ;;
+    file) [ -f "$path" ] || return 1 ;;
+  esac
+  return 0
+}
+
+# Verify the whole trusted set (and the OPS_DIR parent, so a writable parent
+# cannot be used to swap the whole directory). Called before any execution.
+check_trusted_set() {
+  _is_trusted_path "$(dirname "$OPS_DIR")" dir || refuse "operations parent not root-owned/clean: $(dirname "$OPS_DIR")"
+  _is_trusted_path "$OPS_DIR" dir || refuse "operations directory not root-owned/clean: $OPS_DIR"
+  _is_trusted_path "$SEEDS" dir   || refuse "seeds directory not root-owned/clean: $SEEDS"
+  _is_trusted_path "$OPS" file          || refuse "operations module not root-owned/clean: $OPS"
+  _is_trusted_path "$BACKUP_TOOL" file  || refuse "backup module not root-owned/clean: $BACKUP_TOOL"
+  _is_trusted_path "$ROLLBACK_TOOL" file || refuse "rollback module not root-owned/clean: $ROLLBACK_TOOL"
+  [ -x "$PY" ] || refuse "interpreter not found: $PY"
+  return 0
+}
+
+# Build the isolated execution environment: no inherited variables, fixed PATH.
+run() {
+  exec /usr/bin/env -i \
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+    "$PY" -I -B "$@"
+}
+
+dispatch() {
+  local cmd="${1:-}"
+  case "$cmd" in
+    inspect)
+      [ "$#" -eq 1 ] || refuse "inspect takes no arguments"
+      run "$OPS" inspect
+      ;;
+    status)
+      [ "$#" -eq 1 ] || refuse "status takes no arguments"
+      run "$OPS" status
+      ;;
+    backup)
+      [ "$#" -eq 1 ] || refuse "backup takes no arguments"
+      # A UNIQUELY-NAMED snapshot (the tool stamps the name). It must never
+      # collide with, or rewrite, the owner-verified canonical pre-restore
+      # backup ($CANON_BACKUP) or its manifest ($MANIFEST): those are the
+      # digest-pinned rollback anchor and are left strictly untouched. No
+      # --label and no --manifest-out => the new snapshot and its manifest get
+      # distinct names beside it.
+      run "$BACKUP_TOOL" backup --db "$LIVE_DB" --outdir "$BACKUP_DIR"
+      ;;
+    seed)
+      [ "$#" -eq 2 ] || refuse "seed takes exactly one of: step1 step2"
+      case "$2" in step1|step2) ;; *) refuse "unknown seed step: $2" ;; esac
+      run "$OPS" --db "$LIVE_DB" --app-dir "$LIVE_APP" --seed-dir "$SEEDS" \
+        install-seed --step "$2" --confirm
+      ;;
+    rollback)
+      [ "$#" -eq 1 ] || refuse "rollback takes no arguments"
+      run "$ROLLBACK_TOOL" rollback --backup "$CANON_BACKUP" \
+        --manifest "$MANIFEST" \
+        --original-config absent --db "$LIVE_DB" --app-dir "$LIVE_APP" --unit "$UNIT"
+      ;;
+    *)
+      refuse "unknown subcommand: ${cmd:-<none>}"
+      ;;
+  esac
+}
+
+main() {
+  # When running privileged, the trust boundary is enforced; when run
+  # unprivileged (a developer invoking it directly, or the test suite) the
+  # check is a no-op because there is no privilege to protect.
+  if [ "$(id -u)" -eq 0 ]; then
+    check_trusted_set
+  fi
+  dispatch "$@"
+}
+
+# Allow the file to be sourced (tests exercise the predicates) without running.
+if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
+  main "$@"
+fi
+
+# ---------------------------------------------------------------------------
+# sudoers allowlist (one line per permitted invocation; see
+# deploy/sudoers.d/company-os-bifrost-ops):
+#   company-os-bifrost-ops inspect
+#   company-os-bifrost-ops status
+#   company-os-bifrost-ops backup
+#   company-os-bifrost-ops seed step1
+#   company-os-bifrost-ops seed step2
+#   company-os-bifrost-ops rollback
+# ---------------------------------------------------------------------------

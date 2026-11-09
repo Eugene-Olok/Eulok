@@ -1,0 +1,62 @@
+# Project-local Hermes provider definition for the Company OS inference boundary.
+#
+# WHY THIS IS A SOURCE-OF-TRUTH FILE RATHER THAN A DIRECT HERMES CONFIG
+# ---------------------------------------------------------------------
+# Hermes Agent v0.21 resolves its configuration from exactly ONE file:
+# $HERMES_HOME/config.yaml (default ~/.hermes/config.yaml). It has no
+# cwd-based or project-local discovery, so a `.hermes/config.yaml` inside this
+# repository would never be read. This file is therefore the version-controlled
+# definition, and `tools/hermes_company_os.py apply` syncs it into the live
+# Hermes config by merging at the text level (preserving the founder's comments
+# and every unrelated line byte-identical). It deliberately does NOT use Hermes'
+# own writer (`hermes config set`), whose whole-file rewrite would silently drop
+# the commented sections in this file.
+#
+# PRECEDENCE
+# ----------
+# 1. `--provider company-os` (or `model.provider: company-os`) -> Company OS
+#    boundary at http://127.0.0.1:8090/v1. This is the highest-precedence
+#    inference route available in Hermes and is what this file defines.
+# 2. Otherwise the pre-existing Nous Portal route is used, unchanged:
+#    model.default: meituan/longcat-2.0:free, model.provider: nous.
+#
+# The Nous default is preserved deliberately: this integration adds a route, it
+# does not replace the founder's provider. `tools/hermes_company_os.py verify`
+# fails if the Nous default is ever displaced.
+#
+# The boundary requires no credentials and binds to loopback only, so no key is
+# configured here. The logical model (`implement`) is one of the nine roles the
+# control plane routes deterministically; `router` is available for delegation.
+provider: company-os
+values:
+  providers.company-os.api: "http://127.0.0.1:8090/v1"
+  providers.company-os.transport: "chat_completions"
+  providers.company-os.default_model: "implement"
+
+# REASONING OVERRIDES
+# --------------------
+# The Company OS boundary exposes nine deterministic logical roles. Each maps to
+# one fixed upstream model at temperature 0 and returns a single completed result;
+# it deliberately accepts no reasoning controls and rejects unknown parameters
+# with HTTP 400 rather than silently dropping them.
+#
+# Hermes defaults to `agent.reasoning_effort: medium`, which projects a
+# `reasoning_effort` wire parameter onto every request. Against this boundary
+# that is a guaranteed 400 on auxiliary calls (Hermes' own code notes this: "a
+# 400 on non-reasoning models").
+#
+# These per-model overrides disable the wire parameter for the Company OS roles
+# only. They are per-model, so the founder's global `agent.reasoning_effort:
+# medium` and the entire Nous route are left untouched. Setting the value to
+# `none` (YAML `false`/`disabled` are equivalent in Hermes) is required, not
+# cosmetic: any other level reintroduces the 400.
+reasoning_overrides:
+  implement: none
+  research: none
+  architect: none
+  tests: none
+  review: none
+  security: none
+  vision_qa: none
+  summarise: none
+  router: none

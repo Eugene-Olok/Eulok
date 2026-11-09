@@ -1,0 +1,48 @@
+{
+  "base_url": "http://127.0.0.1:8090",
+  "checks": {
+    "health": {
+      "lane": "internal",
+      "models": [
+        "implement",
+        "research",
+        "architect",
+        "tests",
+        "review",
+        "security",
+        "vision_qa",
+        "summarise",
+        "router"
+      ],
+      "ready": true,
+      "router": "company-os-deterministic",
+      "service": "company-os-control-plane",
+      "status": "ok",
+      "uptime_seconds": 5542.374,
+      "version": "1"
+    },
+    "inconclusive": "no eligible provider for role 'implement'; boundary failed closed correctly",
+    "models": {
+      "count": 9,
+      "ids": [
+        "implement",
+        "research",
+        "architect",
+        "tests",
+        "review",
+        "security",
+        "vision_qa",
+        "summarise",
+        "router"
+      ]
+    },
+    "rejects_physical_model": {
+      "rejected_with": "model_not_found",
+      "status": 400
+    }
+  },
+  "e2e_token": "COMPANY_OS_E2E_OK",
+  "started": "2026-10-18T09:54:49Z",
+  "tool": "control_plane_live_smoke",
+  "verdict": "inconclusive"
+}

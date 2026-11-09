@@ -1,0 +1,154 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": null,
+    "case": "security-01"
+  },
+  "candidate_requested": "nim/nemotron-3-ultra",
+  "fallback_allowed": false,
+  "repeat": 5,
+  "repeat_state_isolated": true,
+  "case_count": 1,
+  "results": [
+    {
+      "id": "security-01",
+      "role": "security",
+      "candidate_requested": "nim/nemotron-3-ultra",
+      "fallback_allowed": false,
+      "state": "UNSTABLE",
+      "repeat_count": 5,
+      "pass_count": 2,
+      "pass_rate": 0.4,
+      "stable": false,
+      "providers": [
+        "nim"
+      ],
+      "models": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "failed_checks_union": [
+        "database OR db OR row-level security OR rls",
+        "isolation OR tenant isolation OR cross-tenant"
+      ],
+      "run_states": [
+        "QUALITY_FAIL",
+        "QUALITY_FAIL",
+        "PASS",
+        "QUALITY_FAIL",
+        "PASS"
+      ],
+      "runs": [
+        {
+          "id": "security-01",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3829,
+          "observable_sha256": "cb62b3550b104b31ea6660105d9f8068c0c30abd233d6b5d66c8dbfe494afaba",
+          "quality_pass": false,
+          "failed_checks": [
+            "database OR db OR row-level security OR rls"
+          ],
+          "run_index": 1,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3718,
+          "observable_sha256": "ac5c82e0bbc1aba25219e2c9cbbd7fffedf7919ee399ad210aab40a0e9c7fb35",
+          "quality_pass": false,
+          "failed_checks": [
+            "isolation OR tenant isolation OR cross-tenant"
+          ],
+          "run_index": 2,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3416,
+          "observable_sha256": "9d54acb8664a453b87c855d63ca72860e583052874fc6bcf6c7834671b3185ea",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 3,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3602,
+          "observable_sha256": "91986758543d9cd364ec90b7201a1efa0e5e2fe23ee4382a301d36b72976f115",
+          "quality_pass": false,
+          "failed_checks": [
+            "database OR db OR row-level security OR rls"
+          ],
+          "run_index": 4,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-01",
+          "role": "security",
+          "candidate_requested": "nim/nemotron-3-ultra",
+          "fallback_allowed": false,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3807,
+          "observable_sha256": "61ec79d26e85f6cd8af54484b5f07e20484beef47bab47054360f854f0091b9c",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 5,
+          "health_state_isolated": true
+        }
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

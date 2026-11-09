@@ -1,0 +1,51 @@
+[Unit]
+# TEMPLATE — reference target for scripts/isolate-secrets.sh. NOT installed by
+# the repository; installation requires root. See docs/runbooks/secrets-isolation.md.
+#
+# SYSTEM unit (migrated from the user unit of the same name), running as the
+# dedicated unprivileged `company-os` identity with the secrets file delivered
+# via LoadCredential= rather than read from disk.
+Description=Company OS NVIDIA compatibility proxy
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=company-os
+Group=company-os
+# ExecStart reads the adapter from the repository under /home/genie (owned by
+# genie:genie, mode 0750). scripts/isolate-secrets.sh grants the unprivileged
+# company-os identity *traversal only* of the invoking home via a single
+# revocable setfacl ACE (u:company-os:--x) on each directory lacking the
+# other-execute bit — never supplementary group membership, which would also
+# expose every group-genie-readable file. The secrets file stays root:root 0600
+# and is delivered via LoadCredential=, so this grants no access to protected
+# data.
+ExecStartPre=/bin/mkdir -p /var/lib/company-os/nvidia-proxy
+WorkingDirectory=/var/lib/company-os/nvidia-proxy
+LoadCredential=providers.env:/home/genie/company-os/secrets/providers.env
+ExecStart=/bin/bash -lc 'set -a; source "$CREDENTIALS_DIRECTORY/providers.env"; set +a; exec /usr/bin/python3 /home/genie/company/company_os/adapters/nvidia_compat_proxy.py'
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=10
+UMask=0077
+
+# Hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/company-os/nvidia-proxy
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=yes
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target

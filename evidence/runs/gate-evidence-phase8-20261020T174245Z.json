@@ -1,0 +1,122 @@
+{
+  "phase": "8",
+  "status": "PASS",
+  "deployment": "PASS",
+  "allow_blocked": false,
+  "commit": "7438412bf5137263e3dc1c1c283205041e055f50",
+  "worktree": "clean",
+  "started_at": "2026-10-20T17:35:36Z",
+  "finished_at": "2026-10-20T17:42:45Z",
+  "tests": {
+    "count": 1880,
+    "baseline": 406,
+    "preserved": true
+  },
+  "checks": [
+    {
+      "name": "git repository",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "unit tests",
+      "status": "PASS",
+      "detail": "1880 tests, 0 failures"
+    },
+    {
+      "name": "baseline preserved",
+      "status": "PASS",
+      "detail": "1880 >= 406"
+    },
+    {
+      "name": "business domain import and deterministic transitions",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "template directory is not a valid client",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "business invariants",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "financial guards",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "evidence contracts",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "ci configuration",
+      "status": "PASS",
+      "detail": "structure checks only (actionlint unavailable)"
+    },
+    {
+      "name": "secret hygiene",
+      "status": "PASS",
+      "detail": "pattern scan clean (gitleaks unavailable)"
+    },
+    {
+      "name": "website files present",
+      "status": "PASS",
+      "detail": "index.html, analytics.js, config.js"
+    },
+    {
+      "name": "website placeholders",
+      "status": "PASS",
+      "detail": "no placeholder markers, no committed analytics keys"
+    },
+    {
+      "name": "analytics inert without config",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "deploy targets pages.dev only",
+      "status": "PASS",
+      "detail": "no custom domain configuration"
+    },
+    {
+      "name": "site deploy builds",
+      "status": "PASS",
+      "detail": "deploy-site.sh --build-only reached state=build"
+    },
+    {
+      "name": "bash syntax",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "cloudflare credentials",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "posthog credentials",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "pages build contract",
+      "status": "PASS",
+      "detail": "build command, destination and production-scoped analytics verified (read-only)"
+    },
+    {
+      "name": "live site verification",
+      "status": "PASS",
+      "detail": "https://company-os-3ox.pages.dev answered with expected content"
+    },
+    {
+      "name": "live analytics configuration",
+      "status": "PASS",
+      "detail": "config.js carries a key and host (values not printed)"
+    }
+  ]
+}

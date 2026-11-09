@@ -1,0 +1,31 @@
+{
+  "_kind": "architecture-decision",
+  "alternatives_considered": [
+    "simple",
+    "langgraph"
+  ],
+  "architecture": "langgraph",
+  "conflicts": [],
+  "contract_fingerprint": "d86bcc61173e74e9d4f97a52c649e803eeb504c914cdadbc6096659739d3b32b",
+  "declared_architecture": "langgraph",
+  "mandatory_constraints": [
+    "NO_MODEL_IN_MONEY_PATH",
+    "HUMAN_APPROVAL_FOR_CONSEQUENTIAL_ACTIONS",
+    "DETERMINISTIC_CORE",
+    "DURABLE_AUDIT_TRAIL",
+    "BOUNDED_RETRIES",
+    "FAIL_CLOSED_ON_ERROR"
+  ],
+  "missing_fields": [],
+  "policy_fingerprint": "2bb4d88149fdf369f3269dec8101a3ce523f050057e9d5f877c7baf3554ebf19",
+  "policy_version": "1.0.0",
+  "product_id": "reconciliation_agent",
+  "rationale": "langgraph required: the product requires durable_checkpoint, multi_step_orchestration, resumable_execution, which a stateless pipeline cannot provide",
+  "required_capabilities": [
+    "durable_checkpoint",
+    "multi_step_orchestration",
+    "resumable_execution"
+  ],
+  "status": "decided",
+  "unresolved_assumptions": []
+}

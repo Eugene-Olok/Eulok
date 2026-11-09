@@ -1,0 +1,42 @@
+{
+  "observed_at": "2026-10-20T16:17:21.064310+00:00",
+  "pages": {
+    "/": {
+      "cache_control": "public, max-age=0, must-revalidate",
+      "cf_cache_status": null,
+      "content_length": 4471,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://company-os-3ox.pages.dev/",
+      "sha256": "ebb664c9babefcf02b7b5889eb6aa2e1f67e18fff5861eff687c0ede91e770ce",
+      "status": 200
+    },
+    "/analytics.js": {
+      "cache_control": "public, max-age=0, must-revalidate",
+      "cf_cache_status": null,
+      "content_length": 2338,
+      "content_type": "application/javascript",
+      "final_url": "https://company-os-3ox.pages.dev/analytics.js",
+      "sha256": "9e88a515af6004e9810509f166cdcd4322835be9a1b371f10ba3c4d1e2b744a9",
+      "status": 200
+    },
+    "/config.js": {
+      "cache_control": "public, max-age=0, must-revalidate",
+      "cf_cache_status": null,
+      "content_length": 225,
+      "content_type": "application/javascript",
+      "final_url": "https://company-os-3ox.pages.dev/config.js",
+      "parsed": {
+        "armed": true,
+        "disable_session_recording": true,
+        "host": "https://us.i.posthog.com",
+        "key_fingerprint_algorithm": "sha256",
+        "key_fingerprint_prefix": "b2b0a824",
+        "key_present_in_evidence": false,
+        "well_formed": true
+      },
+      "sha256": "a6408125f6c1bd96616689e98f784326301bc228f840ce888944fc60d0d2a2ea",
+      "status": 200
+    }
+  },
+  "url": "https://company-os-3ox.pages.dev"
+}

@@ -1,0 +1,523 @@
+{
+  "checks": [
+    {
+      "defends": "The nine logical roles are the product. If a valid role cannot be served, every agent above the boundary is dead.",
+      "id": "role_reaches_expected_logical_boundary",
+      "kind": "role_accepted",
+      "observation": {
+        "audited": false,
+        "completion_model": null,
+        "completion_object": null,
+        "declared_candidates": [
+          {
+            "actual_model": "gemini-3.8-flash",
+            "provider": "google_free",
+            "role": "research"
+          },
+          {
+            "actual_model": "nvidia/nemotron-3-ultra-550b-a55b",
+            "provider": "nim",
+            "role": "research"
+          },
+          {
+            "actual_model": "qwen3.5",
+            "provider": "ovh",
+            "role": "research"
+          }
+        ],
+        "lane": null,
+        "role": "research",
+        "status": 503,
+        "transport_error": ""
+      },
+      "requirement": "A client that names a configured logical role is accepted by the boundary and served on the default internal lane. The request must reach a provider rather than being refused.",
+      "source": "company_os/control_plane/boundary.py:parse_chat_request",
+      "status": "FAIL"
+    },
+    {
+      "defends": "Provider substitution is the control plane's job. Accepting a physical name would let a client pin a provider and bypass routing policy.",
+      "id": "physical_model_refused",
+      "kind": "physical_model_refused",
+      "observation": {
+        "audited_as_a_route": false,
+        "error_code": "model_not_found",
+        "error_param": "model",
+        "requested_model": "nvidia/nemotron-3-super-120b-a12b",
+        "status": 400
+      },
+      "requirement": "A client that names a physical model (for example an upstream model id) is refused with `model_not_found` and never routed.",
+      "source": "company_os/control_plane/boundary.py:parse_chat_request",
+      "status": "PASS"
+    },
+    {
+      "defends": "Client-supplied provider is the most direct route around lane and cost policy, so it must not be expressible in the request at all.",
+      "id": "client_cannot_select_provider",
+      "kind": "provider_field_refused",
+      "observation": {
+        "error_code": "unsupported_parameter",
+        "error_param": "provider",
+        "status": 400,
+        "supplied_field": "provider"
+      },
+      "requirement": "A client that supplies a `provider` field is refused with `unsupported_parameter`. Routing is decided by policy, not requested.",
+      "source": "company_os/control_plane/boundary.py:parse_chat_request",
+      "status": "PASS"
+    },
+    {
+      "defends": "RESTRICTED data must not be processed unless an explicitly approved workflow provides controls. Client-selectable lanes make that impossible to guarantee.",
+      "id": "restricted_lane_not_client_selectable",
+      "kind": "lane_field_refused",
+      "observation": {
+        "audited_lanes": [],
+        "error_code": "unsupported_parameter",
+        "error_param": "lane",
+        "requested_lane": "restricted",
+        "status": 400,
+        "supplied_field": "lane"
+      },
+      "requirement": "A client that supplies a `lane` field is refused, and the restricted lane cannot be reached from automation.",
+      "source": "company_os/control_plane/boundary.py:parse_chat_request",
+      "status": "PASS"
+    },
+    {
+      "defends": "Models propose, deterministic systems decide. If the served provider can be anything other than the policy's ordered choice, routing policy is decorative.",
+      "id": "policy_selects_the_route",
+      "kind": "policy_declared_route_served",
+      "observation": {
+        "declared_order": [
+          {
+            "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+            "provider": "nim",
+            "role": "implement"
+          },
+          {
+            "actual_model": "poolside/laguna-s-2.1:free",
+            "provider": "openrouter_free",
+            "role": "implement"
+          },
+          {
+            "actual_model": "cohere/north-mini-code:free",
+            "provider": "openrouter_free",
+            "role": "implement"
+          }
+        ],
+        "expected_first_candidate": {
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+          "provider": "nim",
+          "role": "implement"
+        },
+        "role": "implement",
+        "served": null,
+        "status": 200
+      },
+      "requirement": "The provider that actually served the request is the first candidate the policy engine declares for that role on that lane, in declared order.",
+      "source": "company_os/control_plane/policy.py:select",
+      "status": "FAIL"
+    },
+    {
+      "defends": "Degradation must be predictable. A client must be able to rely on the documented fallback order when a provider is down.",
+      "id": "deterministic_fallback_on_provider_failure",
+      "kind": "fallback_advances_in_declared_order",
+      "observation": {
+        "declared_order": [
+          {
+            "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+            "provider": "nim",
+            "role": "implement"
+          },
+          {
+            "actual_model": "poolside/laguna-s-2.1:free",
+            "provider": "openrouter_free",
+            "role": "implement"
+          },
+          {
+            "actual_model": "cohere/north-mini-code:free",
+            "provider": "openrouter_free",
+            "role": "implement"
+          }
+        ],
+        "expected_served": {
+          "actual_model": "poolside/laguna-s-2.1:free",
+          "provider": "openrouter_free",
+          "role": "implement"
+        },
+        "failed_candidate": {
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+          "provider": "nim",
+          "role": "implement"
+        },
+        "role": "implement",
+        "served": {
+          "actual_model": "poolside/laguna-s-2.1:free",
+          "attempts": 4,
+          "provider": "openrouter_free"
+        },
+        "status": 200,
+        "transport_error": ""
+      },
+      "requirement": "When the declared first candidate fails, the boundary advances to the next declared candidate for the same role and completes the request. The fallback order follows the declared order, not arrival or timing.",
+      "source": "company_os/control_plane/router.py:run",
+      "status": "PASS"
+    },
+    {
+      "defends": "Without the failed attempt on record, an incident review cannot tell a healthy run from one that silently degraded to an expensive fallback.",
+      "id": "failures_are_recorded",
+      "kind": "failed_attempt_audited",
+      "observation": {
+        "attempted_providers": [
+          "nim",
+          "openrouter_free"
+        ],
+        "audit_attempt_trail": [
+          {
+            "error_class": "transient",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "provider": "nim",
+            "retry": false,
+            "status": 503
+          },
+          {
+            "error_class": "transient",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "provider": "nim",
+            "retry": true,
+            "status": 503
+          },
+          {
+            "error_class": "transient",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "provider": "nim",
+            "retry": true,
+            "status": 503
+          },
+          {
+            "error_class": "",
+            "model": "poolside/laguna-s-2.1:free",
+            "provider": "openrouter_free",
+            "retry": false,
+            "status": 200
+          }
+        ],
+        "failed_provider": "nim",
+        "served_provider": "openrouter_free"
+      },
+      "requirement": "A failed attempt is recorded with its provider and error class in the audit trail, alongside the successful attempt that completed the request.",
+      "source": "company_os/control_plane/boundary.py:AuditLog",
+      "status": "PASS"
+    },
+    {
+      "defends": "Physical routing identity is INTERNAL. Clients see logical roles only.",
+      "id": "physical_identity_not_relayed_to_client",
+      "kind": "no_physical_identity_in_client_body",
+      "observation": {
+        "leaks_by_step": {},
+        "model_field_leaks": {},
+        "physical_identifiers_known_to_the_control_plane": []
+      },
+      "requirement": "No provider name, wire model or upstream model id from the audit record appears anywhere in the client-visible response body.",
+      "source": "company_os/control_plane/router_contract.py:public_data",
+      "status": "PASS"
+    },
+    {
+      "defends": "Provider internals leak implementation detail and can carry cross-tenant signal; they are not part of the Company's client contract.",
+      "id": "provider_reasoning_and_fingerprint_stripped",
+      "kind": "no_provider_internals_in_client_body",
+      "observation": {
+        "provider_internal_paths_by_step": {}
+      },
+      "requirement": "Provider `reasoning*` fields and `system_fingerprint` are absent from the client-visible response body, at the top level and inside the message.",
+      "source": "company_os/control_plane/router_contract.py:public_data",
+      "status": "PASS"
+    }
+  ],
+  "checks_file": "tests/trajectory/phase7-trajectory-checks.yaml",
+  "checks_sha256": "sha256:d9d48e2cca6dee1ae7a679d7722a770a1d831d2dffe46f8f93b3ab631b89b85f",
+  "exit_code": 1,
+  "finished": "2026-10-05T22:20:32Z",
+  "judge": "deterministic_equality",
+  "llm_in_judgement": false,
+  "provider_inference_during_run": true,
+  "repo_commit": "a453d42fd133f6e44f43ab3290bcf34bb54653fe",
+  "schema": "company-os-trajectory-evidence/v1",
+  "started": "2026-10-05T22:20:04Z",
+  "summary": {
+    "failed": 2,
+    "passed": 7,
+    "steps_executed": 6,
+    "total": 9
+  },
+  "tool": "company_os_trajectory_eval",
+  "trajectory": {
+    "audit_records": [],
+    "degraded_route": {
+      "audit_records": [
+        {
+          "at": "2026-10-05T22:20:32Z",
+          "attempts": 4,
+          "completion_id": "chatcmpl-e49ef58956304050ace24aa4b31336e6",
+          "duration_ms": 3001,
+          "http_status": 200,
+          "lane": "internal",
+          "logical_provider": "openrouter_free",
+          "logical_role": "implement",
+          "route_attempts": [
+            {
+              "error": "deterministic boundary fixture: transient (provider=nim)",
+              "error_class": "transient",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "provider": "nim",
+              "retry": false,
+              "status": 503
+            },
+            {
+              "error": "deterministic boundary fixture: transient (provider=nim)",
+              "error_class": "transient",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "provider": "nim",
+              "retry": true,
+              "status": 503
+            },
+            {
+              "error": "deterministic boundary fixture: transient (provider=nim)",
+              "error_class": "transient",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "provider": "nim",
+              "retry": true,
+              "status": 503
+            },
+            {
+              "error": "",
+              "error_class": "",
+              "model": "poolside/laguna-s-2.1:free",
+              "provider": "openrouter_free",
+              "retry": false,
+              "status": 200
+            }
+          ],
+          "stream": false,
+          "tool_calls": 0,
+          "upstream_completion_id": "chatcmpl-fixture-openrouter_free",
+          "upstream_model": "poolside/laguna-s-2.1:free",
+          "wire_model": "poolside/laguna-s-2.1:free"
+        }
+      ],
+      "steps": [
+        {
+          "body": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "logprobs": null,
+                "message": {
+                  "content": "deterministic boundary response",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1791238829,
+            "id": "chatcmpl-e49ef58956304050ace24aa4b31336e6",
+            "model": "implement",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 4,
+              "prompt_tokens": 8,
+              "total_tokens": 12
+            }
+          },
+          "headers": {
+            "content-length": "350",
+            "content-type": "application/json",
+            "date": "Mon, 05 Oct 2026 22:20:32 GMT",
+            "server": "company-os-control-plane ",
+            "x-company-os-role": "implement"
+          },
+          "name": "degraded-route",
+          "request": {
+            "messages": [
+              {
+                "content": "trajectory evaluation",
+                "role": "user"
+              }
+            ],
+            "model": "implement"
+          },
+          "status": 200,
+          "transport_error": ""
+        }
+      ]
+    },
+    "step_order": [
+      "accept-valid-logical-role",
+      "refuse-physical-model",
+      "refuse-client-provider",
+      "refuse-client-lane",
+      "healthy-route"
+    ],
+    "steps": [
+      {
+        "body": {
+          "error": {
+            "code": "no_eligible_provider",
+            "message": "no deterministic Company OS candidate could serve role 'research' (no_eligible_provider)",
+            "param": null,
+            "type": "api_error"
+          }
+        },
+        "headers": {
+          "content-length": "182",
+          "content-type": "application/json",
+          "date": "Mon, 05 Oct 2026 22:20:06 GMT",
+          "server": "company-os-control-plane ",
+          "x-company-os-role": "research"
+        },
+        "name": "accept-valid-logical-role",
+        "request": {
+          "messages": [
+            {
+              "content": "trajectory evaluation",
+              "role": "user"
+            }
+          ],
+          "model": "research"
+        },
+        "status": 503,
+        "transport_error": ""
+      },
+      {
+        "body": {
+          "error": {
+            "code": "model_not_found",
+            "message": "unknown model 'nvidia/nemotron-3-super-120b-a12b'. Available logical models: implement, research, architect, tests, review, security, vision_qa, summarise, router",
+            "param": "model",
+            "type": "invalid_request_error"
+          }
+        },
+        "headers": {
+          "content-length": "266",
+          "content-type": "application/json",
+          "date": "Mon, 05 Oct 2026 22:20:06 GMT",
+          "server": "company-os-control-plane ",
+          "x-company-os-role": "unknown"
+        },
+        "name": "refuse-physical-model",
+        "request": {
+          "messages": [
+            {
+              "content": "trajectory evaluation",
+              "role": "user"
+            }
+          ],
+          "model": "nvidia/nemotron-3-super-120b-a12b"
+        },
+        "status": 400,
+        "transport_error": ""
+      },
+      {
+        "body": {
+          "error": {
+            "code": "unsupported_parameter",
+            "message": "unsupported request field(s): provider. This boundary accepts logical Company OS models only; provider and routing selection are decided by the deterministic control plane.",
+            "param": "provider",
+            "type": "invalid_request_error"
+          }
+        },
+        "headers": {
+          "content-length": "285",
+          "content-type": "application/json",
+          "date": "Mon, 05 Oct 2026 22:20:06 GMT",
+          "server": "company-os-control-plane ",
+          "x-company-os-role": "unknown"
+        },
+        "name": "refuse-client-provider",
+        "request": {
+          "messages": [
+            {
+              "content": "trajectory evaluation",
+              "role": "user"
+            }
+          ],
+          "model": "research",
+          "provider": "nim"
+        },
+        "status": 400,
+        "transport_error": ""
+      },
+      {
+        "body": {
+          "error": {
+            "code": "unsupported_parameter",
+            "message": "unsupported request field(s): lane. This boundary accepts logical Company OS models only; provider and routing selection are decided by the deterministic control plane.",
+            "param": "lane",
+            "type": "invalid_request_error"
+          }
+        },
+        "headers": {
+          "content-length": "277",
+          "content-type": "application/json",
+          "date": "Mon, 05 Oct 2026 22:20:06 GMT",
+          "server": "company-os-control-plane ",
+          "x-company-os-role": "unknown"
+        },
+        "name": "refuse-client-lane",
+        "request": {
+          "lane": "restricted",
+          "messages": [
+            {
+              "content": "trajectory evaluation",
+              "role": "user"
+            }
+          ],
+          "model": "research"
+        },
+        "status": 400,
+        "transport_error": ""
+      },
+      {
+        "body": {
+          "choices": [
+            {
+              "finish_reason": "stop",
+              "index": 0,
+              "logprobs": null,
+              "message": {
+                "content": "It looks like you\u2019re interested in **trajectory evaluation**, but I want to make sure I give you the most useful answer. Could you let me know a bit more about the context? For example:\n\n* **Domain** \u2013 Are you working in ballistics, aerospace (rockets, satellites), robotics/autonomous vehicles, sports analytics, particle physics, or something else?\n* **Goal** \u2013 What are you trying to evaluate? (e.g., accuracy of a predicted path, performance of a guidance algorithm, deviation from a target trajectory, etc.)\n* **Data available** \u2013 Do you have simulated data, sensor measurements, or analytical models? Any specific metrics you\u2019re already using?\n* **Tools / framework** \u2013 Are you using a particular programming language, simulation software, or evaluation framework?\n\nWith a bit more detail I can provide a tailored explanation of the evaluation methodology, key performance metrics, and practical steps you can take.",
+                "role": "assistant"
+              }
+            }
+          ],
+          "created": 1791238806,
+          "id": "chatcmpl-9cc386057db5481084773fd14f290c90",
+          "model": "implement",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 416,
+            "prompt_tokens": 3,
+            "total_tokens": 419
+          }
+        },
+        "headers": {
+          "content-length": "1262",
+          "content-type": "application/json",
+          "date": "Mon, 05 Oct 2026 22:20:29 GMT",
+          "server": "company-os-control-plane ",
+          "x-company-os-role": "implement"
+        },
+        "name": "healthy-route",
+        "request": {
+          "messages": [
+            {
+              "content": "trajectory evaluation",
+              "role": "user"
+            }
+          ],
+          "model": "implement"
+        },
+        "status": 200,
+        "transport_error": ""
+      }
+    ]
+  },
+  "transport": "live_boundary",
+  "verdict": "fail"
+}

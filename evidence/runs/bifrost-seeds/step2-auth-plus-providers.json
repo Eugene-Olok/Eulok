@@ -1,0 +1,346 @@
+{
+  "$schema": "https://getbifrost.ai/schema",
+  "config_store": {
+    "enabled": true,
+    "type": "sqlite",
+    "config": {
+      "path": "./config.db"
+    }
+  },
+  "governance": {
+    "auth_config": {
+      "is_enabled": true,
+      "admin_username": "env.BIFROST_ADMIN_USERNAME",
+      "admin_password": "env.BIFROST_ADMIN_PASSWORD"
+    }
+  },
+  "providers": {
+    "mistral": {
+      "keys": [
+        {
+          "name": "mistral-primary",
+          "value": "env.MISTRAL_API_KEY",
+          "models": [
+            "*"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    "gemini": {
+      "keys": [
+        {
+          "name": "google-ai-studio-primary",
+          "value": "env.GOOGLE_API_KEY",
+          "models": [
+            "*"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    "groq": {
+      "keys": [
+        {
+          "name": "groq-primary",
+          "value": "env.GROQ_API_KEY",
+          "models": [
+            "*"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    "openrouter": {
+      "keys": [
+        {
+          "name": "openrouter-primary",
+          "value": "env.OPENROUTER_API_KEY",
+          "models": [
+            "*"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    "nvidia": {
+      "network_config": {
+        "base_url": "http://127.0.0.1:8091",
+        "extra_headers": {
+          "Authorization": "Bearer env.NVIDIA_API_KEY"
+        },
+        "default_request_timeout_in_seconds": 120,
+        "max_retries": 0,
+        "retry_backoff_initial": 0,
+        "retry_backoff_max": 0,
+        "allow_private_network": true
+      },
+      "concurrency_and_buffer_size": {
+        "concurrency": 1000,
+        "buffer_size": 5000
+      },
+      "custom_provider_config": {
+        "is_key_less": false,
+        "base_provider_type": "openai",
+        "allowed_requests": {
+          "list_models": true,
+          "text_completion": false,
+          "text_completion_stream": false,
+          "chat_completion": true,
+          "chat_completion_stream": true,
+          "responses": false,
+          "responses_stream": false,
+          "responses_retrieve": false,
+          "responses_delete": false,
+          "responses_cancel": false,
+          "responses_input_items": false,
+          "count_tokens": false,
+          "compaction": false,
+          "embedding": false,
+          "rerank": false,
+          "decisions": false,
+          "ocr": false,
+          "speech": false,
+          "speech_stream": false,
+          "transcription": false,
+          "transcription_stream": false,
+          "image_generation": false,
+          "image_generation_stream": false,
+          "image_edit": false,
+          "image_edit_stream": false,
+          "image_variation": false,
+          "video_generation": false,
+          "video_edit": false,
+          "video_retrieve": false,
+          "video_download": false,
+          "video_delete": false,
+          "video_list": false,
+          "video_remix": false,
+          "batch_create": false,
+          "batch_list": false,
+          "batch_retrieve": false,
+          "batch_cancel": false,
+          "batch_delete": false,
+          "batch_results": false,
+          "file_upload": false,
+          "file_list": false,
+          "file_retrieve": false,
+          "file_delete": false,
+          "file_content": false,
+          "container_create": false,
+          "container_list": false,
+          "container_retrieve": false,
+          "container_delete": false,
+          "container_file_create": false,
+          "container_file_list": false,
+          "container_file_retrieve": false,
+          "container_file_content": false,
+          "container_file_delete": false,
+          "passthrough": false,
+          "passthrough_stream": false,
+          "websocket_responses": false,
+          "realtime": false,
+          "cached_content_create": false,
+          "cached_content_list": false,
+          "cached_content_retrieve": false,
+          "cached_content_update": false,
+          "cached_content_delete": false
+        },
+        "does_not_send_done_marker": false,
+        "wait_for_usage": false
+      },
+      "keys": [
+        {
+          "name": "nvidia-primary",
+          "value": "env.NVIDIA_API_KEY",
+          "models": [
+            "*"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    "zai": {
+      "network_config": {
+        "base_url": "https://api.z.ai/api/paas",
+        "default_request_timeout_in_seconds": 0,
+        "max_retries": 0,
+        "retry_backoff_initial": 0,
+        "retry_backoff_max": 0
+      },
+      "custom_provider_config": {
+        "is_key_less": false,
+        "base_provider_type": "openai",
+        "allowed_requests": {
+          "list_models": false,
+          "text_completion": false,
+          "text_completion_stream": false,
+          "chat_completion": true,
+          "chat_completion_stream": true,
+          "responses": false,
+          "responses_stream": false,
+          "responses_retrieve": false,
+          "responses_delete": false,
+          "responses_cancel": false,
+          "responses_input_items": false,
+          "count_tokens": false,
+          "compaction": false,
+          "embedding": false,
+          "rerank": false,
+          "decisions": false,
+          "ocr": false,
+          "speech": false,
+          "speech_stream": false,
+          "transcription": false,
+          "transcription_stream": false,
+          "image_generation": false,
+          "image_generation_stream": false,
+          "image_edit": false,
+          "image_edit_stream": false,
+          "image_variation": false,
+          "video_generation": false,
+          "video_edit": false,
+          "video_retrieve": false,
+          "video_download": false,
+          "video_delete": false,
+          "video_list": false,
+          "video_remix": false,
+          "batch_create": false,
+          "batch_list": false,
+          "batch_retrieve": false,
+          "batch_cancel": false,
+          "batch_delete": false,
+          "batch_results": false,
+          "file_upload": false,
+          "file_list": false,
+          "file_retrieve": false,
+          "file_delete": false,
+          "file_content": false,
+          "container_create": false,
+          "container_list": false,
+          "container_retrieve": false,
+          "container_delete": false,
+          "container_file_create": false,
+          "container_file_list": false,
+          "container_file_retrieve": false,
+          "container_file_content": false,
+          "container_file_delete": false,
+          "passthrough": false,
+          "passthrough_stream": false,
+          "websocket_responses": false,
+          "realtime": false,
+          "cached_content_create": false,
+          "cached_content_list": false,
+          "cached_content_retrieve": false,
+          "cached_content_update": false,
+          "cached_content_delete": false
+        },
+        "request_path_overrides": {
+          "chat_completion": "/v4/chat/completions",
+          "chat_completion_stream": "/v4/chat/completions"
+        },
+        "does_not_send_done_marker": false,
+        "wait_for_usage": false
+      },
+      "keys": [
+        {
+          "name": "zai-primary",
+          "value": "env.ZAI_API_KEY",
+          "models": [
+            "*"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    "cloudflare": {
+      "network_config": {
+        "base_url": "https://api.cloudflare.com/client/v4/accounts/8011340734c1a27f986e4827e9a3974d/ai",
+        "default_request_timeout_in_seconds": 0,
+        "max_retries": 0,
+        "retry_backoff_initial": 0,
+        "retry_backoff_max": 0
+      },
+      "custom_provider_config": {
+        "is_key_less": false,
+        "base_provider_type": "openai",
+        "allowed_requests": {
+          "list_models": false,
+          "text_completion": false,
+          "text_completion_stream": false,
+          "chat_completion": true,
+          "chat_completion_stream": true,
+          "responses": false,
+          "responses_stream": false,
+          "responses_retrieve": false,
+          "responses_delete": false,
+          "responses_cancel": false,
+          "responses_input_items": false,
+          "count_tokens": false,
+          "compaction": false,
+          "embedding": false,
+          "rerank": false,
+          "decisions": false,
+          "ocr": false,
+          "speech": false,
+          "speech_stream": false,
+          "transcription": false,
+          "transcription_stream": false,
+          "image_generation": false,
+          "image_generation_stream": false,
+          "image_edit": false,
+          "image_edit_stream": false,
+          "image_variation": false,
+          "video_generation": false,
+          "video_edit": false,
+          "video_retrieve": false,
+          "video_download": false,
+          "video_delete": false,
+          "video_list": false,
+          "video_remix": false,
+          "batch_create": false,
+          "batch_list": false,
+          "batch_retrieve": false,
+          "batch_cancel": false,
+          "batch_delete": false,
+          "batch_results": false,
+          "file_upload": false,
+          "file_list": false,
+          "file_retrieve": false,
+          "file_delete": false,
+          "file_content": false,
+          "container_create": false,
+          "container_list": false,
+          "container_retrieve": false,
+          "container_delete": false,
+          "container_file_create": false,
+          "container_file_list": false,
+          "container_file_retrieve": false,
+          "container_file_content": false,
+          "container_file_delete": false,
+          "passthrough": false,
+          "passthrough_stream": false,
+          "websocket_responses": false,
+          "realtime": false,
+          "cached_content_create": false,
+          "cached_content_list": false,
+          "cached_content_retrieve": false,
+          "cached_content_update": false,
+          "cached_content_delete": false
+        },
+        "does_not_send_done_marker": false,
+        "wait_for_usage": false
+      },
+      "keys": [
+        {
+          "name": "cloudflare-primary",
+          "value": "env.CLOUDFLARE_API_TOKEN",
+          "models": [
+            "@cf/openai/gpt-oss-120b"
+          ],
+          "weight": 1
+        }
+      ]
+    }
+  }
+}

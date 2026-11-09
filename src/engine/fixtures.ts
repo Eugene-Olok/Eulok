@@ -1,0 +1,138 @@
+import { Transaction, Obligation } from '../types/reconciliation';
+
+export const SAMPLE_OBLIGATIONS: Obligation[] = [
+  {
+    obligation_id: 'OBL-001',
+    client: 'Green Hill School',
+    amount_due: 500000,
+    due_date: '2026-01-31',
+    description: 'Term 1 tuition and registration fee',
+  },
+  {
+    obligation_id: 'OBL-002',
+    client: 'Kampala Dairy Cooperative (SACCO)',
+    amount_due: 300000,
+    due_date: '2026-01-31',
+    description: 'January member contribution',
+  },
+  {
+    obligation_id: 'OBL-003',
+    client: 'Victoria Logistics Ltd',
+    amount_due: 350000,
+    due_date: '2026-02-15',
+    description: 'Fleet tracking subscription',
+  },
+  {
+    obligation_id: 'OBL-004',
+    client: 'Nalubaale Retailers',
+    amount_due: 150000,
+    due_date: '2026-02-10',
+    description: 'Inventory software monthly fee',
+  },
+];
+
+export const SAMPLE_TRANSACTIONS: Transaction[] = [
+  {
+    tx_id: 'TX-0001',
+    provider: 'mtn_momo',
+    account: '0772000001',
+    amount: 500000,
+    currency: 'UGX',
+    timestamp: '2026-01-05 10:00:00 EAT',
+    payer_reference: 'OBL-001',
+    kind: 'payment',
+    note: 'Tuition payment - Term 1',
+  },
+  {
+    tx_id: 'TX-0002',
+    provider: 'mtn_momo',
+    account: '0772000002',
+    amount: 300000,
+    currency: 'UGX',
+    timestamp: '2026-01-05 11:30:00 EAT',
+    payer_reference: 'OBL-002',
+    kind: 'payment',
+    note: 'Co-op contribution',
+  },
+  {
+    tx_id: 'TX-0003',
+    provider: 'airtel_money',
+    account: '0752000003',
+    amount: 250000,
+    currency: 'UGX',
+    timestamp: '2026-01-06 09:15:00 EAT',
+    payer_reference: 'OBL-003',
+    kind: 'payment',
+    note: 'Fleet tracking deposit (partial payment)',
+  },
+  {
+    tx_id: 'TX-0004',
+    provider: 'mtn_momo',
+    account: '0772000004',
+    amount: 150000,
+    currency: 'UGX',
+    timestamp: '2026-01-06 14:00:00 EAT',
+    payer_reference: null, // Unreferenced, matches OBL-004 balance exactly -> PROPOSED match
+    kind: 'payment',
+    note: 'Retail store payment via agent',
+  },
+  {
+    tx_id: 'TX-0005',
+    provider: 'airtel_money',
+    account: '0752000005',
+    amount: 100000,
+    currency: 'UGX',
+    timestamp: '2026-01-07 08:00:00 EAT',
+    payer_reference: 'OBL-003', // Second installment toward OBL-003 -> completes it
+    kind: 'payment',
+    note: 'Fleet tracking balance',
+  },
+  {
+    // Duplicate test: identical tx_id and identical amount
+    tx_id: 'TX-0002',
+    provider: 'mtn_momo',
+    account: '0772000002',
+    amount: 300000,
+    currency: 'UGX',
+    timestamp: '2026-01-05 11:30:00 EAT',
+    payer_reference: 'OBL-002',
+    kind: 'payment',
+    note: 'Duplicate webhook receipt from aggregator',
+  },
+  {
+    // Refund: never auto-applied to obligations per R7
+    tx_id: 'TX-R001',
+    provider: 'mtn_momo',
+    account: '0772000001',
+    amount: 50000,
+    currency: 'UGX',
+    timestamp: '2026-01-08 10:00:00 EAT',
+    payer_reference: 'OBL-001',
+    kind: 'refund',
+    note: 'Book fee refund initiated by parent',
+  },
+  {
+    // Reversal: never auto-applied per R8
+    tx_id: 'TX-V001',
+    provider: 'airtel_money',
+    account: '0752000003',
+    amount: 250000,
+    currency: 'UGX',
+    timestamp: '2026-01-09 12:00:00 EAT',
+    payer_reference: 'OBL-003',
+    kind: 'reversal',
+    note: 'Carrier reversal due to dispute',
+  },
+  {
+    // Unmatched transaction
+    tx_id: 'TX-9999',
+    provider: 'mtn_momo',
+    account: '0772999999',
+    amount: 80000,
+    currency: 'UGX',
+    timestamp: '2026-01-10 15:30:00 EAT',
+    payer_reference: 'OBL-UNKNOWN',
+    kind: 'payment',
+    note: 'Unrecognized reference from external merchant',
+  },
+];

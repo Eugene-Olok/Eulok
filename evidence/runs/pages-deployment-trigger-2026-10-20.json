@@ -1,0 +1,207 @@
+{
+  "deployments": [
+    {
+      "branch": "main",
+      "commit_hash": "7a3c03a528617547cf610f0d1c81b43858ed5a29",
+      "created_on": "2026-10-20T14:25:58.290708Z",
+      "environment": "production",
+      "id": "0d1d1b18-bc5f-431a-9673-d37b79f0293d",
+      "is_skipped": true,
+      "short_id": "0d1d1b18",
+      "stage": "queued",
+      "stage_status": "idle",
+      "url": "https://0d1d1b18.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "docs/pages-analytics-release-report-final",
+      "commit_hash": "8c18727f3a683a768fb8408f51ddf1150e4c8082",
+      "created_on": "2026-10-20T14:13:42.315757Z",
+      "environment": "preview",
+      "id": "eedcda8d-db2b-4b8f-944f-ba2a3e1dd2bf",
+      "is_skipped": true,
+      "short_id": "eedcda8d",
+      "stage": "queued",
+      "stage_status": "idle",
+      "url": "https://eedcda8d.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "main",
+      "commit_hash": "752087ee35926b3582b4ee043ce9f66123c58faa",
+      "created_on": "2026-10-20T14:03:39.825594Z",
+      "environment": "production",
+      "id": "25c4e60c-a953-4591-80c7-bb344a194331",
+      "is_skipped": false,
+      "short_id": "25c4e60c",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://25c4e60c.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "docs/pages-analytics-release-report",
+      "commit_hash": "230351c521c938ca70ab4f883f24b75f78fb9cfb",
+      "created_on": "2026-10-20T13:55:07.65138Z",
+      "environment": "preview",
+      "id": "6ba8a12b-4bee-42ec-ab29-367840987ed7",
+      "is_skipped": false,
+      "short_id": "6ba8a12b",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://6ba8a12b.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "main",
+      "commit_hash": "69d7bff2ad5e7759b053586d57810a46a7b24fca",
+      "created_on": "2026-10-20T13:44:01.449226Z",
+      "environment": "production",
+      "id": "c632f071-08fa-4ad5-83eb-e5fee0e23fe8",
+      "is_skipped": false,
+      "short_id": "c632f071",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://c632f071.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "release/pages-analytics-2026-10-20",
+      "commit_hash": "a3be7c147a5ba8266ed4b01aa223df0c028efdbd",
+      "created_on": "2026-10-20T13:33:45.458159Z",
+      "environment": "preview",
+      "id": "bb9b1bae-042a-4e7b-a0d2-da38c967295a",
+      "is_skipped": false,
+      "short_id": "bb9b1bae",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://bb9b1bae.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "main",
+      "commit_hash": "4998f6947242bd738594cb92c3221a286724349e",
+      "created_on": "2026-10-19T22:57:16.383255Z",
+      "environment": "production",
+      "id": "0eb080ea-61e9-426f-8169-c080b804b4a7",
+      "is_skipped": false,
+      "short_id": "0eb080ea",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://0eb080ea.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "fix/business-evidence-placeholder-guard",
+      "commit_hash": "0257bd9597a05d37993b954bb90cd9db4e85f942",
+      "created_on": "2026-10-19T22:47:26.837816Z",
+      "environment": "preview",
+      "id": "7f5b5dfa-94ea-4a6f-bb85-cd534480821b",
+      "is_skipped": false,
+      "short_id": "7f5b5dfa",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://7f5b5dfa.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "fix/business-evidence-placeholder-guard",
+      "commit_hash": "40caf011e8361d172b5f3c9dee6e9b92bac0ed80",
+      "created_on": "2026-10-19T22:46:20.318669Z",
+      "environment": "preview",
+      "id": "64385858-4729-484d-93b5-87672dbc809c",
+      "is_skipped": false,
+      "short_id": "64385858",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://64385858.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "main",
+      "commit_hash": "fbed5fd91d5afa61d6693014fd7ca3d056b9885f",
+      "created_on": "2026-10-19T22:35:39.397222Z",
+      "environment": "production",
+      "id": "e55a6da8-98c6-4e50-959e-3cafc6deb9ed",
+      "is_skipped": false,
+      "short_id": "e55a6da8",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://e55a6da8.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "fix/business-evidence-placeholder-guard",
+      "commit_hash": "fbed5fd91d5afa61d6693014fd7ca3d056b9885f",
+      "created_on": "2026-10-18T10:56:10.286943Z",
+      "environment": "preview",
+      "id": "84b2a506-9c3f-441d-a56b-69491fb61927",
+      "is_skipped": false,
+      "short_id": "84b2a506",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://84b2a506.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "fix/business-evidence-placeholder-guard",
+      "commit_hash": "8faf6c1428c90a4c7ff5650d9446a3c879eb6c0a",
+      "created_on": "2026-10-18T10:48:02.186122Z",
+      "environment": "preview",
+      "id": "b9b518a1-abb8-48a1-ba7d-05d47adcc2d4",
+      "is_skipped": false,
+      "short_id": "b9b518a1",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://b9b518a1.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "fix/business-evidence-placeholder-guard",
+      "commit_hash": "ac8fd6b06a2262a00aa269f14d929e5b49abaeb3",
+      "created_on": "2026-10-18T10:35:23.846164Z",
+      "environment": "preview",
+      "id": "0eccf23b-6fc2-45a7-bed5-416f374d5f2c",
+      "is_skipped": false,
+      "short_id": "0eccf23b",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://0eccf23b.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "fix/business-evidence-placeholder-guard",
+      "commit_hash": "32ea1274cd27c39bb984ea92cd0e5ef268a22f4e",
+      "created_on": "2026-10-17T22:21:48.363493Z",
+      "environment": "preview",
+      "id": "827d11ce-c449-451d-a17b-0a9e0d495202",
+      "is_skipped": false,
+      "short_id": "827d11ce",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://827d11ce.company-os-3ox.pages.dev"
+    },
+    {
+      "branch": "main",
+      "commit_hash": "bba862d68803b113b51e6331bb05c70351c5ba6a",
+      "created_on": "2026-10-17T19:04:53.766276Z",
+      "environment": "production",
+      "id": "04732797-d4ca-4363-ac66-080881c42d58",
+      "is_skipped": false,
+      "short_id": "04732797",
+      "stage": "deploy",
+      "stage_status": "success",
+      "url": "https://04732797.company-os-3ox.pages.dev"
+    }
+  ],
+  "observed_at": "2026-10-20T16:20:13.397880+00:00",
+  "project": {
+    "build_command": "python3 tools/build_site.py --profile auto --out business/site --allow-in-place",
+    "canonical_deployment_created_on": "2026-10-20T14:03:39.825594Z",
+    "canonical_deployment_id": "25c4e60c-a953-4591-80c7-bb344a194331",
+    "destination_dir": "business/site",
+    "domains": [
+      "company-os-3ox.pages.dev"
+    ],
+    "name": "company-os",
+    "preview_env_shape": {},
+    "production_branch": "main",
+    "production_env_shape": {
+      "POSTHOG_HOST": "plain_text",
+      "POSTHOG_KEY": "secret_text"
+    },
+    "root_dir": "",
+    "source_owner": "Eugene-Olok",
+    "source_production_branch": "main",
+    "source_repo": "company-os",
+    "source_type": "github",
+    "subdomain": "company-os-3ox.pages.dev"
+  }
+}

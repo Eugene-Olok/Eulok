@@ -1,0 +1,12 @@
+{
+  "analytics_armed": false,
+  "commit": "7a3c03a528617547cf610f0d1c81b43858ed5a29",
+  "credential_values_recorded": false,
+  "inert_config": true,
+  "leaked_files": [],
+  "observed_at": "2026-10-20T16:23:36.232731+00:00",
+  "production_credential_scope_present": true,
+  "requested_branch": "release/closure-2026-10-20",
+  "resolved_profile": "preview",
+  "verdict": "PASS"
+}

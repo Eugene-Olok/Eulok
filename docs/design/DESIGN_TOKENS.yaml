@@ -1,0 +1,868 @@
+# Company OS Design Tokens — canonical machine-readable token contract
+#
+# Authority chain (DESIGN_SYSTEM.md):
+#   Founder decision → this file → Penpot variables / frontend CSS custom properties
+#
+# STATUS: VALIDATED — 126 canonical tokens classified against the decision
+# register: 104 VALID_APPROVED (governing decision APPROVED + contrast valid),
+# 22 VALID_PENDING_DECISION (pending, blocked, or not yet owned), 0 INVALID
+# (validator run 2026-10-09). Individual token approval is NOT package approval:
+# the complete design system is not approved while decisions remain pending or
+# blocked (26.1, 26.5, 26.9, 26.11). (26.16 was approved 2026-10-10 — §8.5
+# contract restated verbatim, Penpot Cloud.) Every value below is either (a)
+# measured evidence from business/site/index.html:12, (b) a labelled proposal,
+# or (c) a founder-approved value. The validator
+# (tools/validate_design_tokens.py) classifies each token as
+# VALID_APPROVED / VALID_PENDING_DECISION / INVALID against the decision
+# register in docs/design/DESIGN_DECISIONS.md §5. Nothing here renders in
+# production until its decision is APPROVED (GOV-004).
+#
+# Secrets rule: this file must never contain credentials, MCP endpoints,
+# provider keys or environment values. It contains design values only.
+
+schema_version: 1
+status: VALIDATED_PARTIALLY_APPROVED
+canonical: true
+created: "2026-10-08"
+
+authority:
+  decision_register: docs/design/DESIGN_DECISIONS.md
+  reference_doc: docs/design/DESIGN_TOKENS.md
+  manifest: docs/design/DESIGN_MANIFEST.yaml
+  baseline_evidence: evidence/runs/design-system-audit-2026-10-08.md
+  naming_authority: GOV-002
+  approval_gate: GOV-004
+  penpot_policy: "Penpot variables and frontend CSS are downstream; neither may originate a value absent from this file (PEN-003)."
+
+# ---------------------------------------------------------------------------
+# Theme architecture (26.4, approved 2026-10-08 — option B: both light + dark)
+# Light is the canonical production theme. Primitives are shared raw values;
+# semantic colour roles map differently per theme (value = light, value_dark =
+# dark); components inherit by aliasing semantic roles and must never carry a
+# component-owned light-only literal. Initial preference comes from
+# prefers-color-scheme; the product shell may apply an explicit override.
+# Both themes are measured against WCAG 2.2 AA.
+# ---------------------------------------------------------------------------
+themes:
+  supported: [light, dark]
+  default: light
+  decision_id: "26.4"
+  resolution: "Preference resolved at the semantic colour layer: value (light) | value_dark (dark)."
+  system_preference: "prefers-color-scheme provides the initial preference; explicit user/product-shell override supported."
+  obligations:
+    - "Both themes satisfy WCAG 2.2 AA (contrast_matrix dark pairs)."
+    - "No component may hard-code a light-only colour (validator enforces semantic routing)."
+    - "Visual regression must cover both themes (open obligation until rendered UI exists)."
+    - "Dark-mode CSS counts against the approved performance budgets (26.15)."
+  hue_family_status: "RESOLVED 2026-10-09: founder separately approved the hue family under 26.3 — Option 1 neutral-derived monochrome (no invented brand hue; interactive roles map to the strong neutral per theme). Light and dark values land together; see the action/focus/inverse/status tokens and contrast_matrix."
+
+# ---------------------------------------------------------------------------
+# Naming rules (GOV-002)
+# ---------------------------------------------------------------------------
+naming:
+  structure: "<layer>.<domain>.<role>[.<variant>]"
+  layers: [primitive, semantic, component]
+  pattern: "^(primitive|semantic|component)\\.(color|space|radius|shadow|motion|focus|z|icon|type|breakpoint|size)\\.[a-z0-9]+(-[a-z0-9]+)*$"
+  rules:
+    - "Layer prefix is mandatory and matches the section the token is declared in."
+    - "Names are identical in this file, the CSS custom-property mapping, and Penpot variable names."
+    - "One name never changes meaning; a meaning change is a new name."
+    - "Semantic tokens alias primitives or carry a null pending value; they never hold an unexplained literal."
+    - "Component tokens alias semantic tokens (pure geometry may alias primitives directly). No component-to-component aliasing."
+
+# ---------------------------------------------------------------------------
+# Status model
+# ---------------------------------------------------------------------------
+status_model:
+  classes:
+    VALID_APPROVED: "Structure valid AND contrast valid AND decision status = APPROVED"
+    VALID_PENDING_DECISION: "Structure valid but at least one governing decision is not APPROVED, or value is null awaiting decision"
+    INVALID: "Structural violation, unknown decision reference, alias cycle, bad literal, or an approved decision whose value fails its contrast threshold"
+  value_classes:
+    current_evidence: "Measured existing site value (audit §5.2). Evidence, not approval."
+    proposed: "Model/audit proposal. Not evidence, not approval."
+    pending: "Deliberately null — no value exists until a decision resolves it."
+  decision_states_seen_in_register: [PENDING, PENDING_ESCALATE, BLOCKED]
+
+# ---------------------------------------------------------------------------
+# Layer 1 — primitives
+# ---------------------------------------------------------------------------
+primitives:
+
+  color:
+    # The seven current-site literals (audit §5.2, index.html:12). Names describe
+    # today's usage, not an invented numeric scale; palette approval (26.3) may
+    # restructure these into a proper scale.
+    - name: primitive.color.canvas-raw
+      type: color
+      value: "#fafafa"
+      value_class: current_evidence
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "index.html:12 :root background"
+
+    - name: primitive.color.surface-raw
+      type: color
+      value: "#ffffff"
+      value_class: current_evidence
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "index.html:12 card surface"
+
+    - name: primitive.color.text-raw
+      type: color
+      value: "#151515"
+      value_class: current_evidence
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "index.html:12 :root color; measured ≥15:1 on canvas"
+
+    - name: primitive.color.text-muted-raw
+      type: color
+      value: "#555555"
+      value_class: current_evidence
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "index.html:12 footer text; measured ≈7.1:1 on canvas"
+
+    - name: primitive.color.border-subtle-raw
+      type: color
+      value: "#8f8f8f"
+      value_class: proposed
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "Repaired 2026-10-08 (founder option B): replaces #dddddd (1.30:1 advisory fail). #8f8f8f measures 3.23:1 on #ffffff and 3.10:1 on #fafafa."
+      notes: "Role: static content boundary — card edges, dividers, footer rules. Distinct from primitive.color.border-default-raw (UI-component boundary); do not substitute one for the other."
+
+    - name: primitive.color.border-default-raw
+      type: color
+      value: "#767676"
+      value_class: proposed
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "Repaired 2026-10-08 (founder option B): replaces #bbbbbb (1.92:1, WCAG 1.4.11 failure A11Y-004). #767676 measures 4.54:1 on #ffffff and 4.35:1 on #fafafa."
+      notes: "Role: UI-component boundary — badge borders now, form controls later; also AA-text-capable. Distinct from primitive.color.border-subtle-raw (static content boundary); do not substitute one for the other."
+
+    - name: primitive.color.border-strong-raw
+      type: color
+      value: "#111111"
+      value_class: current_evidence
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "index.html:12 step-marker border/number; ≥15:1 on canvas"
+
+    # --- dark theme raw values (26.4, approved 2026-10-08) -------------------
+    # Shared raw values for the dark theme. Neutrals only; the interactive hue
+    # family resolved as monochrome on 2026-10-09 (26.3) — see themes.hue_family_status.
+    - name: primitive.color.dark-canvas-raw
+      type: color
+      value: "#0f0f0f"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "26.4 dark theme: near-black page background. Measured vs dark text 17.12:1."
+
+    - name: primitive.color.dark-surface-raw
+      type: color
+      value: "#1a1a1a"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "26.4 dark theme: raised card surface. Measured vs dark text 15.55:1."
+
+    - name: primitive.color.dark-text-raw
+      type: color
+      value: "#f2f2f2"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "26.4 dark theme: primary text. 17.12:1 on #0f0f0f, 15.55:1 on #1a1a1a."
+
+    - name: primitive.color.dark-text-muted-raw
+      type: color
+      value: "#a9a9a9"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "26.4 dark theme: secondary/muted text. 8.16:1 on #0f0f0f, 7.41:1 on #1a1a1a (> 4.5:1 AA)."
+
+    - name: primitive.color.dark-border-subtle-raw
+      type: color
+      value: "#6b6b6b"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "26.4 dark theme: static content boundary. 3.60:1 on #0f0f0f, 3.27:1 on #1a1a1a (≥ 3:1)."
+
+    - name: primitive.color.dark-border-default-raw
+      type: color
+      value: "#8f8f8f"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "26.4 dark theme: UI-component boundary. 5.93:1 on #0f0f0f, 5.38:1 on #1a1a1a (≥ 3:1 AND AA-text-capable ≥ 4.5:1)."
+      notes: "Dark theme UI-component boundary. Distinct role from light border-subtle #8f8f8f despite identical hex — token semantics differ by theme, never substitute."
+
+    - name: primitive.color.dark-border-strong-raw
+      type: color
+      value: "#e5e5e5"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "26.4 dark theme: strong/emphasis border. 15.22:1 on #0f0f0f, 13.82:1 on #1a1a1a."
+
+    - name: primitive.color.accent
+      type: color
+      value: "#151515"
+      value_class: proposed
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "Founder 2026-10-09 (26.3 hue approval, Option 1): monochrome family — the interactive hue collapses to the strong neutral #151515 (17.50:1 on light canvas / 18.26:1 on white). Basis: closure report §19.6; computed by hue_proposal.py."
+      notes: "The 2026-10-08 carve-out (no accent hue exists) is resolved by founder-approved neutral-derived monochrome — not an invented hue."
+
+    - name: primitive.color.accent-hover-raw
+      type: color
+      value: "#2f2f2f"
+      value_class: proposed
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "Founder 2026-10-09 (26.3 hue approval, Option 1): light-theme hover step of the monochrome action family. Inverse #fafafa on #2f2f2f = 12.83:1 (>= 4.5:1); vs canvas #fafafa = 12.83:1 (>= 3:1). Computed by hue_proposal.py."
+
+    - name: primitive.color.dark-accent-raw
+      type: color
+      value: "#f2f2f2"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "Founder 2026-10-09 (26.3 hue approval, Option 1): dark-theme action/focus base of the monochrome family (26.4 theme). Inverse #0f0f0f on #f2f2f2 = 17.12:1; vs dark canvas #0f0f0f = 17.12:1. Computed by hue_proposal.py."
+
+    - name: primitive.color.dark-accent-hover-raw
+      type: color
+      value: "#ffffff"
+      value_class: proposed
+      decision_id: "26.4"
+      status: VALID_APPROVED
+      evidence: "Founder 2026-10-09 (26.3 hue approval, Option 1): dark-theme hover step. Inverse #0f0f0f on #ffffff = 19.17:1 (>= 4.5:1); vs dark canvas #0f0f0f = 19.17:1. Computed by hue_proposal.py."
+      notes: "Dark hover #ffffff is a distinct dark-theme role; despite the shared hex it never substitutes for the light surface-raw role."
+
+  type:
+    - name: primitive.type.family-system
+      type: font_family
+      value: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "Effective stack today is system-ui (Inter is named but never loaded — audit §5.2 / risk §27.D); extension list is a proposal."
+
+    - name: primitive.type.family-mono
+      type: font_family
+      value: "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace"
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      notes: "No mono font is declared in the repository today; stack is a proposal for FOUND-024."
+
+    - name: primitive.type.size-1
+      type: size
+      value: "0.85rem"
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "index.html:12 .badge font-size"
+
+    - name: primitive.type.size-2
+      type: size
+      value: "0.9rem"
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "index.html:12 footer font-size"
+
+    - name: primitive.type.size-3
+      type: size
+      value: "1rem"
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "index.html:12 body font-size (browser default, declared in prose rule)"
+
+    - name: primitive.type.size-lead
+      type: size
+      value: "1.25rem"
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "Initial scale approved 2026-10-08 (founder value 20px, stored as 1.25rem to preserve user-zoom scaling)."
+      notes: "Lead/intro step — not the hero/display size (that is primitive.type.size-hero). New intermediate value; no current CSS rule consumed it before approval."
+
+    - name: primitive.type.size-h2
+      type: size
+      value: "1.5rem"
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "Approved 2026-10-08 (founder value 24px). Matches the h2 UA default (1.5em) already rendered today — no visual change."
+
+    - name: primitive.type.size-h3
+      type: size
+      value: "1.125rem"
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "Approved 2026-10-08 (founder value 18px). Current h3 is the UA default 1.17em (18.72px); this is a deliberate 0.72px normalisation."
+
+    - name: primitive.type.size-hero
+      type: size
+      value: "clamp(2.5rem, 7vw, 5rem)"
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "index.html:12 h1 clamp; extending clamp beyond h1 is FOUND-005 work."
+
+    - name: primitive.type.leading-body
+      type: number
+      value: 1.6
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "index.html:12 body line-height"
+
+    - name: primitive.type.leading-hero
+      type: number
+      value: 1.05
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "index.html:12 h1 line-height"
+
+  space:
+    # Measured literals from index.html:12 (audit §5.2), ratified as the comfortable scale by 26.6 option A (2026-10-08).
+    # 10px and 18px are deliberate optical exceptions (FOUND-009), NOT normalised to the grid.
+    - {name: primitive.space.4,    type: size, value: "4px",  value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "badge padding"}
+    - {name: primitive.space.8,    type: size, value: "8px",  value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "step-list padding"}
+    - {name: primitive.space.10,   type: size, value: "10px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "badge padding-x", notes: "Deliberate optical exception (FOUND-009) — kept by 26.6, not normalised to a mathematical grid."}
+    - {name: primitive.space.12,   type: size, value: "12px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "step-list margin"}
+    - {name: primitive.space.16,   type: size, value: "16px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "grid gap; also RESPONSIVE_SPEC minimum gutter"}
+    - {name: primitive.space.18,   type: size, value: "18px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "step-list indent", notes: "Deliberate optical exception (FOUND-009) — kept by 26.6, not normalised to a mathematical grid."}
+    - {name: primitive.space.20,   type: size, value: "20px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "card padding; nav gap"}
+    - {name: primitive.space.24,   type: size, value: "24px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "page gutter; footer padding-top"}
+    - {name: primitive.space.48,   type: size, value: "48px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "page padding-y"}
+    - {name: primitive.space.64,   type: size, value: "64px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "h2 margin-top"}
+    - {name: primitive.space.72,   type: size, value: "72px", value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "footer margin-top"}
+
+  radius:
+    - {name: primitive.radius.14,   type: size, value: "14px", value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "card border-radius", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (value approval A1)."}
+    - {name: primitive.radius.pill, type: size, value: "999px", value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "badge border-radius", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (value approval A1)."}
+
+  border:
+    - {name: primitive.border.width-1, type: size, value: "1px", value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "card/badge/step borders (index.html:12)", notes: "Universal 1px hairline in evidence (engineering constant); approved 2026-10-09 under GOV-004 register decision 26.18."}
+
+  shadow:
+    - {name: primitive.shadow.none, type: shadow, value: "none", value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "no shadows exist (audit §5.2)", notes: "Site has no elevation; approved 2026-10-09 under GOV-004 register decision 26.18. Elevation scale (FOUND-014) still needed before overlays ship; shadow.low/medium/high remain deferred."}
+    - {name: primitive.shadow.low,    type: shadow, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-014 elevation tokens not established."}
+    - {name: primitive.shadow.medium, type: shadow, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-014 elevation tokens not established."}
+    - {name: primitive.shadow.high,   type: shadow, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-014 elevation tokens not established."}
+
+  motion:
+    - {name: primitive.motion.fast,   type: duration, value: "150ms", value_class: proposed, decision_id: "26.7", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.7 option A: minimal, reduced-motion-safe)."}
+    - {name: primitive.motion.normal, type: duration, value: "250ms", value_class: proposed, decision_id: "26.7", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.7 option A)."}
+    - {name: primitive.motion.slow,   type: duration, value: "400ms", value_class: proposed, decision_id: "26.7", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.7 option A)."}
+    - {name: primitive.motion.ease-standard, type: easing, value: "cubic-bezier(0.2, 0, 0, 1)", value_class: proposed, decision_id: "26.7", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.7 option A)."}
+
+  breakpoint:
+    # Approved 2026-10-08 (26.8 option A). px is canonical; em equivalents are supporting documentation only (16px reference), never a second source of truth.
+    - {name: primitive.breakpoint.sm, type: size, value: "480px",  value_class: proposed, decision_id: "26.8", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.8 option A). ≈30em at 16px reference."}
+    - {name: primitive.breakpoint.md, type: size, value: "768px",  value_class: proposed, decision_id: "26.8", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.8 option A). ≈48em at 16px reference."}
+    - {name: primitive.breakpoint.lg, type: size, value: "1024px", value_class: proposed, decision_id: "26.8", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.8 option A). ≈64em at 16px reference."}
+    - {name: primitive.breakpoint.xl, type: size, value: "1440px", value_class: proposed, decision_id: "26.8", status: VALID_APPROVED, evidence: "Approved 2026-10-08 (26.8 option A). ≈90em at 16px reference."}
+
+  z:
+    - {name: primitive.z.base,      type: number, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-018 layering scale not established; no §26 owner — propose under GOV-004 before overlays ship."}
+    - {name: primitive.z.dropdown,  type: number, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-018 not established."}
+    - {name: primitive.z.sticky,    type: number, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-018 not established."}
+    - {name: primitive.z.overlay,   type: number, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-018 not established."}
+    - {name: primitive.z.modal,     type: number, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-018 not established."}
+
+  icon:
+    - {name: primitive.icon.sm, type: size, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-019 icon sizes pair with BRAND-011 iconography; no §26 owner — propose under GOV-004."}
+    - {name: primitive.icon.md, type: size, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-019 not established."}
+    - {name: primitive.icon.lg, type: size, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-019 not established."}
+
+# ---------------------------------------------------------------------------
+# Layer 2 — semantic roles
+# ---------------------------------------------------------------------------
+semantics:
+
+  color:
+    - name: semantic.color.bg.canvas
+      type: color
+      value: {alias: primitive.color.canvas-raw}
+      value_dark: {alias: primitive.color.dark-canvas-raw}
+      value_class: current_evidence
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "audit FOUND-002: bg #fafafa exists unroled"
+
+    - name: semantic.color.bg.surface
+      type: color
+      value: {alias: primitive.color.surface-raw}
+      value_dark: {alias: primitive.color.dark-surface-raw}
+      value_class: current_evidence
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "audit FOUND-002: surface #fff exists unroled"
+
+    - name: semantic.color.fg.default
+      type: color
+      value: {alias: primitive.color.text-raw}
+      value_dark: {alias: primitive.color.dark-text-raw}
+      value_class: current_evidence
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "audit FOUND-002: text #151515 exists unroled"
+
+    - name: semantic.color.fg.muted
+      type: color
+      value: {alias: primitive.color.text-muted-raw}
+      value_dark: {alias: primitive.color.dark-text-muted-raw}
+      value_class: current_evidence
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "audit FOUND-002: footer #555 exists unroled"
+
+    - name: semantic.color.fg.inverse
+      type: color
+      value: {alias: primitive.color.canvas-raw}
+      value_dark: {alias: primitive.color.dark-canvas-raw}
+      value_class: proposed
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "Founder 2026-10-09 (26.3 hue approval, Option 1): inverse/on-action text. Light #fafafa on #151515 = 17.50:1; dark #0f0f0f on #f2f2f2 = 17.12:1. Computed by hue_proposal.py."
+      notes: "Carve-out resolved 2026-10-09. Inverse text derives from the canvas roles per theme (monochrome family)."
+
+    - name: semantic.color.border.subtle
+      type: color
+      value: {alias: primitive.color.border-subtle-raw}
+      value_dark: {alias: primitive.color.dark-border-subtle-raw}
+      value_class: current_evidence
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "audit FOUND-013: 1px #ddd borders exist; ≈1.3:1 on canvas is a §19.4 decorative-boundary risk"
+
+    - name: semantic.color.border.default
+      type: color
+      value: {alias: primitive.color.border-default-raw}
+      value_dark: {alias: primitive.color.dark-border-default-raw}
+      value_class: proposed
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "A11Y-004 repair value approved 2026-10-08 (founder option B): #767676, 4.54:1 on #ffffff."
+      notes: "UI-component boundary (≥3:1 wherever used). Replaces the failing badge border primitive; the retired #bbbbbb (1.92:1) is preserved as historical evidence in DESIGN_DECISIONS.md §3 26.3. Distinct from semantic.color.border.subtle."
+
+    - name: semantic.color.border.strong
+      type: color
+      value: {alias: primitive.color.border-strong-raw}
+      value_dark: {alias: primitive.color.dark-border-strong-raw}
+      value_class: current_evidence
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "audit FOUND-013: 1px #111 step-marker borders exist unroled"
+
+    - name: semantic.color.action.primary
+      type: color
+      value: {alias: primitive.color.accent}
+      value_dark: {alias: primitive.color.dark-accent-raw}
+      value_class: proposed
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "Founder 2026-10-09 (26.3 hue approval, Option 1): neutral-derived action fill. Text on action: light #fafafa/#151515 17.50:1, dark #0f0f0f/#f2f2f2 17.12:1; boundary vs canvas >= 3:1 both themes. Computed by hue_proposal.py."
+      notes: "No interactive element exists today (zero <a>/<button>) — the token is approved for use when one ships. 'Active' state reuses this value (no separate active token exists)."
+
+    - name: semantic.color.action.primary-hover
+      type: color
+      value: {alias: primitive.color.accent-hover-raw}
+      value_dark: {alias: primitive.color.dark-accent-hover-raw}
+      value_class: proposed
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "Founder 2026-10-09 (26.3 hue approval, Option 1): hover step. Text on hover: light #fafafa/#2f2f2f 12.83:1, dark #0f0f0f/#ffffff 19.17:1. Computed by hue_proposal.py."
+      notes: "Hover is a darker step in light (#2f2f2f) and a brighter step in dark (#ffffff), preserving >= 4.5:1 inverse-text contrast both themes."
+
+    - name: semantic.color.focus.ring
+      type: color
+      value: {alias: primitive.color.accent}
+      value_dark: {alias: primitive.color.dark-accent-raw}
+      value_class: proposed
+      value_class_dark: proposed
+      dark_decision_id: "26.4"
+      decision_id: "26.3"
+      status: VALID_APPROVED
+      evidence: "FOUND-017 REQUIRED: zero :focus rules today. Founder 2026-10-09 (26.3 hue approval, Option 1): ring = monochrome focus, 17.50:1 vs light canvas and 17.12:1 vs dark canvas (>= 3:1, WCAG 2.4.11). Computed by hue_proposal.py."
+      notes: "Ring colour approved 2026-10-09. Ring geometry (width/offset) still lands with FOUND-017 under GOV-004. Rendered focus visual review remains outstanding (ratios are not visual approval)."
+
+  type:
+    - name: semantic.type.family.body
+      type: font_family
+      value: {alias: primitive.type.family-system}
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+
+    - name: semantic.type.family.mono
+      type: font_family
+      value: {alias: primitive.type.family-mono}
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      notes: "FOUND-024 — required for code/excerpt rendering."
+
+    - name: semantic.type.size.body
+      type: size
+      value: {alias: primitive.type.size-3}
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+
+    - name: semantic.type.size.h1
+      type: size
+      value: {alias: primitive.type.size-hero}
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+
+    - name: semantic.type.size.h2
+      type: size
+      value: {alias: primitive.type.size-h2}
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+
+    - name: semantic.type.size.h3
+      type: size
+      value: {alias: primitive.type.size-h3}
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+
+    - name: semantic.type.size.caption
+      type: size
+      value: {alias: primitive.type.size-1}
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      evidence: "badge .85rem"
+      notes: "COMP-TXT-05 floor: 14px legibility minimum must hold when the scale lands (0.85rem ≈ 13.6px at 16px root — revisit at scale time)."
+
+    - name: semantic.type.weight.regular
+      type: weight
+      value: 400
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      notes: "Explicit 400; matches the UA default that applied implicitly today (no visual change)."
+
+    - name: semantic.type.weight.bold
+      type: weight
+      value: 700
+      value_class: proposed
+      decision_id: "26.2"
+      status: VALID_APPROVED
+      notes: "Explicit 700; matches .steps li::before today (no visual change)."
+
+    - name: semantic.type.leading.body
+      type: number
+      value: {alias: primitive.type.leading-body}
+      value_class: current_evidence
+      decision_id: "26.2"
+      status: VALID_APPROVED
+
+  space:
+    # Role-named from measured evidence. 26.6 (approved 2026-10-08, comfortable)
+    # ratified these literals, including the 10px/18px optical exceptions. The
+    # numbered ladder space.1…space.n (DESIGN_TOKENS.md proposal) remains
+    # deliberately NOT materialised — 26.6 kept the measured scale rather than
+    # forcing a mathematical grid.
+    - {name: semantic.space.page-gutter,  type: size, value: {alias: primitive.space.24}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "container padding 24px; RESPONSIVE_SPEC makes 16px the absolute floor"}
+    - {name: semantic.space.gutter-min,   type: size, value: {alias: primitive.space.16}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "RESPONSIVE_SPEC: never reduce page gutters below 16px"}
+    - {name: semantic.space.grid-gap,     type: size, value: {alias: primitive.space.16}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "auto-fit grid gap 16px (FOUND-011)"}
+    - {name: semantic.space.card-padding, type: size, value: {alias: primitive.space.20}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "card padding 20px"}
+    - {name: semantic.space.section-gap,  type: size, value: {alias: primitive.space.64}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "h2 margin-top 64px"}
+    - {name: semantic.space.footer-gap,   type: size, value: {alias: primitive.space.72}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "footer margin-top 72px"}
+
+  radius:
+    - {name: semantic.radius.md,   type: size, value: {alias: primitive.radius.14},   value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "card radius 14px; aliases approved primitive (26.18)", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (alias to approved primary)."}
+    - {name: semantic.radius.pill, type: size, value: {alias: primitive.radius.pill}, value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "badge radius 999px; aliases approved primitive (26.18)", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (alias to approved primary)."}
+    - {name: semantic.radius.sm,   type: size, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-012: full scale needed; not established."}
+    - {name: semantic.radius.lg,   type: size, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-012: full scale needed; not established."}
+
+  border:
+    - {name: semantic.border.width, type: size, value: {alias: primitive.border.width-1}, value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "1px everywhere in evidence; aliases approved primitive (26.18)", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (alias to approved primary)."}
+
+  shadow:
+    - {name: semantic.shadow.none, type: shadow, value: {alias: primitive.shadow.none}, value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "site has no elevation; aliases approved primitive (26.18)", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (alias to approved primary)."}
+
+  focus:
+    - {name: semantic.focus.width, type: size, value: null, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION, notes: "FOUND-017 ring spec (width/offset) not established; no §26 owner — propose under GOV-004. Must satisfy WCAG 2.4.11."}
+
+  z:
+    - {name: semantic.z.base,      type: number, value: {alias: primitive.z.base},     value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+    - {name: semantic.z.dropdown,  type: number, value: {alias: primitive.z.dropdown}, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+    - {name: semantic.z.sticky,    type: number, value: {alias: primitive.z.sticky},   value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+    - {name: semantic.z.overlay,   type: number, value: {alias: primitive.z.overlay},  value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+    - {name: semantic.z.modal,     type: number, value: {alias: primitive.z.modal},    value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+
+  breakpoint:
+    - {name: semantic.breakpoint.sm, type: size, value: {alias: primitive.breakpoint.sm}, value_class: proposed, decision_id: "26.8", status: VALID_APPROVED}
+    - {name: semantic.breakpoint.md, type: size, value: {alias: primitive.breakpoint.md}, value_class: proposed, decision_id: "26.8", status: VALID_APPROVED}
+    - {name: semantic.breakpoint.lg, type: size, value: {alias: primitive.breakpoint.lg}, value_class: proposed, decision_id: "26.8", status: VALID_APPROVED}
+    - {name: semantic.breakpoint.xl, type: size, value: {alias: primitive.breakpoint.xl}, value_class: proposed, decision_id: "26.8", status: VALID_APPROVED}
+
+  motion:
+    - {name: semantic.motion.fast,   type: duration, value: {alias: primitive.motion.fast},   value_class: proposed, decision_id: "26.7", status: VALID_APPROVED}
+    - {name: semantic.motion.normal, type: duration, value: {alias: primitive.motion.normal}, value_class: proposed, decision_id: "26.7", status: VALID_APPROVED}
+    - {name: semantic.motion.slow,   type: duration, value: {alias: primitive.motion.slow},   value_class: proposed, decision_id: "26.7", status: VALID_APPROVED}
+
+  icon:
+    - {name: semantic.icon.sm, type: size, value: {alias: primitive.icon.sm}, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+    - {name: semantic.icon.md, type: size, value: {alias: primitive.icon.md}, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+    - {name: semantic.icon.lg, type: size, value: {alias: primitive.icon.lg}, value_class: pending, decision_id: null, status: VALID_PENDING_DECISION}
+
+# ---------------------------------------------------------------------------
+# Layer 3 — component tokens (evidence-backed only; components are thin today)
+# ---------------------------------------------------------------------------
+components:
+
+  card:
+    - {name: component.card.background, type: color, value: {alias: semantic.color.bg.surface},   value_class: current_evidence, decision_id: "26.3", status: VALID_APPROVED, evidence: "index.html:12 .card background #fff"}
+    - {name: component.card.border,     type: color, value: {alias: semantic.color.border.subtle}, value_class: current_evidence, decision_id: "26.3", status: VALID_APPROVED, evidence: "index.html:12 .card border #ddd"}
+    - {name: component.card.radius,     type: size,  value: {alias: semantic.radius.md},           value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "14px; aliases approved semantic role (26.18)", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (chain to approved primary)."}
+    - {name: component.card.padding,    type: size,  value: {alias: semantic.space.card-padding},  value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "20px"}
+
+  badge:
+    - {name: component.badge.border, type: color, value: {alias: semantic.color.border.default}, value_class: proposed, decision_id: "26.3", status: VALID_APPROVED, evidence: "A11Y-004 repair landed 2026-10-08 (#767676, 4.54:1 on white); visual review pending before the defect is fully closed.", notes: "Aliases semantic.color.border.default (UI-component boundary). Never aliases the retired #bbbbbb."}
+    - {name: component.badge.radius, type: size,  value: {alias: semantic.radius.pill}, value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "999px; aliases approved semantic role (26.18)", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (chain to approved primary)."}
+    - {name: component.badge.padding-y, type: size, value: {alias: primitive.space.4}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "4px"}
+    - {name: component.badge.padding-x, type: size, value: {alias: primitive.space.10}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "10px"}
+    - {name: component.badge.text-size, type: size, value: {alias: semantic.type.size.caption}, value_class: current_evidence, decision_id: "26.2", status: VALID_APPROVED, evidence: ".85rem"}
+
+  container:
+    - {name: component.container.max,   type: size, value: "980px", value_class: current_evidence, decision_id: "26.18", status: VALID_APPROVED, evidence: "index.html:12 max-width; FOUND-010 CURRENT — RESPONSIVE_SPEC notes 980px is evidence, not automatically the final system value", notes: "Approved 2026-10-09 under GOV-004 register decision 26.18 (value approval A1). If the approved responsive review changes the cap, update here first (single source)."}
+    - {name: component.container.gutter, type: size, value: {alias: semantic.space.page-gutter}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "24px padding"}
+
+  grid:
+    - {name: component.grid.gap, type: size, value: {alias: semantic.space.grid-gap}, value_class: current_evidence, decision_id: "26.6", status: VALID_APPROVED, evidence: "gap 16px"}
+    - {name: component.grid.min-column, type: size, value: "220px", value_class: current_evidence, decision_id: "26.8", status: VALID_APPROVED, evidence: "minmax(220px,1fr) — auto-fit behaviour, breakpoint-independent today (FOUND-011).", notes: "Revisited when responsive behaviour is validated (26.8 approved 2026-10-08; contract not yet declared complete)."}
+
+  badge-status:
+    # Deliberately empty of colour: status must never be colour-only (A11Y-013).
+    - {name: component.status.text-color, type: color, value: {alias: semantic.color.fg.default}, value_class: proposed, decision_id: "26.3", status: VALID_APPROVED, notes: "Approved 2026-10-09 (26.3 hue approval, Option 1): status text inherits the default fg (18.26:1 on surface light / 15.55:1 dark, via status-text-on-surface pair). A11Y-013 still requires non-colour signalling (icon/text) regardless — colour is enhancement only, never colour-only semantics."}
+
+# ---------------------------------------------------------------------------
+# Contrast matrix (WCAG 2.2 AA) — computed deterministically by the validator
+# ---------------------------------------------------------------------------
+contrast_matrix:
+  policy:
+    basis: "WCAG 2.2 Level AA (A11Y-001, FOUND-003)"
+    thresholds:
+      text_normal: 4.5
+      text_large: 3.0
+      non_text: 3.0
+      focus_indicator: 3.0
+  enforcement_modes:
+    blocking: "Paired tokens must meet min_ratio once their governing decision is APPROVED; failure then = INVALID. While the decision is pending = VALID_PENDING_DECISION (reported with computed ratio)."
+    tracked_defect: "A measured open failure (known defect). Always reported loudly as KNOWN_OPEN_DEFECT; never counted as a pass; closes only when its replacement value lands, passes, and its repair decision is approved."
+    advisory: "Reported for review; not a WCAG pass/fail claim (e.g. decorative boundaries outside confirmed 1.4.11 scope)."
+  pairs:
+    - id: text-on-canvas
+      fg: primitive.color.text-raw
+      bg: primitive.color.canvas-raw
+      fg_dark: primitive.color.dark-text-raw
+      bg_dark: primitive.color.dark-canvas-raw
+      min_ratio: 4.5
+      threshold_class: text_normal
+      enforcement: blocking
+      basis: "1.4.3"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+
+    - id: muted-text-on-canvas
+      fg: primitive.color.text-muted-raw
+      bg: primitive.color.canvas-raw
+      fg_dark: primitive.color.dark-text-muted-raw
+      bg_dark: primitive.color.dark-canvas-raw
+      min_ratio: 4.5
+      threshold_class: text_normal
+      enforcement: blocking
+      basis: "1.4.3"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+
+    - id: text-on-surface
+      fg: primitive.color.text-raw
+      bg: primitive.color.surface-raw
+      fg_dark: primitive.color.dark-text-raw
+      bg_dark: primitive.color.dark-surface-raw
+      min_ratio: 4.5
+      threshold_class: text_normal
+      enforcement: blocking
+      basis: "1.4.3"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+
+    - id: badge-border-on-surface
+      fg: primitive.color.border-default-raw
+      bg: primitive.color.surface-raw
+      fg_dark: primitive.color.dark-border-default-raw
+      bg_dark: primitive.color.dark-surface-raw
+      min_ratio: 3.0
+      threshold_class: non_text
+      enforcement: tracked_defect
+      basis: "1.4.11"
+      defect_id: A11Y-004
+      repair_decision: "26.3"
+      measured_reference: "4.54:1 (#767676 on #ffffff — repaired 2026-10-08, founder option B)"
+      notes: "A11Y-004 repair landed: 4.54:1 ≥ 3.0:1 → DEFECT_CLOSED_PENDING_REVIEW. Not fully closed until the rendered result passes visual review. Retired #bbbbbb (1.92:1) preserved as historical evidence in DESIGN_DECISIONS.md §3 26.3. Dark measure 5.38:1."
+
+    - id: strong-border-on-canvas
+      fg: primitive.color.border-strong-raw
+      bg: primitive.color.canvas-raw
+      fg_dark: primitive.color.dark-border-strong-raw
+      bg_dark: primitive.color.dark-canvas-raw
+      min_ratio: 3.0
+      threshold_class: non_text
+      enforcement: blocking
+      basis: "1.4.11"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      notes: "Strong/emphasis border (step markers) 18.09:1. Distinct role — not the A11Y-004 replacement (that is border.default → #767676). Dark measure 15.22:1."
+
+    - id: subtle-border-on-canvas
+      fg: primitive.color.border-subtle-raw
+      bg: primitive.color.canvas-raw
+      fg_dark: primitive.color.dark-border-subtle-raw
+      bg_dark: primitive.color.dark-canvas-raw
+      min_ratio: 3.0
+      threshold_class: non_text
+      enforcement: blocking
+      basis: "1.4.11"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      measured_reference: "3.10:1 (#8f8f8f on #fafafa — repaired 2026-10-08, founder option B)"
+      notes: "Card/subtle boundary repaired and upgraded advisory→blocking (founder 2026-10-08): 3.10:1 ≥ 3.0:1 on canvas, 3.23:1 on white. Static-content role — must not be substituted for border.default (UI-component boundary). Dark measure 3.60:1."
+
+    - id: focus-ring-on-canvas
+      fg: primitive.color.accent
+      bg: primitive.color.canvas-raw
+      fg_dark: primitive.color.dark-accent-raw
+      bg_dark: primitive.color.dark-canvas-raw
+      min_ratio: 3.0
+      threshold_class: focus_indicator
+      enforcement: blocking
+      basis: "2.4.11"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      measured_reference: "17.50:1 (#151515 on #fafafa) / 17.12:1 dark (#f2f2f2 on #0f0f0f)"
+      notes: "Funded by the 2026-10-09 monochrome hue approval (semantic.color.focus.ring). Ring geometry (width/offset) still lands with FOUND-017 under GOV-004; rendered focus visual review remains outstanding (ratios are not visual approval)."
+
+    - id: inverse-text-on-action-primary
+      fg: primitive.color.canvas-raw
+      bg: primitive.color.accent
+      fg_dark: primitive.color.dark-canvas-raw
+      bg_dark: primitive.color.dark-accent-raw
+      min_ratio: 4.5
+      threshold_class: text_normal
+      enforcement: blocking
+      basis: "1.4.3"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      measured_reference: "17.50:1 (#fafafa on #151515) / 17.12:1 dark (#0f0f0f on #f2f2f2)"
+      notes: "Actual placeholder-text pairing on the primary action (semantic.color.fg.inverse on semantic.color.action.primary). 'Active' state reuses this pair — no separate active token exists."
+
+    - id: inverse-text-on-action-hover
+      fg: primitive.color.canvas-raw
+      bg: primitive.color.accent-hover-raw
+      fg_dark: primitive.color.dark-canvas-raw
+      bg_dark: primitive.color.dark-accent-hover-raw
+      min_ratio: 4.5
+      threshold_class: text_normal
+      enforcement: blocking
+      basis: "1.4.3"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      measured_reference: "12.83:1 (#fafafa on #2f2f2f) / 19.17:1 dark (#0f0f0f on #ffffff)"
+      notes: "Hover placeholder-text pairing (semantic.color.fg.inverse on semantic.color.action.primary-hover)."
+
+    - id: action-primary-on-canvas
+      fg: primitive.color.accent
+      bg: primitive.color.canvas-raw
+      fg_dark: primitive.color.dark-accent-raw
+      bg_dark: primitive.color.dark-canvas-raw
+      min_ratio: 3.0
+      threshold_class: non_text
+      enforcement: blocking
+      basis: "1.4.11"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      measured_reference: "17.50:1 / 17.12:1 dark"
+      notes: "Non-text 3:1 => the action control surface is distinguishable from the page (semantic.color.action.primary vs canvas), not only its label text."
+
+    - id: action-hover-on-canvas
+      fg: primitive.color.accent-hover-raw
+      bg: primitive.color.canvas-raw
+      fg_dark: primitive.color.dark-accent-hover-raw
+      bg_dark: primitive.color.dark-canvas-raw
+      min_ratio: 3.0
+      threshold_class: non_text
+      enforcement: blocking
+      basis: "1.4.11"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      measured_reference: "12.83:1 / 19.17:1 dark"
+      notes: "Non-text 3:1 => hovered action surface remains distinguishable from the page."
+
+    - id: status-text-on-surface
+      fg: primitive.color.text-raw
+      bg: primitive.color.surface-raw
+      fg_dark: primitive.color.dark-text-raw
+      bg_dark: primitive.color.dark-surface-raw
+      min_ratio: 4.5
+      threshold_class: text_normal
+      enforcement: blocking
+      basis: "1.4.3"
+      decision_id: "26.3"
+      dark_decision_id: "26.4"
+      measured_reference: "18.26:1 (#151515 on #ffffff) / 15.55:1 dark (#f2f2f2 on #1a1a1a)"
+      notes: "Status text resolves via component.status.text-color (alias of semantic.color.fg.default). Disabled state: NO disabled colour token exists — recorded as an explicit open item (2026-10-09 founder directive), intentionally not fabricated."
+
+# ---------------------------------------------------------------------------
+# Downstream rules (Penpot + frontend)
+# ---------------------------------------------------------------------------
+downstream:
+  penpot:
+    file: docs/design/PENPOT_IMPLEMENTATION_MAP.yaml
+    rule: "Variable names = token names; values copied verbatim; no Penpot-originated values (PEN-003)."
+    readiness: PARTIAL
+    readiness_reason: "Penpot MCP bridge operational (remote, Penpot 2.18.3) and decision 26.16 APPROVED 2026-10-10 (contract restated verbatim; Penpot Cloud). First modelling set = 104 VALID_APPROVED tokens. The Company OS design file was created 2026-10-10 via the command API by tools/penpot_provision.py (id 52a5041f-08a1-80f1-8008-c50e307f3ef4, project Company-Os); connecting it to the MCP plugin remains a founder action. The 22 pending tokens stay excluded from modelling."
+  frontend:
+    rule: "CSS custom properties mirror token names layer-stripped (e.g. semantic.color.bg.canvas → --color-bg-canvas); raw hex forbidden in component CSS once TEST-012 activates."
+  update_rule: "Changing any value in this file requires: decision approval check (this file's status model), contrast re-run (validator), visual/accessibility regression verification (DESIGN_TOKENS.md invariant 10), and a commit recording the change."

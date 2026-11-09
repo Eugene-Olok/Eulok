@@ -1,0 +1,106 @@
+{
+  "aliases": {
+    "cloudflare": {
+      "gpt-oss-120b": {
+        "reason": "certified-provider-model-id",
+        "target": "@cf/openai/gpt-oss-120b"
+      }
+    },
+    "google_free": {
+      "gemini-2.5-pro": {
+        "reason": "zero-cost-policy-compatibility",
+        "target": "gemini-3.8-flash"
+      },
+      "gemini-flash": {
+        "reason": "current-certified-free-target",
+        "target": "gemini-3.8-flash"
+      },
+      "gemini-flash-lite": {
+        "reason": "current-certified-free-target",
+        "target": "gemini-3.6-flash"
+      }
+    },
+    "groq": {
+      "gpt-oss-20b": {
+        "reason": "certified-provider-model-id",
+        "target": "openai/gpt-oss-20b"
+      },
+      "qwen3.6-27b": {
+        "reason": "provider-deprecation-replacement",
+        "target": "qwen/qwen3.8-27b"
+      }
+    },
+    "nim": {
+      "meta/muse-glimmer-30b": {
+        "reason": "certified-provider-model-id",
+        "target": "meta/muse-glimmer-30b"
+      },
+      "nemotron-3-super-120b": {
+        "reason": "certified-provider-model-id",
+        "target": "nvidia/nemotron-3-super-120b-a12b"
+      },
+      "nemotron-3-ultra": {
+        "reason": "certified-provider-model-id",
+        "target": "nvidia/nemotron-3-ultra-550b-a55b"
+      },
+      "nemotron-3.5-lightning": {
+        "reason": "certified-provider-model-id",
+        "target": "nvidia/nemotron-3.5-lightning-30b-a3b"
+      },
+      "nemotron-3.5-super-vl-120b": {
+        "reason": "certified-provider-model-id",
+        "target": "nvidia/nemotron-3.5-super-vl-120b-a12b"
+      }
+    }
+  },
+  "free_models": {
+    "local": [
+      "fastembed"
+    ],
+    "mistral": []
+  },
+  "free_providers": [
+    "google_free",
+    "groq",
+    "nim",
+    "zai",
+    "openrouter_free",
+    "cloudflare"
+  ],
+  "generation_limits": {
+    "models": {
+      "groq/qwen/qwen3.8-27b": 1000
+    },
+    "reasoning": {
+      "minimum_output_tokens": {
+        "implement": 768
+      },
+      "model_minimum_output_tokens": {
+        "openrouter_free/minimax/minimax-m3.1-flash:free": 2048
+      },
+      "models": [
+        "nim/nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nim/nvidia/nemotron-3-ultra-550b-a55b",
+        "nim/nvidia/nemotron-3-super-120b-a12b",
+        "groq/openai/gpt-oss-20b",
+        "groq/openai/gpt-oss-120b",
+        "openrouter_free/cohere/north-mini-code:free",
+        "openrouter_free/nvidia/nemotron-3.5-lightning:free",
+        "openrouter_free/minimax/minimax-m3.1-flash:free"
+      ]
+    },
+    "roles": {
+      "router": 512
+    }
+  },
+  "transports": {
+    "cloudflare": "cloudflare",
+    "google_free": "gemini",
+    "groq": "groq",
+    "local": "local",
+    "mistral": "mistral",
+    "nim": "nvidia",
+    "openrouter_free": "openrouter",
+    "zai": "zai"
+  }
+}

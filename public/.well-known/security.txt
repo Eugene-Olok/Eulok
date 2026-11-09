@@ -1,0 +1,11 @@
+# EULOK Security Policy (RFC 9116)
+# https://eulok.com/.well-known/security.txt
+
+Contact: mailto:security@eulok.com
+Contact: https://wa.me/256760779160
+Expires: 2027-11-05T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://eulok.com/.well-known/security.txt
+Policy: https://eulok.com/security
+Acknowledgments: https://eulok.com/security#acknowledgments
+Hiring: https://eulok.com/about

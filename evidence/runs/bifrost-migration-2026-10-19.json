@@ -1,0 +1,200 @@
+{
+  "title": "Bifrost live migration: auth + six providers (2026-10-19)",
+  "date": "2026-10-19",
+  "classification": "INTERNAL (no credential values read, printed, or stored)",
+  "authorization": "founder selected 'Authorize full migration' via explicit gate",
+  "pre_state": {
+    "providers": [
+      "mistral"
+    ],
+    "config_json_present": false,
+    "auth_off": true,
+    "rollback_ready": true,
+    "health": 200,
+    "main_pid": 1280
+  },
+  "pre_migration_snapshot": {
+    "path": "/var/lib/company-os/backups/config.db.20261019T110214Z-205738.bak",
+    "sha256": "703b3f814017206a80368a26b9a1852e0e956db063cbe3e0869310e81780e8a2",
+    "size_bytes": 34353152,
+    "integrity_check": "ok",
+    "table_count": 61,
+    "restore_test_ok": true
+  },
+  "step1_auth": {
+    "exit": 0,
+    "installed": "/var/lib/company-os/bifrost/data/config.json",
+    "mode": "0o600",
+    "restarted": true,
+    "ready_seconds": 7,
+    "new_pid": 205817,
+    "governance_config_keys": [
+      "admin_password",
+      "admin_username",
+      "complexity_semantic_generations",
+      "is_auth_enabled",
+      "restart_required"
+    ],
+    "enforce_auth_on_inference": false,
+    "matrix": {
+      "unauth GET /api/config": 401,
+      "unauth GET /api/providers": 401,
+      "unauth GET /api/keys": 401,
+      "wrong-creds GET /api/config": 401,
+      "GET /health": 200,
+      "unauth POST /v1/chat/completions": 400,
+      "unauth GET /v1/models": 200
+    }
+  },
+  "step2_providers": {
+    "exit": 0,
+    "restarted": true,
+    "ready_seconds": 19,
+    "new_pid": 206004,
+    "providers": [
+      "cloudflare",
+      "gemini",
+      "groq",
+      "mistral",
+      "nvidia",
+      "openrouter",
+      "zai"
+    ],
+    "keys": [
+      "MISTRAL_API_KEY_auto_detected",
+      "cloudflare-primary",
+      "google-ai-studio-primary",
+      "groq-primary",
+      "mistral-primary",
+      "nvidia-primary",
+      "openrouter-primary",
+      "zai-primary"
+    ]
+  },
+  "inference_probes_initial": {
+    "gemini/gemini-flash-latest": {
+      "status": 200,
+      "verdict": "PASS"
+    },
+    "groq/openai/gpt-oss-20b": {
+      "status": 200,
+      "verdict": "PASS"
+    },
+    "groq/llama-3.1-8b-instant": {
+      "status": 502,
+      "verdict": "upstream network error (other groq model PASSED)"
+    },
+    "openrouter/openai/gpt-4o-mini": {
+      "status": 403,
+      "verdict": "BLOCKED: key total limit exceeded (billing/account, not config)"
+    },
+    "mistral/mistral-small-latest": {
+      "status": 400,
+      "verdict": "FAIL: 'no keys found that support model'"
+    },
+    "nvidia/*": {
+      "status": "timeout",
+      "verdict": "FAIL: request hung >45s"
+    },
+    "zai/*": {
+      "status": "timeout",
+      "verdict": "FAIL: request hung >45s"
+    },
+    "cloudflare/*": {
+      "status": "timeout",
+      "verdict": "FAIL: request hung >45s"
+    }
+  },
+  "root_causes": [
+    "mistral seed key omitted `models` and `weight`; proven against v2.2.3 that absence persists as models_json NULL / weight 0 -> router answers 'no keys found that support model'.",
+    "nvidia/zai/cloudflare seeds omitted provider-level network_config/custom_provider_config; the reference store has base_url, request_path_overrides, allowed_requests. Without them the providers are added but requests hang.",
+    "openrouter key is valid but its account total limit is exceeded (403) - external billing condition, not a config defect."
+  ],
+  "remediation": {
+    "seed": "evidence/runs/bifrost-seeds/step2-auth-plus-providers.json regenerated with reference-store wiring; env refs preserved; no inline credentials",
+    "cloudflare_models": "['@cf/openai/gpt-oss-120b'] (reference restriction)",
+    "tests": "SeedSafetyTests: models+weight on every key; provider wiring matches reference; no inline credentials",
+    "sha256sums": "regenerated; step2 digest 03c0fcc54b0c0f686d9a4f7189c517a3f2a869cd7c06773a4e19a87f302d0d22",
+    "disposable_proof": "fresh store seeded with the corrected file: 7 providers persisted; nvidia base_url=http://127.0.0.1:8091 private=True concurrency=True; zai overrides={'chat_completion':'/v4/chat/completions'}; cloudflare models=['@cf/openai/gpt-oss-120b']",
+    "gates": "PASS failed_checks=0; focused 79 passed; ruff/sha256sum clean",
+    "re_seed_semantics": "proven on v2.2.3: v1 key without models -> null/0; re-seed same store -> ['*']/1 and network_config updated"
+  },
+  "pending": [
+    "positive Basic-auth 200 check with the real admin credential",
+    "openrouter limit raise (founder/billing)"
+  ],
+  "not_verified": [
+    "positive Basic-auth 200 path: providers.env is root:root 0600 (LoadCredential), so the unprivileged agent cannot read it; a root-run parse-only check is documented in the runbook and was tested against a stub (PASS 200 correct / FAIL 401 wrong).",
+    "openrouter inference (account limit)"
+  ],
+  "final_state": {
+    "providers": [
+      "cloudflare",
+      "gemini",
+      "groq",
+      "mistral",
+      "nvidia",
+      "openrouter",
+      "zai"
+    ],
+    "keys": 8,
+    "auth_enforced": true,
+    "auth_matrix": {
+      "unauth /api/config": 401,
+      "unauth /api/providers": 401,
+      "unauth /api/keys": 401,
+      "wrong-creds /api/config": 401,
+      "health": 200
+    },
+    "catalog_total": 701,
+    "catalog_by_prefix": {
+      "gemini": 63,
+      "groq": 11,
+      "mistral": 45,
+      "nvidia": 81,
+      "openrouter": 501
+    },
+    "rollback_ready": true,
+    "digest_matches_manifest": true,
+    "restarts": 0,
+    "db_mode": "0o600",
+    "config_json_mode": "0o600"
+  },
+  "final_probes": {
+    "gemini/gemini-flash-latest": 200,
+    "groq/openai/gpt-oss-20b": 200,
+    "mistral/open-mistral-nemo": 200,
+    "nvidia/nvidia/nemotron-3.5-lightning-30b-a3b": 200,
+    "nvidia/nvidia/nemotron-3-super-120b-a12b": 200,
+    "zai/glm-4.5-flash": 200,
+    "cloudflare/@cf/openai/gpt-oss-120b": 200,
+    "openrouter/openai/gpt-4o-mini": 403
+  },
+  "final_fixes": {
+    "mistral": "seed now sets models=['*'] and weight=1 on mistral-primary",
+    "nvidia_zai_cloudflare": "seed now carries the reference network_config/custom_provider_config; re-seed updates existing rows in place",
+    "nvidia_proxy": "added read-only GET /v1/models pass-through to BOTH proxy implementations (company_os/adapters/nvidia_compat_proxy.py and tools/nvidia_compat_proxy_hardened.py): auth injected, client Authorization discarded, redirects not followed, 405 on POST, 404 unknown; 18 contract tests (9 per implementation); seed enables list_models",
+    "cloudflare": "key model restricted to @cf/openai/gpt-oss-120b (reference behavior)"
+  },
+  "external_blockers": [
+    "openrouter 403 key total limit",
+    "mistral-small-latest 429 free-tier rate limit (other models work)",
+    "zai/glm-4.6 429 insufficient balance (glm-4.5-flash works)"
+  ],
+  "artifacts": {
+    "step2_seed_sha256": "bff590688e681683b10f982149979f4edfbc9b6e593bc4f4961fb2a9650f6785",
+    "nvidia_adapter": "company_os/adapters/nvidia_compat_proxy.py (repo-read by unit)",
+    "runbook": "docs/runbooks/bifrost-privileged-operations.md (provider matrix + root-only positive-auth check, snippet tested PASS/FAIL against a stub)"
+  },
+  "verification": {
+    "focused_tests": "88 passed (pre-parity) / 51 passed for proxy+security after parity",
+    "gates": "PASS failed_checks=0 (run twice: after seed fix and after proxy parity)",
+    "ruff": "clean",
+    "gitleaks": "no leaks in seeds or migration evidence",
+    "catalog": "701 total; gemini 63, groq 11, mistral 45, nvidia 81, openrouter 501"
+  },
+  "residual_notes": [
+    "running proxy differs from source only by removal of two unused constants; behavior verified is present in the running process and requires no restart",
+    "tools/nvidia_compat_proxy_hardened.py is not referenced by any unit; kept at parity to prevent a future switch from losing the catalog endpoint"
+  ]
+}

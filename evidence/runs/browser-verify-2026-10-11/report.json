@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "blocked_reason": null,
+  "generated_at": "2026-10-11T21:06:24Z",
+  "pages": [
+    "PAGE-001"
+  ],
+  "viewports": [
+    320,
+    480,
+    768,
+    1024,
+    1440
+  ],
+  "axe_version": "4.14.0",
+  "screenshots": [
+    "evidence/runs/browser-verify-2026-10-11/PAGE-001-320.png",
+    "evidence/runs/browser-verify-2026-10-11/PAGE-001-480.png",
+    "evidence/runs/browser-verify-2026-10-11/PAGE-001-768.png",
+    "evidence/runs/browser-verify-2026-10-11/PAGE-001-1024.png",
+    "evidence/runs/browser-verify-2026-10-11/PAGE-001-1440.png"
+  ],
+  "findings": []
+}

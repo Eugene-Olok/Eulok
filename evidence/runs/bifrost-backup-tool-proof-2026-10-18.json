@@ -1,0 +1,24 @@
+{
+  "what": "Production backup tool (tools/backup_bifrost_state.py) proven on the reference store (a real 41 MB Bifrost config.db). Sandbox mode; the reference store is not the live store and is not modified.",
+  "tool": "tools/backup_bifrost_state.py",
+  "command": "backup --db /home/genie/company-os/state/bifrost/data/config.db --outdir <tmp>/backup-ref --label reference --sandbox",
+  "date": "2026-10-18",
+  "method": "sqlite3.Connection.backup() from a mode=ro source; service not stopped; source DB not modified",
+  "result": {
+    "sha256": "ee9a7b14dd1743e4f5cdb048b1dda2c472e04fd7b7c9b7ede383655e2d826463",
+    "sha256_matches_prior_manual_proof": true,
+    "size_bytes": 41558016,
+    "integrity_check": "ok",
+    "table_count": 61,
+    "providers": ["cloudflare", "gemini", "groq", "mistral", "nvidia", "openai", "openrouter", "zai"],
+    "keys": ["MISTRAL_API_KEY_auto_detected", "OPENAI_API_KEY_auto_detected", "cloudflare-primary", "google-ai-studio-primary", "groq-primary", "mistral-primary", "nvidia-primary", "openrouter-primary", "zai-primary"],
+    "governance_config_keys": ["admin_password", "admin_username", "complexity_semantic_generations", "is_auth_enabled", "restart_required"],
+    "restore_test": {"integrity_check": "ok", "table_count": 61, "inventory_matches": true, "ok": true},
+    "ok": true
+  },
+  "notes": [
+    "Only names/status are recorded; no credential value is read or printed.",
+    "The reference store carries governance_config keys admin_username/admin_password/is_auth_enabled (auth already configured there) — this is why the earlier disposable-store seed test showed auth NOT applied to a store that already had is_auth_enabled. The LIVE store has no auth_config, so the seed will apply.",
+    "Backup files and the 41 MB database are NOT committed; only this sanitized summary."
+  ]
+}

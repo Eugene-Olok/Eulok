@@ -1,0 +1,159 @@
+{
+  "title": "Bifrost privileged-operations \u2014 independent adversarial review (2026-10-19)",
+  "date": "2026-10-19",
+  "classification": "INTERNAL",
+  "secrets": "none (env.<NAME> references and non-secret sentinels only)",
+  "code_revision": "fbed5fd91d5afa61d6693014fd7ca3d056b9885f (fix/business-evidence-placeholder-guard)",
+  "worktree": "dirty (uncommitted by design; release_eligibility=BLOCKED is correct)",
+  "scope": "independent re-review of the staged privilege boundary, installer, migration seed/backup/rollback path, and evidence \u2014 not a restatement of the prior report",
+  "production_mutation": "none: /usr/local/lib/company-os, /usr/local/sbin/company-os-bifrost-ops and /etc/sudoers.d/company-os-bifrost-ops are all absent; live store unreadable to the reviewer (0700 company-os)",
+  "findings_and_fixes": {
+    "D1_installer_toctou": {
+      "severity": "medium",
+      "finding": "install.sh verified SOURCE digests then copied; a local attacker writing the repo could swap bytes between verify and copy; the dispatcher's trust predicate checks ownership, not content, so a swapped-but-root-owned module would run as root.",
+      "fix": "install.sh now re-hashes the INSTALLED bytes against SHA256SUMS after copying, before installing the sudoers rule; on any mismatch it removes the installed code (rollback_install) and exits non-zero. Sudoers is installed LAST, only after the code it authorizes is verified.",
+      "regression_test": "tests/test_bifrost_ops_security.py::InstallerStaticTests::test_verifies_installed_digests_and_fails_closed"
+    },
+    "D2_backup_clobber": {
+      "severity": "medium",
+      "finding": "the dispatcher's `backup` op wrote config.db.pre-restore.bak \u2014 the same path as the owner-verified rollback target \u2014 silently overwriting a verified artifact.",
+      "fix": "the backup tool refuses to overwrite an existing backup unless --overwrite is passed; the dispatcher never passes it.",
+      "regression_test": "tests/test_bifrost_backup_rollback.py::BackupOverwriteGuardTests"
+    },
+    "D3_rollback_digest": {
+      "severity": "low",
+      "finding": "rollback checked backup integrity_check only, not that the bytes matched the recorded digest; a valid-but-substituted db could be restored.",
+      "fix": "rollback refuses when a manifest is available and its recorded sha256 differs from the backup; the dispatcher passes its MANIFEST path.",
+      "regression_test": "tests/test_bifrost_backup_rollback.py::RollbackDigestGuardTests"
+    },
+    "D4_trust_predicate": {
+      "severity": "low",
+      "finding": "the trust predicate used stat (follows symlinks) and did not check the OPS_DIR parent directory.",
+      "fix": "_is_trusted_path now rejects symlinks ([ ! -L ]); check_trusted_set also verifies the OPS_DIR parent is root-owned/clean.",
+      "regression_test": "tests/test_bifrost_ops_security.py::TrustPredicateTests::test_symlink_refused"
+    }
+  },
+  "property_verification": {
+    "sudoers_grants_only_six_exact_invocations": {
+      "result": "PASS",
+      "evidence": "deploy/sudoers.d/company-os-bifrost-ops has 6 `genie ALL=(root) NOPASSWD:` lines, no wildcard/\"\"/ALL; test_exact_allowlist_only + test_no_wildcard_or_passthrough"
+    },
+    "no_caller_input_redirects_execution": {
+      "result": "PASS",
+      "evidence": "dispatcher meta-table: only `inspect|status|backup|seed step1|step2|rollback`, exact arity, fixed paths, no env read; DispatcherMappingTests + test_environment_repo_override_is_ignored"
+    },
+    "installer_never_executes_caller_sources_as_root": {
+      "result": "PASS",
+      "evidence": "install.sh only reads/copies sources; the dispatcher never runs the repo tree"
+    },
+    "integrity_covers_every_installed_file": {
+      "result": "PASS",
+      "evidence": "SHA256SUMS covers 3 modules + 2 seeds + dispatcher + sudoers; post-install verification added (D1)"
+    },
+    "trusted_isolated_interpreter": {
+      "result": "PASS",
+      "evidence": "PY=/usr/bin/python3, `/usr/bin/env -i ... \"$PY\" -I -B`; LauncherStaticTests"
+    },
+    "no_partial_install_reports_success": {
+      "result": "PASS",
+      "evidence": "set -euo pipefail; digest verify before sudoers; rollback_install removes code on mismatch; sudoers installed last"
+    },
+    "installed_tree_root_owned_not_caller_writable": {
+      "result": "PASS",
+      "evidence": "install -o root -g root; trust predicate enforces owner 0 + no 022"
+    },
+    "dispatcher_fails_closed_on_bad_trust": {
+      "result": "PASS",
+      "evidence": "check_trusted_set refuses (exit 2) when OPS_DIR/SEEDS/parent/files are not root-owned, symlinked, or group/world-writable"
+    },
+    "no_arbitrary_paths_or_commands": {
+      "result": "PASS",
+      "evidence": "every path is a fixed constant in the dispatcher; one allowlisted token max"
+    },
+    "no_generic_root_access_via_the_six_ops": {
+      "result": "PASS",
+      "evidence": "ops are fixed read/backup/seed/rollback; installed modules are stdlib-only root-owned (StdlibOnlyTests); callers supply no data"
+    }
+  },
+  "exact_binary_reverification": {
+    "binary": "/home/genie/.cache/bifrost/v2.2.3/bin/bifrost-http-0",
+    "method": "disposable copy of the reference store under /tmp/opencode; governance cleared; step2 seed applied; loopback only; production untouched",
+    "results": {
+      "GET /health unauth": 200,
+      "GET /api/providers unauth": 401,
+      "POST /api/providers unauth": 401,
+      "GET /api/providers correct Basic": 200,
+      "GET /api/providers wrong Basic": 401,
+      "POST /v1/chat/completions unauth": 400,
+      "providers_after": [
+        "cloudflare",
+        "gemini",
+        "groq",
+        "mistral",
+        "nvidia",
+        "openai",
+        "openrouter",
+        "zai"
+      ],
+      "six_present": true,
+      "existing_openai_retained": true
+    },
+    "status": "PASS",
+    "note": "This run proves auth enforcement + preservation. True addition of a MISSING provider was shown earlier with a synthetic 'probeadd' (evidence/runs/bifrost-api-contract-2026-10-18.json t1/t2/t6)."
+  },
+  "gates_and_tests": {
+    "scripts_gates_sh": "status=PASS, failed_checks=0 (30 checks)",
+    "full_pytest": "1760 passed, 5 skipped, 355 subtests passed",
+    "focused": "65 passed (ops/security/backup-rollback/restore-config/provisioning)",
+    "ruff": "All checks passed",
+    "semgrep": "clean (repo-wide, rc=0)",
+    "gitleaks": "no leaks (git + filesystem incl. untracked)",
+    "shellcheck": "clean",
+    "bash -n": "ok",
+    "visudo -cf": "parsed OK",
+    "sha256sum --check SHA256SUMS": "all OK"
+  },
+  "seed_hashes": {
+    "evidence/runs/bifrost-seeds/step1-auth.json": "sha256:b012ed72330a3a79a46a239b990e30a3cf4c762687c1568f7373eba75564c979",
+    "evidence/runs/bifrost-seeds/step2-auth-plus-providers.json": "sha256:2213b883e4ca20f801e8d00daf6f49bfea2ed6138842e1dc060692a90aedf9f4"
+  },
+  "provider_inventory": {
+    "added": [
+      "gemini",
+      "groq",
+      "openrouter",
+      "nvidia",
+      "zai",
+      "cloudflare"
+    ],
+    "preserved": [
+      "mistral"
+    ],
+    "excluded": [
+      "openai",
+      "*_auto_detected duplicates"
+    ],
+    "keys": [
+      "google-ai-studio-primary",
+      "groq-primary",
+      "openrouter-primary",
+      "nvidia-primary",
+      "zai-primary",
+      "cloudflare-primary",
+      "mistral-primary"
+    ],
+    "credentials": "env.<NAME> references only"
+  },
+  "backup_rollback_status": {
+    "pre_restore_backup_sha256": "78b281f6cd624fcbb06cf7027b11d4dfcd0fe7cf3747b05ac1ae649a259c3871 (owner-verified; not re-read here: root-only)",
+    "rollback_target": "config.db.pre-restore.bak, --original-config absent",
+    "sidecar_handling": "stale -wal/-shm removed; pre-rollback copy retained for reversibility",
+    "digest_guard": "added (D3)"
+  },
+  "residual_risks": [
+    "Installed bifrost_ops.py default --seed-dir points at the repo path; the dispatcher always overrides it. Only reachable if root runs the installed module directly, bypassing the dispatcher (operator action, not attacker-controlled); the seed still passes _assert_seed_safe.",
+    "The migration and rollback are NOT verified against the live database (requires the unauthorized production mutation); they are verified on disposable copies of the exact binary/store only.",
+    "The canonical backup digest could not be re-read by the reviewer (root-only); it relies on the owner-verified value and a manifest that rollback now cross-checks."
+  ],
+  "verdict": "READY FOR OWNER AUTHORIZATION \u2014 with installation authorization separated from migration authorization."
+}

@@ -1,0 +1,18 @@
+{
+  "endpoint": "/api/public/v2/observations",
+  "generated_at": "2026-10-05T21:57:07+00:00",
+  "host": "https://us.cloud.langfuse.com",
+  "kind": "langfuse-evidence",
+  "public_key_fingerprint": "pk-l...c34d",
+  "reason": "Langfuse accepted no observation named 'company-os-boundary' for logical role 'implement' in the last 15 minute(s). 0 matching observation(s) were returned in the window. Either the tracer was inactive, the exporter dropped the span, or the buffer was not flushed.",
+  "schema_version": 1,
+  "trace": {
+    "expected_logical_role": "implement",
+    "found": null,
+    "name": "company-os-boundary",
+    "observations_inspected": 0,
+    "window_minutes": 15
+  },
+  "verdict": "fail",
+  "verified": false
+}

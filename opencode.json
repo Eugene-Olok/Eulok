@@ -1,0 +1,59 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "company-os": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Company OS",
+      "options": {
+        "baseURL": "http://127.0.0.1:8090/v1"
+      },
+      "models": {
+        "implement": {
+          "name": "Company OS implement",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "research": {
+          "name": "Company OS research",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "architect": {
+          "name": "Company OS architect",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "tests": {
+          "name": "Company OS tests",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "review": {
+          "name": "Company OS review",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "security": {
+          "name": "Company OS security",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "vision_qa": {
+          "name": "Company OS vision QA",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "summarise": {
+          "name": "Company OS summarise",
+          "tool_call": true,
+          "reasoning": false
+        },
+        "router": {
+          "name": "Company OS router",
+          "tool_call": true,
+          "reasoning": false
+        }
+      }
+    }
+  }
+}

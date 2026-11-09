@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "status": "live-verified",
+  "note": "ensure_page dispatch+read-back validated on disposable file 17193a1f-939a-80b5-8008-c5215ecd24ae; op created markers under lane namespace; observation matches comparator contract"
+}

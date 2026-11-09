@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-10-20T15:48:21+00:00",
+  "kind": "langfuse-route-observations",
+  "observations": [
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "cloudflare",
+      "role": "implement",
+      "route_duration_ms": 2400,
+      "start_time": "2026-10-20T15:15:09.690Z",
+      "wire_model": "@cf/openai/gpt-oss-120b"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "cloudflare",
+      "role": "implement",
+      "route_duration_ms": 1879,
+      "start_time": "2026-10-20T15:15:12.095Z",
+      "wire_model": "@cf/openai/gpt-oss-120b"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "cloudflare",
+      "role": "implement",
+      "route_duration_ms": 2682,
+      "start_time": "2026-10-20T15:16:55.688Z",
+      "wire_model": "@cf/openai/gpt-oss-120b"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "groq",
+      "role": "tests",
+      "route_duration_ms": 1320,
+      "start_time": "2026-10-20T15:16:58.377Z",
+      "wire_model": "qwen/qwen3.8-27b"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "zai",
+      "role": "review",
+      "route_duration_ms": 17095,
+      "start_time": "2026-10-20T15:16:59.703Z",
+      "wire_model": "glm-4.7-flash"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "nim",
+      "role": "security",
+      "route_duration_ms": 8387,
+      "start_time": "2026-10-20T15:17:16.806Z",
+      "wire_model": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+      "attempt_error_classes": "model_or_route_unavailable",
+      "attempts": 2,
+      "http_status": 200,
+      "provider": "nim",
+      "role": "architect",
+      "route_duration_ms": 3111,
+      "start_time": "2026-10-20T15:17:25.197Z",
+      "wire_model": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+      "attempt_error_classes": "timeout_or_network",
+      "attempts": 2,
+      "http_status": 200,
+      "provider": "nim",
+      "role": "research",
+      "route_duration_ms": 63539,
+      "start_time": "2026-10-20T15:17:28.315Z",
+      "wire_model": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "groq",
+      "role": "summarise",
+      "route_duration_ms": 1512,
+      "start_time": "2026-10-20T15:18:31.873Z",
+      "wire_model": "openai/gpt-oss-20b"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 2,
+      "http_status": 200,
+      "provider": "nim",
+      "role": "vision_qa",
+      "route_duration_ms": 3176,
+      "start_time": "2026-10-20T15:18:33.389Z",
+      "wire_model": "nvidia/nemotron-3.5-super-vl-120b-a12b"
+    },
+    {
+      "attempt_error_classes": null,
+      "attempts": 1,
+      "http_status": 200,
+      "provider": "google_free",
+      "role": "router",
+      "route_duration_ms": 13612,
+      "start_time": "2026-10-20T15:18:36.571Z",
+      "wire_model": "gemini-3.6-flash"
+    }
+  ],
+  "schema_version": 1,
+  "trace_name": "company_os.boundary.request",
+  "window_minutes": 60
+}

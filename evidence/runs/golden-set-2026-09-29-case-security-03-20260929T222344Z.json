@@ -1,0 +1,141 @@
+{
+  "version": "2026-09-29",
+  "purpose": "Company OS deterministic-judge regression set",
+  "selection": {
+    "role": null,
+    "case": "security-03"
+  },
+  "repeat": 5,
+  "repeat_state_isolated": true,
+  "case_count": 1,
+  "results": [
+    {
+      "id": "security-03",
+      "role": "security",
+      "state": "UNSTABLE",
+      "repeat_count": 5,
+      "pass_count": 2,
+      "pass_rate": 0.4,
+      "stable": false,
+      "providers": [
+        "nim",
+        "zai"
+      ],
+      "models": [
+        "glm-4.7-flash",
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "failed_checks_union": [
+        "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+      ],
+      "run_states": [
+        "PASS",
+        "QUALITY_FAIL",
+        "QUALITY_FAIL",
+        "QUALITY_FAIL",
+        "PASS"
+      ],
+      "runs": [
+        {
+          "id": "security-03",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "zai",
+          "model": "glm-4.7-flash",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 5177,
+          "observable_sha256": "1d7fc837a06d0eff3e6a7aa00fde120d8ce6e026d330d842d2dfeb6a320229c9",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 1,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3750,
+          "observable_sha256": "006dc45a1e6355d3fb2cbb9dddbd952ece4890c1f445be8fc4b93fa82ca86917",
+          "quality_pass": false,
+          "failed_checks": [
+            "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+          ],
+          "run_index": 2,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3655,
+          "observable_sha256": "e7bfa6797f607ed4f2d72b588c2f11a0c156f1693fa758c9ee5bbda16862463f",
+          "quality_pass": false,
+          "failed_checks": [
+            "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+          ],
+          "run_index": 3,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "QUALITY_FAIL",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3722,
+          "observable_sha256": "80bf78a6c65a315b5ccf7a1a417ed4381c8d4c84ff6f26b74346abbda10db82f",
+          "quality_pass": false,
+          "failed_checks": [
+            "idempotency OR idempotent OR duplicate-safe OR duplicate event"
+          ],
+          "run_index": 4,
+          "health_state_isolated": true
+        },
+        {
+          "id": "security-03",
+          "role": "security",
+          "exit_code": 0,
+          "stderr_tail": "",
+          "state": "PASS",
+          "ok": true,
+          "provider": "nim",
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "data_present": true,
+          "extraction_mode": "assistant_content",
+          "content_length": 3741,
+          "observable_sha256": "4556160d1771f4abd922da99be7f2e3d33c0010e95c932c15db7bf43a7234638",
+          "quality_pass": true,
+          "failed_checks": [],
+          "run_index": 5,
+          "health_state_isolated": true
+        }
+      ]
+    }
+  ],
+  "models_yaml_sha256_before": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_sha256_after": "a4bb345d966c00f590f30467d04dfaad350a0ae6980b0e49278daba41fe9b50f",
+  "models_yaml_unchanged": true
+}

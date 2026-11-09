@@ -1,0 +1,22 @@
+# Cost and provider metadata consumed by the deterministic control plane.
+# Do not infer cost solely from the provider name.
+free_providers:
+  - google_free
+  - groq
+  - nim
+  - zai
+  - openrouter_free
+  - cloudflare
+
+# Confidential-lane allowlist. Confidential material may only be sent to a
+# provider that appears here AND is neither denied in config/models.yaml nor
+# classified as free above. Anything else is denied fail-closed, so adding a
+# paid provider to routing is an explicit owner decision, never an accident.
+confidential_allow_providers:
+  - local
+
+free_models:
+  mistral: []
+  local:
+    - fastembed
+

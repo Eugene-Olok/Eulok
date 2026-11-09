@@ -1,0 +1,119 @@
+{
+  "title": "Bifrost v2.2.3 installed-version behaviour characterization (disposable store)",
+  "date": "2026-10-18",
+  "classification": "INTERNAL",
+  "secrets": "none (values are env.<NAME> references or dummy non-secret sentinels; masked by the gateway itself)",
+  "method": {
+    "binary": "/home/genie/.cache/bifrost/v2.2.3/bin/bifrost-http-0",
+    "version_observed": "v2.2.3",
+    "isolation": "disposable copy of the known-good reference store under /tmp/opencode/bifrost-lab; CWD == app-dir; loopback-only; ephemeral port; never touched /var/lib/company-os",
+    "note_cwd": "Bifrost resolves config_store path './config.db' relative to the PROCESS CWD, not -app-dir. The live unit sets WorkingDirectory=/var/lib/company-os/bifrost/data so they coincide; the lab mirrors this."
+  },
+  "results": {
+    "t1_fresh_store_seed_from_config_json": {
+      "input": "config.json only (7 providers, no db)",
+      "providers_seeded": ["cloudflare", "gemini", "groq", "mistral", "nvidia", "openrouter", "zai"],
+      "status": "PASS",
+      "meaning": "A missing store is seeded from config.json."
+    },
+    "t2_existing_store_reconcile_from_config_json": {
+      "input": "existing 8-provider db + config.json with 'cerebras' added, then config.json with 'groq' removed",
+      "after_add_cerebras_and_restart": ["cerebras", "cloudflare", "gemini", "groq", "mistral", "nvidia", "openai", "openrouter", "zai"],
+      "after_remove_groq_and_restart": ["cerebras", "cloudflare", "gemini", "groq", "mistral", "nvidia", "openai", "openrouter", "zai"],
+      "status": "PASS",
+      "meaning": "On an existing store, startup reconciles config.json ADDITIVELY: providers present in config.json but missing from the store are added; providers removed from config.json are NOT removed. config.json is an additive seed, not a destructive mirror."
+    },
+    "t3_authentication_enforcement": {
+      "governance.auth_config.is_enabled=true + no admin env": 401,
+      "governance.auth_config.is_enabled=true + admin env set": 401,
+      "governance.auth_config.is_enabled=false + no admin env, GET /api/providers": 200,
+      "governance.auth_config.is_enabled=false + no admin env, POST /api/providers": 200,
+      "governance.auth_config.is_enabled=false + admin env set, GET": 200,
+      "status": "PASS",
+      "meaning": "Auth is governed by config.json governance.auth_config.is_enabled at startup. With it false (the live state) the management API is unauthenticated for READS AND WRITES."
+    },
+    "t4_management_api_write_contract": {
+      "POST /api/providers missing 'provider'": {"status": 400, "error": "Missing provider"},
+      "POST /api/providers {'provider':'cerebras'}": {"status": 200},
+      "POST /api/providers duplicate": {"status": 409, "error": "Provider cerebras already exists"},
+      "POST /api/providers/{p}/keys valid env-ref": {"status": 200},
+      "POST /api/providers/{p}/keys repeat identical": {"status": 409, "error": "API key names must be unique across providers. Choose a different name"},
+      "POST /api/providers/{p}/keys literal (non env-ref)": {"status": 200, "note": "literal secret values are ACCEPTED by the API - the caller must pass env.<NAME> refs"},
+      "persisted_providers": ["mistral", "openai", "cloudflare", "gemini", "groq", "nvidia", "openrouter", "zai", "cerebras"],
+      "persisted_keys": ["MISTRAL_API_KEY_auto_detected", "OPENAI_API_KEY_auto_detected", "cloudflare-primary", "google-ai-studio-primary", "groq-primary", "mistral-primary", "nvidia-primary", "openrouter-primary", "zai-primary", "cerebras-primary", "gemini-bad"],
+      "key_value_stored_as": "env.<NAME> reference (not the secret)",
+      "key_encryption_status": "plain_text",
+      "status": "PASS",
+      "meaning": "Contract: create provider with {'provider': name}; create key with {name,value:'env.<NAME>',models,weight}. Duplicate provider/key are rejected (409) - safe, but a retry must treat 409 as already-exists."
+    },
+    "t5_management_api_provider_registry_limit": {
+      "input": "for each id: POST /api/providers {'provider':id} then POST /api/providers/{id}/keys {value:'env.PROBE'}",
+      "provider_create_200": ["gemini","groq","openrouter","nvidia","zai","cloudflare"],
+      "key_create_200": ["gemini","groq","openrouter","mistral"],
+      "key_create_500": {
+        "nvidia": "failed to create provider for the given key: unsupported provider: nvidia",
+        "zai": "failed to create provider for the given key: unsupported provider: zai",
+        "cloudflare": "failed to create provider for the given key: unsupported provider: cloudflare"
+      },
+      "status": "PASS",
+      "meaning": "Provider-create always returns 200 (the name is stored) but key-create only works for ids in the API's internal registry. The API CANNOT add nvidia/zai/cloudflare - it can complete at most 3 of 6. The approved API-only method is therefore insufficient."
+    },
+    "t6_config_json_additive_seed_restores_all_six": {
+      "input": "disposable store that mirrors live (mistral only, no config.json) -> write config.json with mistral + the six approved providers (openai excluded) -> restart",
+      "pre": {"providers": ["mistral"], "keys": ["mistral-primary"]},
+      "post_providers": ["cloudflare","gemini","groq","mistral","nvidia","openrouter","zai"],
+      "post_keys": ["cloudflare-primary","google-ai-studio-primary","groq-primary","mistral-primary","nvidia-primary","openrouter-primary","zai-primary"],
+      "providers_ok": true,
+      "keys_ok": true,
+      "status": "PASS",
+      "meaning": "The config.json additive seed restores ALL SIX providers and their keys, including the three the API rejects, and preserves mistral. This is the validated restoration method."
+    },
+    "t7_authentication_mechanism": {
+      "struct_from_binary": "governance.auth_config = { is_enabled bool; admin_username SecretVar; admin_password SecretVar }",
+      "secretvar_env_forms_basic_auth_result": {
+        "plain_string_env_NAME": 200,
+        "object_ref_type_env": 200,
+        "object_value_ref_type_env": 200,
+        "object_value_type_env_no_ref": 401
+      },
+      "production_reference_form": "plain string \"env.BIFROST_ADMIN_USERNAME\" / \"env.BIFROST_ADMIN_PASSWORD\"",
+      "enforcement_when_enabled": {
+        "GET /api/providers unauth": 401, "POST /api/providers unauth": 401,
+        "GET /api/providers wrong creds": 401, "GET /api/providers correct Basic": 200,
+        "GET /api/providers Bearer": 401, "GET /health unauth": 200,
+        "POST /v1/chat/completions unauth": "400 no_key_supports_model (NOT 401 - inference not admin-gated)"
+      },
+      "client_enforce_auth_on_inference_default": false,
+      "live_value_enforce_auth_on_inference": false,
+      "legacy_field_disable_auth_on_inference": "ignored by this build",
+      "restart_required": true,
+      "seed_precedence": "config.json seeds a value only where the store lacks it; a store whose DB already had is_auth_enabled=true ignored config.json is_enabled=false (restored-reference start returned 401). Live store has NO auth_config (live GET /api/config lacks it) => the seed applies on live.",
+      "runtime_writer": "PUT /api/config exists (UI save path); rejects partial bodies (400 log_retention_days must be at least 1); exact schema not fully resolved; not used.",
+      "status": "PASS"
+    },
+    "t8_backup_restore_procedure": {
+      "method": "python sqlite3 Connection.backup() (sqlite3 CLI not installed); source opened mode=ro; service not stopped; live DB not modified",
+      "reference_store_result": {
+        "sha256": "ee9a7b14dd1743e4f5cdb048b1dda2c472e04fd7b7c9b7ede383655e2d826463",
+        "size_bytes": 41558016,
+        "integrity_check": "ok",
+        "tables": 61,
+        "providers": ["cloudflare","gemini","groq","mistral","nvidia","openai","openrouter","zai"],
+        "keys_count": 9,
+        "key_encryption_status": "encrypted"
+      },
+      "finding_encryption_key_dependency": "reference keys are encrypted => restoring such a store requires BIFROST_ENCRYPTION_KEY. Restored-reference gateway returned 401 (its DB had auth enabled), not a restore failure.",
+      "live_relevance": "LIVE keys are plain_text env refs => live restore is not key-dependent; still retain the encryption key in backup.",
+      "live_before_inventory": {"providers": ["mistral"], "keys": ["MISTRAL_API_KEY_auto_detected"]},
+      "status": "PASS"
+    }
+  },
+  "live_state_readonly": {
+    "app_dir_config_json": "ABSENT - journal 'config file not found at path: /var/lib/company-os/bifrost/data/config.json, initializing with default values'",
+    "admin_account": "ABSENT - journal 'No admin account is configured for this Bifrost instance yet, and no setup token is configured.'",
+    "management_api_auth": "DISABLED (unauthenticated reads AND writes on 127.0.0.1)",
+    "live_providers": ["mistral"],
+    "live_keys": ["MISTRAL_API_KEY_auto_detected"],
+    "note": "Live store was initialized from defaults; mistral was auto-detected from the MISTRAL_API_KEY env var delivered via systemd LoadCredential. The reference store's other providers were never seeded into the new app-dir."
+  }
+}

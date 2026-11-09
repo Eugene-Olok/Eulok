@@ -1,0 +1,33 @@
+{
+  "endpoint": "/api/public/v2/observations",
+  "generated_at": "2026-10-05T22:27:45+00:00",
+  "host": "https://us.cloud.langfuse.com",
+  "kind": "langfuse-evidence",
+  "public_key_fingerprint": "pk-l...c34d",
+  "reason": "a matching observation was read back from the Langfuse API",
+  "schema_version": 1,
+  "trace": {
+    "expected_logical_role": "implement",
+    "found": {
+      "end_time": "2026-10-05T22:27:34.436Z",
+      "latency_ms": 1.0,
+      "latency_seconds": 0.001,
+      "metadata": {
+        "company_os.attempts": 1,
+        "company_os.boundary": "sdk-smoke",
+        "company_os.http_status": 200,
+        "company_os.lane": "internal",
+        "company_os.logical_role": "implement",
+        "company_os.route_duration_ms": 1
+      },
+      "observation_id": "7b3179da86d3c6d8",
+      "start_time": "2026-10-05T22:27:34.435Z",
+      "trace_id": "fd3b165f4eedea7a63e827bc9d94e096"
+    },
+    "name": "company_os.boundary.request",
+    "observations_inspected": 1,
+    "window_minutes": 5
+  },
+  "verdict": "pass",
+  "verified": true
+}

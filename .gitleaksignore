@@ -1,0 +1,15 @@
+# gitleaks fingerprint ignore-list (not a value allowlist).
+#
+# Each line is <commit>:<file>:<rule-id>:<line> and ignores exactly one
+# historical finding, so a real secret committed anywhere still fires — this
+# removes no detection from the current tree or the future, unlike a
+# path/value allowlist. Format matches gitleaks' reported `Fingerprint` field.
+#
+# `tests/test_export_privileged_evidence.py` used an AWS-shaped synthetic
+# fixture (an access-key-id value) in these two commits. It is a false
+# positive: the fixture exists to prove the exporter's secret scanner detects
+# that shape. The sample is now assembled at runtime (see that file), so no
+# literal AWS-key shape remains in the tree; these two entries only retire the
+# historical occurrences.
+a14c1f92ccbe738391008c60c4fb152bf606276a:tests/test_export_privileged_evidence.py:aws-access-token:36
+57bad76f6fa452a214a698a548b45e0cfa9cbd18:tests/test_export_privileged_evidence.py:aws-access-token:39
