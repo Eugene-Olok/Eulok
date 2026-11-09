@@ -1,65 +1,70 @@
-# Company OS
+# Eulok
 
-**The operating system for a one-person software company — Rewritten as a React Application.**
+**Software engineering studio site and internal operations tooling.**
 
-Company OS brings business operations and software delivery into one auditable web platform: discover opportunities, research and scope work, build and verify software, deliver to clients, manage commercial records, and execute deterministic payment reconciliation.
+Eulok is a business website plus an interactive operations suite, built as a
+single Astro + React application. It covers the public-facing services site
+(home, services, case studies, contact) and an embedded demo of the
+deterministic reconciliation/workflow engine the studio builds for clients.
 
-> **Models propose. Deterministic systems decide.**
+> Models propose. Deterministic systems decide.
 
-## Core Features & Architecture
+## Stack
 
-This application has been rewritten as a modern **React (TypeScript + Vite)** web application that preserves the complete feature set, design language, and business logic of Company OS:
+- **Astro 5** (static output, React islands via `@astrojs/react`)
+- **React 19 + TypeScript**
+- **Bun** as the package manager and task runner (see `bun.lock` — don't mix
+  in `npm install`, it will produce a second, conflicting lockfile)
+- **Vitest** + Node's built-in test runner for unit tests
+- Deployed as a Cloudflare Pages site with a Pages Function
+  (`functions/api/intake.ts`) for the contact/intake form — see
+  `docs/runbooks/site-deploy.md`
 
-1. **Company Web Presence & Services Hub (`COM-OS`)**:
-   - **Home**: Executive overview, Kampala & remote worldwide context, "The standard behind the work" 4-step delivery lifecycle, problems grid, operating contexts, engineering principles, and WhatsApp project contact.
-   - **Services Hub**: Comprehensive overview of the 6 core offerings:
-     - 01 Business Websites
-     - 02 Custom Business Software
-     - 03 Payments and Integrations
-     - 04 Payment Reconciliation
-     - 05 Workflow Automation
-     - 06 Software Rescue and Ongoing Care
-   - **Detailed Service Pages**: Deep dives into *Performance Builds & Software Rescue*, *Finance Integrations*, and *Reconciliation*.
-   - **How We Work**: Step-by-step engagement lifecycle (`Understand → Scope → Propose → Build → Verify → Hand over`) and clear commercial terms.
-   - **Work & Case Studies**: Publication standard and technical demonstration data table highlighting matched, unmatched, duplicate, and conflicting transactions.
-   - **About & Standards**: Mission statement, Ugandan context, delivery commitments, WCAG 2.2 AA accessibility statement, security handling, and RFC 9116 security disclosure.
-   - **Contact & WhatsApp Inquiry**: Direct contact with structured project brief generation.
+## Features
 
-2. **Interactive Reconciliation & Operations Suite (`/ops-suite`)**:
-   - **Product 1 — Mobile-Money Reconciliation Agent**:
-     - Deterministic, zero-LLM engine executing rules R1 through R8.
-     - Synthetic data fixtures featuring MTN Mobile Money, Airtel Money, school tuition obligations, SACCO contributions, and logistics billing.
-     - Real-time classification of Exact matches, Partial allocations, Unreferenced proposed matches, Unmatched records, Duplicate suspects, and Overpayment/conflicting exceptions.
-     - Strict isolation of Refunds (R7) and Reversals (R8).
-     - Exportable JSON reconciliation audit reports with cryptographic rules fingerprint.
-   - **Phase 8 Client Lifecycle State Machine**:
-     - Interactive simulation of the 11 authoritative states:
-       `PROSPECT → INTAKE → APPROVAL → SCOPE → PROPOSAL → ENGAGEMENT → DELIVERY → ACCEPTANCE → INVOICE → ISSUED → PAYMENT → CLOSED`
-     - Fail-closed transition verification and live audit logging.
-   - **Governance & Model Routing Inspector**:
-     - Visualizes the 4 data classification tiers (`PUBLIC`, `INTERNAL`, `CONFIDENTIAL`, `RESTRICTED`).
-     - Details model routing assignments from `config/models.yaml`.
-   - **Weekly Close & Financial Invariants**:
-     - Financial discipline records and audit invariants: *Empty is not zero. Absence of a record is not evidence of zero.*
+1. **Public site**
+   - Home, Services (6 offerings: business websites, custom software,
+     payments & integrations, reconciliation, workflow automation, software
+     rescue), detailed service pages, How We Work, Work/Case Studies, About,
+     Standards, Security, Privacy, Accessibility, Contact.
+   - Contact form posts to `/api/intake`, a Cloudflare Pages Function that
+     validates the payload (`src/engine/intakeValidation.ts`), generates a
+     reference ID, and optionally forwards to a configured webhook
+     (`ZOHO_WEBHOOK_URL` env var) — no webhook configured means the form
+     still validates and confirms, it just doesn't forward anywhere yet.
 
-## Development & Build
+2. **Interactive Ops Suite** (`/ops-suite`)
+   - **Reconciliation engine** (`src/engine/reconciliationCore.ts`): a
+     deterministic, zero-LLM rules engine (R1–R8) over synthetic
+     mobile-money/SACCO/school-fee fixtures — exact matches, partial
+     allocations, duplicates, refunds/reversals, conflicting exceptions.
+   - **Client lifecycle state machine** (`src/engine/workflowEngine.ts`):
+     the 11-state `PROSPECT → … → CLOSED` pipeline with fail-closed
+     transition checks.
+   - **Scope calculator** (`src/engine/scopeCalculator.ts`): deterministic
+     project-scope/risk estimation from input parameters.
 
-This project uses **React 19**, **TypeScript**, and **Vite**:
+## Development
 
 ```bash
-# Install dependencies
-npm install
-
-# Start development server on port 3000
-npm run dev
-
-# Build production bundle
-npm run build
+bun install        # install dependencies
+bun run dev         # dev server on :3000
+bun run build       # production build → dist/
+bun run preview     # preview the production build on :3000
+bun run lint         # tsc --noEmit
+bun run test         # node:test suites + vitest component tests
 ```
 
-## Styling & Design Tokens
+## Styling
 
-The UI strictly preserves the Company OS design tokens (`docs/design/DESIGN_TOKENS.yaml`):
-- Monochromatic, high-contrast, distraction-free typographic hierarchy.
-- Dark mode and light mode automatic adaptation via `color-scheme`.
-- Accessible keyboard navigation with visible focus indicators and skip link.
+Design tokens live in `docs/design/DESIGN_TOKENS.yaml`: monochromatic,
+high-contrast typography, automatic dark/light via `color-scheme`, visible
+focus states, and a skip link for keyboard navigation.
+
+## Deployment
+
+Production deploys via Cloudflare Pages' own Git integration on push to
+`main` — there is no custom deploy script. Build command, output directory,
+and the Pages Function's environment variables are Cloudflare *project*
+settings, not repository files; see `docs/runbooks/site-deploy.md` for the
+exact values and `docs/runbooks/cloudflare-recovery.md` for rollback.

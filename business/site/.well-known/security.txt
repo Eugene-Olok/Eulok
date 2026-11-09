@@ -1,5 +1,0 @@
-Contact: https://wa.me/256760779160
-Expires: 2027-10-21T00:00:00.000Z
-Preferred-Languages: en
-Canonical: https://company-os-3ox.pages.dev/.well-known/security.txt
-Policy: https://company-os-3ox.pages.dev/security.html

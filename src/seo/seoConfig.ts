@@ -640,14 +640,47 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
         'Transparent edge telemetry, engine availability, and disaster recovery SLA disclosures.',
     },
   },
+
+  notFound: {
+    pageId: 'notFound',
+    title: 'Page Not Found (404) — EULOK Software Engineering',
+    description:
+      'The page you requested does not exist or may have moved. Check the URL, or use the navigation below to find what you were looking for on the EULOK site.',
+    keywords: [],
+    canonicalPath: '/404',
+    ogType: 'website',
+    ogImage: DEFAULT_OG_IMAGE,
+    ogImageAlt: 'EULOK',
+    twitterCard: 'summary_large_image',
+    // 404s should never be indexed, and must not inherit the homepage's
+    // Organization/WebApplication structured data — a search engine that
+    // trusted that markup on a page that explicitly says "not found" is
+    // exactly the kind of thing that erodes a site's indexing trust.
+    robots: 'noindex, nofollow',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: '404 — Page Not Found',
+    },
+  },
 };
 
 /**
  * Returns the PageSEOConfig for any given route, falling back to home page metadata if unmatched.
+ *
+ * Always returns a fresh copy, never a direct reference into SEO_PAGE_CONFIGS.
+ * Callers (Layout.astro, specifically) apply `customTitle`/`customDescription`
+ * by mutating the returned object's top-level fields — if this returned the
+ * shared singleton directly, that mutation would permanently corrupt the
+ * module-level config for every subsequent page rendered in the same
+ * process. Astro's static build renders every page in one Node process, so
+ * this isn't a theoretical leak: it previously meant 404.astro's
+ * `customTitle` (pageId="home") overwrote the real homepage's title for the
+ * rest of the build, depending on build order.
  */
 export function getPageSEO(pageId: string): PageSEOConfig {
   if (SEO_PAGE_CONFIGS[pageId]) {
-    return SEO_PAGE_CONFIGS[pageId];
+    return { ...SEO_PAGE_CONFIGS[pageId] };
   }
   // Fallback with custom pageId
   const fallback = SEO_PAGE_CONFIGS.home;
