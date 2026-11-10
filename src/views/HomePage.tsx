@@ -65,11 +65,11 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Hero Right Column: Original Engineering Diagram with Live Indicator */}
             <div className="diagram-box animate-fade-in delay-200" style={{ margin: 0, border: '1px solid var(--line-strong)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+                <span className="mono-tag" style={{ color: 'var(--electric-blue)', flexShrink: 0 }}>
                   EULOK_PIPELINE.ARCH
                 </span>
-                <span className="badge badge-pass" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <span className="badge badge-pass" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                   <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', animation: 'pulseGlow 2s infinite' }} />
                   Deterministic Core Active
                 </span>
@@ -501,16 +501,16 @@ export const HomePage: React.FC<HomePageProps> = ({
               <span className="mono-tag" style={{ color: '#4ade80', marginBottom: '8px' }}>
                 ASSURANCE
               </span>
-              <h3>51-Point Acceptance Gate</h3>
+              <h3>Release Verification Standard</h3>
               <p>
-                Before declaring any client build complete, it must satisfy our comprehensive 51-point checklist covering performance, WCAG 2.2 AA accessibility, SEO canonicals, and fail-closed security.
+                Before declaring any client build complete, it must satisfy our deterministic verification framework covering performance budgets, WCAG 2.2 AA accessibility, SEO invariants, and fail-closed security.
               </p>
               <button
                 className="text-link"
                 style={{ marginTop: 'auto', paddingTop: '10px' }}
                 onClick={() => onNavigate('verification')}
               >
-                Inspect 51 verification criteria →
+                Inspect verification standard →
               </button>
             </div>
 

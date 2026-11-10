@@ -1043,6 +1043,19 @@ p {
   }
 }
 
+.ops-tables-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .ops-tables-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
 .empty-state-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
@@ -1181,6 +1194,7 @@ p {
   font-size: 0.74rem;
   font-weight: 600;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .badge-pass {
@@ -1293,7 +1307,7 @@ pre code {
   position: fixed;
   bottom: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-bottom, 0px));
   right: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-right, 0px));
-  z-index: 999;
+  z-index: 90;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -1310,6 +1324,7 @@ pre code {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   border: none;
+  max-width: calc(100vw - 32px);
 }
 
 .floating-whatsapp-btn:hover {
@@ -1329,6 +1344,12 @@ pre code {
   }
   .floating-whatsapp-btn span {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  main#main {
+    padding-bottom: clamp(64px, 10vw, 88px);
   }
 }
 

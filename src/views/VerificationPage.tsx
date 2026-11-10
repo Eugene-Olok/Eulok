@@ -1,279 +1,305 @@
+import React from 'react';
+import {
+  CheckCircle2,
+  ShieldCheck,
+  Cpu,
+  Smartphone,
+  Eye,
+  Server,
+  ArrowRight,
+  Lock,
+  Layers,
+  FileCheck,
+} from 'lucide-react';
 import { navigateTo, openIntakeModal } from '../utils/navigation';
-import React, { useState } from 'react';
-import { CheckCircle2, RotateCcw, AlertTriangle, ShieldCheck, CheckSquare, Square } from 'lucide-react';
 
 interface VerificationPageProps {
   onNavigate?: (page: string) => void;
   onOpenIntakeModal?: () => void;
 }
 
-interface ChecklistSection {
-  category: string;
-  description: string;
-  items: Array<{ id: string; label: string; verifiedByDefault?: boolean }>;
+interface VerificationPillar {
+  title: string;
+  subtitle: string;
+  icon: React.ComponentType<{ size?: number; color?: string; style?: React.CSSProperties }>;
+  criteria: Array<{ name: string; detail: string; standard: string }>;
 }
 
-export const VerificationPage: React.FC<VerificationPageProps> = ({ onNavigate = navigateTo }) => {
-  const defaultSections: ChecklistSection[] = [
+export const VerificationPage: React.FC<VerificationPageProps> = ({
+  onNavigate = navigateTo,
+  onOpenIntakeModal,
+}) => {
+  const pillars: VerificationPillar[] = [
     {
-      category: 'Visual Design',
-      description: 'HEXACORE aesthetic, expansive full-width composition, and typography hierarchy.',
-      items: [
-        { id: 'v1', label: 'A distinctive EULOK design system exists', verifiedByDefault: true },
-        { id: 'v2', label: 'The website uses the full available viewport intelligently', verifiedByDefault: true },
-        { id: 'v3', label: 'No narrow global centered container wrapping the whole page', verifiedByDefault: true },
-        { id: 'v4', label: 'Consistent typography and spacing tokens', verifiedByDefault: true },
-        { id: 'v5', label: 'Original engineering illustrations and diagrams', verifiedByDefault: true },
-        { id: 'v6', label: 'Distinctive hero composition with clear visual hierarchy', verifiedByDefault: true },
-        { id: 'v7', label: 'Consistent page-to-page components and styling', verifiedByDefault: true },
-        { id: 'v8', label: 'Light and dark sections have deliberate editorial rhythm', verifiedByDefault: true },
-        { id: 'v9', label: 'No generic placeholder visuals or corporate stock photography', verifiedByDefault: true },
+      title: 'Deterministic Invariant Testing',
+      subtitle: 'Pure logic verified against mathematical truth with zero model hallucinations',
+      icon: Cpu,
+      criteria: [
+        {
+          name: 'Fixed-Point Integer Precision',
+          detail: 'Financial calculations use integer cents or Decimal types to eliminate IEEE 754 floating-point drift across multi-million UGX ledgers.',
+          standard: 'Zero Rounding Drift',
+        },
+        {
+          name: 'Strict Event Idempotency',
+          detail: 'Aggregator webhooks and payment event payloads enforce SHA-256 fingerprinting to prevent replay attacks and duplicate postings.',
+          standard: 'Duplicate Rejection',
+        },
+        {
+          name: 'Monotonic Workflow Transitions',
+          detail: 'Delivery pipelines and financial states follow single-direction progression; settled transactions cannot be retroactively modified without an audit entry.',
+          standard: 'Fail-Closed State Machine',
+        },
+        {
+          name: 'Partitioned Reconciliation Ledgers',
+          detail: 'Refunds and reversals are strictly partitioned from credit settlements, ensuring debtor liabilities are never silently offset.',
+          standard: 'Partition Isolation',
+        },
       ],
     },
     {
-      category: 'Homepage & Content',
-      description: 'Messaging clarity, delivery spine, and honest publication standards.',
-      items: [
-        { id: 'h1', label: 'Hero has one dominant CTA ("Discuss a project")', verifiedByDefault: true },
-        { id: 'h2', label: 'All six services are represented with buyer-oriented descriptions', verifiedByDefault: true },
-        { id: 'h3', label: 'Engineering philosophy ("Models propose. Deterministic systems decide") clearly explained', verifiedByDefault: true },
-        { id: 'h4', label: 'Delivery stages are consistent (01 Discover to 06 Operate)', verifiedByDefault: true },
-        { id: 'h5', label: 'Industry sections explain actual operating problems', verifiedByDefault: true },
-        { id: 'h6', label: 'Technical demonstrations distinguish illustrative from deployed work', verifiedByDefault: true },
-        { id: 'h7', label: 'Case-study empty state is deliberate ("Scope and date, not scope and spin")', verifiedByDefault: true },
-        { id: 'h8', label: 'No fabricated metrics, certificates, or unauthorized client logos', verifiedByDefault: true },
+      title: 'Security & Secrets Governance',
+      subtitle: 'Zero trust boundary isolation between development, client data, and production infrastructure',
+      icon: ShieldCheck,
+      criteria: [
+        {
+          name: 'Zero Client-Side Credentials',
+          detail: 'API keys, webhook secrets, and private signing tokens are never bundled in client code; verified via automated Gitleaks static analysis.',
+          standard: 'Credential Isolation',
+        },
+        {
+          name: 'Strict Environment Failsafes',
+          detail: 'Endpoints and functions fail closed if critical environment variables are absent; zero fallback default secrets allowed in codebase.',
+          standard: 'Fail-Closed Defaults',
+        },
+        {
+          name: 'RFC 9116 Vulnerability Disclosure',
+          detail: 'Institutional security contact protocol and PGP disclosure keys published under standard /.well-known/security.txt endpoints.',
+          standard: 'RFC 9116 Validated',
+        },
+        {
+          name: 'Statutory Data Protection',
+          detail: 'Client intake and operational data comply with the Uganda Data Protection and Privacy Act 2019 with explicit retention schedules.',
+          standard: 'DPPA 2019 Conformance',
+        },
       ],
     },
     {
-      category: 'Conversion & Ingestion',
-      description: 'Shared intake wizard, budget qualification, and zero-number WhatsApp deep links.',
-      items: [
-        { id: 'c1', label: 'One shared canonical intake wizard component', verifiedByDefault: true },
-        { id: 'c2', label: 'Navigation CTA reaches the intake flow', verifiedByDefault: true },
-        { id: 'c3', label: 'Homepage and Contact page use the same wizard logic', verifiedByDefault: true },
-        { id: 'c4', label: 'Budget qualification supports unknown/early-stage budgets', verifiedByDefault: true },
-        { id: 'c5', label: 'Email option provides a functional mailto link', verifiedByDefault: true },
-        { id: 'c6', label: 'WhatsApp opens a correctly drafted structured enquiry', verifiedByDefault: true },
-        { id: 'c7', label: 'WhatsApp telephone number is NEVER visibly printed on the page', verifiedByDefault: true },
-        { id: 'c8', label: 'Form data handling and privacy are disclosed under Uganda DPPA 2019', verifiedByDefault: true },
+      title: 'Responsive & Multi-Viewport Engineering',
+      subtitle: 'Verified fluid layouts across actual physical screen widths without horizontal scroll',
+      icon: Smartphone,
+      criteria: [
+        {
+          name: '320px Viewport Integrity',
+          detail: 'Layouts reflow cleanly down to 320px (compact budget Android standard) without horizontal overflow or clipped typography.',
+          standard: 'Zero Horizontal Overflow',
+        },
+        {
+          name: 'Fluid Typography & Spacing',
+          detail: 'Font sizes and container gutters use CSS clamp() tokens, preventing abrupt reflow jumps across tablet and mobile breakpoints.',
+          standard: 'Fluid Token Scales',
+        },
+        {
+          name: 'Safe-Area & Fixed Element Insets',
+          detail: 'Interactive floating controls respect hardware safe-area insets (iOS home bar, Android gesture zones) and never obscure underlying content.',
+          standard: 'Unobstructed Viewports',
+        },
+        {
+          name: 'Touch Target Compliance',
+          detail: 'Interactive buttons, menu toggles, and form inputs provide a minimum 44×44px hit target for reliable mobile ergonomics.',
+          standard: '≥ 44px Touch Targets',
+        },
       ],
     },
     {
-      category: 'Mobile & Responsive Engineering',
-      description: 'Tested down to 320px with zero horizontal scroll and native keyboards.',
-      items: [
-        { id: 'm1', label: '320px viewport verified without clipping', verifiedByDefault: true },
-        { id: 'm2', label: '360px viewport verified (budget Android standard)', verifiedByDefault: true },
-        { id: 'm3', label: '375px viewport verified (iPhone SE)', verifiedByDefault: true },
-        { id: 'm4', label: '390px viewport verified (iPhone 14/15 standard)', verifiedByDefault: true },
-        { id: 'm5', label: '414px viewport verified (large device mobile)', verifiedByDefault: true },
-        { id: 'm6', label: 'Navigation is keyboard and touch accessible with disclosure menu', verifiedByDefault: true },
-        { id: 'm7', label: 'No horizontal overflow on any screen breakpoint', verifiedByDefault: true },
-        { id: 'm8', label: 'Technical diagrams reflow cleanly on small screens', verifiedByDefault: true },
-        { id: 'm9', label: 'Forms work with native virtual keyboards without layout breakage', verifiedByDefault: true },
-        { id: 'm10', label: 'Floating WhatsApp control respects safe-area insets', verifiedByDefault: true },
-        { id: 'm11', label: 'No fixed buttons obscuring underlying page buttons or content', verifiedByDefault: true },
+      title: 'Accessibility & Usability (WCAG 2.2 AA)',
+      subtitle: 'Inclusive digital surfaces engineered for keyboard navigation and assistive screen readers',
+      icon: Eye,
+      criteria: [
+        {
+          name: 'Full Keyboard Navigability',
+          detail: 'All interactive elements, drawers, and modal dialogs are reachable via Tab/Shift+Tab, with Escape keys bound to close operations.',
+          standard: 'Keyboard Operable',
+        },
+        {
+          name: 'Visible Focus Indicators',
+          detail: 'High-contrast 2px focus outlines (:focus-visible) render consistently across all actionable buttons and links in both dark and light modes.',
+          standard: 'Visible Focus Rings',
+        },
+        {
+          name: 'Contrast Ratios & Editorial Color',
+          detail: 'Body copy exceeds 4.5:1 contrast against backdrops; large display headers exceed 3:1. Color is never the sole conveyer of status.',
+          standard: '≥ 4.5:1 Body Contrast',
+        },
+        {
+          name: 'Accessible Dialog Traps & Semantics',
+          detail: 'Modals and slide-over drawers implement proper aria-modal="true", role="dialog", and focus restoration on dismissal.',
+          standard: 'WAI-ARIA Conforming',
+        },
       ],
     },
     {
-      category: 'Technical Production & Gates',
-      description: 'WCAG 2.2 AA accessibility, security isolation, and reproducible builds.',
-      items: [
-        { id: 't1', label: 'Production canonical hostname verified in metadata', verifiedByDefault: true },
-        { id: 't2', label: 'Branch preview is not mistaken for production identity', verifiedByDefault: true },
-        { id: 't3', label: 'Robots directives and sitemap are intentional', verifiedByDefault: true },
-        { id: 't4', label: 'Open Graph and social share metadata verified', verifiedByDefault: true },
-        { id: 't5', label: 'Lighthouse mobile performance budgets respected', verifiedByDefault: true },
-        { id: 't6', label: 'Core Web Vitals targets respected (LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1)', verifiedByDefault: true },
-        { id: 't7', label: 'WCAG 2.2 AA accessibility audit performed', verifiedByDefault: true },
-        { id: 't8', label: 'Manual keyboard testing and visible focus indicators confirmed', verifiedByDefault: true },
-        { id: 't9', label: 'Screen-reader friendly landmark structure and skip-link enabled', verifiedByDefault: true },
-        { id: 't10', label: 'Cross-browser compatibility verified (Chrome, Safari, Firefox, Edge)', verifiedByDefault: true },
-        { id: 't11', label: 'Zero exposed secrets or hardcoded authorization credentials', verifiedByDefault: true },
-        { id: 't12', label: 'RFC 9116 security.txt disclosure present and valid', verifiedByDefault: true },
-        { id: 't13', label: 'Reproducible Astro 5 + React 19 + TypeScript production build', verifiedByDefault: true },
-        { id: 't14', label: 'Cloudflare Pages edge security headers (HSTS, strict CSP) configured', verifiedByDefault: true },
-        { id: 't15', label: 'Deterministic test gates pass in CI/CD pipeline (20/20 unit tests)', verifiedByDefault: true },
+      title: 'Production Edge Architecture',
+      subtitle: 'Serverless, pre-rendered global Anycast distribution with atomic release cutovers',
+      icon: Server,
+      criteria: [
+        {
+          name: '100% Pre-rendered Static Pages',
+          detail: 'Core marketing and documentation pages compile to static HTML/CSS. Content is fully readable without executing client-side JavaScript.',
+          standard: 'Astro 5 SSG Compilation',
+        },
+        {
+          name: 'Cloudflare Pages Anycast Network',
+          detail: 'Assets are distributed globally across 300+ edge locations, ensuring sub-100ms first-byte response times worldwide.',
+          standard: 'Global Anycast Edge',
+        },
+        {
+          name: 'Immutable Atomic Deployments',
+          detail: 'Each production deployment is tied to an immutable git commit hash, allowing instant roll-forward or rollback without downtime.',
+          standard: 'Atomic Git Cutover',
+        },
+        {
+          name: 'Stateless Edge Functions',
+          detail: 'Inquiry processing routes (/api/intake) execute in isolated edge V8 isolates with zero permanent database credential exposure.',
+          standard: 'Stateless Edge V8',
+        },
       ],
     },
   ];
 
-  // Initialize checked items from defaults
-  const initialChecked: Record<string, boolean> = {};
-  defaultSections.forEach((s) => {
-    s.items.forEach((item) => {
-      initialChecked[item.id] = !!item.verifiedByDefault;
-    });
-  });
-
-  const [checkedState, setCheckedState] = useState<Record<string, boolean>>(initialChecked);
-
-  const totalItems = defaultSections.reduce((acc, s) => acc + s.items.length, 0);
-  const verifiedCount = Object.values(checkedState).filter(Boolean).length;
-
-  const toggleItem = (id: string) => {
-    setCheckedState((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
-
-  const handleReset = () => {
-    const cleared: Record<string, boolean> = {};
-    Object.keys(checkedState).forEach((k) => (cleared[k] = false));
-    setCheckedState(cleared);
-  };
-
-  const handleVerifyAll = () => {
-    const allChecked: Record<string, boolean> = {};
-    Object.keys(checkedState).forEach((k) => (allChecked[k] = true));
-    setCheckedState(allChecked);
+  const handleStartProject = () => {
+    if (onOpenIntakeModal) {
+      onOpenIntakeModal();
+    } else {
+      openIntakeModal();
+    }
   };
 
   return (
-    <>
-      <section className="section-full theme-dark" style={{ padding: 'clamp(56px, 8vw, 96px) 0 40px' }}>
-        <div className="container-expansive">
-          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
-            <button onClick={() => onNavigate('home')}>Home</button>
-            <span className="separator">/</span>
-            <span aria-current="page">Verification Gates</span>
-          </nav>
+    <div className="page-wrapper">
+      {/* Breadcrumb Navigation */}
+      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
+        <button onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
+        <span className="breadcrumb-sep">/</span>
+        <span className="breadcrumb-current">Release Verification Methodology</span>
+      </nav>
 
-          <div style={{ maxWidth: '860px' }}>
-            <span className="eyebrow">QUALITY ASSURANCE · RELEASE VERIFICATION GATES</span>
-            <h1 style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.4rem)', marginBottom: '20px' }}>
-              51-Point Acceptance Standard
-            </h1>
-            <p className="lead" style={{ maxWidth: '64ch' }}>
-              This interactive release matrix records the explicit verification status of the EULOK web architecture. Checking an item records engineering review, ensuring no release ships with unverified assumptions.
+      {/* Hero Header */}
+      <header className="page-hero-header">
+        <div className="container-expansive">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+            <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>
+              ENGINEERING RIGOR · ACCEPTANCE STANDARDS
+            </span>
+          </div>
+
+          <h1 className="hero-heading" style={{ maxWidth: '28ch' }}>
+            Deterministic Release Verification Standard
+          </h1>
+          <p className="hero-subheading" style={{ maxWidth: '66ch' }}>
+            How EULOK verifies software architectures before production release. We reject subjective claims and self-graded checkboxes. Every deliverable is proven through reproducible automated tests, security boundary isolation, accessibility audits, and multi-viewport responsive testing.
+          </p>
+
+          <blockquote
+            style={{
+              margin: '24px 0 0',
+              padding: '12px 18px',
+              borderLeft: '3px solid var(--electric-blue)',
+              background: 'var(--bg-secondary)',
+              borderRadius: '0 8px 8px 0',
+              color: 'var(--warm-white)',
+              maxWidth: '60ch',
+              fontSize: '0.95rem',
+              lineHeight: 1.6,
+            }}
+          >
+            <strong>Core Rule:</strong> Models propose. Deterministic systems decide. We never treat model output as proof of correctness. Critical software requires reproducible, auditable evidence.
+          </blockquote>
+        </div>
+      </header>
+
+      {/* The Five Verification Disciplines */}
+      <section className="section-padded">
+        <div className="container-expansive">
+          <div style={{ marginBottom: '36px' }}>
+            <span className="eyebrow">The EULOK Quality Spine</span>
+            <h2>Five Architectural Verification Disciplines</h2>
+            <p style={{ color: 'var(--text-muted)', maxWidth: '64ch', lineHeight: 1.6 }}>
+              Production software must survive hostile network environments, unexpected edge cases, and continuous operation. We test deliverables against five core dimensions:
             </p>
           </div>
 
-          {/* Progress Card */}
-          <div
-            className="card"
-            style={{
-              marginTop: '32px',
-              padding: '24px',
-              background: 'var(--bg-secondary)',
-              border: verifiedCount === totalItems ? '1px solid #4ade80' : '1px solid var(--line-strong)',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '14px' }}>
-              <div>
-                <span className="mono-tag" style={{ color: verifiedCount === totalItems ? '#4ade80' : 'var(--electric-blue)', fontWeight: 700 }}>
-                  RELEASE READINESS STATUS
-                </span>
-                <h3 style={{ margin: '4px 0 0', fontSize: '1.6rem' }}>
-                  {verifiedCount} / {totalItems} Criteria Verified
-                </h3>
-              </div>
-
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <button
-                  className="button button-quiet button-small"
-                  onClick={handleReset}
-                  type="button"
-                >
-                  <RotateCcw size={14} />
-                  <span>Clear All</span>
-                </button>
-                <button
-                  className="button button-primary button-small"
-                  onClick={handleVerifyAll}
-                  type="button"
-                >
-                  <CheckCircle2 size={14} />
-                  <span>Verify All 51</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Progress Bar */}
-            <div style={{ width: '100%', height: '8px', background: 'var(--bg-primary)', borderRadius: '999px', overflow: 'hidden' }}>
-              <div
-                style={{
-                  width: `${(verifiedCount / totalItems) * 100}%`,
-                  height: '100%',
-                  background: verifiedCount === totalItems ? '#4ade80' : 'var(--electric-blue)',
-                  transition: 'width 0.3s ease',
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sections List */}
-      <section className="section-full theme-navy" style={{ padding: 'clamp(48px, 6vw, 80px) 0', borderTop: '1px solid var(--line)' }}>
-        <div className="container-expansive">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-            {defaultSections.map((sec, sIdx) => {
-              const secVerifiedCount = sec.items.filter((i) => checkedState[i.id]).length;
+            {pillars.map((pillar, pIdx) => {
+              const Icon = pillar.icon;
               return (
                 <div
-                  key={sec.category}
+                  key={pillar.title}
                   className="card"
-                  style={{ background: 'var(--bg-primary)', padding: 'clamp(20px, 3vw, 32px)' }}
+                  style={{
+                    background: 'var(--bg-primary)',
+                    padding: 'clamp(20px, 3.5vw, 36px)',
+                    border: '1px solid var(--line-strong)',
+                  }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
-                    <div>
-                      <span className="card-number" style={{ margin: 0 }}>SECTION {String(sIdx + 1).padStart(2, '0')}</span>
-                      <h2 style={{ fontSize: '1.4rem', margin: '4px 0 2px' }}>{sec.category}</h2>
-                      <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                        {sec.description}
-                      </p>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '20px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                      <div
+                        style={{
+                          width: '42px',
+                          height: '42px',
+                          borderRadius: '8px',
+                          background: 'rgba(56, 189, 248, 0.1)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          border: '1px solid rgba(56, 189, 248, 0.25)',
+                        }}
+                      >
+                        <Icon size={20} color="var(--electric-blue)" />
+                      </div>
+                      <div>
+                        <span className="card-number" style={{ margin: 0 }}>DISCIPLINE 0{pIdx + 1}</span>
+                        <h3 style={{ fontSize: '1.35rem', margin: '2px 0 0' }}>{pillar.title}</h3>
+                      </div>
                     </div>
 
-                    <span className="badge badge-pass">
-                      {secVerifiedCount} / {sec.items.length} Checked
+                    <span className="mono-tag" style={{ color: 'var(--text-muted)' }}>
+                      MANDATORY RELEASE GATE
                     </span>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
-                    {sec.items.map((item) => {
-                      const isChecked = !!checkedState[item.id];
-                      return (
-                        <div
-                          key={item.id}
-                          role="checkbox"
-                          aria-checked={isChecked}
-                          tabIndex={0}
-                          onClick={() => toggleItem(item.id)}
-                          onKeyDown={(e) => {
-                            if (e.key === ' ' || e.key === 'Enter') {
-                              e.preventDefault();
-                              toggleItem(item.id);
-                            }
-                          }}
-                          style={{
-                            padding: '12px 14px',
-                            background: isChecked ? 'rgba(56, 189, 248, 0.05)' : 'var(--bg-secondary)',
-                            border: `1px solid ${isChecked ? 'rgba(56, 189, 248, 0.25)' : 'var(--line)'}`,
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '12px',
-                            transition: 'all 0.15s ease',
-                          }}
-                        >
-                          <div style={{ color: isChecked ? 'var(--electric-blue)' : 'var(--text-muted)' }}>
-                            {isChecked ? <CheckSquare size={18} /> : <Square size={18} />}
-                          </div>
-                          <span
-                            style={{
-                              fontSize: '0.92rem',
-                              color: isChecked ? 'var(--warm-white)' : 'var(--text-subtle)',
-                              fontWeight: isChecked ? 600 : 400,
-                            }}
-                          >
-                            {item.label}
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '24px', maxWidth: '68ch' }}>
+                    {pillar.subtitle}
+                  </p>
+
+                  <div className="grid-2">
+                    {pillar.criteria.map((item) => (
+                      <div
+                        key={item.name}
+                        style={{
+                          padding: '16px',
+                          background: 'var(--bg-secondary)',
+                          borderRadius: '8px',
+                          border: '1px solid var(--line)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '6px',
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+                          <strong style={{ fontSize: '0.94rem', color: 'var(--warm-white)' }}>
+                            {item.name}
+                          </strong>
+                          <span className="badge badge-pass" style={{ fontSize: '0.68rem', padding: '1px 6px' }}>
+                            {item.standard}
                           </span>
                         </div>
-                      );
-                    })}
+                        <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>
+                          {item.detail}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               );
@@ -281,6 +307,49 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({ onNavigate =
           </div>
         </div>
       </section>
-    </>
+
+      {/* Handover & Client Audit Governance */}
+      <section className="section-padded section-alt">
+        <div className="container-expansive">
+          <div className="grid-2">
+            <div>
+              <span className="eyebrow">Handover Protocol</span>
+              <h2>Clean Handover & Complete Code Ownership</h2>
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '16px' }}>
+                Every client engagement concludes with a comprehensive handover package. Clients receive full repository rights, clean git history, documented architecture specifications, and deterministic test suites that run independently in standard Node.js environments.
+              </p>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, margin: 0 }}>
+                <li>No proprietary vendor lock-in or obfuscated runtimes.</li>
+                <li>Executable test suites with zero external cloud dependencies.</li>
+                <li>Production runbooks for DNS cutover, rollback, and disaster recovery.</li>
+                <li>Documented credential rotation certificates upon final milestone delivery.</li>
+              </ul>
+            </div>
+
+            <div className="card" style={{ background: 'var(--bg-primary)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '12px', display: 'inline-block' }}>
+                DISCUSS AN ENGAGEMENT
+              </span>
+              <h3 style={{ fontSize: '1.3rem', marginBottom: '12px' }}>
+                Need production software verified to these standards?
+              </h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '24px' }}>
+                Whether you need a legacy codebase rescued, a multi-rail reconciliation engine built, or a mission-critical platform engineered from discovery through production, we deliver with written scope and deterministic acceptance.
+              </p>
+
+              <button
+                type="button"
+                className="button button-primary"
+                onClick={handleStartProject}
+                style={{ alignSelf: 'flex-start' }}
+              >
+                <span>Start Project Intake</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };

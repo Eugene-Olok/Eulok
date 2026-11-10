@@ -39,7 +39,7 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
       {/* Core Controls */}
       <section className="section-padded">
         <div className="container-expansive">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '48px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '24px', marginBottom: '48px' }}>
             <div className="card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
                 <Key size={20} color="var(--electric-blue)" />

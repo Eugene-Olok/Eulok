@@ -43,7 +43,7 @@ export const AccessibilityPage: React.FC<AccessibilityPageProps> = ({
               We test our digital surfaces against the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA. Our engineering pipeline enforces accessibility gates during automated integration:
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '32px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '20px', marginBottom: '32px' }}>
               <div className="card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                   <Keyboard size={18} color="var(--electric-blue)" />
@@ -60,7 +60,7 @@ export const AccessibilityPage: React.FC<AccessibilityPageProps> = ({
                   <h4 style={{ margin: 0 }}>Contrast & Typography</h4>
                 </div>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0 }}>
-                  High contrast ratios (exceeding 4.5:1 for body copy and 3:1 for large text) across HEXACORE themes. Never relying on color alone for state.
+                  High contrast ratios (exceeding 4.5:1 for body copy and 3:1 for large text) across dark and light themes. Never relying on color alone for state.
                 </p>
               </div>
 

@@ -114,7 +114,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
       {/* Main Studio Interactive Layout */}
       <section className="section-padded">
         <div className="container-expansive">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '32px', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px', alignItems: 'start' }}>
             {/* Left Column: Interactive Inputs */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               {/* Client Name Input */}
@@ -125,7 +125,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="e.g. Stanbic Uganda, Tugende, NilePay"
+                  placeholder="e.g. Apex FinTech, Rift Valley Logistics, Horizon Pay"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
                 />

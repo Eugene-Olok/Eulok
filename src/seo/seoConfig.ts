@@ -369,11 +369,11 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
 
   verification: {
     pageId: 'verification',
-    title: '51-Point Acceptance & Release Gates — EULOK',
+    title: 'Release Verification Standard — EULOK Systems',
     description:
-      'Review our rigorous 51-point verification framework and deterministic CI release gates ensuring verifiable security, reliability, and zero defects.',
+      'Deterministic release verification methodology and architectural acceptance criteria ensuring verifiable security, reliability, and zero defects.',
     keywords: [
-      '51 point verification framework',
+      'release verification standard',
       'release gates',
       'deterministic testing',
       'zero defect software',
@@ -382,13 +382,13 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     canonicalPath: '/verification',
     ogType: 'website',
     ogImage: DEFAULT_OG_IMAGE,
-    ogImageAlt: '51-Point Acceptance and Deterministic Verification Framework',
+    ogImageAlt: 'Deterministic Release Verification Standard by EULOK',
     twitterCard: 'summary_large_image',
     robots: 'index, follow',
     structuredData: {
       '@context': 'https://schema.org',
       '@type': 'TechArticle',
-      headline: 'The EULOK 51-Point Acceptance and Verification Standard',
+      headline: 'The EULOK Deterministic Release Verification Standard',
       description:
         'A comprehensive deterministic verification framework for testing, security, accessibility, and operational integrity.',
     },
@@ -618,7 +618,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     pageId: 'status',
     title: 'Live System Health & Status — EULOK Platform',
     description:
-      'Real-time edge telemetry, client latency measurements, component health matrices, and verified uptime governance for the EULOK engineering platform.',
+      'Real-time edge telemetry, client latency measurements, component architecture topologies, and disaster recovery SLA disclosures for the EULOK platform.',
     keywords: [
       'system status',
       'edge telemetry',

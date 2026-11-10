@@ -350,7 +350,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '14px', marginBottom: '20px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-subtle)', marginBottom: '4px' }}>
                 Your Email Address (Optional)
@@ -459,7 +459,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
               Choose your direct contact channel:
             </span>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '12px' }}>
               <a
                 className="button button-primary"
                 href={whatsappUrl}

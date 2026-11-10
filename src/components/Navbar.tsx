@@ -239,11 +239,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <CheckCircle2 size={17} color="#4ade80" style={{ marginTop: '2px', flexShrink: 0 }} />
                       <div>
                         <div className="nav-dropdown-item-title">
-                          <span>51-Point Release Gates</span>
-                          <span className="badge badge-pass" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Pass</span>
+                          <span>Release Verification Standard</span>
+                          <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Standard</span>
                         </div>
                         <div className="nav-dropdown-item-desc">
-                          Strict pre-deployment verification & audit criteria.
+                          Deterministic release verification & architectural acceptance criteria.
                         </div>
                       </div>
                     </button>
@@ -260,7 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Live</span>
                         </div>
                         <div className="nav-dropdown-item-desc">
-                          Real-time global edge latency & system health check.
+                          Real-time client latency & edge infrastructure topology.
                         </div>
                       </div>
                     </button>

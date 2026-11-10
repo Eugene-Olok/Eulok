@@ -47,7 +47,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
               <strong>EULOK</strong> is an independent software engineering practice based in Kampala, Uganda, operating remotely worldwide. Under the <em>Data Protection and Privacy Act, 2019</em>, EULOK acts as the <strong>Data Controller</strong> for communications received via our website, email, and WhatsApp scoping channels.
             </p>
             <div style={{ background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px', padding: '20px 24px', marginBottom: '36px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', fontSize: '0.9rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '16px', fontSize: '0.9rem' }}>
                 <div>
                   <span style={{ color: 'var(--accent-blue)', display: 'block', fontSize: '0.78rem', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Operating Jurisdiction</span>
                   <strong>Kampala, Uganda (East Africa Time, UTC+3)</strong>

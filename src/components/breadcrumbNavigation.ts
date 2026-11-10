@@ -13,7 +13,7 @@ export const PAGE_LABEL_MAP: Record<string, string> = {
   work: 'How We Work',
   'case-studies': 'Case Studies & Evidence',
   insights: 'Engineering Notes',
-  verification: '51-Point Acceptance Gates',
+  verification: 'Release Verification Standard',
   'scope-calculator': 'Scoping Studio',
   status: 'System Health & Telemetry',
   about: 'About EULOK',

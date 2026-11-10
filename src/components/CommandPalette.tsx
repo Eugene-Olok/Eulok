@@ -61,8 +61,8 @@ export const CommandPalette: React.FC = () => {
     },
     {
       id: 'verification-gates',
-      title: '51-Point Acceptance & Release Gates',
-      subtitle: 'Inspect deterministic verification checklist and CI/CD criteria',
+      title: 'Release Verification Standard',
+      subtitle: 'Deterministic release verification framework and architectural criteria',
       category: 'Governance & RFC',
       action: () => navigateTo('verification'),
       icon: <ShieldCheck size={16} color="#4ade80" />,

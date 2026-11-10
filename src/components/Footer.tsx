@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li><a href="/ops-suite" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('ops-suite'); } }}>Reconciliation Core</a></li>
               <li><a href="/insights" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('insights'); } }}>Engineering Notes</a></li>
               <li><a href="/services/finance-integrations" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('services/finance-integrations'); } }}>Finance Integrations</a></li>
-              <li><a href="/verification" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('verification'); } }}>51-Point Release Criteria</a></li>
+              <li><a href="/verification" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('verification'); } }}>Release Verification Standard</a></li>
               <li><a href="/status" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('status'); } }}>Live Edge Telemetry</a></li>
             </ul>
           </div>

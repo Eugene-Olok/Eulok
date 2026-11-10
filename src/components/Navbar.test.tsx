@@ -94,7 +94,7 @@ describe('Navbar Component — FAANG Grade Rendering & Accessibility', () => {
     // Verify dropdown items rendered
     expect(screen.getByText('Reconciliation Demo')).toBeInTheDocument();
     expect(screen.getByText('Scoping Studio (SOW)')).toBeInTheDocument();
-    expect(screen.getByText('51-Point Release Gates')).toBeInTheDocument();
+    expect(screen.getByText('Release Verification Standard')).toBeInTheDocument();
     expect(screen.getByText('Edge Telemetry')).toBeInTheDocument();
 
     // Clicking an item triggers navigation

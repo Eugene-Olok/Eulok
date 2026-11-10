@@ -36,7 +36,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
       {/* Delivery Phases */}
       <section className="section-padded">
         <div className="container-expansive">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '24px' }}>
             {/* Card 1 */}
             <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '10px', display: 'inline-block' }}>
@@ -72,7 +72,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               </span>
               <h3 style={{ marginBottom: '12px' }}>Operational Autonomy</h3>
               <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, margin: 0 }}>
-                <li>Deliverables evaluated item-by-item against the 51-Point Acceptance Gate checklist.</li>
+                <li>Deliverables evaluated against our deterministic Release Verification Standard.</li>
                 <li>Full source code ownership transferred without proprietary vendor lock-in.</li>
                 <li>Architecture runbooks, disaster recovery procedures, and API specifications delivered.</li>
                 <li>Credential rotation and access handover executed cleanly.</li>
@@ -162,11 +162,11 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               <span className="eyebrow">Reliability Rigor</span>
               <h2>How to assess our work</h2>
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
-                We distinguish a target from a measured outcome, and a local build from a production verification. You can inspect our full 51-point verification criteria and evaluate each gate before commissioning a project.
+                We distinguish a target from a measured outcome, and a local build from a production verification. You can inspect our deterministic verification framework and review each gate before commissioning a project.
               </p>
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                 <button className="button button-primary" onClick={() => onNavigate('verification')}>
-                  <span>Inspect the 51-Point Release Gates</span>
+                  <span>Inspect Release Verification Standard</span>
                   <ArrowRight size={14} />
                 </button>
                 <button className="button button-quiet" onClick={onOpenIntakeModal}>

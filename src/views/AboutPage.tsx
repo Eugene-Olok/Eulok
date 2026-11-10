@@ -104,7 +104,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           <span className="eyebrow">Operational Standards</span>
           <h2 style={{ marginBottom: '32px' }}>Our Six Engineering Principles</h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '24px' }}>
             {principles.map((p) => {
               const Icon = p.icon;
               return (
@@ -127,7 +127,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       {/* Leadership & Location */}
       <section className="section-padded">
         <div className="container-expansive">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '32px', alignItems: 'center' }}>
             <div>
               <span className="eyebrow">Founder & Principal</span>
               <h2>Eugene Olok</h2>
@@ -168,7 +168,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </li>
                 <li>
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-subtle)', textTransform: 'uppercase' }}>Verification Standard</div>
-                  <div style={{ fontWeight: 600, color: 'var(--warm-white)' }}>51-Point Acceptance Gate checklist before release</div>
+                  <div style={{ fontWeight: 600, color: 'var(--warm-white)' }}>Deterministic release verification standard before cutover</div>
                 </li>
               </ul>
             </div>

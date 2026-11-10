@@ -62,21 +62,21 @@ const TOOLS_ITEMS = [
   },
   {
     id: 'verification',
-    label: '51-Point Release Gates',
+    label: 'Release Verification Standard',
     path: '/verification',
-    desc: 'Strict pre-deployment acceptance criteria',
+    desc: 'Deterministic release verification & acceptance criteria',
     icon: CheckCircle2,
     color: '#4ade80',
-    tag: 'Pass',
+    tag: 'Standard',
   },
   {
     id: 'status',
     label: 'Live Edge Telemetry',
     path: '/status',
-    desc: 'Real-time multi-region latency & status',
+    desc: 'Real-time client latency & edge infrastructure topology',
     icon: Activity,
     color: '#38bdf8',
-    tag: 'Active',
+    tag: 'Live',
   },
 ];
 

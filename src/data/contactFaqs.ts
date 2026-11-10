@@ -84,11 +84,11 @@ export const FAQ_ITEMS: FAQItem[] = [
   {
     id: 'acceptance-gates',
     category: 'Delivery',
-    question: 'What are the 51-Point Acceptance Gates?',
-    answer: 'Before any system is handed over or declared complete, it must satisfy our deterministic 51-point verification suite covering performance budgets (sub-second mobile FCP), full WCAG 2.2 AA accessibility, fail-closed security headers, input sanitization, and regression test suites.',
+    question: 'What is the EULOK Release Verification Standard?',
+    answer: 'Before any system is handed over or declared complete, it must satisfy our deterministic verification framework covering performance budgets (sub-second mobile FCP), full WCAG 2.2 AA accessibility, fail-closed security headers, input sanitization, and automated regression test suites.',
     tags: ['gates', 'verification', 'testing', 'qa', 'acceptance', 'wcag', 'performance', 'lighthouse'],
     serviceLink: {
-      label: 'Inspect 51 Verification Gates',
+      label: 'Inspect Release Verification Standard',
       page: 'verification',
     },
   },

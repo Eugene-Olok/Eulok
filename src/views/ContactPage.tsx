@@ -39,7 +39,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       {/* Main Form Section: Direct Embedded Scoping Wizard */}
       <section className="section-padded">
         <div className="container-expansive">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '32px', alignItems: 'start' }}>
             {/* Left Col: Interactive Intake Wizard */}
             <div>
               <IntakeWizard isModal={false} />
@@ -135,7 +135,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <ArrowRight size={14} />
               </button>
               <button className="button button-quiet" onClick={() => onNavigate('verification')}>
-                <span>51-Point Release Gates</span>
+                <span>Release Verification Standard</span>
                 <ArrowRight size={14} />
               </button>
             </div>

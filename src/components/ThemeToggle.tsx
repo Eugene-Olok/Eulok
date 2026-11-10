@@ -11,18 +11,14 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   className = '',
   showLabel = false,
 }) => {
-  const [theme, setTheme] = useState<ThemeMode>(() => {
-    if (typeof window !== 'undefined') {
-      return getInitialTheme();
-    }
-    return 'dark';
-  });
+  const [theme, setTheme] = useState<ThemeMode>('dark');
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
+    setMounted(true);
     // Sync theme on client mount
     const initial = getInitialTheme();
     setTheme(initial);
-    applyTheme(initial);
 
     const handleThemeChange = (e: Event) => {
       const customEvent = e as CustomEvent<{ theme: ThemeMode }>;
@@ -42,7 +38,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     setTheme(next);
   };
 
-  const isLight = theme === 'light';
+  const isLight = mounted && theme === 'light';
 
   return (
     <button

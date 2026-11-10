@@ -60,19 +60,6 @@ const seoData = buildSEOTags(config);
           const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
           const theme = stored === 'light' || stored === 'dark' ? stored : (prefersLight ? 'light' : 'dark');
           document.documentElement.setAttribute('data-theme', theme);
-          if (theme === 'light') {
-            document.documentElement.style.setProperty('--bg-primary', '#f8fafc');
-            document.documentElement.style.setProperty('--bg-secondary', '#f1f5f9');
-            document.documentElement.style.setProperty('--bg-card', '#ffffff');
-            document.documentElement.style.setProperty('--surface-elevated', '#ffffff');
-            document.documentElement.style.setProperty('--text-main', '#090e17');
-            document.documentElement.style.setProperty('--text-subtle', '#334155');
-            document.documentElement.style.setProperty('--text-muted', '#64748b');
-            document.documentElement.style.setProperty('--line', 'rgba(0, 0, 0, 0.12)');
-            document.documentElement.style.setProperty('--line-strong', 'rgba(0, 0, 0, 0.22)');
-            document.documentElement.style.setProperty('--warm-white', '#090e17');
-            document.documentElement.style.setProperty('--electric-blue', '#0284c7');
-          }
         } catch (e) {}
       })();
       document.addEventListener('astro:after-swap', function() {

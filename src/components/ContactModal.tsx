@@ -80,7 +80,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px', marginBottom: '24px' }}>
           <div>
             <label className="form-label" htmlFor="modal-deadline">
               Deadline / Urgency
