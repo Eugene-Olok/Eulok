@@ -46,22 +46,26 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenIntakeModal,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
+  const [toolsHoverOpen, setToolsHoverOpen] = useState(false);
+  const [toolsPinnedOpen, setToolsPinnedOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const toolsDropdownOpen = toolsHoverOpen || toolsPinnedOpen;
   const isToolsActive = TOOLS_PAGES.includes(currentPage);
 
-  // Close dropdown on outside click
+  // Close dropdown on outside click or Escape
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setToolsDropdownOpen(false);
+        setToolsHoverOpen(false);
+        setToolsPinnedOpen(false);
       }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setToolsDropdownOpen(false);
+        setToolsHoverOpen(false);
+        setToolsPinnedOpen(false);
         setMobileMenuOpen(false);
       }
     };
@@ -76,7 +80,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const handleNavClick = (page: string) => {
     setMobileMenuOpen(false);
-    setToolsDropdownOpen(false);
+    setToolsHoverOpen(false);
+    setToolsPinnedOpen(false);
     if (onNavigate) {
       onNavigate(page);
     } else {
@@ -86,7 +91,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const handleIntakeClick = () => {
     setMobileMenuOpen(false);
-    setToolsDropdownOpen(false);
+    setToolsHoverOpen(false);
+    setToolsPinnedOpen(false);
     if (onOpenIntakeModal) {
       onOpenIntakeModal();
     } else {
@@ -102,7 +108,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="site-header">
+    <>
+      <header className="site-header">
       <div className="container-expansive">
         <div className="nav-container">
           {/* Brand Wordmark */}
@@ -148,13 +155,20 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div
               className="nav-dropdown-wrapper"
               ref={dropdownRef}
-              onMouseEnter={() => setToolsDropdownOpen(true)}
-              onMouseLeave={() => setToolsDropdownOpen(false)}
+              onMouseEnter={() => setToolsHoverOpen(true)}
+              onMouseLeave={() => setToolsHoverOpen(false)}
             >
               <button
                 type="button"
                 className={`nav-item-btn ${isToolsActive ? 'active' : ''}`}
-                onClick={() => setToolsDropdownOpen((prev) => !prev)}
+                onClick={() => {
+                  if (toolsPinnedOpen) {
+                    setToolsPinnedOpen(false);
+                    setToolsHoverOpen(false);
+                  } else {
+                    setToolsPinnedOpen(true);
+                  }
+                }}
                 aria-expanded={toolsDropdownOpen}
                 aria-haspopup="true"
                 aria-label="Tools and Verification Gates menu"
@@ -284,6 +298,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="mobile-nav-toggle"
               onClick={() => setMobileMenuOpen(true)}
               aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation-drawer"
               aria-label="Open mobile navigation menu"
             >
               <Menu size={18} />
@@ -291,16 +306,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
         </div>
-
-        {/* Pure CSS Animated SlideOver Drawer */}
-        <MobileSlideOver
-          isOpen={mobileMenuOpen}
-          onClose={() => setMobileMenuOpen(false)}
-          currentPage={currentPage}
-          onNavigate={handleNavClick}
-          onOpenIntakeModal={handleIntakeClick}
-        />
       </div>
     </header>
+
+    {/* Portaled SlideOver Drawer rendered outside sticky blurred header */}
+    <MobileSlideOver
+      isOpen={mobileMenuOpen}
+      onClose={() => setMobileMenuOpen(false)}
+      currentPage={currentPage}
+      onNavigate={handleNavClick}
+      onOpenIntakeModal={handleIntakeClick}
+    />
+    </>
   );
 };

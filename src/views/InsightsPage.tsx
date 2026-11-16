@@ -223,7 +223,7 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
                     </div>
 
                     <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                      By Eugene Olok · EULOK
+                      EULOK
                     </span>
                   </div>
 

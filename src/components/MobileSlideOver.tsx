@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   ArrowRight,
@@ -87,18 +88,19 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
   onOpenIntakeModal,
 }) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
-  // Prevent background scrolling when open & handle Escape key
+  // Prevent background scrolling when open, handle Escape key, and restore focus on close
   useEffect(() => {
     if (!isOpen) return;
 
+    previousFocusRef.current = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    // Focus close button on open for a11y
     const timer = setTimeout(() => {
       closeButtonRef.current?.focus();
-    }, 50);
+    }, 30);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -112,6 +114,7 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
       clearTimeout(timer);
+      previousFocusRef.current?.focus?.();
     };
   }, [isOpen, onClose]);
 
@@ -143,8 +146,9 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
     return null;
   }
 
-  return (
+  const drawerContent = (
     <div
+      id="mobile-navigation-drawer"
       className="slideover-root"
       role="dialog"
       aria-modal="true"
@@ -196,9 +200,9 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Search size={15} color="var(--electric-blue)" />
-                  <span>Search site or press ⌘K</span>
+                  <span>Search site or press ⌘ K</span>
                 </div>
-                <kbd className="mono-kbd">⌘K</kbd>
+                <kbd className="mono-kbd" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', whiteSpace: 'nowrap' }}>⌘K</kbd>
               </button>
             </div>
 
@@ -373,5 +377,11 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
             </div>
           </aside>
         </div>
-      );
-    };
+  );
+
+  if (typeof document !== 'undefined' && document.body) {
+    return createPortal(drawerContent, document.body);
+  }
+
+  return drawerContent;
+};

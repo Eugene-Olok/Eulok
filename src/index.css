@@ -501,10 +501,12 @@ p {
   background: none;
   border: none;
   padding: 8px 12px;
+  min-height: 38px;
   color: var(--text-subtle);
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
+  line-height: 1.25;
   text-decoration: none;
   cursor: pointer;
   border-radius: 6px;
@@ -588,13 +590,15 @@ p {
 
 .nav-dropdown-wrapper {
   position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .nav-dropdown-menu {
   position: absolute;
   top: calc(100% + 8px);
   left: 50%;
-  width: 336px;
+  width: min(336px, calc(100vw - 32px));
   background: var(--bg-card);
   border: 1px solid var(--line-strong);
   border-radius: 12px;
@@ -692,6 +696,12 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-action-cluster .button-small,
+.nav-action-cluster .theme-toggle-btn {
+  min-height: 40px;
 }
 
 /* Mobile Nav Toggle */
@@ -700,28 +710,44 @@ p {
   background: none;
   border: 1px solid var(--line);
   color: var(--warm-white);
-  padding: 8px 12px;
+  min-height: 44px;
+  padding: 8px 14px;
   border-radius: 8px;
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Tablet & Mobile Nav Tuning */
-@media (min-width: 1081px) and (max-width: 1260px) {
+.mobile-nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--line-strong);
+}
+
+[data-theme="light"] .mobile-nav-toggle:hover {
+  background: #f1f5f9;
+}
+
+/* Laptop / Compact Desktop Nav Tuning */
+@media (min-width: 1261px) and (max-width: 1400px) {
   .nav-links-desktop {
     gap: 2px;
   }
   .nav-item-btn {
-    padding: 6px 9px;
-    font-size: 0.86rem;
+    padding: 7px 9px;
+    font-size: 0.85rem;
   }
   .nav-action-cluster {
-    gap: 6px;
+    gap: 8px;
   }
 }
 
-@media (max-width: 1080px) {
+/* Tablet & Mobile Drawer Switch Breakpoint */
+@media (max-width: 1260px) {
   .nav-links-desktop {
     display: none;
   }
@@ -732,12 +758,20 @@ p {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
   .nav-container {
     min-height: 64px;
+    gap: 10px;
+  }
+  .nav-action-cluster {
+    gap: 8px;
   }
   .nav-action-cluster .button-primary {
     display: none;
+  }
+  .nav-action-cluster .button-small,
+  .nav-action-cluster .theme-toggle-btn {
+    min-height: 44px;
   }
 }
 
@@ -745,6 +779,30 @@ p {
   .nav-action-cluster .mono-tag,
   .nav-action-cluster .mono-kbd {
     display: none;
+  }
+  .nav-action-cluster {
+    gap: 6px;
+  }
+  .mobile-nav-toggle {
+    padding: 8px 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-container {
+    gap: 6px;
+  }
+  .brand-wordmark {
+    font-size: 1.12rem;
+    gap: 6px;
+  }
+  .brand-badge {
+    padding: 2px 5px;
+    font-size: 0.62rem;
+  }
+  .mobile-nav-toggle {
+    padding: 8px 9px;
+    font-size: 0.8rem;
   }
 }
 
@@ -773,7 +831,10 @@ p {
 .slideover-root {
   position: fixed;
   inset: 0;
-  z-index: 2000;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9990;
   display: flex;
   justify-content: flex-end;
 }
@@ -784,7 +845,7 @@ p {
   background: rgba(9, 14, 23, 0.72);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 2001;
+  z-index: 9991;
   animation: slideoverFadeIn 0.2s ease-out;
 }
 
@@ -803,10 +864,11 @@ p {
 
 .slideover-panel {
   position: relative;
-  z-index: 2002;
-  width: 100%;
-  max-width: 380px;
-  height: 100%;
+  z-index: 9992;
+  width: min(88vw, 400px);
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
   background: var(--bg-card);
   border-left: 1px solid var(--line-strong);
   display: flex;
@@ -814,6 +876,12 @@ p {
   overflow: hidden;
   box-shadow: -12px 0 40px rgba(0, 0, 0, 0.45);
   animation: slideoverSlideIn 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 360px) {
+  .slideover-panel {
+    width: min(92vw, 340px);
+  }
 }
 
 @keyframes slideoverSlideIn {
@@ -1023,12 +1091,13 @@ p {
 }
 
 .slideover-footer {
-  padding: 16px 18px 20px;
+  padding: 14px 18px calc(18px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--line);
   background: var(--bg-card);
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 [data-theme="light"] .slideover-footer {
