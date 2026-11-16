@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { IntakeWizard } from './components/IntakeWizard';
@@ -32,7 +31,6 @@ import { applyTheme, getInitialTheme } from './utils/themeManager';
 export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const [isIntakeModalOpen, setIsIntakeModalOpen] = useState<boolean>(false);
-  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     applyTheme(getInitialTheme());
@@ -198,25 +196,12 @@ export const App: React.FC = () => {
       {/* Contextual Breadcrumb Navigation */}
       <Breadcrumb currentPage={currentPage} onNavigate={handleNavigate} />
 
-      <AnimatePresence mode="wait">
-        <motion.main
-          key={currentPage}
-          id="main"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
-          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
-          transition={{
-            duration: shouldReduceMotion ? 0.15 : 0.28,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="w-full"
-        >
-          {/* Reusable Error Boundary wrapping renderPage */}
-          <ErrorBoundary onReset={() => setCurrentPage('home')}>
-            {renderPage()}
-          </ErrorBoundary>
-        </motion.main>
-      </AnimatePresence>
+      <main id="main" key={currentPage} className="w-full animate-fade-in">
+        {/* Reusable Error Boundary wrapping renderPage */}
+        <ErrorBoundary onReset={() => setCurrentPage('home')}>
+          {renderPage()}
+        </ErrorBoundary>
+      </main>
 
       <Footer
         onNavigate={handleNavigate}

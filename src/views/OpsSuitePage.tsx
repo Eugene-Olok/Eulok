@@ -113,12 +113,12 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
   return (
     <div className="section-full theme-dark" style={{ minHeight: '100vh', padding: 'clamp(32px, 5vw, 64px) 0 80px' }}>
       <div className="container-expansive">
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '28px' }} aria-label="Breadcrumb">
-          <button className="text-link" onClick={() => onNavigate('home')} style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Home</button>
-          <span>/</span>
-          <button className="text-link" onClick={() => onNavigate('case-studies')} style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Work & Evidence</button>
-          <span>/</span>
-          <span style={{ color: 'var(--warm-white)' }} aria-current="page">Reconciliation Engine Demonstration</span>
+        <nav className="breadcrumb" style={{ marginBottom: '28px' }} aria-label="Breadcrumb">
+          <button type="button" onClick={() => onNavigate('home')}>Home</button>
+          <span className="separator">/</span>
+          <button type="button" onClick={() => onNavigate('case-studies')}>Work & Evidence</button>
+          <span className="separator">/</span>
+          <span aria-current="page">Reconciliation Engine Demo</span>
         </nav>
 
         <header style={{ marginBottom: '40px' }}>
@@ -132,30 +132,38 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
         </header>
 
         {/* Tabs Bar */}
-        <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid var(--line)', paddingBottom: '12px', marginBottom: '36px', overflowX: 'auto' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', borderBottom: '1px solid var(--line)', paddingBottom: '14px', marginBottom: '36px' }}>
           <button
+            type="button"
             className={`button button-small ${activeTab === 'simulation' ? 'button-primary' : 'button-quiet'}`}
+            style={{ whiteSpace: 'nowrap' }}
             onClick={() => setActiveTab('simulation')}
           >
             Live Engine Simulation
           </button>
           <button
+            type="button"
             className={`button button-small ${activeTab === 'architecture' ? 'button-primary' : 'button-quiet'}`}
+            style={{ whiteSpace: 'nowrap' }}
             onClick={() => setActiveTab('architecture')}
           >
-            Rules & Decimal Architecture
+            Rules & Decimal Math
           </button>
           <button
+            type="button"
             className={`button button-small ${activeTab === 'escalation' ? 'button-primary' : 'button-quiet'}`}
+            style={{ whiteSpace: 'nowrap' }}
             onClick={() => setActiveTab('escalation')}
           >
-            Exception Boundaries & Review
+            Exception Boundaries
           </button>
           <button
+            type="button"
             className={`button button-small ${activeTab === 'verification' ? 'button-primary' : 'button-quiet'}`}
+            style={{ whiteSpace: 'nowrap' }}
             onClick={() => setActiveTab('verification')}
           >
-            Automated Test Gates (7/7 Pass)
+            Verification Invariants
           </button>
         </div>
 
@@ -229,16 +237,16 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                       {outcome.summary.total_transactions}
                     </strong>
                     <span style={{ fontSize: '0.8rem', display: 'block', color: 'var(--text-muted)' }}>
-                      {outcome.summary.total_payments_amount.toLocaleString()} UGX
+                      {outcome.summary.total_payments_amount.toLocaleString('en-US')} UGX
                     </span>
                   </div>
 
                   <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
-                    <span style={{ fontSize: '0.78rem', color: '#4ade80', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--status-pass-text)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
                       Matched Amount
                     </span>
-                    <strong style={{ fontSize: '1.6rem', color: '#4ade80' }}>
-                      {outcome.summary.matched_amount.toLocaleString()} UGX
+                    <strong style={{ fontSize: '1.6rem', color: 'var(--status-pass-text)' }}>
+                      {outcome.summary.matched_amount.toLocaleString('en-US')} UGX
                     </strong>
                     <span style={{ fontSize: '0.8rem', display: 'block', color: 'var(--text-muted)' }}>
                       {outcome.summary.exact_count} Exact · {outcome.summary.partial_count} Partial
@@ -246,10 +254,10 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                   </div>
 
                   <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
-                    <span style={{ fontSize: '0.78rem', color: '#fbbf24', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--status-warn-text)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
                       Proposed / Review
                     </span>
-                    <strong style={{ fontSize: '1.6rem', color: '#fbbf24' }}>
+                    <strong style={{ fontSize: '1.6rem', color: 'var(--status-warn-text)' }}>
                       {outcome.summary.proposed_count}
                     </strong>
                     <span style={{ fontSize: '0.8rem', display: 'block', color: 'var(--text-muted)' }}>
@@ -258,10 +266,10 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                   </div>
 
                   <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
-                    <span style={{ fontSize: '0.78rem', color: '#f87171', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
-                      Exceptions & Dups
+                    <span style={{ fontSize: '0.78rem', color: 'var(--status-fail-text)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
+                      Exceptions &amp; Dups
                     </span>
-                    <strong style={{ fontSize: '1.6rem', color: '#f87171' }}>
+                    <strong style={{ fontSize: '1.6rem', color: 'var(--status-fail-text)' }}>
                       {outcome.summary.exception_count + outcome.summary.duplicate_count}
                     </strong>
                     <span style={{ fontSize: '0.8rem', display: 'block', color: 'var(--text-muted)' }}>
@@ -373,7 +381,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                               {tx.provider.replace('_', ' ')}
                             </td>
                             <td style={{ fontWeight: 600 }}>
-                              {tx.amount.toLocaleString()} {tx.currency}
+                              {tx.amount.toLocaleString('en-US')} {tx.currency}
                             </td>
                             <td style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                               {tx.payer_reference || '—'}
@@ -425,7 +433,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                               {obl.client}
                             </td>
                             <td style={{ fontWeight: 600 }}>
-                              {obl.amount_due.toLocaleString()} UGX
+                              {obl.amount_due.toLocaleString('en-US')} UGX
                             </td>
                             <td style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                               {obl.description}
@@ -452,7 +460,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <div>TX ID: <code>{selectedMatch.transaction.tx_id}</code></div>
                       <div>Target Obligation: <code>{selectedMatch.obligation?.obligation_id || 'None (Unmatched/Partitioned)'}</code></div>
-                      <div>Amount Applied: <strong>{selectedMatch.amount_applied.toLocaleString()} UGX</strong></div>
+                      <div>Amount Applied: <strong>{selectedMatch.amount_applied.toLocaleString('en-US')} UGX</strong></div>
                     </div>
                   </div>
                 )}
@@ -475,19 +483,19 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <span className="card-number">RULE SPECIFICATION</span>
                 <h3>Rules R1 Through R8</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.88rem' }}>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid #4ade80' }}>
+                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-pass-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R1: Exact Single Match</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Exact reference match + exact amount = 100% deterministic auto-reconciliation.</p>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid #fbbf24' }}>
+                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-warn-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R2: Partial Payment Allocation</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Valid reference but incoming amount &lt; due balance. Allocates payment and tracks remaining due variance.</p>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid #f87171' }}>
+                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R3: Overpayment Exception</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Incoming amount &gt; obligation. Triggers exception flag and escalates credit balance to human finance desk.</p>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid #f87171' }}>
+                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R5: Duplicate Webhook Retries</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Identical provider reference and amount processed previously. Flagged as duplicate suspect to prevent double-crediting.</p>
                   </div>
@@ -578,12 +586,12 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <div>
                   <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Reconciliation Core Invariant Specifications</h3>
                   <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-                    7 formal mathematical properties proven across multi-rail settlement
+                    7 deterministic mathematical properties enforced across multi-rail settlement
                   </span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span className="badge badge-pass" style={{ fontSize: '0.85rem', padding: '6px 12px' }}>
-                    7 / 7 Verified Invariants
+                  <span className="badge badge-neutral" style={{ fontSize: '0.85rem', padding: '6px 12px' }}>
+                    7 Invariant Rules Enforced
                   </span>
                 </div>
               </div>
@@ -622,7 +630,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span className="mono-tag" style={{ fontSize: '0.72rem', color: 'var(--electric-blue)' }}>{t.property}</span>
-                      <span className="badge badge-pass">PROVEN</span>
+                      <span className="badge badge-neutral">ENFORCED</span>
                     </div>
                   </div>
                 ))}
@@ -653,7 +661,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '14px', marginBottom: '14px' }}>
                   <div>
                     <label className="eyebrow" style={{ display: 'block', marginBottom: '4px' }}>Provider</label>
                     <select
@@ -680,7 +688,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '14px', marginBottom: '20px' }}>
                   <div>
                     <label className="eyebrow" style={{ display: 'block', marginBottom: '4px' }}>Amount (UGX)</label>
                     <input

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
   ArrowRight,
@@ -57,7 +56,7 @@ const TOOLS_ITEMS = [
     path: '/scope-calculator',
     desc: 'Deterministic feasibility & milestone estimator',
     icon: Sliders,
-    color: '#fbbf24',
+    color: 'var(--status-warn-text)',
     tag: 'Interactive',
   },
   {
@@ -66,7 +65,7 @@ const TOOLS_ITEMS = [
     path: '/verification',
     desc: 'Deterministic release verification & acceptance criteria',
     icon: CheckCircle2,
-    color: '#4ade80',
+    color: 'var(--status-pass-text)',
     tag: 'Standard',
   },
   {
@@ -75,7 +74,7 @@ const TOOLS_ITEMS = [
     path: '/status',
     desc: 'Real-time client latency & edge infrastructure topology',
     icon: Activity,
-    color: '#38bdf8',
+    color: 'var(--electric-blue)',
     tag: 'Live',
   },
 ];
@@ -140,39 +139,28 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
     return currentPage === id;
   };
 
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <div
-          className="slideover-root"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation drawer"
-        >
-          {/* Backdrop with fade animation */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="slideover-backdrop"
-            onClick={onClose}
-            aria-hidden="true"
-          />
+  if (!isOpen) {
+    return null;
+  }
 
-          {/* Drawer panel with slide animation from right */}
-          <motion.aside
-            initial={{ x: '100%', boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-            animate={{
-              x: 0,
-              boxShadow: '-12px 0 40px rgba(0, 0, 0, 0.45)',
-            }}
-            exit={{ x: '100%', boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-            transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-            className="slideover-panel"
-          >
-            {/* SlideOver Header */}
-            <div className="slideover-header">
+  return (
+    <div
+      className="slideover-root"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation drawer"
+    >
+      {/* Backdrop */}
+      <div
+        className="slideover-backdrop"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* Drawer panel with smooth CSS slide transition */}
+      <aside className="slideover-panel">
+        {/* SlideOver Header */}
+        <div className="slideover-header">
               <a
                 href="/"
                 className="brand-wordmark"
@@ -383,9 +371,7 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
                 <ArrowRight size={15} />
               </button>
             </div>
-          </motion.aside>
+          </aside>
         </div>
-      )}
-    </AnimatePresence>
-  );
-};
+      );
+    };

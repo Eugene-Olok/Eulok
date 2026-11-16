@@ -149,7 +149,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               </div>
             </div>
 
-            <div className="card" style={{ background: 'var(--deep-navy)', borderColor: 'var(--line)' }}>
+            <div className="card" style={{ background: 'var(--bg-secondary)', borderColor: 'var(--line)' }}>
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '14px', display: 'inline-block' }}>
                 EULOK Practice Overview
               </span>

@@ -223,8 +223,8 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
                   <th scope="col">Gate</th>
                   <th scope="col">What It Verifies</th>
                   <th scope="col">Methodology & Tooling</th>
-                  <th scope="col">Release Standard</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Required Exit Criteria</th>
+                  <th scope="col">Enforcement</th>
                 </tr>
               </thead>
               <tbody>
@@ -233,49 +233,49 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
                   <td>Core business logic, decimal calculations, state transitions</td>
                   <td>Deterministic unit test runners, zero-mock pure functions</td>
                   <td>100% pass on critical financial paths</td>
-                  <td><span className="badge badge-pass">PASS</span></td>
+                  <td><span className="badge badge-neutral">Blocking Gate</span></td>
                 </tr>
                 <tr>
                   <th scope="row">Integration Tests</th>
                   <td>API contracts, webhook handling, database queries</td>
                   <td>Idempotency simulation, sandbox payload replay</td>
-                  <td>All mock contract tests green</td>
-                  <td><span className="badge badge-pass">PASS</span></td>
+                  <td>All contract &amp; replay suites green</td>
+                  <td><span className="badge badge-neutral">Blocking Gate</span></td>
                 </tr>
                 <tr>
-                  <th scope="row">Browser & E2E</th>
+                  <th scope="row">Browser &amp; E2E</th>
                   <td>Critical user journeys, responsive reflow, form validation</td>
-                  <td>Playwright / automated browser verification across viewports</td>
-                  <td>Zero console errors, zero layout overflow</td>
-                  <td><span className="badge badge-pass">PASS</span></td>
+                  <td>Playwright headless Chromium across mobile &amp; desktop viewports</td>
+                  <td>Clean runtime console, zero horizontal overflow (320px–1440px)</td>
+                  <td><span className="badge badge-neutral">Pre-Release Check</span></td>
                 </tr>
                 <tr>
                   <th scope="row">Accessibility</th>
                   <td>Keyboard navigation, contrast, landmarks, focus rings</td>
                   <td>Automated axe-core checks + manual keyboard walkthrough</td>
-                  <td>WCAG 2.2 AA target, skip-link verified</td>
-                  <td><span className="badge badge-pass">PASS</span></td>
+                  <td>WCAG 2.2 AA contrast &amp; focus targets verified</td>
+                  <td><span className="badge badge-neutral">Pre-Release Check</span></td>
                 </tr>
                 <tr>
-                  <th scope="row">Security & Secrets</th>
+                  <th scope="row">Security &amp; Secrets</th>
                   <td>Gitleaks secret scanning, credential isolation, dependency audit</td>
                   <td>Static analysis, npm audit, zero tokens in Git</td>
                   <td>0 high/critical vulnerabilities, 0 exposed keys</td>
-                  <td><span className="badge badge-pass">PASS</span></td>
+                  <td><span className="badge badge-neutral">Blocking Gate</span></td>
                 </tr>
                 <tr>
                   <th scope="row">Performance</th>
-                  <td>Bundle budget, Core Web Vitals (LCP, INP, CLS)</td>
-                  <td>Vite build analyzer, compressed payload limits</td>
-                  <td>Initial bundle &lt; 100KB, sub-2s mobile LCP</td>
-                  <td><span className="badge badge-pass">PASS</span></td>
+                  <td>Payload budget, Core Web Vitals (LCP, INP, CLS)</td>
+                  <td>Compressed asset budget inspection &amp; network throttling checks</td>
+                  <td>Pre-rendered HTML/CSS first paint; lean compressed payload budget</td>
+                  <td><span className="badge badge-neutral">Release Budget</span></td>
                 </tr>
                 <tr>
                   <th scope="row">Release Verification</th>
                   <td>Live production smoke test, DNS canonicals, SSL</td>
                   <td>HTTP header inspection, live endpoint health probes</td>
-                  <td>Confirmed live response &amp; security.txt</td>
-                  <td><span className="badge badge-pass">PASS</span></td>
+                  <td>Confirmed HTTP 200 routing, accurate canonicals &amp; security.txt</td>
+                  <td><span className="badge badge-neutral">Post-Deploy Probe</span></td>
                 </tr>
               </tbody>
             </table>

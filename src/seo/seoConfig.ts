@@ -1,8 +1,9 @@
 import type { PageSEOConfig } from './types.ts';
+import { siteConfig, resolveSiteUrl } from '../siteConfig.ts';
 
-export const SITE_NAME = 'EULOK';
-export const SITE_URL = 'https://eulok.com';
-export const DEFAULT_OG_IMAGE = 'https://eulok.com/og-image.png';
+export const SITE_NAME = siteConfig.name;
+export const SITE_URL = siteConfig.defaultBaseUrl;
+export const DEFAULT_OG_IMAGE = resolveSiteUrl(siteConfig.ogImagePath);
 
 export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
   home: {
@@ -29,31 +30,31 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
       '@graph': [
         {
           '@type': 'Organization',
-          '@id': 'https://eulok.com/#organization',
-          name: 'EULOK',
-          url: 'https://eulok.com',
-          logo: 'https://eulok.com/logo.png',
+          '@id': `${SITE_URL}/#organization`,
+          name: siteConfig.name,
+          url: SITE_URL,
+          logo: resolveSiteUrl(siteConfig.logoPath),
           description:
             'Independent software engineering studio specializing in deterministic financial reconciliation, EFRIS integrations, and mission-critical web applications.',
           address: {
             '@type': 'PostalAddress',
-            addressLocality: 'Kampala',
-            addressCountry: 'UG',
+            addressLocality: siteConfig.addressLocality,
+            addressCountry: siteConfig.addressCountry,
           },
           contactPoint: {
             '@type': 'ContactPoint',
             contactType: 'customer service',
-            telephone: '+256-784-000-000',
+            telephone: '+256-760-779-160',
             availableLanguage: ['English', 'Luganda'],
           },
         },
         {
           '@type': 'WebSite',
-          '@id': 'https://eulok.com/#website',
-          url: 'https://eulok.com',
-          name: 'EULOK',
+          '@id': `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: siteConfig.name,
           publisher: {
-            '@id': 'https://eulok.com/#organization',
+            '@id': `${SITE_URL}/#organization`,
           },
         },
       ],
@@ -86,8 +87,8 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
           serviceType: 'Software Engineering Services',
           provider: {
             '@type': 'Organization',
-            name: 'EULOK',
-            url: 'https://eulok.com',
+            name: siteConfig.name,
+            url: SITE_URL,
           },
           areaServed: 'Worldwide',
           hasOfferCatalog: {
@@ -153,8 +154,8 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
       name: 'High-Performance Web Systems Engineering',
       provider: {
         '@type': 'Organization',
-        name: 'EULOK',
-        url: 'https://eulok.com',
+        name: siteConfig.name,
+        url: SITE_URL,
       },
       description:
         'Custom web applications engineered with zero runtime bloat, sub-second responses, and guaranteed 99.9% uptime architectures.',
@@ -185,8 +186,8 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
       name: 'Financial and EFRIS Fiscalization Integrations',
       provider: {
         '@type': 'Organization',
-        name: 'EULOK',
-        url: 'https://eulok.com',
+        name: siteConfig.name,
+        url: SITE_URL,
       },
       description:
         'Direct automated integration into URA EFRIS fiscal systems, telecom mobile money gateways, and commercial bank webhooks.',
@@ -246,8 +247,8 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
       name: 'Production Software Rescue and Turnaround',
       provider: {
         '@type': 'Organization',
-        name: 'EULOK',
-        url: 'https://eulok.com',
+        name: siteConfig.name,
+        url: SITE_URL,
       },
       description:
         'Rapid turnaround and stabilization for stalled, buggy, or legacy production codebases with test-driven guarantees.',
@@ -297,7 +298,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
         {
           '@type': 'HowToStep',
           name: 'Stage 4: Automated Verification Gates',
-          text: 'Executing the 51-point verification framework across all branches.',
+          text: 'Executing deterministic verification gates across all release branches.',
         },
         {
           '@type': 'HowToStep',

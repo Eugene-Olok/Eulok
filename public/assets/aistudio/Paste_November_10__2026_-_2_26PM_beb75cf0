@@ -1,0 +1,782 @@
+# Company OS website: market research and service strategy
+
+The website should position the business as a software engineering and business-systems partner for Uganda and international clients, not merely a company that makes websites.
+
+That distinction matters: a client may approach you because they need a website, but the more valuable opportunity may be connecting payments, automating finance operations, replacing spreadsheets, repairing unreliable software, or building a secure internal platform.
+
+The research needs to answer three separate questions:
+
+1. What can we credibly sell? Services that solve real business problems and fit the capabilities we can deliver.
+
+2. What should the website learn from established firms? Their service architecture, proof of competence, project process, case-study presentation, and conversion paths—not simply their visual styles.
+
+3. How should the site perform in Uganda and internationally? Fast, accessible, trustworthy, secure, and usable on mobile devices and constrained connections.
+
+The local context is a design requirement, not a reason to lower the engineering standard. GSMA's Mobile Economy Africa 2026 reports that nearly 1 billion people in Africa were not using mobile internet in 2025, despite coverage being available to many of them. That supports treating lightweight pages, low data consumption, and mobile-first usability as core product requirements rather than optional optimizations.
+
+![](https://www.google.com/s2/favicons?domain=https://www.gsma.com\&sz=32)
+
+gsma.com
+
+## 1. Global and regional benchmark: what to learn from other firms
+
+I reviewed representative software engineering consultancies, product-development firms, and Ugandan software providers. The useful comparison is not which company has the most impressive animation; it is how each explains its services, demonstrates credibility, reduces a buyer's uncertainty, and converts interest into a project.
+
+Thoughtworks — engineering depth and service architecture
+
+Global engineering consultancy
+
+Its service architecture spans product development, software engineering, modernization, data, AI, managed services, customer experience, and technology advisory. It connects these capabilities to business challenges and client stories instead of treating everything as one generic “IT services” offering.
+
+![](https://www.google.com/s2/favicons?domain=https://www.thoughtworks.com\&sz=32)
+
+Thoughtworks
+
++2
+
+Adopt: clear service families, problem-led messaging, case studies connected to specific capabilities, and a distinction between building something new and repairing or modernizing existing systems.
+
+[Explore its services](https://www.thoughtworks.com/what-we-do?utm_source=chatgpt.com)
+
+EPAM — complete delivery lifecycle
+
+EPAM organizes its work around strategy, design, engineering, operating systems, and continuous optimization. Its engineering services cover product development, API integration, modernization, quality engineering, DevOps, and cloud capabilities.
+
+![](https://www.google.com/s2/favicons?domain=https://www.epam.com\&sz=32)
+
+EPAM
+
++1
+
+Adopt: explain what happens before coding, what the client receives at handover, how software is tested, and what ongoing support means. This communicates a delivery system rather than just developer availability.
+
+[Explore its engineering services](https://www.epam.com/services/engineering?utm_source=chatgpt.com)
+
+Endava — industry-specific expertise
+
+Endava organizes its offerings around business sectors, including payments, financial services, healthcare, insurance, and government. Its payments practice discusses integration, modernization, and payment orchestration as connected business needs.
+
+![](https://www.google.com/s2/favicons?domain=https://www.endava.com\&sz=32)
+
+Endava
+
++2
+
+Adopt: dedicated solution pages for industries Company OS understands, with concrete workflows and integrations rather than generic claims about “digital transformation.”
+
+[Explore its capabilities](https://www.endava.com/what-we-do?utm_source=chatgpt.com)
+
+Information Village — local credibility and proof
+
+Its public website emphasizes systems operating in production, links to actual project examples, explains ownership and handover, describes its delivery process, and publishes indicative price bands. These are strong trust-building patterns for a buyer deciding whether to hire a local firm.
+
+![](https://www.google.com/s2/favicons?domain=https://informationvillagelimited.com\&sz=32)
+
+Information Village Limited
+
+Adopt: show real work where available, explain ownership and handover, give a clear next step, and communicate how the engagement will work. Use only Company OS's own verifiable evidence; do not imitate another firm's project claims or metrics.
+
+[Explore its website](https://informationvillagelimited.com/software-development-company-uganda?utm_source=chatgpt.com)
+
+Online Tech Uganda — straightforward offers for local buyers
+
+It separates websites, e-commerce, mobile apps, and management systems; explains the process in simple language; emphasizes mobile money, slow-connection usability, written quotes, and continued support.
+
+![](https://www.google.com/s2/favicons?domain=https://www.onlinetechug.com\&sz=32)
+
+Online Tech Uganda
+
+Adopt: plain-language service descriptions, easy WhatsApp contact, understandable deliverables, and a buying process that does not require the client to know software terminology.
+
+[Explore its development page](https://www.onlinetechug.com/development?utm_source=chatgpt.com)
+
+Omega Nodes — packaging and maintenance
+
+Its public offering separates custom software, dashboards, business automation, and school systems. It also presents one-time builds alongside recurring care plans.
+
+![](https://www.google.com/s2/favicons?domain=https://www.omeganodes.ai\&sz=32)
+
+Omega Nodes
+
+Adopt: make the difference between a project fee and ongoing maintenance clear. Do not copy low price points without costing the engineering, support, hosting, and security obligations they imply.
+
+[Explore its custom software service](https://www.omeganodes.ai/services/custom-software?utm_source=chatgpt.com)
+
+Smart Click — integration-led services
+
+Its site makes integrations discoverable as a separate capability, grouping payments, communication, tax, productivity tools, banking, and APIs.
+
+![](https://www.google.com/s2/favicons?domain=https://www.smartclickug.tech\&sz=32)
+
+Smart Click
+
+Adopt: a dedicated integrations service page showing what business systems can connect, what the integration automates, and how errors and reconciliation are handled.
+
+[Explore its website](https://www.smartclickug.tech/?utm_source=chatgpt.com)
+
+### What the benchmark suggests
+
+The strongest combined approach for Company OS is:
+
+* Global engineering credibility: the depth and lifecycle framing of Thoughtworks and EPAM.
+
+* Clear business outcomes: Endava's industry-specific approach.
+
+* Local relevance: the Ugandan providers' emphasis on mobile money, familiar workflows, understandable quotes, and ongoing support.
+
+* Evidence over adjectives: real work, specific deliverables, visible process, transparent ownership, and honest limitations.
+
+This is a synthesis of observed website patterns, not a claim that these firms are identical or that one has the objectively best website.
+
+## 2. Services Company OS should offer
+
+A key distinction: the market can contain an opportunity without that opportunity automatically becoming a service we promise to deliver. The public portfolio should match work we can reliably scope, implement, test, secure, and support.
+
+I would structure the offering in three layers.
+
+### Layer A — primary services to lead with
+
+These are the clearest fit for a one-person engineering business, the current Company OS work, and the types of business problems already identified.
+
+1. Business websites and conversion-focused web experiences
+
+Professional company websites, landing pages, service websites, product sites, and content-managed websites.
+
+* Mobile-first responsive design and accessible interaction.
+
+* Search-engine-friendly content structure and metadata.
+
+* Fast page loads and optimized images.
+
+* WhatsApp, email, and appropriate inquiry flows.
+
+* Analytics and conversion measurement where consent and privacy requirements are handled.
+
+* Clear handover and maintenance options.
+
+Ideal buyers: small and medium businesses, professional services, NGOs, schools, and growing companies that need a credible digital presence.
+
+Package smaller sites around a written scope, explicit page limits, content responsibilities, revisions, and handover.
+
+2. Custom business software and internal systems
+
+Web applications that replace disconnected spreadsheets, paper processes, and systems that no longer fit how an organization operates.
+
+* Operations dashboards and reporting.
+
+* Inventory, order, booking, and workflow management.
+
+* Staff roles, permissions, and audit trails.
+
+* Records management and administrative portals.
+
+* Customer or supplier portals.
+
+* Purpose-built systems for well-defined operational problems.
+
+Ideal buyers: owner-operators, operations managers, finance teams, and organizations with manual processes or fragmented tools.
+
+Sell a measurable business improvement—not simply “custom software.”
+
+3. Business integrations, payments, and reconciliation
+
+Connect the systems a business already uses so staff do not have to repeatedly enter the same information or manually reconcile every transaction.
+
+Potential work includes:
+
+* Mobile-money collection and payment integrations.
+
+* Payment-status verification and transaction reconciliation.
+
+* CRM, accounting, invoicing, and operational-system integrations.
+
+* API and webhook integrations.
+
+* Exception queues and reconciliation reports.
+
+* Reliable synchronization, retry handling, and audit trails.
+
+Ideal buyers: finance managers, schools, SACCOs, retailers, service businesses, and organizations collecting payments through multiple channels.
+
+This should be a signature offering because it combines local business relevance with engineering work that is more valuable than a basic brochure website.
+
+4. Workflow automation and systems integration
+
+Automate repetitive work while preserving human approval where decisions have financial, legal, or operational consequences.
+
+* CRM and lead-routing workflows.
+
+* Invoice and customer follow-up workflows.
+
+* Notifications and document handoffs.
+
+* Cross-system data synchronization.
+
+* Approval workflows and exception handling.
+
+* Operational reporting and scheduled tasks.
+
+Ideal buyers: teams spending significant time on repeated data entry, follow-ups, or moving information between applications.
+
+Make reliability part of the offer: logs, retries, duplicate prevention, error alerts, and a manual recovery path.
+
+5. Software rescue, technical audits, and modernization
+
+Help clients who already have software but cannot confidently maintain it, release changes, or trust its behavior.
+
+* Codebase and architecture assessments.
+
+* Bug investigation and production issue triage.
+
+* Dependency and security configuration reviews.
+
+* Test coverage and CI/CD improvements.
+
+* Performance investigation.
+
+* Database and API reliability improvements.
+
+* Incremental modernization with regression safeguards.
+
+Ideal buyers: businesses with abandoned projects, unreliable vendors, aging applications, or software that is expensive to change.
+
+This is an effective entry service because an audit can define a smaller, evidence-backed remediation project rather than asking a client to commit immediately to a full rebuild.
+
+6. Ongoing engineering care and reliability
+
+Continued technical ownership after launch, with a clearly defined scope.
+
+* Dependency and security updates.
+
+* Bug fixes and small enhancements.
+
+* Uptime and error monitoring where configured.
+
+* Backup and recovery verification.
+
+* Performance reviews.
+
+* Release automation and regression tests.
+
+* Technical documentation and handover.
+
+Ideal buyers: businesses that cannot justify an in-house engineer but need their software maintained responsibly.
+
+Start with defined response windows and maintenance limits. Do not advertise 24/7 support, guaranteed uptime, or enterprise SLAs unless the operational capability and coverage genuinely exist.
+
+### Layer B — valuable adjacent services
+
+These expand the addressable market, but should be sold only when the project can be delivered competently and supported afterward.
+
+| Service                                | What the client buys                                                                       | Important boundary                                                                                          |
+| -------------------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| E-commerce                             | Product catalog, orders, checkout, stock and delivery workflows                            | Payment security, refunds, transaction state, and operational ownership must be scoped.                     |
+| Progressive web apps (PWAs)            | Installable, app-like web experiences with selected offline capabilities                   | Offline behavior must be explicitly designed and tested; it is not automatic.                               |
+| Dashboards and reporting               | Operational metrics, finance summaries, and decision-support views                         | Data quality, access controls, and definitions of each metric matter.                                       |
+| Data migration and cleanup             | Move records from spreadsheets or legacy systems with validation                           | Reconciliation, backups, rollback, and sign-off are mandatory.                                              |
+| Product discovery and technical design | Requirements, workflows, architecture, risk assessment, and implementation specification   | Deliver concrete artifacts rather than an open-ended consulting promise.                                    |
+| Security hardening                     | Access control, secrets handling, dependency review, secure configuration, and remediation | Do not imply certification, legal compliance, or a penetration-testing credential that has not been earned. |
+| AI-enabled business workflows          | Carefully scoped document processing, search, classification, or internal assistants       | Human review, data boundaries, cost controls, evaluation, and deterministic authority are essential.        |
+| Analytics implementation               | Event instrumentation, dashboards, and conversion measurement                              | Privacy, consent, data retention, and the accuracy of reported metrics must be addressed.                   |
+
+### Layer C — opportunities to investigate before making strong public promises
+
+These could be valuable over time, but should not be presented as fully established capabilities merely because clients might request them.
+
+* Native Android and iOS apps: first assess whether a responsive web application or PWA meets the need. Native apps bring distribution, device testing, updates, and long-term maintenance obligations.
+
+* Advanced AI and autonomous agents: begin with constrained, measurable workflows; avoid vague “AI transformation” claims or autonomous financial decision-making.
+
+* Cloud infrastructure and managed DevOps: offer only the environments, monitoring, incident response, and operational coverage that can actually be sustained.
+
+* Staff augmentation and dedicated teams: these models require dependable engineering capacity and delivery coordination beyond what a solo founder can promise indefinitely.
+
+* Regulated financial or healthcare platforms: assess security, privacy, domain expertise, integration permissions, and applicable legal obligations before accepting the work.
+
+* Formal penetration testing, compliance certification, and 24/7 incident response: partner with appropriately qualified specialists where necessary instead of overstating capability.
+
+The website can invite enquiries about these needs without claiming that every engagement is immediately available.
+
+## 3. Uganda-specific opportunities that can differentiate the business
+
+The strongest positioning is not “we build software in Uganda.” It is:
+
+We build business software that fits how organizations operate in Uganda, with engineering practices suitable for international clients.
+
+The following opportunities are particularly relevant.
+
+EFRIS and invoicing-system integration
+
+The Uganda Revenue Authority describes EFRIS as a system for recording transactions and sharing transaction information with URA. Its documented options include system-to-system integration for computerized accounting, ERP, and POS systems.
+
+![](https://www.google.com/s2/favicons?domain=https://ura.go.ug\&sz=32)
+
+Uganda Revenue Authority
+
++1
+
+A credible service could connect a client's existing sales or invoicing system to an authorized EFRIS integration path, subject to the applicable technical and authorization requirements.
+
+Website language: “EFRIS and invoicing integrations for existing business systems.”
+
+Do not claim that Company OS is a URA-accredited EFRIS integrator unless its accreditation is independently verified and applicable to the precise service being advertised. URA publishes a list of accredited integrators, but the search result available here is dated 2024, so it should not be treated as a current accreditation determination.
+
+![](https://www.google.com/s2/favicons?domain=https://ura.go.ug\&sz=32)
+
+Uganda Revenue Authority
+
++1
+
+Mobile-money integration and reconciliation
+
+MTN's official MoMo developer resources describe APIs for collecting payments, disbursing funds, checking transaction status, and supporting other payment workflows. MTN Uganda also documents a sandbox and a process for progressing toward live integration.
+
+![](https://www.google.com/s2/favicons?domain=https://momo.mtn.com\&sz=32)
+
+momo.mtn.com
+
++2
+
+That creates practical integration opportunities for customer payments, school fees, merchant checkout, supplier payments, and reconciliation.
+
+The engineering offer should emphasize verified transaction status, idempotency, duplicate prevention, exception handling, and auditable reconciliation—not just a payment button.
+
+Live availability, onboarding, commercial terms, and permission to use each payment product must be checked for the specific client and use case.
+
+School and SACCO operational systems
+
+Potential problems to solve include payment matching, outstanding balances, member records, fee collection reporting, receipts, approval workflows, and administrative reporting.
+
+Start with tightly scoped operational software or integrations rather than promising an entire banking, lending, or school-management platform before its requirements and risks are understood.
+
+Potential buyers: bursars, finance managers, SACCO managers, administrators, and organizations with fragmented record-keeping.
+
+Insurance and professional-services back-office automation
+
+Opportunities include claims intake, document routing, case tracking, reminders, reporting, and connections between CRM, email, and internal records.
+
+Begin with workflow software and integrations. Treat policy decisions, claim eligibility, underwriting, and regulated financial decisions as separate, higher-risk domains requiring explicit expert review and controls.
+
+Spreadsheet-to-system modernization
+
+Many organizations do not need an enormous new platform. They need reliable shared records, controlled access, validation, automated reports, and a safe path away from error-prone spreadsheets.
+
+Offer a short assessment followed by a scoped implementation with data migration, reconciliation, training, and documented ownership.
+
+These opportunities give the site a clearer commercial identity than a long generic list of technologies.
+
+## 4. The website's differentiator: international engineering, designed for constrained connectivity
+
+Uganda-specific optimization should be visible in the engineering itself. The public site must still look polished, modern, and credible to international buyers.
+
+GSMA's regional reporting identifies device affordability, digital skills, and the gap between network coverage and actual internet use as important constraints. The design response is to minimize unnecessary data and interaction complexity—not to deliver an inferior experience.
+
+![](https://www.google.com/s2/favicons?domain=https://www.gsma.com\&sz=32)
+
+gsma.com
+
++1
+
+### Performance and resilience targets
+
+The following are proposed project acceptance criteria, not claims about the existing website's current performance.
+
+Core Web Vitals targets
+
+# ≤ 2.5 s
+
+LCP
+
+Largest Contentful Paint
+
+# ≤ 200 ms
+
+INP
+
+Interaction to Next Paint
+
+# ≤ 0.1
+
+CLS
+
+Cumulative Layout Shift
+
+These are Google's “good” Core Web Vitals thresholds assessed at the 75th percentile of real-user page loads, segmented by mobile and desktop. They should be treated as measurable goals, not as a guarantee for every device or connection.
+
+![](https://www.google.com/s2/favicons?domain=https://web.dev\&sz=32)
+
+web.dev
+
++1
+
+### Additional low-bandwidth requirements
+
+| Area                  | Engineering requirement                                                                                                                |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| First visit           | Render meaningful content without requiring a large JavaScript bundle or third-party services to load first.                           |
+| Images                | Use appropriately sized responsive images, modern formats when supported, compression, and lazy loading for noncritical images.        |
+| Fonts                 | Prefer a limited font set and weights; use efficient font files and system-font fallbacks.                                             |
+| Animation             | Keep motion subtle and nonessential; honor reduced-motion preferences. Avoid video backgrounds and heavy scroll effects.               |
+| JavaScript            | Ship only what the page needs. Keep navigation and key content usable if nonessential JavaScript fails.                                |
+| Navigation            | Simple, keyboard-accessible navigation with a clear path to services and contact.                                                      |
+| Contact               | Make WhatsApp and email available without requiring a third-party widget to initialize.                                                |
+| Forms                 | Keep them short, validate clearly, preserve user input after errors where feasible, and never silently discard submissions.            |
+| External dependencies | Avoid multiple chat widgets, heavy trackers, remote font dependencies, and unnecessary embeds.                                         |
+| Resilience            | Design explicit empty, loading, timeout, and failure states for any dynamic feature.                                                   |
+| Search                | Use semantic HTML, meaningful page titles, crawlable service pages, and useful content without relying on client-side rendering alone. |
+| Data usage            | Establish a transfer-size budget for initial page load and test with throttled mobile networks.                                        |
+
+MDN's performance guidance notes that images and video can account for a large share of downloaded page bytes and that JavaScript can also significantly affect download time, rendering, CPU use, and battery consumption. It recommends optimizing assets, deferring noncritical work, and using techniques such as efficient fonts and lazy loading appropriately.
+
+![](https://www.google.com/s2/favicons?domain=https://developer.mozilla.org\&sz=32)
+
+MDN
+
++2
+
+I would add a measured first-load budget to the website's acceptance tests. A reasonable initial engineering target is to keep critical initial resources around or below 500 KB compressed on the homepage, excluding subsequent user-requested downloads. This is a proposed budget to validate through testing, not a universal web standard. The final budget should be adjusted based on the actual design, analytics requirements, and test results.
+
+### Accessibility: WCAG 2.2 AA
+
+The site should target WCAG 2.2 Level AA. W3C's guidance includes keyboard access, visible focus, contrast, reflow, accessible form errors, and minimum target-size requirements.
+
+![](https://www.google.com/s2/favicons?domain=https://www.w3.org\&sz=32)
+
+W3C
+
++3
+
+Practical requirements:
+
+* All navigation, menus, dialogs, and forms work with a keyboard.
+
+* Visible focus indicators are present.
+
+* Text contrast meets the applicable minimum ratios.
+
+* Content reflows without horizontal scrolling at narrow viewports, except where inherently required.
+
+* Inputs have programmatic labels and useful error messages.
+
+* Touch targets meet WCAG requirements.
+
+* Images have appropriate alternative text, while decorative imagery is ignored by assistive technology.
+
+* Animations respect user preferences.
+
+* Automated checks are supplemented with manual keyboard and screen-reader review.
+
+Accessibility is part of the product's quality and reach. It should not be a footer badge added after design.
+
+## 5. Recommended website architecture
+
+The site should have enough depth to communicate a real engineering business, without forcing visitors through dozens of pages to understand what you do.
+
+## Proposed site map
+
+Home
+
+Positioning, key business problems, featured services, proof of work, delivery process, and primary contact CTA.
+
+Services
+
+* Business websites
+
+* Custom software and business systems
+
+* Integrations, payments and reconciliation
+
+* Workflow automation
+
+* Software rescue and modernization
+
+* Ongoing engineering care
+
+Solutions
+
+* Finance and payment operations
+
+* Schools and SACCOs
+
+* Retail and service businesses
+
+* Insurance and administrative workflows
+
+* NGOs and organizations with data-heavy operations
+
+These are buyer-specific landing pages only where we can write credible, distinct content. Do not create empty SEO pages for every industry.
+
+Our work
+
+Case studies with the problem, constraints, solution, engineering approach, and verified results. Until genuine client evidence exists, use clearly labeled demonstrations rather than fabricated client stories.
+
+Engineering standards
+
+Explain how we handle testing, accessibility, performance, security, deployment, documentation, and ownership. Avoid unsubstantiated “military-grade,” “unhackable,” or compliance-certified claims.
+
+Process
+
+Discovery → written scope → design and implementation → testing → deployment → handover → ongoing care.
+
+About
+
+The company, its approach, how clients work with us, and verified business details.
+
+Contact / Start a project
+
+WhatsApp, email, and a lightweight project inquiry form with clear next steps.
+
+Supporting pages
+
+Privacy, terms where applicable, accessibility statement, custom 404 page, and service-specific FAQs.
+
+This preserves the earlier direction for Home, Services, About, Process, Engineering, Case Studies, Contact, Privacy, and 404, while making the industry and solution structure more useful to potential buyers.
+
+### The homepage should answer five questions quickly
+
+1. What do you build? Business websites, custom software, integrations, and automation.
+
+2. Who do you help? Ugandan businesses and organizations, with the ability to work remotely with international clients.
+
+3. Why choose you? Reliable delivery, locally relevant integrations, strong engineering controls, and clear ownership.
+
+4. Can I trust you? Real work, transparent scope, demonstrable quality, and no fabricated claims.
+
+5. How do I start? A direct WhatsApp conversation or a concise project inquiry.
+
+A suitable positioning direction—not final approved copy—is:
+
+> Software that solves real business problems. Engineered to work in the real world.
+>
+> We build fast websites, custom business systems, integrations, and workflow automation for organizations in Uganda and beyond.
+
+The actual homepage should be written around concrete client outcomes, rather than filling the hero with a list of frameworks or generic phrases such as “innovative digital transformation.”
+
+## 6. Design direction: premium without being heavy
+
+The site should look like a serious engineering studio, not a generic agency template and not an overloaded enterprise consultancy homepage.
+
+Direction A — Editorial engineering
+
+Strong typography, deliberate whitespace, restrained color, diagrams and technical proof. Best for communicating competence and clarity.
+
+Direction B — Technical studio
+
+A more technical identity with diagrams, structured grids, and controlled dark surfaces. Useful if applied selectively rather than turning every page into a dark dashboard.
+
+These are visual reference directions, not instructions to copy another firm's branding.
+
+My recommendation is to combine the clarity of editorial design with selective technical elements. The design should use a consistent spacing scale, restrained typography, a defined color system, accessible components, and reusable responsive patterns.
+
+Avoid:
+
+* Large autoplay videos.
+
+* Endless scrolling animations.
+
+* A wall of generic stock photography.
+
+* Artificially inflated metrics.
+
+* Excessive gradients, glowing cards, and decorative code.
+
+* Huge animated hero text that delays access to the actual offer.
+
+* A separate, visually inconsistent style for every service page.
+
+Use real product screenshots, diagrams, annotated interface examples, and carefully selected photography when they add information. Visual polish should come from hierarchy, typography, composition, and detail—not from the volume of effects.
+
+## 7. How to convert visitors into clients
+
+The website should support more than one buying journey.
+
+Path A — ready to talk
+
+A prominent WhatsApp contact option for buyers who want to explain a problem quickly. The current website already uses `https://wa.me/256760779160`; preserve it unless the owner changes it.
+
+Path B — request a project assessment
+
+A short form asking what the organization does, what problem it needs solved, the desired outcome, the approximate timeline, and an optional budget range. Collect only information needed to qualify the enquiry.
+
+Path C — researching a service
+
+Specific service pages, practical FAQs, process explanations, and real examples for visitors who are not ready to contact the company yet.
+
+Path D — evaluating a vendor
+
+Engineering standards, ownership and handover commitments, security approach, maintenance options, and case studies to help a buyer evaluate risk.
+
+### Pricing and packages
+
+Pricing deserves special attention in the Ugandan market, but publishing low prices without understanding delivery cost can make the business unsustainable.
+
+I recommend three commercial models:
+
+* Fixed-scope packages: appropriate for well-defined websites, audits, and small integrations.
+
+* Scoped projects: written requirements, assumptions, deliverables, acceptance criteria, milestones, and a clear price.
+
+* Ongoing care plans: a defined monthly scope with explicit response windows, exclusions, and escalation procedures.
+
+Publish starting prices only after costing the work properly. If a project requires discovery, make that explicit. Do not promise a fixed price before the scope is understood, and do not imitate competitors' price points simply because they appear attractive.
+
+For international clients, explain remote collaboration, communication, ownership, handover, and payment arrangements only to the extent the business can actually support them.
+
+## 8. Technical, security, and search requirements
+
+The website is a client acquisition system. It should be engineered and operated accordingly.
+
+| Area              | Required outcome                                                                                                                                         |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Architecture      | Semantic, maintainable pages and reusable components; avoid unnecessary client-side complexity.                                                          |
+| SEO               | Unique titles and descriptions, logical headings, canonical URLs, sitemap, robots policy, structured data where appropriate, and useful service content. |
+| Security          | HTTPS, safe headers, dependency hygiene, no exposed secrets, input validation, spam controls, and no unnecessary collection of personal data.            |
+| Forms             | Server-side validation and abuse protection if backed by a service; clear confirmation and failure behavior; no false success messages.                  |
+| Analytics         | Measure service-page engagement and qualified contact actions with privacy controls and sensible retention.                                              |
+| Reliability       | Monitor actual availability and errors; document deployment and rollback; distinguish synthetic tests from real user evidence.                           |
+| Accessibility     | WCAG 2.2 AA target with automated checks and manual verification.                                                                                        |
+| Performance       | Test real production assets, mobile viewports, throttled networks, and Core Web Vitals.                                                                  |
+| Content integrity | No fake testimonials, invented client logos, fabricated project results, or unverified compliance claims.                                                |
+| Maintainability   | CI checks, repeatable builds, regression tests, clear documentation, and controlled releases.                                                            |
+
+The current site uses Cloudflare Pages and PostHog according to the existing project record. Those services should be retained if the audit confirms they are correctly configured; changing infrastructure is not a design requirement.
+
+## 9. What the site should prove, not merely claim
+
+A small firm can compete on engineering discipline, but only if it can demonstrate that discipline.
+
+Build the trust system around evidence:
+
+* Work samples: genuine projects, with permission to publish where necessary.
+
+* Demonstrations: clearly labeled sample applications when client work is not available to show.
+
+* Engineering standards: actual test strategy, deployment approach, accessibility process, and security boundaries.
+
+* Delivery clarity: scope, milestones, acceptance, handover, and ownership.
+
+* Local capability: accurate descriptions of relevant mobile-money and business-system integration experience.
+
+* Maintenance: a concrete description of what happens after launch.
+
+* Measured performance: current test results from the actual website, not aspirational badges.
+
+* Transparent limitations: clearly state when a service requires a specialist partner or additional client authorization.
+
+The company does not need fabricated enterprise logos or made-up percentages to look credible. A small number of well-explained, verifiable demonstrations will be stronger than an impressive but unsupported portfolio.
+
+## 10. Research-derived priorities
+
+Priority 1 — establish a focused offer
+
+Lead with business websites, custom software, integrations and reconciliation, workflow automation, software rescue, and ongoing engineering care.
+
+Priority 2 — build credibility into the site
+
+Make delivery process, engineering standards, ownership, case studies, and contact options first-class parts of the experience.
+
+Priority 3 — optimize for constrained devices
+
+Set performance budgets, target Core Web Vitals, keep critical resources light, and test accessibility and usability on mobile.
+
+Priority 4 — differentiate through integrations
+
+Make payment workflows, reconciliation, EFRIS integration, and business automation discoverable, with honest descriptions of current capability and authorization requirements.
+
+Priority 5 — keep claims and operations aligned
+
+No unverified service promises, fabricated proof, unsupported compliance statements, or operational commitments beyond available capacity.
+
+### Research sources
+
+The main source material used for this assessment:
+
+* [Thoughtworks — capabilities and services](https://www.thoughtworks.com/what-we-do?utm_source=chatgpt.com) — service organization and modernization.
+
+  ![](https://www.google.com/s2/favicons?domain=https://www.thoughtworks.com\&sz=32)
+
+  Thoughtworks
+
+  +1
+
+* [EPAM — engineering services](https://www.epam.com/services/engineering?utm_source=chatgpt.com) — product development, integration, quality, DevOps, and modernization.
+
+  ![](https://www.google.com/s2/favicons?domain=https://www.epam.com\&sz=32)
+
+  EPAM
+
+  +1
+
+* [Endava — services](https://www.endava.com/what-we-do?utm_source=chatgpt.com) — sector-specific engineering and transformation.
+
+  ![](https://www.google.com/s2/favicons?domain=https://www.endava.com\&sz=32)
+
+  Endava
+
+  +1
+
+* [Information Village — Uganda software development](https://informationvillagelimited.com/software-development-company-uganda?utm_source=chatgpt.com) — local delivery, proof, ownership, and project process.
+
+  ![](https://www.google.com/s2/favicons?domain=https://informationvillagelimited.com\&sz=32)
+
+  Information Village Limited
+
+* [Online Tech Uganda — development services](https://www.onlinetechug.com/development?utm_source=chatgpt.com) — local pricing presentation, mobile-money context, and accessible buying process.
+
+  ![](https://www.google.com/s2/favicons?domain=https://www.onlinetechug.com\&sz=32)
+
+  Online Tech Uganda
+
+* [Omega Nodes — custom software](https://www.omeganodes.ai/services/custom-software?utm_source=chatgpt.com) and [Smart Click](https://www.smartclickug.tech/?utm_source=chatgpt.com) — local packaging, maintenance, and integration-led service structures.
+
+  ![](https://www.google.com/s2/favicons?domain=https://www.omeganodes.ai\&sz=32)
+
+  Omega Nodes
+
+  +1
+
+* [GSMA — The Mobile Economy Africa 2026](https://www.gsma.com/solutions-and-impact/connectivity-for-good/mobile-economy/africa/?utm_source=chatgpt.com) — connectivity and usage-gap context.
+
+  ![](https://www.google.com/s2/favicons?domain=https://www.gsma.com\&sz=32)
+
+  gsma.com
+
+* [Google web.dev — Core Web Vitals thresholds](https://web.dev/articles/defining-core-web-vitals-thresholds/?utm_source=chatgpt.com) — performance measurement and recommended thresholds.
+
+  ![](https://www.google.com/s2/favicons?domain=https://web.dev\&sz=32)
+
+  web.dev
+
+* [W3C — WCAG 2.2](https://www.w3.org/WAI/standards-guidelines/wcag/?utm_source=chatgpt.com) — accessibility standards.
+
+  ![](https://www.google.com/s2/favicons?domain=https://www.w3.org\&sz=32)
+
+  W3C
+
+  +1
+
+* [Uganda Revenue Authority — EFRIS](https://ura.go.ug/en/efris/?utm_source=chatgpt.com) — official system purpose and integration channels.
+
+  ![](https://www.google.com/s2/favicons?domain=https://ura.go.ug\&sz=32)
+
+  Uganda Revenue Authority
+
+  +1
+
+* [MTN MoMo — APIs](https://momo.mtn.com/api/?utm_source=chatgpt.com) — payment collections, disbursements, and related integration capabilities.
+
+  ![](https://www.google.com/s2/favicons?domain=https://momo.mtn.com\&sz=32)
+
+  momo.mtn.com
+
+  +1
+
+This is a targeted benchmark and strategy review, not an exhaustive census of every global software agency or a formal usability test of every reference website.
+
+## Final recommendation
+
+Build the website around a focused engineering partner that solves business problems, with websites as an accessible entry service and integrations, custom systems, and automation as deeper engineering offerings.
+
+The most important design principle is to combine international-grade engineering credibility with the realities of Ugandan buyers and devices: clear pricing expectations, direct contact, mobile-first usability, lightweight delivery, relevant integrations, honest evidence, and reliable post-launch support.
+
+The next implementation step should be a repository-backed website audit that maps the existing pages, components, design tokens, performance, accessibility, and content against this research and the preserved design-system audit. That audit should produce a precise keep/change/build mapping before the visual redesign begins.

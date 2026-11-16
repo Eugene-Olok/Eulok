@@ -67,7 +67,7 @@ export function runReconciliation(
           transaction: tx,
           obligation: null,
           amount_applied: 0,
-          rationale: `Conflicting identifier: tx_id "${tx.tx_id}" already recorded with amount ${first.amount.toLocaleString()} UGX, current record has ${tx.amount.toLocaleString()} UGX. Requires security review.`,
+          rationale: `Conflicting identifier: tx_id "${tx.tx_id}" already recorded with amount ${first.amount.toLocaleString('en-US')} UGX, current record has ${tx.amount.toLocaleString('en-US')} UGX. Requires security review.`,
         };
         exceptions.push(match);
       } else {
@@ -78,7 +78,7 @@ export function runReconciliation(
           transaction: tx,
           obligation: null,
           amount_applied: 0,
-          rationale: `Duplicate transaction ID: "${tx.tx_id}" with amount ${tx.amount.toLocaleString()} UGX already recorded at ${first.timestamp}. Retained for duplicate audit.`,
+          rationale: `Duplicate transaction ID: "${tx.tx_id}" with amount ${tx.amount.toLocaleString('en-US')} UGX already recorded at ${first.timestamp}. Retained for duplicate audit.`,
         };
         duplicates.push(match);
       }
@@ -103,7 +103,7 @@ export function runReconciliation(
           transaction: tx,
           obligation: oblState.obligation,
           amount_applied: 0,
-          rationale: `Overpayment: Obligation ${oblState.obligation.obligation_id} (${oblState.obligation.client}) is already fully paid. Received surplus ${tx.amount.toLocaleString()} UGX.`,
+          rationale: `Overpayment: Obligation ${oblState.obligation.obligation_id} (${oblState.obligation.client}) is already fully paid. Received surplus ${tx.amount.toLocaleString('en-US')} UGX.`,
         };
         exceptions.push(match);
       } else if (tx.amount === oblState.remaining) {
@@ -115,7 +115,7 @@ export function runReconciliation(
           transaction: tx,
           obligation: oblState.obligation,
           amount_applied: tx.amount,
-          rationale: `Exact match: Reference ${ref} matches obligation ${oblState.obligation.obligation_id} for exactly ${tx.amount.toLocaleString()} UGX. Obligation closed.`,
+          rationale: `Exact match: Reference ${ref} matches obligation ${oblState.obligation.obligation_id} for exactly ${tx.amount.toLocaleString('en-US')} UGX. Obligation closed.`,
         };
         matches.push(match);
       } else if (tx.amount < oblState.remaining) {
@@ -127,7 +127,7 @@ export function runReconciliation(
           transaction: tx,
           obligation: oblState.obligation,
           amount_applied: tx.amount,
-          rationale: `Partial match: Reference ${ref} applied to obligation ${oblState.obligation.obligation_id}. Remaining balance: ${oblState.remaining.toLocaleString()} UGX.`,
+          rationale: `Partial match: Reference ${ref} applied to obligation ${oblState.obligation.obligation_id}. Remaining balance: ${oblState.remaining.toLocaleString('en-US')} UGX.`,
         };
         matches.push(match);
       } else {
@@ -138,7 +138,7 @@ export function runReconciliation(
           transaction: tx,
           obligation: oblState.obligation,
           amount_applied: 0,
-          rationale: `Overpayment exception: Reference ${ref} pays ${tx.amount.toLocaleString()} UGX but only ${oblState.remaining.toLocaleString()} UGX remains due. Routed to human review.`,
+          rationale: `Overpayment exception: Reference ${ref} pays ${tx.amount.toLocaleString('en-US')} UGX but only ${oblState.remaining.toLocaleString('en-US')} UGX remains due. Routed to human review.`,
         };
         exceptions.push(match);
       }
@@ -158,7 +158,7 @@ export function runReconciliation(
           transaction: tx,
           obligation: candidate.obligation,
           amount_applied: 0, // Not auto-applied!
-          rationale: `Proposed match: No payer reference provided, but amount (${tx.amount.toLocaleString()} UGX) exactly equals open balance for ${candidate.obligation.obligation_id} (${candidate.obligation.client}). Requires human confirmation.`,
+          rationale: `Proposed match: No payer reference provided, but amount (${tx.amount.toLocaleString('en-US')} UGX) exactly equals open balance for ${candidate.obligation.obligation_id} (${candidate.obligation.client}). Requires human confirmation.`,
         };
         matches.push(match);
       } else {

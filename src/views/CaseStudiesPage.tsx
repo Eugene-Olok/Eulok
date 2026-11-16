@@ -99,7 +99,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                   <span className="badge badge-warn" style={{ marginBottom: '10px' }}>
                     Deliberate Empty State
                   </span>
-                  <h3 style={{ fontSize: '1.35rem' }}>First case study publishing after the EFRIS pilot closes.</h3>
+                  <h3 style={{ fontSize: '1.35rem' }}>Case studies are published upon verified acceptance.</h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                     Scope and date, not scope and spin.
                   </p>

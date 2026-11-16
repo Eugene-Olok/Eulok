@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageSquare, Mail, ArrowUpRight, Activity, Sliders } from 'lucide-react';
 import { navigateTo, openIntakeModal } from '../utils/navigation';
 import { ThemeToggle } from './ThemeToggle';
@@ -12,6 +12,12 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigate,
   onOpenIntakeModal,
 }) => {
+  const [copyrightYear, setCopyrightYear] = useState<number>(() => new Date().getUTCFullYear());
+
+  useEffect(() => {
+    setCopyrightYear(new Date().getFullYear());
+  }, []);
+
   const whatsappUrl = 'https://wa.me/256760779160?text=Hello%20EULOK%2C%20I%20would%20like%20to%20discuss%20a%20software%20engineering%20project.';
 
   const handleNav = (page: string) => {
@@ -138,15 +144,13 @@ export const Footer: React.FC<FooterProps> = ({
             <a
               href="/status"
               onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('status'); } }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#4ade80' }}
             >
-              <span className="live-status-dot" style={{ width: '7px', height: '7px' }} />
-              Live Status
+              System Telemetry
             </a>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
             <ThemeToggle showLabel />
-            <span>© {new Date().getFullYear()} EULOK. Each engagement is subject to explicit written scope and acceptance.</span>
+            <span>© {copyrightYear} EULOK. Each engagement is subject to explicit written scope and acceptance.</span>
           </div>
         </div>
       </div>

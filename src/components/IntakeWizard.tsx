@@ -378,7 +378,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
           </div>
 
           {submitError && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f87171', fontSize: '0.84rem', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--status-fail-text)', fontSize: '0.84rem', marginBottom: '16px' }}>
               <AlertCircle size={16} />
               <span>{submitError}</span>
             </div>
@@ -445,7 +445,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                 className="button button-quiet button-small"
                 onClick={handleCopyRef}
               >
-                {copied ? <CheckCircle2 size={14} color="#4ade80" /> : <Copy size={14} />}
+                {copied ? <CheckCircle2 size={14} color="var(--status-pass-text)" /> : <Copy size={14} />}
                 <span>{copied ? 'Copied ID' : 'Copy Reference'}</span>
               </button>
             </div>

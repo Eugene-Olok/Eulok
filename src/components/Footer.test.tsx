@@ -119,7 +119,7 @@ describe('Footer Component — Rendering & Accessibility Standards', () => {
     const security = screen.getByRole('link', { name: /Security & RFC 9116/i });
     const accessibility = screen.getByRole('link', { name: /Accessibility \(WCAG 2\.2 AA\)/i });
     const standards = screen.getByRole('link', { name: /Delivery Commitments/i });
-    const status = screen.getByRole('link', { name: /Live Status/i });
+    const status = screen.getByRole('link', { name: /System Telemetry/i });
 
     expect(privacy).toBeInTheDocument();
     expect(security).toBeInTheDocument();

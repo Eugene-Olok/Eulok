@@ -197,7 +197,7 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
             Deterministic Release Verification Standard
           </h1>
           <p className="hero-subheading" style={{ maxWidth: '66ch' }}>
-            How EULOK verifies software architectures before production release. We reject subjective claims and self-graded checkboxes. Every deliverable is proven through reproducible automated tests, security boundary isolation, accessibility audits, and multi-viewport responsive testing.
+            How EULOK verifies software architectures before production release. We reject subjective claims and self-graded checkboxes. Every deliverable is verified through reproducible automated tests, security boundary isolation, accessibility audits, and multi-viewport responsive testing.
           </p>
 
           <blockquote
@@ -287,11 +287,11 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
                           gap: '6px',
                         }}
                       >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
-                          <strong style={{ fontSize: '0.94rem', color: 'var(--warm-white)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '6px' }}>
+                          <strong style={{ fontSize: '0.94rem', color: 'var(--warm-white)', minWidth: 0, flex: '1 1 auto' }}>
                             {item.name}
                           </strong>
-                          <span className="badge badge-pass" style={{ fontSize: '0.68rem', padding: '1px 6px' }}>
+                          <span className="badge badge-accent" style={{ fontSize: '0.68rem', padding: '1px 6px', flexShrink: 0 }}>
                             {item.standard}
                           </span>
                         </div>

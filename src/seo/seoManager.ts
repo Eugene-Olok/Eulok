@@ -1,5 +1,6 @@
 import type { PageSEOConfig } from './types.ts';
 import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from './seoConfig.ts';
+import { siteConfig, resolveSiteBaseUrl, resolveSiteUrl } from '../siteConfig.ts';
 
 export interface MetaTagEntry {
   attributeName: 'name' | 'property';
@@ -11,18 +12,31 @@ export interface MetaTagEntry {
  * Resolves a fully qualified canonical URL based on origin and path.
  */
 export function resolveCanonicalUrl(path: string, customOrigin?: string): string {
-  const origin =
-    customOrigin ||
-    (typeof window !== 'undefined' && window.location?.origin
-      ? window.location.origin
-      : SITE_URL);
+  return resolveSiteUrl(path, customOrigin);
+}
 
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  try {
-    return new URL(cleanPath, origin).href;
-  } catch {
-    return `${origin}${cleanPath}`;
+/**
+ * Recursively rewrites default base URL occurrences inside JSON-LD objects
+ * to match the active runtime/build origin.
+ */
+function rewriteStructuredDataOrigin(value: unknown, activeOrigin: string): unknown {
+  if (typeof value === 'string') {
+    if (SITE_URL !== activeOrigin && value.startsWith(SITE_URL)) {
+      return `${activeOrigin}${value.slice(SITE_URL.length)}`;
+    }
+    return value;
   }
+  if (Array.isArray(value)) {
+    return value.map((item) => rewriteStructuredDataOrigin(item, activeOrigin));
+  }
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      out[k] = rewriteStructuredDataOrigin(v, activeOrigin);
+    }
+    return out;
+  }
+  return value;
 }
 
 /**
@@ -37,8 +51,15 @@ export function buildSEOTags(
   metaTags: MetaTagEntry[];
   jsonLd: string;
 } {
-  const canonicalUrl = resolveCanonicalUrl(config.canonicalPath, customOrigin);
-  const ogImage = config.ogImage || DEFAULT_OG_IMAGE;
+  const activeOrigin = resolveSiteBaseUrl(customOrigin);
+  const canonicalUrl = resolveCanonicalUrl(config.canonicalPath, activeOrigin);
+  const rawOgImage = config.ogImage || DEFAULT_OG_IMAGE;
+  const ogImage =
+    rawOgImage.startsWith(SITE_URL) && SITE_URL !== activeOrigin
+      ? `${activeOrigin}${rawOgImage.slice(SITE_URL.length)}`
+      : rawOgImage.startsWith('/')
+        ? resolveSiteUrl(rawOgImage, activeOrigin)
+        : rawOgImage;
   const ogImageAlt = config.ogImageAlt || config.title;
 
   const metaTags: MetaTagEntry[] = [
@@ -59,7 +80,7 @@ export function buildSEOTags(
     },
     { attributeName: 'property', attributeValue: 'og:type', content: config.ogType },
     { attributeName: 'property', attributeValue: 'og:url', content: canonicalUrl },
-    { attributeName: 'property', attributeValue: 'og:site_name', content: SITE_NAME },
+    { attributeName: 'property', attributeValue: 'og:site_name', content: SITE_NAME || siteConfig.name },
     { attributeName: 'property', attributeValue: 'og:image', content: ogImage },
     { attributeName: 'property', attributeValue: 'og:image:alt', content: ogImageAlt },
 
@@ -74,7 +95,8 @@ export function buildSEOTags(
     { attributeName: 'name', attributeValue: 'twitter:image', content: ogImage },
   ];
 
-  const jsonLd = JSON.stringify(config.structuredData, null, 2);
+  const localizedStructuredData = rewriteStructuredDataOrigin(config.structuredData, activeOrigin);
+  const jsonLd = JSON.stringify(localizedStructuredData, null, 2);
 
   return {
     title: config.title,

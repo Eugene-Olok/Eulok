@@ -231,7 +231,7 @@ export function calculateScope(inputs: ScopingInputs): ScopingResult {
       stageName: 'Stage 04: Production Implementation & Integration',
       weeks: w4,
       deliverables: ['Working integration adapters (MTN/Airtel/EFRIS)', 'Fail-closed state persistence', 'Security credential isolation'],
-      exitGate: '51-point release verification gate executed and passed.',
+      exitGate: 'Deterministic release verification gates executed and passed.',
     },
     {
       stageNumber: 5,

@@ -1,5 +1,6 @@
 import { navigateTo, openIntakeModal } from '../utils/navigation';
-import React from 'react';
+import { siteConfig, resolveSiteUrl } from '../siteConfig';
+import React, { useState, useEffect } from 'react';
 import { Shield, Key, FileCheck, ArrowRight, Lock, CheckCircle2, AlertTriangle, Terminal, Cpu, Database, Eye } from 'lucide-react';
 
 interface SecurityPageProps {
@@ -11,6 +12,14 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
   onNavigate = navigateTo,
   onOpenIntakeModal = openIntakeModal,
 }) => {
+  const [securityTxtUrl, setSecurityTxtUrl] = useState<string>(() =>
+    resolveSiteUrl('/.well-known/security.txt', siteConfig.defaultBaseUrl)
+  );
+
+  useEffect(() => {
+    setSecurityTxtUrl(resolveSiteUrl('/.well-known/security.txt'));
+  }, []);
+
   return (
     <div className="page-wrapper">
       {/* Breadcrumb */}
@@ -23,10 +32,7 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
       {/* Hero Header */}
       <header className="page-hero-header">
         <div className="container-expansive">
-          <div className="live-status-pill" style={{ marginBottom: '16px' }}>
-            <span className="live-status-dot"></span>
-            <span>RFC 9116 Security Disclosure & Cryptographic Verification</span>
-          </div>
+          <span className="eyebrow">RFC 9116 Security Disclosure · Vulnerability Policy</span>
           <h1 className="hero-heading" style={{ maxWidth: '24ch' }}>
             Security is an architectural discipline, not a badge.
           </h1>
@@ -87,13 +93,13 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
               EULOK maintains a transparent, public vulnerability disclosure policy complying with Internet Engineering Task Force (IETF) RFC 9116. Our security contact file is publicly available at:
             </p>
-            <div style={{ background: 'var(--obsidian)', border: '1px solid var(--line)', borderRadius: '8px', padding: '16px 20px', marginBottom: '24px' }}>
-              <code>https://eulok.com/.well-known/security.txt</code>
+            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line)', borderRadius: '8px', padding: '16px 20px', marginBottom: '24px' }}>
+              <code>{securityTxtUrl}</code>
             </div>
 
             <h3 style={{ fontSize: '1.2rem', marginBottom: '12px' }}>Guidelines for Security Researchers:</h3>
             <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '24px' }}>
-              <li>Send reports to <code>security@eulok.com</code> with reproducible technical steps, proof of concept, and affected endpoints.</li>
+              <li>Send reports to <code>{siteConfig.securityEmail}</code> with reproducible technical steps, proof of concept, and affected endpoints.</li>
               <li>Allow a reasonable window (minimum 30 calendar days) before public disclosure to permit mitigation.</li>
               <li>Do not access, modify, or destroy client data. Do not execute volumetric DDoS attacks against production infrastructure.</li>
               <li>We acknowledge valid submissions within <strong>48 hours</strong> and provide regular remediation updates.</li>
@@ -103,7 +109,7 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
             <span className="eyebrow">Edge Hardening</span>
             <h2>HTTP Response Headers & Content Security Policy</h2>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
-              All responses from EULOK edge hosting are configured with military-grade defense-in-depth headers:
+              All responses from edge hosting are configured with explicit defense-in-depth HTTP security headers:
             </p>
             <div className="table-responsive" style={{ marginBottom: '36px' }}>
               <table className="audit-table">
@@ -151,12 +157,12 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
                 For security audits, incident disclosures, or compliance questionnaires, contact the engineering security coordinator.
               </p>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <a href="mailto:security@eulok.com" className="button button-primary">
-                  <span>Contact security@eulok.com</span>
+                <a href={`mailto:${siteConfig.securityEmail}`} className="button button-primary">
+                  <span>Contact {siteConfig.securityEmail}</span>
                   <ArrowRight size={14} />
                 </a>
                 <button type="button" className="button button-quiet" onClick={() => onNavigate('verification')}>
-                  <span>Inspect 51 Verification Gates</span>
+                  <span>Inspect Release Verification Standard</span>
                 </button>
               </div>
             </div>

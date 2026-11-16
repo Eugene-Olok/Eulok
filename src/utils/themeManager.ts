@@ -12,6 +12,7 @@ export interface ThemeVariables {
   '--bg-primary': string;
   '--bg-secondary': string;
   '--bg-card': string;
+  '--bg-card-hover': string;
   '--surface-elevated': string;
   '--text-main': string;
   '--text-subtle': string;
@@ -19,35 +20,67 @@ export interface ThemeVariables {
   '--line': string;
   '--line-strong': string;
   '--warm-white': string;
+  '--accent-blue': string;
   '--electric-blue': string;
+  '--status-pass-bg': string;
+  '--status-pass-text': string;
+  '--status-pass-border': string;
+  '--status-warn-bg': string;
+  '--status-warn-text': string;
+  '--status-warn-border': string;
+  '--status-fail-bg': string;
+  '--status-fail-text': string;
+  '--status-fail-border': string;
 }
 
 export const LIGHT_THEME_VARIABLES: ThemeVariables = {
   '--bg-primary': '#f8fafc',
   '--bg-secondary': '#f1f5f9',
   '--bg-card': '#ffffff',
+  '--bg-card-hover': '#f8fafc',
   '--surface-elevated': '#ffffff',
-  '--text-main': '#090e17',
+  '--text-main': '#0f172a',
   '--text-subtle': '#334155',
-  '--text-muted': '#64748b',
-  '--line': 'rgba(0, 0, 0, 0.12)',
-  '--line-strong': 'rgba(0, 0, 0, 0.22)',
-  '--warm-white': '#090e17',
+  '--text-muted': '#475569',
+  '--line': 'rgba(15, 23, 42, 0.11)',
+  '--line-strong': 'rgba(15, 23, 42, 0.22)',
+  '--warm-white': '#0f172a',
+  '--accent-blue': '#0369a1',
   '--electric-blue': '#0284c7',
+  '--status-pass-bg': 'rgba(22, 163, 74, 0.10)',
+  '--status-pass-text': '#15803d',
+  '--status-pass-border': 'rgba(22, 163, 74, 0.28)',
+  '--status-warn-bg': 'rgba(217, 119, 6, 0.10)',
+  '--status-warn-text': '#b45309',
+  '--status-warn-border': 'rgba(217, 119, 6, 0.28)',
+  '--status-fail-bg': 'rgba(220, 38, 38, 0.10)',
+  '--status-fail-text': '#b91c1c',
+  '--status-fail-border': 'rgba(220, 38, 38, 0.28)',
 };
 
 export const DARK_THEME_VARIABLES: ThemeVariables = {
-  '--bg-primary': '#090E17',
-  '--bg-secondary': '#101928',
-  '--bg-card': '#142034',
-  '--surface-elevated': '#1a2a44',
-  '--text-main': '#F3F1EC',
-  '--text-subtle': '#cbd5e1',
-  '--text-muted': '#8899ac',
-  '--line': 'rgba(255, 255, 255, 0.12)',
-  '--line-strong': 'rgba(255, 255, 255, 0.22)',
-  '--warm-white': '#F3F1EC',
-  '--electric-blue': '#38bdf8',
+  '--bg-primary': '#090D16',
+  '--bg-secondary': '#0F1623',
+  '--bg-card': '#131D2E',
+  '--bg-card-hover': '#18253A',
+  '--surface-elevated': '#1B2A42',
+  '--text-main': '#F4F5F7',
+  '--text-subtle': '#CBD5E1',
+  '--text-muted': '#94A3B8',
+  '--line': 'rgba(255, 255, 255, 0.10)',
+  '--line-strong': 'rgba(255, 255, 255, 0.20)',
+  '--warm-white': '#F4F5F7',
+  '--accent-blue': '#60A5FA',
+  '--electric-blue': '#38BDF8',
+  '--status-pass-bg': 'rgba(34, 197, 94, 0.14)',
+  '--status-pass-text': '#4ADE80',
+  '--status-pass-border': 'rgba(34, 197, 94, 0.35)',
+  '--status-warn-bg': 'rgba(245, 158, 11, 0.14)',
+  '--status-warn-text': '#FBBF24',
+  '--status-warn-border': 'rgba(245, 158, 11, 0.35)',
+  '--status-fail-bg': 'rgba(239, 68, 68, 0.14)',
+  '--status-fail-text': '#F87171',
+  '--status-fail-border': 'rgba(239, 68, 68, 0.35)',
 };
 
 /**
@@ -90,6 +123,11 @@ export function applyTheme(theme: ThemeMode): void {
   const vars = theme === 'light' ? LIGHT_THEME_VARIABLES : DARK_THEME_VARIABLES;
   for (const [key, value] of Object.entries(vars)) {
     root.style.setProperty(key, value);
+  }
+
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) {
+    metaTheme.setAttribute('content', theme === 'light' ? '#f8fafc' : '#090D16');
   }
 
   // Dispatch custom event for synchronized components

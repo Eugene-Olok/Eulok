@@ -82,12 +82,12 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
 
   const riskBadgeColor =
     scopingResult.riskLevel === 'LOW'
-      ? '#4ade80'
+      ? 'var(--status-pass-text)'
       : scopingResult.riskLevel === 'MODERATE'
       ? 'var(--electric-blue)'
       : scopingResult.riskLevel === 'HIGH'
-      ? '#fbbf24'
-      : '#f87171';
+      ? 'var(--status-warn-text)'
+      : 'var(--status-fail-text)';
 
   return (
     <div className="page-wrapper">
@@ -352,7 +352,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                       onClick={handleCopyMemorandum}
                       style={{ justifyContent: 'center' }}
                     >
-                      {copied ? <CheckCircle2 size={14} color="#4ade80" /> : <Copy size={14} />}
+                      {copied ? <CheckCircle2 size={14} color="var(--status-pass-text)" /> : <Copy size={14} />}
                       <span>{copied ? 'Copied SOW' : 'Copy SOW'}</span>
                     </button>
 

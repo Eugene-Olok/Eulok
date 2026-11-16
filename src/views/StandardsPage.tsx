@@ -94,7 +94,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               </p>
               <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
                 <li><strong>Static-First Astro Architecture:</strong> Pages pre-render to raw HTML and CSS at build time. Zero bloated hydration client JavaScript required to read content.</li>
-                <li><strong>Sub-100KB Critical Payloads:</strong> Content displays in under 1.5 seconds even on throttle-capped 3G connections.</li>
+                <li><strong>Lean Critical Payloads:</strong> Pre-rendered semantic HTML and optimized CSS keep first paint responsive even on throttle-capped 3G connections.</li>
                 <li><strong>Budget Hardware Friendly:</strong> Tested down to 320px/360px viewports on entry-level Android devices without memory exhaustion or reflow jank.</li>
                 <li><strong>Zero-Budget Infrastructure:</strong> Distributed on Cloudflare’s global edge nodes with instant local cache hits, bypassing congested international transit.</li>
               </ul>
@@ -120,7 +120,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                     </tr>
                     <tr>
                       <td><strong>Initial Page Weight</strong></td>
-                      <td>&lt; 100 KB total compressed static assets</td>
+                      <td>Pre-rendered HTML/CSS shell; lean compressed assets (under 180 KB budget)</td>
                     </tr>
                     <tr>
                       <td><strong>Font Loading</strong></td>
@@ -144,7 +144,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
           <div className="grid-2">
             <div className="card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line-strong)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-                <Server size={22} color="#4ade80" />
+                <Server size={22} color="var(--status-pass-text)" />
                 <h3 style={{ margin: 0, fontSize: '1.25rem' }}>Realistic Availability Discipline</h3>
               </div>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: '10px 0 16px' }}>

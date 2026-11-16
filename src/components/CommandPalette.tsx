@@ -49,7 +49,7 @@ export const CommandPalette: React.FC = () => {
       subtitle: 'Run 8-rule deterministic matching engine with live test vectors',
       category: 'Tools & Simulators',
       action: () => navigateTo('ops-suite'),
-      icon: <Cpu size={16} color="#4ade80" />,
+      icon: <Cpu size={16} color="var(--status-pass-text)" />,
     },
     {
       id: 'system-status',
@@ -65,7 +65,7 @@ export const CommandPalette: React.FC = () => {
       subtitle: 'Deterministic release verification framework and architectural criteria',
       category: 'Governance & RFC',
       action: () => navigateTo('verification'),
-      icon: <ShieldCheck size={16} color="#4ade80" />,
+      icon: <ShieldCheck size={16} color="var(--status-pass-text)" />,
     },
     {
       id: 'start-intake',
@@ -89,7 +89,7 @@ export const CommandPalette: React.FC = () => {
       subtitle: 'Stabilize failing codebases, restore test suites, fix tech debt',
       category: 'Navigation',
       action: () => navigateTo('rescue'),
-      icon: <Terminal size={16} color="#fbbf24" />,
+      icon: <Terminal size={16} color="var(--status-warn-text)" />,
     },
     {
       id: 'standards',

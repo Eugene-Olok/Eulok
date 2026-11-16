@@ -74,7 +74,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
 
           <div className="grid-3">
             <div className="card" style={{ background: 'var(--bg-primary)' }}>
-              <span className="mono-tag" style={{ color: '#f87171', display: 'block', marginBottom: '10px' }}>01 / STALLED DELIVERY</span>
+              <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>01 / STALLED DELIVERY</span>
               <h3>Unfinished Contractor Projects</h3>
               <p>
                 An agency or freelance developer delivered half-working software, missing core edge-case handling or disappearing before production deployment.
@@ -82,7 +82,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
             </div>
 
             <div className="card" style={{ background: 'var(--bg-primary)' }}>
-              <span className="mono-tag" style={{ color: '#f87171', display: 'block', marginBottom: '10px' }}>02 / SILENT ERRORS</span>
+              <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>02 / SILENT ERRORS</span>
               <h3>Unreliable Integrations</h3>
               <p>
                 Payment callbacks fail intermittently, mobile-money webhooks drop transactions, or sync jobs duplicate records without clear error logs.
@@ -90,7 +90,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
             </div>
 
             <div className="card" style={{ background: 'var(--bg-primary)' }}>
-              <span className="mono-tag" style={{ color: '#f87171', display: 'block', marginBottom: '10px' }}>03 / FRAGILITY</span>
+              <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>03 / FRAGILITY</span>
               <h3>Code Too Risky to Change</h3>
               <p>
                 Every small bug fix triggers regression failures in unrelated modules because the architecture lacks unit tests and clear boundary isolation.
@@ -98,7 +98,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
             </div>
 
             <div className="card" style={{ background: 'var(--bg-primary)' }}>
-              <span className="mono-tag" style={{ color: '#f87171', display: 'block', marginBottom: '10px' }}>04 / PERFORMANCE</span>
+              <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>04 / PERFORMANCE</span>
               <h3>Timeout Cascades & Latency</h3>
               <p>
                 Database queries crawl as user volume grows, causing mobile apps to hang and customer payments to time out before confirmation.
@@ -106,7 +106,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
             </div>
 
             <div className="card" style={{ background: 'var(--bg-primary)' }}>
-              <span className="mono-tag" style={{ color: '#f87171', display: 'block', marginBottom: '10px' }}>05 / BLIND SPOTS</span>
+              <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>05 / BLIND SPOTS</span>
               <h3>Missing Documentation & Runbooks</h3>
               <p>
                 The team lacks deployment scripts, server access maps, and database backup routines, leaving the business vulnerable to single-person departures.
@@ -114,7 +114,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
             </div>
 
             <div className="card" style={{ background: 'var(--bg-primary)' }}>
-              <span className="mono-tag" style={{ color: '#f87171', display: 'block', marginBottom: '10px' }}>06 / SECURITY RISK</span>
+              <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>06 / SECURITY RISK</span>
               <h3>Exposed Secrets & Data Gaps</h3>
               <p>
                 API keys and database passwords hardcoded in source repositories or client databases exposed to unapproved third-party analytics.

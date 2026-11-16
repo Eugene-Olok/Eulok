@@ -1,9 +1,15 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 
+const configuredSiteUrl =
+  process.env.PUBLIC_SITE_URL ||
+  process.env.SITE_URL ||
+  process.env.CF_PAGES_URL ||
+  'https://company-os-3ox.pages.dev';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://eulok.com',
+  site: configuredSiteUrl.replace(/\/+$/, ''),
   integrations: [react()],
   devToolbar: {
     enabled: false,
@@ -18,7 +24,13 @@ export default defineConfig({
       ws: false,
     },
     resolve: {
-      dedupe: ['react', 'react-dom'],
+      dedupe: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+        'lucide-react',
+      ],
     },
     optimizeDeps: {
       include: [
@@ -28,9 +40,7 @@ export default defineConfig({
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
         'lucide-react',
-        'framer-motion',
       ],
-      exclude: ['@astrojs/react'],
     },
   },
 });

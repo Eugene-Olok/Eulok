@@ -139,7 +139,7 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
       relatedService: 'services/performance-builds',
       content: [
         'While modern Silicon Valley web apps routinely ship 5MB JavaScript bundles with dozens of tracking scripts, users in Kampala often browse on 3G mobile connections with metered data plans.',
-        'A website that takes 12 seconds to hydrate will be abandoned. By enforcing strict performance budgets (under 100KB initial bundle, semantic HTML, modern CSS without runtime overhead), applications load instantly and remain navigable even when connection latency spikes.',
+        'A website that takes 12 seconds to hydrate will be abandoned. By enforcing strict performance budgets (lean compressed payloads, pre-rendered semantic HTML, modern CSS without heavy runtime overhead), applications load quickly and remain navigable even when connection latency spikes.',
       ],
     },
   ];
@@ -223,7 +223,7 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
                     </div>
 
                     <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                      By EULOK Engineering Team
+                      By Eugene Olok · EULOK
                     </span>
                   </div>
 

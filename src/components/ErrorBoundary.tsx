@@ -88,10 +88,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   border: '1px solid rgba(239, 68, 68, 0.3)',
                 }}
               >
-                <AlertTriangle size={22} color="#f87171" />
+                <AlertTriangle size={22} color="var(--status-fail-text)" />
               </div>
               <div>
-                <span className="mono-tag" style={{ color: '#f87171', display: 'block', marginBottom: '2px' }}>
+                <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '2px' }}>
                   FAIL-CLOSED RUNTIME INTERCEPT
                 </span>
                 <h2 style={{ margin: 0, fontSize: '1.35rem', color: 'var(--warm-white)' }}>
@@ -148,7 +148,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 onClick={this.handleCopyDiagnostic}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
-                {this.state.copied ? <CheckCircle2 size={15} color="#4ade80" /> : <Copy size={15} />}
+                {this.state.copied ? <CheckCircle2 size={15} color="var(--status-pass-text)" /> : <Copy size={15} />}
                 <span>{this.state.copied ? 'Copied' : 'Copy Diagnostics'}</span>
               </button>
             </div>

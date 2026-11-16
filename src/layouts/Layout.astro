@@ -1,6 +1,7 @@
 ---
 import { getPageSEO } from '../seo/seoConfig.ts';
 import { buildSEOTags } from '../seo/seoManager.ts';
+import { siteConfig, isLoopbackOrigin, resolveSiteBaseUrl } from '../siteConfig.ts';
 import { Navbar } from '../components/Navbar.tsx';
 import { Footer } from '../components/Footer.tsx';
 import { FloatingWhatsApp } from '../components/FloatingWhatsApp.tsx';
@@ -21,7 +22,14 @@ const config = getPageSEO(pageId);
 if (customTitle) config.title = customTitle;
 if (customDescription) config.description = customDescription;
 
-const seoData = buildSEOTags(config);
+// Derive active origin from Astro.url, supporting preview/production hosts and falling back to siteConfig
+const originHost = Astro.url?.origin;
+const activeOrigin =
+  originHost && !isLoopbackOrigin(originHost)
+    ? resolveSiteBaseUrl(originHost)
+    : siteConfig.defaultBaseUrl;
+
+const seoData = buildSEOTags(config, activeOrigin);
 ---
 
 <!doctype html>
@@ -29,7 +37,7 @@ const seoData = buildSEOTags(config);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0a0c10" />
+    <meta name="theme-color" content="#090E17" />
     <title>{seoData.title}</title>
     <link rel="canonical" id="eulok-canonical-link" href={seoData.canonicalUrl} />
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -46,37 +54,15 @@ const seoData = buildSEOTags(config);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <script id="eulok-seo-jsonld" type="application/ld+json" set:html={seoData.jsonLd} />
     <ClientRouter />
 
-    <script is:inline>
-      (function() {
-        try {
-          const stored = localStorage.getItem('eulok_theme');
-          const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-          const theme = stored === 'light' || stored === 'dark' ? stored : (prefersLight ? 'light' : 'dark');
-          document.documentElement.setAttribute('data-theme', theme);
-        } catch (e) {}
-      })();
-      document.addEventListener('astro:after-swap', function() {
-        try {
-          const stored = localStorage.getItem('eulok_theme') || 'dark';
-          document.documentElement.setAttribute('data-theme', stored);
-        } catch (e) {}
-      });
-    </script>
-
-    <script is:inline>
-      if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
-        });
-      }
-    </script>
+    <script src="/theme-init.js" is:inline></script>
+    <script src="/sw-register.js" defer is:inline></script>
   </head>
   <body>
     <a class="skip-link" href="#main">

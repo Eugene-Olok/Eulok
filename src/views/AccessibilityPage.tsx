@@ -91,7 +91,7 @@ export const AccessibilityPage: React.FC<AccessibilityPageProps> = ({
               Despite automated testing, accessibility barriers can emerge in specific browser and assistive technology combinations. If you encounter any difficulty navigating or reading any part of this site, please let us know:
             </p>
 
-            <div style={{ background: 'var(--deep-navy)', padding: '24px', borderRadius: '8px', border: '1px solid var(--line)' }}>
+            <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '8px', border: '1px solid var(--line)' }}>
               <h3 style={{ margin: 0, marginBottom: '8px' }}>Report an Accessibility Issue</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '16px' }}>
                 Please specify the page URL, assistive device used, and observed barrier. We will prioritize remediation within 5 business days.

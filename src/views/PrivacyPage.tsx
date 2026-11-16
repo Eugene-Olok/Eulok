@@ -23,10 +23,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
       {/* Hero Header */}
       <header className="page-hero-header">
         <div className="container-expansive">
-          <div className="live-status-pill" style={{ marginBottom: '16px' }}>
-            <span className="live-status-dot"></span>
-            <span>Uganda DPPA 2019 & International Privacy Architecture</span>
-          </div>
+          <span className="eyebrow">Uganda DPPA 2019 · Statutory Privacy Governance</span>
           <h1 className="hero-heading" style={{ maxWidth: '24ch' }}>
             A rigorous, auditable account of website and client data.
           </h1>
@@ -169,7 +166,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             </div>
 
             {/* Exercise Rights Box */}
-            <div style={{ background: 'var(--deep-navy)', padding: '28px', borderRadius: '12px', border: '1px solid var(--line-strong)' }}>
+            <div style={{ background: 'var(--bg-secondary)', padding: '28px', borderRadius: '12px', border: '1px solid var(--line-strong)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
                 <Shield size={22} color="var(--electric-blue)" />
                 <h3 style={{ margin: 0, fontSize: '1.2rem', color: 'var(--text-main)' }}>Exercise Data Subject Rights</h3>

@@ -93,7 +93,7 @@ test('SEO Manager — buildSEOTags generates all required social cards and struc
   const tags = buildSEOTags(config, SITE_URL);
 
   assert.equal(tags.title, config.title);
-  assert.equal(tags.canonicalUrl, 'https://eulok.com/services/reconciliation');
+  assert.equal(tags.canonicalUrl, `${SITE_URL}/services/reconciliation`);
 
   const metaMap = new Map<string, string>();
   for (const m of tags.metaTags) {
@@ -109,7 +109,7 @@ test('SEO Manager — buildSEOTags generates all required social cards and struc
   assert.equal(metaMap.get('property:og:title'), config.title);
   assert.equal(metaMap.get('property:og:description'), config.description);
   assert.equal(metaMap.get('property:og:type'), 'website');
-  assert.equal(metaMap.get('property:og:url'), 'https://eulok.com/services/reconciliation');
+  assert.equal(metaMap.get('property:og:url'), `${SITE_URL}/services/reconciliation`);
   assert.equal(metaMap.get('property:og:site_name'), SITE_NAME);
   assert.ok(metaMap.get('property:og:image'));
   assert.ok(metaMap.get('property:og:image:alt'));
@@ -139,4 +139,18 @@ test('SEO DOM — applySEOToHead safely runs in non-browser or browser environme
   assert.doesNotThrow(() => {
     applySEOToHead(SEO_PAGE_CONFIGS.home);
   });
+});
+
+test('SiteConfig & Dynamic JSON-LD Origin Substitution', async () => {
+  const { siteConfig, resolveSiteUrl } = await import('../siteConfig.ts');
+  assert.equal(siteConfig.name, 'EULOK');
+  assert.equal(SITE_URL, siteConfig.defaultBaseUrl);
+  assert.equal(resolveSiteUrl('/standards', 'https://preview.pages.dev'), 'https://preview.pages.dev/standards');
+
+  const homeTags = buildSEOTags(SEO_PAGE_CONFIGS.home, 'https://preview.pages.dev');
+  assert.equal(homeTags.canonicalUrl, 'https://preview.pages.dev/');
+  const graph = JSON.parse(homeTags.jsonLd)['@graph'];
+  assert.equal(graph[0].url, 'https://preview.pages.dev');
+  assert.equal(graph[0]['@id'], 'https://preview.pages.dev/#organization');
+  assert.equal(graph[1]['@id'], 'https://preview.pages.dev/#website');
 });

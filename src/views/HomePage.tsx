@@ -57,21 +57,20 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </button>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '36px', color: 'var(--text-muted)', fontSize: '0.86rem' }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 8px #4ade80' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '36px', color: 'var(--text-muted)', fontSize: '0.86rem' }}>
+                <ShieldCheck size={16} color="var(--accent-blue)" style={{ flexShrink: 0 }} />
                 <span>Engineered for Ugandan operational infrastructure. Built for production worldwide.</span>
               </div>
             </div>
 
-            {/* Hero Right Column: Original Engineering Diagram with Live Indicator */}
+            {/* Hero Right Column: Original Engineering Diagram */}
             <div className="diagram-box animate-fade-in delay-200" style={{ margin: 0, border: '1px solid var(--line-strong)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)', flexShrink: 0 }}>
                   EULOK_PIPELINE.ARCH
                 </span>
                 <span className="badge badge-pass" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', animation: 'pulseGlow 2s infinite' }} />
-                  Deterministic Core Active
+                  Deterministic Core
                 </span>
               </div>
 
@@ -101,7 +100,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
 
                 <div style={{ padding: '12px', background: 'var(--bg-primary)', border: '1px solid var(--line)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <ShieldCheck size={16} color="#4ade80" />
+                  <ShieldCheck size={16} color="var(--status-pass-text)" />
                   <div>
                     <strong style={{ fontSize: '0.85rem', display: 'block', color: 'var(--warm-white)' }}>03 / Acceptance & Verification</strong>
                     <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>Automated test gates · Human escalation for exceptions</span>
@@ -198,7 +197,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
               <button
                 className="text-link"
-                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--obsidian)' }}
+                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--light-text)' }}
                 onClick={() => onNavigate('services/performance-builds')}
               >
                 Website specifications →
@@ -216,7 +215,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
               <button
                 className="text-link"
-                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--obsidian)' }}
+                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--light-text)' }}
                 onClick={() => onNavigate('services/performance-builds')}
               >
                 Custom system builds →
@@ -234,7 +233,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
               <button
                 className="text-link"
-                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--obsidian)' }}
+                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--light-text)' }}
                 onClick={() => onNavigate('rescue')}
               >
                 Rescue methodology →
@@ -252,7 +251,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
               <button
                 className="text-link"
-                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--obsidian)' }}
+                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--light-text)' }}
                 onClick={() => onNavigate('services/finance-integrations')}
               >
                 Workflow automation →
@@ -270,7 +269,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
               <button
                 className="text-link"
-                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--obsidian)' }}
+                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--light-text)' }}
                 onClick={() => onNavigate('services/finance-integrations')}
               >
                 API and webhook adapters →
@@ -288,7 +287,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
               <button
                 className="text-link"
-                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--obsidian)' }}
+                style={{ marginTop: 'auto', paddingTop: '16px', color: 'var(--light-text)' }}
                 onClick={() => onNavigate('services/reconciliation')}
               >
                 Explore reconciliation systems →
@@ -496,9 +495,9 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
             </div>
 
-            {/* Bento Card 2: Release Gate 51 */}
+            {/* Bento Card 2: Release Verification Standard */}
             <div className="card bento-span-4">
-              <span className="mono-tag" style={{ color: '#4ade80', marginBottom: '8px' }}>
+              <span className="mono-tag" style={{ color: 'var(--status-pass-text)', marginBottom: '8px' }}>
                 ASSURANCE
               </span>
               <h3>Release Verification Standard</h3>
@@ -565,7 +564,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </span>
                 <h3 style={{ fontSize: '1.6rem' }}>Deliberate Empty State</h3>
                 <p style={{ color: 'var(--text-muted)' }}>
-                  First case study publishing after the EFRIS pilot closes. Scope and date, not scope and spin.
+                  Case studies are published exclusively upon client-signed acceptance and non-disclosure approval. Scope and date, not scope and spin.
                 </p>
               </div>
 

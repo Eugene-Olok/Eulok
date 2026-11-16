@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu,
   X,
@@ -122,7 +121,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="brand-badge">ENG</span>
           </a>
 
-          {/* Desktop Navigation Links with Framer Motion layoutId Underline */}
+          {/* Desktop Navigation Links with Pure CSS Animated Underline */}
           <nav className="nav-links-desktop" aria-label="Main navigation">
             {PRIMARY_NAV_ITEMS.map((item) => {
               const active = isItemActive(item);
@@ -139,29 +138,23 @@ export const Navbar: React.FC<NavbarProps> = ({
                     }}
                   >
                     <span>{item.label}</span>
-                    {active && (
-                      <motion.span
-                        layoutId="navbar-sliding-underline"
-                        className="nav-sliding-underline"
-                        transition={{
-                          type: 'spring',
-                          stiffness: 380,
-                          damping: 30,
-                        }}
-                      />
-                    )}
+                    {active && <span className="nav-sliding-underline" />}
                   </a>
                 </div>
               );
             })}
 
             {/* Interactive Tools & Gates Dropdown */}
-            <div className="nav-dropdown-wrapper" ref={dropdownRef}>
+            <div
+              className="nav-dropdown-wrapper"
+              ref={dropdownRef}
+              onMouseEnter={() => setToolsDropdownOpen(true)}
+              onMouseLeave={() => setToolsDropdownOpen(false)}
+            >
               <button
                 type="button"
                 className={`nav-item-btn ${isToolsActive ? 'active' : ''}`}
                 onClick={() => setToolsDropdownOpen((prev) => !prev)}
-                onMouseEnter={() => setToolsDropdownOpen(true)}
                 aria-expanded={toolsDropdownOpen}
                 aria-haspopup="true"
                 aria-label="Tools and Verification Gates menu"
@@ -171,102 +164,88 @@ export const Navbar: React.FC<NavbarProps> = ({
                   size={13}
                   style={{
                     transform: toolsDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.2s ease',
+                    transition: 'transform 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 />
-                {isToolsActive && (
-                  <motion.span
-                    layoutId="navbar-sliding-underline"
-                    className="nav-sliding-underline"
-                    transition={{
-                      type: 'spring',
-                      stiffness: 380,
-                      damping: 30,
-                    }}
-                  />
-                )}
+                {isToolsActive && <span className="nav-sliding-underline" />}
               </button>
 
-              <AnimatePresence>
-                {toolsDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                    transition={{ duration: 0.16, ease: 'easeOut' }}
-                    className="nav-dropdown-menu"
-                    onMouseLeave={() => setToolsDropdownOpen(false)}
+              <div
+                className={`nav-dropdown-menu ${toolsDropdownOpen ? 'is-open' : ''}`}
+                aria-hidden={!toolsDropdownOpen}
+              >
+                  <button
+                    type="button"
+                    className="nav-dropdown-item"
+                    tabIndex={toolsDropdownOpen ? 0 : -1}
+                    onClick={() => handleNavClick('ops-suite')}
                   >
-                    <button
-                      type="button"
-                      className="nav-dropdown-item"
-                      onClick={() => handleNavClick('ops-suite')}
-                    >
-                      <Terminal size={17} color="var(--electric-blue)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                      <div>
-                        <div className="nav-dropdown-item-title">
-                          <span>Reconciliation Demo</span>
-                          <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Live Engine</span>
-                        </div>
-                        <div className="nav-dropdown-item-desc">
-                          Interactive mobile-money & bank ledger matching simulation.
-                        </div>
+                    <Terminal size={17} color="var(--electric-blue)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                    <div>
+                      <div className="nav-dropdown-item-title">
+                        <span>Reconciliation Demo</span>
+                        <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Live Engine</span>
                       </div>
-                    </button>
+                      <div className="nav-dropdown-item-desc">
+                        Interactive mobile-money & bank ledger matching simulation.
+                      </div>
+                    </div>
+                  </button>
 
-                    <button
-                      type="button"
-                      className="nav-dropdown-item"
-                      onClick={() => handleNavClick('scope-calculator')}
-                    >
-                      <Sliders size={17} color="#fbbf24" style={{ marginTop: '2px', flexShrink: 0 }} />
-                      <div>
-                        <div className="nav-dropdown-item-title">
-                          <span>Scoping Studio (SOW)</span>
-                          <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Interactive</span>
-                        </div>
-                        <div className="nav-dropdown-item-desc">
-                          Technical feasibility, risk scoring & milestone estimator.
-                        </div>
+                  <button
+                    type="button"
+                    className="nav-dropdown-item"
+                    tabIndex={toolsDropdownOpen ? 0 : -1}
+                    onClick={() => handleNavClick('scope-calculator')}
+                  >
+                    <Sliders size={17} color="var(--status-warn-text)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                    <div>
+                      <div className="nav-dropdown-item-title">
+                        <span>Scoping Studio (SOW)</span>
+                        <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Interactive</span>
                       </div>
-                    </button>
+                      <div className="nav-dropdown-item-desc">
+                        Technical feasibility, risk scoring & milestone estimator.
+                      </div>
+                    </div>
+                  </button>
 
-                    <button
-                      type="button"
-                      className="nav-dropdown-item"
-                      onClick={() => handleNavClick('verification')}
-                    >
-                      <CheckCircle2 size={17} color="#4ade80" style={{ marginTop: '2px', flexShrink: 0 }} />
-                      <div>
-                        <div className="nav-dropdown-item-title">
-                          <span>Release Verification Standard</span>
-                          <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Standard</span>
-                        </div>
-                        <div className="nav-dropdown-item-desc">
-                          Deterministic release verification & architectural acceptance criteria.
-                        </div>
+                  <button
+                    type="button"
+                    className="nav-dropdown-item"
+                    tabIndex={toolsDropdownOpen ? 0 : -1}
+                    onClick={() => handleNavClick('verification')}
+                  >
+                    <CheckCircle2 size={17} color="var(--status-pass-text)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                    <div>
+                      <div className="nav-dropdown-item-title">
+                        <span>Release Verification Standard</span>
+                        <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Standard</span>
                       </div>
-                    </button>
+                      <div className="nav-dropdown-item-desc">
+                        Deterministic release verification & architectural acceptance criteria.
+                      </div>
+                    </div>
+                  </button>
 
-                    <button
-                      type="button"
-                      className="nav-dropdown-item"
-                      onClick={() => handleNavClick('status')}
-                    >
-                      <Activity size={17} color="#38bdf8" style={{ marginTop: '2px', flexShrink: 0 }} />
-                      <div>
-                        <div className="nav-dropdown-item-title">
-                          <span>Edge Telemetry</span>
-                          <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Live</span>
-                        </div>
-                        <div className="nav-dropdown-item-desc">
-                          Real-time client latency & edge infrastructure topology.
-                        </div>
+                  <button
+                    type="button"
+                    className="nav-dropdown-item"
+                    tabIndex={toolsDropdownOpen ? 0 : -1}
+                    onClick={() => handleNavClick('status')}
+                  >
+                    <Activity size={17} color="var(--electric-blue)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                    <div>
+                      <div className="nav-dropdown-item-title">
+                        <span>Edge Telemetry</span>
+                        <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Live</span>
                       </div>
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      <div className="nav-dropdown-item-desc">
+                        Real-time client latency & edge infrastructure topology.
+                      </div>
+                    </div>
+                  </button>
+              </div>
             </div>
           </nav>
 
@@ -278,11 +257,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="button button-quiet button-small"
               onClick={() => openCommandPalette()}
               title="Open Command Palette (Cmd+K)"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 10px' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 10px', whiteSpace: 'nowrap', flexShrink: 0 }}
               aria-label="Open HUD Search (Cmd+K)"
             >
               <Search size={13} color="var(--text-muted)" />
-              <span className="mono-tag" style={{ fontSize: '0.72rem', padding: '1px 5px', margin: 0 }}>⌘K</span>
+              <span className="mono-kbd" style={{ fontSize: '0.7rem', padding: '1px 6px', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>⌘K</span>
             </button>
 
             {/* Theme Toggle (Dark/Light) */}
@@ -292,6 +271,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               className="button button-primary button-small"
+              style={{ whiteSpace: 'nowrap', flexShrink: 0 }}
               onClick={handleIntakeClick}
             >
               <span>Start a project</span>
@@ -312,7 +292,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Dedicated Framer Motion Animated SlideOver Drawer */}
+        {/* Pure CSS Animated SlideOver Drawer */}
         <MobileSlideOver
           isOpen={mobileMenuOpen}
           onClose={() => setMobileMenuOpen(false)}

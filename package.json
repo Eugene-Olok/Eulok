@@ -16,7 +16,6 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "astro": "5.18.2",
-    "framer-motion": "^14.9.0",
     "jsdom": "^31.0.0",
     "lucide-react": "^1.16.0",
     "react": "^19.0.0",
