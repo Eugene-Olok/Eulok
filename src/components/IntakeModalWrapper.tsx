@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { IntakeWizard } from './IntakeWizard';
+import { type IntakePrefillContext, readStoredIntakePrefill } from '../utils/navigation';
 
 export const IntakeModalWrapper: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [initialService, setInitialService] = useState<string | undefined>(undefined);
+  const [prefill, setPrefill] = useState<IntakePrefillContext | undefined>(undefined);
+  const [modalKey, setModalKey] = useState(0);
 
   useEffect(() => {
     const handleOpen = (e: Event) => {
-      const customEvent = e as CustomEvent<{ service?: string }>;
-      if (customEvent.detail?.service) {
-        setInitialService(customEvent.detail.service);
+      const customEvent = e as CustomEvent<IntakePrefillContext & { service?: string }>;
+      const detail = customEvent.detail;
+      if (detail && Object.keys(detail).length > 0) {
+        const normalized: IntakePrefillContext = detail.service
+          ? { systemType: detail.service }
+          : detail;
+        setPrefill(normalized);
+      } else {
+        setPrefill(readStoredIntakePrefill() || undefined);
       }
+      setModalKey((k) => k + 1);
       setIsOpen(true);
     };
 
@@ -45,8 +54,9 @@ export const IntakeModalWrapper: React.FC = () => {
           </button>
         </div>
         <IntakeWizard
+          key={modalKey}
           isModal={true}
-          initialNeed={initialService}
+          prefill={prefill}
           onCloseModal={() => setIsOpen(false)}
         />
       </div>

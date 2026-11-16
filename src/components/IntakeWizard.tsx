@@ -12,10 +12,16 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { generateReferenceId, sanitizeString } from '../engine/intakeValidation';
+import {
+  type IntakePrefillContext,
+  readStoredIntakePrefill,
+  clearStoredIntakePrefill,
+} from '../utils/navigation';
 
 interface IntakeWizardProps {
   initialNeed?: string;
   initialSystem?: string;
+  prefill?: IntakePrefillContext;
   isModal?: boolean;
   onCloseModal?: () => void;
 }
@@ -23,15 +29,19 @@ interface IntakeWizardProps {
 export const IntakeWizard: React.FC<IntakeWizardProps> = ({
   initialNeed,
   initialSystem,
+  prefill,
   isModal = false,
   onCloseModal,
 }) => {
   const [step, setStep] = useState<number>(1);
-  const [need, setNeed] = useState<string>(initialNeed || 'Build something new');
-  const [systemType, setSystemType] = useState<string>(initialSystem || 'Custom business software');
-  const [budget, setBudget] = useState<string>('$500–$2,000');
-  const [problemDescription, setProblemDescription] = useState<string>('');
-  const [attemptedSolutions, setAttemptedSolutions] = useState<string>('');
+  const [need, setNeed] = useState<string>(prefill?.need || initialNeed || 'Build something new');
+  const [systemType, setSystemType] = useState<string>(prefill?.systemType || initialSystem || 'Custom business software');
+  const [budgetCurrency, setBudgetCurrency] = useState<'UGX' | 'USD'>(prefill?.preferredCurrency || 'UGX');
+  const [budget, setBudget] = useState<string>(prefill?.budget || 'UGX 2M–7.5M');
+  const [problemDescription, setProblemDescription] = useState<string>(prefill?.problemDescription || '');
+  const [attemptedSolutions, setAttemptedSolutions] = useState<string>(prefill?.attemptedSolutions || '');
+  const [attachedSpecHash, setAttachedSpecHash] = useState<string | undefined>(prefill?.specHash);
+  const [attachedSpecSummary, setAttachedSpecSummary] = useState<string | undefined>(prefill?.specSummary);
   const [clientEmail, setClientEmail] = useState<string>('');
   const [clientPhone, setClientPhone] = useState<string>('');
   const [honeypot, setHoneypot] = useState<string>(''); // Bot trap
@@ -39,6 +49,21 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [referenceId, setReferenceId] = useState<string>('');
   const [copied, setCopied] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (prefill) return;
+    const stored = readStoredIntakePrefill();
+    if (stored) {
+      if (stored.need) setNeed(stored.need);
+      if (stored.systemType) setSystemType(stored.systemType);
+      if (stored.preferredCurrency) setBudgetCurrency(stored.preferredCurrency);
+      if (stored.budget) setBudget(stored.budget);
+      if (stored.problemDescription) setProblemDescription(stored.problemDescription);
+      if (stored.attemptedSolutions) setAttemptedSolutions(stored.attemptedSolutions);
+      if (stored.specHash) setAttachedSpecHash(stored.specHash);
+      if (stored.specSummary) setAttachedSpecSummary(stored.specSummary);
+    }
+  }, [prefill]);
 
   const needsOptions = [
     { label: 'Build something new', desc: 'Design and engineer software from discovery to release' },
@@ -55,15 +80,31 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
     { label: 'Spreadsheet to database migration', desc: 'Safe schema design, data validation and audit log' },
   ];
 
+  const budgetOptionsByCurrency = {
+    UGX: [
+      { label: 'UGX 2M–7.5M', note: 'Focused presence builds, bounded diagnostics, or targeted adapters' },
+      { label: 'UGX 7.5M–18.5M', note: 'Custom workflow portals, URA EFRIS gateways, rescue sprints' },
+      { label: 'UGX 18.5M–55M+', note: 'Multi-rail reconciliation cores and full operational systems' },
+      { label: 'Unknown / Early stage', note: 'Need initial discovery and technical scoping first' },
+      { label: 'Custom explanation', note: 'Procurement constraints or phased milestone schedules' },
+    ],
+    USD: [
+      { label: '$500–$2,000', note: 'Indicative planning range for bounded diagnostics or focused sites' },
+      { label: '$2,000–$8,000', note: 'Multi-system integrations, custom workflow portals, rescue sprints' },
+      { label: '$8,000–$25,000+', note: 'International commercial systems and multi-rail financial infrastructure' },
+      { label: 'Unknown / Early stage', note: 'Need initial discovery and technical scoping first' },
+      { label: 'Custom explanation', note: 'Procurement constraints, phased milestone grants' },
+    ],
+  };
+
   const budgetOptions = [
-    { label: '$500–$2,000', note: 'Indicative planning range, not a formal quote' },
-    { label: '$2,000–$5,000', note: 'Multi-system builds, custom workflow portals' },
-    { label: '$5,000–$15,000+', note: 'Comprehensive integrations and production systems' },
-    { label: 'Unknown / Early stage', note: 'Need initial discovery and technical scoping first' },
-    { label: 'Custom explanation', note: 'Procurement constraints, phased milestone grants' },
+    ...(attachedSpecHash && prefill?.budget
+      ? [{ label: prefill.budget, note: `Imported from Scoping Spec ${attachedSpecHash}` }]
+      : []),
+    ...budgetOptionsByCurrency[budgetCurrency],
   ];
 
-  const compiledDraft = `Hello EULOK,\n\nI would like to discuss a software engineering engagement:\n\nReference: ${referenceId || 'PENDING'}\n1. Project Need: ${need}\n2. System Type: ${systemType}\n3. Budget Indication: ${budget}\n4. Operational Problem: ${problemDescription.trim() || 'To be discussed during discovery.'}\n5. What was already tried: ${attemptedSolutions.trim() || 'None recorded yet.'}\n${clientEmail ? `6. Contact Email: ${clientEmail.trim()}\n` : ''}${clientPhone ? `7. Contact Phone: ${clientPhone.trim()}\n` : ''}\nPlease let me know your thoughts and availability for a focused scoping discussion.`;
+  const compiledDraft = `Hello EULOK,\n\nI would like to discuss a software engineering engagement:\n\nReference: ${referenceId || 'PENDING'}\n${attachedSpecHash ? `Attached Spec: ${attachedSpecHash}${attachedSpecSummary ? ` (${attachedSpecSummary})` : ''}\n` : ''}1. Project Need: ${need}\n2. System Type: ${systemType}\n3. Budget Indication: ${budget}\n4. Operational Problem: ${problemDescription.trim() || 'To be discussed during discovery.'}\n5. What was already tried: ${attemptedSolutions.trim() || 'None recorded yet.'}\n${clientEmail ? `6. Contact Email: ${clientEmail.trim()}\n` : ''}${clientPhone ? `7. Contact Phone: ${clientPhone.trim()}\n` : ''}\nPlease let me know your thoughts and availability for a focused scoping discussion.`;
 
   // Encoded WhatsApp URL without printing the number anywhere in text
   const whatsappUrl = `https://wa.me/256760779160?text=${encodeURIComponent(compiledDraft)}`;
@@ -172,6 +213,45 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
         )}
       </div>
 
+      {/* Attached Scoping / Triage Context Banner */}
+      {(attachedSpecHash || attachedSpecSummary) && (
+        <div
+          style={{
+            padding: '12px 14px',
+            marginBottom: '16px',
+            borderRadius: '8px',
+            background: 'rgba(56, 189, 248, 0.08)',
+            border: '1px solid rgba(56, 189, 248, 0.35)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '10px',
+            flexWrap: 'wrap',
+          }}
+        >
+          <div style={{ fontSize: '0.82rem' }}>
+            <strong style={{ color: 'var(--electric-blue)', display: 'block' }}>
+              Imported Specification{attachedSpecHash ? `: ${attachedSpecHash}` : ''}
+            </strong>
+            {attachedSpecSummary && (
+              <span style={{ color: 'var(--text-subtle)' }}>{attachedSpecSummary}</span>
+            )}
+          </div>
+          <button
+            type="button"
+            className="text-link"
+            style={{ fontSize: '0.76rem' }}
+            onClick={() => {
+              setAttachedSpecHash(undefined);
+              setAttachedSpecSummary(undefined);
+              clearStoredIntakePrefill();
+            }}
+          >
+            Clear attachment
+          </button>
+        </div>
+      )}
+
       {/* Progress Dots */}
       <div className="wizard-step-indicator">
         {[1, 2, 3, 4].map((i) => (
@@ -267,9 +347,25 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
       {/* Step 3: Budget Range */}
       {step === 3 && (
         <div>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
-            Indicative planning range helps us recommend an appropriately scoped starting increment. It is not an eligibility gate or a binding quote.
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '14px' }}>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0, maxWidth: '46ch' }}>
+              Indicative planning range helps us scope an appropriate starting increment. It is not a binding quote.
+            </p>
+            <div role="group" aria-label="Budget currency view" style={{ display: 'flex', gap: '6px' }}>
+              {(['UGX', 'USD'] as const).map((cur) => (
+                <button
+                  key={cur}
+                  type="button"
+                  onClick={() => setBudgetCurrency(cur)}
+                  aria-pressed={budgetCurrency === cur}
+                  className={`button button-small ${budgetCurrency === cur ? 'button-primary' : 'button-quiet'}`}
+                  style={{ padding: '4px 10px', minHeight: '32px', fontSize: '0.76rem' }}
+                >
+                  {cur}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div style={{ marginBottom: '20px' }}>
             {budgetOptions.map((opt) => (

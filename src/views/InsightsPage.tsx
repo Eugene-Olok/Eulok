@@ -1,14 +1,13 @@
 import { navigateTo, openIntakeModal } from '../utils/navigation';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  FileText,
   Clock,
   Calendar,
-  ArrowRight,
-  BookOpen,
   ChevronDown,
   ChevronUp,
-  Tag,
+  Copy,
+  CheckCircle2,
+  Link2,
 } from 'lucide-react';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
 
@@ -37,6 +36,8 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [expandedArticleId, setExpandedArticleId] = useState<string | null>('deterministic-calc');
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const [copiedSnippetId, setCopiedSnippetId] = useState<string | null>(null);
+  const [copiedLinkId, setCopiedLinkId] = useState<string | null>(null);
 
   const handleCategoryChange = (cat: string) => {
     if (cat === selectedCategory) return;
@@ -84,6 +85,15 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
         'If the receiving application naively inserts each incoming payload into its database, user accounts are credited twice. If the application rejects retries with an HTTP 400/500, the aggregator suspends delivery.',
         'Our integration adapters utilize an idempotency key hash (combining carrier transaction ID, account, amount, and timestamp) stored in a fast atomic cache. Duplicate events return an immediate HTTP 200 acknowledging receipt while skipping duplicate ledger allocation.',
       ],
+      codeSnippet: `// Atomic idempotency claim prevents double-credit on carrier timeout retries
+const eventKey = sha256(\`\${provider}:\${externalTxId}:\${invoiceRef}\`);
+const claimed = await db.query(
+  'INSERT INTO webhook_events (idempotency_key) VALUES ($1) ON CONFLICT DO NOTHING RETURNING id',
+  [eventKey]
+);
+if (claimed.rowCount === 0) {
+  return { status: 200, action: 'IDEMPOTENT_NOOP' };
+}`,
     },
     {
       id: 'human-approval-boundaries',
@@ -99,6 +109,14 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
         'At EULOK, our core architecture principle is: Models propose. Deterministic systems decide. Models may synthesize documents, propose transaction matches, or format intake briefs; but any action that carries financial, legal, or security consequences halts at an explicit human sign-off boundary.',
         'If a parameter is ambiguous or an external check times out, the system fails closed (blocks execution) rather than assuming a default pass state.',
       ],
+      codeSnippet: `// Fail-closed exception gate for unreferenced or mismatched amounts
+if (match.status === 'proposed' || match.status === 'exception') {
+  return await escrowQueue.enqueueForFinanceSignOff({
+    matchId: match.id,
+    amountApplied: 0, // Never auto-apply ambiguous credits
+    requiresHumanOperator: true,
+  });
+}`,
     },
     {
       id: 'rescue-stalled-project',
@@ -113,6 +131,10 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
         'When an agency abandons an unfinished build or a solo developer leaves with institutional knowledge, business owners panic and assume they must start from zero.',
         'A complete rewrite is costly and usually reintroduces bugs that were already solved in the original codebase. The professional approach is systematic triage: reproduce reported production failures in an isolated container, establish automated tests for working paths, and isolate the unstable modules.',
       ],
+      codeSnippet: `# Step 1-2 Rescue Triage Checklist
+1. Audit .env & git history -> rotate leaked credentials immediately (P0)
+2. Verify automated DB backup + test staging pg_restore (P0)
+3. Wrap fragile billing endpoints in characterization tests before touching logic (P1)`,
     },
     {
       id: 'deployment-vs-production',
@@ -144,6 +166,43 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
     },
   ];
 
+  // Expand and scroll directly when navigated via URL hash (#article-id)
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hashId = window.location.hash.replace(/^#/, '').trim();
+      if (!hashId) return;
+      const targetExists = articles.some((a) => a.id === hashId);
+      if (targetExists) {
+        setSelectedCategory('all');
+        setExpandedArticleId(hashId);
+        setTimeout(() => {
+          document.getElementById(hashId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 60);
+      }
+    };
+
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
+  }, []);
+
+  const handleCopySnippet = (articleId: string, snippet: string) => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(snippet);
+      setCopiedSnippetId(articleId);
+      setTimeout(() => setCopiedSnippetId(null), 2000);
+    }
+  };
+
+  const handleCopyArticleLink = (articleId: string) => {
+    if (typeof window === 'undefined' || !navigator.clipboard) return;
+    const url = `${window.location.origin}/insights#${articleId}`;
+    navigator.clipboard.writeText(url);
+    window.history.replaceState(null, '', `#${articleId}`);
+    setCopiedLinkId(articleId);
+    setTimeout(() => setCopiedLinkId(null), 2000);
+  };
+
   const categories = ['all', 'Financial Engineering', 'Reliability', 'AI Governance', 'Technical Assessment', 'Release Engineering', 'Infrastructure'];
 
   const filteredArticles = articles.filter(
@@ -155,7 +214,7 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
       <section className="section-full theme-dark" style={{ padding: 'clamp(56px, 8vw, 96px) 0 50px' }}>
         <div className="container-expansive">
           <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
-            <button onClick={() => onNavigate('home')}>Home</button>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
             <span className="separator">/</span>
             <span aria-current="page">Engineering Notes</span>
           </nav>
@@ -163,7 +222,7 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
           <div style={{ maxWidth: '860px' }}>
             <span className="eyebrow">TECHNICAL JOURNAL · ARCHITECTURE & RELIABILITY</span>
             <h1 style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.4rem)', marginBottom: '20px' }}>
-              Engineering Notes & Insights
+              Engineering Notes &amp; Insights
             </h1>
             <p className="lead" style={{ maxWidth: '64ch' }}>
               In-depth explanations of the architectural decisions, financial correctness rules, and reliability boundaries behind our systems. No generic marketing fluff—real technical supply lines.
@@ -175,6 +234,7 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
             {categories.map((cat) => (
               <button
                 key={cat}
+                type="button"
                 className={`button button-small ${selectedCategory === cat ? 'button-primary' : 'button-quiet'}`}
                 onClick={() => handleCategoryChange(cat)}
                 style={{ textTransform: 'capitalize' }}
@@ -200,11 +260,13 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
                 return (
                 <article
                   key={article.id}
+                  id={article.id}
                   className="card"
                   style={{
                     background: 'var(--bg-primary)',
                     border: isExpanded ? '1px solid var(--electric-blue)' : '1px solid var(--line)',
                     padding: 'clamp(24px, 4vw, 36px)',
+                    scrollMarginTop: '92px',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '10px' }}>
@@ -222,9 +284,24 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
                       </span>
                     </div>
 
-                    <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                      EULOK
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <button
+                        type="button"
+                        className="button button-quiet button-small"
+                        onClick={() => handleCopyArticleLink(article.id)}
+                        style={{ minHeight: '28px', padding: '4px 10px', fontSize: '0.74rem' }}
+                      >
+                        {copiedLinkId === article.id ? (
+                          <CheckCircle2 size={13} color="var(--status-pass-text)" />
+                        ) : (
+                          <Link2 size={13} />
+                        )}
+                        <span>{copiedLinkId === article.id ? 'Link Copied' : 'Copy link'}</span>
+                      </button>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                        EULOK
+                      </span>
+                    </div>
                   </div>
 
                   <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)', marginBottom: '12px' }}>
@@ -249,9 +326,24 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
 
                       {article.codeSnippet && (
                         <div style={{ margin: '20px 0' }}>
-                          <span className="mono-tag" style={{ color: 'var(--electric-blue)', display: 'block', marginBottom: '6px' }}>
-                            Technical Example:
-                          </span>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px', flexWrap: 'wrap', gap: '8px' }}>
+                            <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>
+                              Technical Reference Pattern:
+                            </span>
+                            <button
+                              type="button"
+                              className="button button-quiet button-small"
+                              onClick={() => handleCopySnippet(article.id, article.codeSnippet!)}
+                              style={{ minHeight: '28px', padding: '4px 10px', fontSize: '0.74rem' }}
+                            >
+                              {copiedSnippetId === article.id ? (
+                                <CheckCircle2 size={13} color="var(--status-pass-text)" />
+                              ) : (
+                                <Copy size={13} />
+                              )}
+                              <span>{copiedSnippetId === article.id ? 'Copied Snippet' : 'Copy snippet'}</span>
+                            </button>
+                          </div>
                           <pre>
                             <code>{article.codeSnippet}</code>
                           </pre>
@@ -260,6 +352,7 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
 
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', marginTop: '24px' }}>
                         <button
+                          type="button"
                           className="button button-quiet button-small"
                           onClick={() => onNavigate(article.relatedService)}
                         >
@@ -267,8 +360,9 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
                         </button>
 
                         <button
+                          type="button"
                           className="button button-primary button-small"
-                          onClick={onOpenIntakeModal}
+                          onClick={() => onOpenIntakeModal()}
                         >
                           Discuss Your System Architecture
                         </button>
@@ -278,8 +372,16 @@ const balanceMinor = amountDueMinor - paidMinor; // 0n (Exact)`,
 
                   <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'flex-start' }}>
                     <button
+                      type="button"
                       className="text-link"
-                      onClick={() => setExpandedArticleId(isExpanded ? null : article.id)}
+                      aria-expanded={isExpanded}
+                      onClick={() => {
+                        const next = isExpanded ? null : article.id;
+                        setExpandedArticleId(next);
+                        if (next && typeof window !== 'undefined') {
+                          window.history.replaceState(null, '', `#${next}`);
+                        }
+                      }}
                       style={{ fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                     >
                       <span>{isExpanded ? 'Collapse Article' : 'Read Full Technical Note'}</span>

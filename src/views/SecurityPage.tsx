@@ -128,8 +128,8 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
                   </tr>
                   <tr>
                     <td><code>Content-Security-Policy</code></td>
-                    <td><code>default-src 'self'; frame-ancestors 'self'</code></td>
-                    <td>Mitigates cross-site scripting (XSS) and unauthorized resource execution.</td>
+                    <td><code>default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; frame-ancestors 'self'</code></td>
+                    <td>Restricts origins, embedding, and form targets while accommodating static Astro pre-rendered bootstrap scripts (see deliberate trade-off below).</td>
                   </tr>
                   <tr>
                     <td><code>X-Content-Type-Options</code></td>
@@ -148,6 +148,20 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            {/* Intentional CSP Trade-off Disclosure */}
+            <div style={{ background: 'var(--bg-secondary)', padding: '20px 22px', borderRadius: '10px', border: '1px solid var(--line)', marginBottom: '36px' }}>
+              <span className="mono-tag" style={{ color: 'var(--status-warn-text)', display: 'inline-block', marginBottom: '6px' }}>
+                DELIBERATE ARCHITECTURAL TRADE-OFF
+              </span>
+              <h3 style={{ margin: '0 0 8px', fontSize: '1.08rem' }}>Why <code>'unsafe-inline'</code> appears on this static site</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.65, marginBottom: '10px' }}>
+                On static CDN hosting (Cloudflare Pages without per-request HTML rewriting), Astro emits framework-injected inline bootstrap scripts for island hydration and early theme initialization. Allowing <code>'unsafe-inline'</code> strictly for those pre-rendered artifacts is an intentional, bounded trade-off because this informational site has no authenticated session state, zero user-generated HTML rendering, and zero database backing.
+              </p>
+              <p style={{ color: 'var(--text-subtle)', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
+                <strong>Production Client Standard:</strong> On dynamic transactional systems (reconciliation portals, EFRIS gateways, admin dashboards), <code>'unsafe-inline'</code> is strictly prohibited and replaced with per-request cryptographic nonces or SHA-256 script hashes enforced at the edge worker or origin server.
+              </p>
             </div>
 
             {/* Report CTA */}

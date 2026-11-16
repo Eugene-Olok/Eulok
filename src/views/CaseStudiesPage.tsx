@@ -94,7 +94,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                 </div>
 
                 <div className="card" style={{ background: 'var(--bg-primary)', border: '1px solid var(--line-strong)', padding: 'clamp(24px, 4vw, 36px)' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.75fr) minmax(0, 1.25fr)', gap: '28px', alignItems: 'start' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '28px', alignItems: 'start' }}>
                 <div>
                   <span className="badge badge-warn" style={{ marginBottom: '10px' }}>
                     Deliberate Empty State
@@ -274,7 +274,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>NOTE 01</span>
                 <h3>Deterministic Calculations</h3>
                 <p>Why floating-point arithmetic causes cumulative ledger drift, and why pure integer minor units are necessary for finance.</p>
-                <button className="text-link" onClick={() => onNavigate('insights')} style={{ marginTop: 'auto', paddingTop: '10px' }}>
+                <button className="text-link" onClick={() => onNavigate('insights#deterministic-calc')} style={{ marginTop: 'auto', paddingTop: '10px' }}>
                   Read article →
                 </button>
               </div>
@@ -283,7 +283,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>NOTE 02</span>
                 <h3>Idempotency in Mobile Money</h3>
                 <p>Handling webhook retries, network jitter, and distributed locks to prevent double credits in cellular environments.</p>
-                <button className="text-link" onClick={() => onNavigate('insights')} style={{ marginTop: 'auto', paddingTop: '10px' }}>
+                <button className="text-link" onClick={() => onNavigate('insights#idempotency-momo')} style={{ marginTop: 'auto', paddingTop: '10px' }}>
                   Read article →
                 </button>
               </div>
@@ -292,7 +292,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>NOTE 03</span>
                 <h3>Software Rescue Triage</h3>
                 <p>How to audit, isolate risks, and stabilize an abandoned or unstable codebase without defaulting to an expensive total rewrite.</p>
-                <button className="text-link" onClick={() => onNavigate('insights')} style={{ marginTop: 'auto', paddingTop: '10px' }}>
+                <button className="text-link" onClick={() => onNavigate('insights#rescue-stalled-project')} style={{ marginTop: 'auto', paddingTop: '10px' }}>
                   Read article →
                 </button>
               </div>
