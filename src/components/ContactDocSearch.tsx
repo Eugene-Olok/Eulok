@@ -28,15 +28,15 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
   };
 
   return (
-    <section className="section-padded" style={{ borderTop: '1px solid var(--line)', paddingBottom: '64px' }}>
+    <section className="section-full theme-dark band-section">
       <div className="container-expansive">
         <div style={{ maxWidth: '820px', marginBottom: '28px' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--electric-blue)', marginBottom: '8px' }}>
             <BookOpen size={16} />
-            <span className="eyebrow" style={{ margin: 0 }}>Instant Service Documentation & FAQs</span>
+            <span className="eyebrow" style={{ margin: 0 }}>Instant Service Documentation &amp; FAQs</span>
           </div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.2vw, 2.5rem)', marginBottom: '12px' }}>
-            Find answers to common technical & scope questions
+            Find answers to common technical &amp; scope questions
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0, maxWidth: '64ch' }}>
             Filter our operational policies, pricing models, carrier integrations, and verification standards in real time.
@@ -44,7 +44,7 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
         </div>
 
         {/* Search Bar & Controls */}
-        <div className="card" style={{ padding: '20px', marginBottom: '24px', background: 'var(--bg-secondary)' }}>
+        <div className="card" style={{ padding: '20px', marginBottom: '24px' }}>
           <div style={{ position: 'relative', marginBottom: '16px' }} role="search" aria-label="Documentation search">
             <Search
               size={18}
@@ -61,17 +61,17 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
               id="faq-search-input"
               data-testid="faq-search-input"
               type="text"
+              className="form-input"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search topics (e.g. 'MoMo', 'pricing', 'EFRIS', 'ownership', 'rescue', 'timeline')..."
               style={{
                 width: '100%',
+                marginTop: 0,
                 padding: '12px 42px 12px 42px',
                 borderRadius: '8px',
                 fontSize: '0.96rem',
                 border: '1px solid var(--line-strong)',
-                background: 'var(--bg-primary)',
-                color: 'var(--text-main)',
               }}
               aria-label="Filter documentation and FAQs"
             />
@@ -197,11 +197,11 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
                           {item.tags.map((tag) => (
                             <span
                               key={tag}
+                              className="surface-inset"
                               style={{
                                 fontSize: '0.74rem',
                                 color: 'var(--text-muted)',
-                                background: 'var(--bg-secondary)',
-                                padding: '2px 6px',
+                                padding: '2px 7px',
                                 borderRadius: '4px',
                               }}
                             >

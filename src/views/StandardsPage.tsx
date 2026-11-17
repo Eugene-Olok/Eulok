@@ -12,31 +12,37 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
   onOpenIntakeModal = openIntakeModal,
 }) => {
   return (
-    <div className="page-wrapper">
-      {/* Breadcrumb */}
-      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
-        <button onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">Delivery Commitments & Standards</span>
-      </nav>
-
+    <>
       {/* Hero Header */}
-      <header className="page-hero-header">
+      <section className="section-full theme-dark band-hero">
         <div className="container-expansive">
-          <span className="eyebrow">Working Agreement · FAANG-Grade Discipline</span>
-          <h1 className="hero-heading" style={{ maxWidth: '24ch' }}>
-            Clear commitments. Verifiable delivery.
-          </h1>
-          <p className="hero-subheading" style={{ maxWidth: '64ch' }}>
-            A client should always know exactly what is being engineered, how acceptance will be assessed, what risks remain open, and what happens at handover.
-          </p>
+          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
+            <span className="separator">/</span>
+            <span aria-current="page">Delivery Commitments &amp; Standards</span>
+          </nav>
+
+          <div style={{ maxWidth: '860px' }}>
+            <span className="eyebrow">Working Agreement · Deterministic Discipline</span>
+            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '24ch' }}>
+              Clear commitments. Verifiable delivery.
+            </h1>
+            <p className="lead" style={{ maxWidth: '64ch', marginBottom: 0 }}>
+              A client should always know exactly what is being engineered, how acceptance will be assessed, what risks remain open, and what happens at handover.
+            </p>
+          </div>
         </div>
-      </header>
+      </section>
 
       {/* Delivery Phases */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '24px' }}>
+          <div style={{ maxWidth: '760px', marginBottom: '32px' }}>
+            <span className="eyebrow">Engagement Lifecycle</span>
+            <h2>Contractual &amp; Technical Checkpoints</h2>
+          </div>
+
+          <div className="grid-3">
             {/* Card 1 */}
             <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '10px', display: 'inline-block' }}>
@@ -83,16 +89,16 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
       </section>
 
       {/* Network Resilience & Low-Bandwidth Standards */}
-      <section className="section-padded section-alt">
+      <section className="section-full theme-dark band-section">
         <div className="container-expansive">
-          <div className="grid-2">
+          <div className="grid-2" style={{ alignItems: 'center' }}>
             <div>
               <span className="eyebrow">Performance Architecture</span>
-              <h2>Low-Bandwidth & Emerging Network Resilience</h2>
+              <h2>Low-Bandwidth &amp; Emerging Network Resilience</h2>
               <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7 }}>
                 Software built for emerging markets cannot rely on unmetered fiber or $1,200 smartphones. We engineer for actual network conditions in Kampala, Nairobi, and across regional cellular grids (MTN, Airtel).
               </p>
-              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, margin: 0 }}>
                 <li><strong>Static-First Astro Architecture:</strong> Pages pre-render to raw HTML and CSS at build time. Zero bloated hydration client JavaScript required to read content.</li>
                 <li><strong>Lean Critical Payloads:</strong> Pre-rendered semantic HTML and optimized CSS keep first paint responsive even on throttle-capped 3G connections.</li>
                 <li><strong>Budget Hardware Friendly:</strong> Tested down to 320px/360px viewports on entry-level Android devices without memory exhaustion or reflow jank.</li>
@@ -100,12 +106,12 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               </ul>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)', border: '1px solid var(--line-strong)' }}>
+            <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
                 <Wifi size={22} color="var(--electric-blue)" />
                 <h3 style={{ margin: 0, fontSize: '1.25rem' }}>Network Constraints Policy</h3>
               </div>
-              <div className="table-wrapper" style={{ marginTop: '12px' }}>
+              <div className="table-wrapper" style={{ margin: '12px 0 0' }}>
                 <table style={{ fontSize: '0.86rem' }}>
                   <thead>
                     <tr>
@@ -139,16 +145,16 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
       </section>
 
       {/* Realistic Availability vs Marketing Claims */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
-          <div className="grid-2">
-            <div className="card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line-strong)' }}>
+          <div className="grid-2" style={{ alignItems: 'center' }}>
+            <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
                 <Server size={22} color="var(--status-pass-text)" />
                 <h3 style={{ margin: 0, fontSize: '1.25rem' }}>Realistic Availability Discipline</h3>
               </div>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: '10px 0 16px' }}>
-                We refuse to publish unsubstantiated "99.999% uptime" marketing claims. Real-world systems depend on upstream telecom gateways, payment webhooks, and third-party APIs that suffer outages.
+                We refuse to publish unsubstantiated &ldquo;99.999% uptime&rdquo; marketing claims. Real-world systems depend on upstream telecom gateways, payment webhooks, and third-party APIs that suffer outages.
               </p>
               <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.86rem', lineHeight: 1.6, margin: 0 }}>
                 <li><strong>Fail-Closed State Machines:</strong> When external APIs drop, transactions freeze safely without silent loss of client capital.</li>
@@ -161,15 +167,15 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
             <div>
               <span className="eyebrow">Reliability Rigor</span>
               <h2>How to assess our work</h2>
-              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '20px' }}>
                 We distinguish a target from a measured outcome, and a local build from a production verification. You can inspect our deterministic verification framework and review each gate before commissioning a project.
               </p>
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-                <button className="button button-primary" onClick={() => onNavigate('verification')}>
+                <button type="button" className="button button-primary" onClick={() => onNavigate('verification')}>
                   <span>Inspect Release Verification Standard</span>
                   <ArrowRight size={14} />
                 </button>
-                <button className="button button-quiet" onClick={onOpenIntakeModal}>
+                <button type="button" className="button button-quiet" onClick={onOpenIntakeModal}>
                   <span>Discuss a Defined Project</span>
                   <ArrowRight size={14} />
                 </button>
@@ -178,6 +184,6 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };

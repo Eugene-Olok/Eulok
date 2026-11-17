@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Navbar } from './Navbar';
 
-describe('Navbar Component — FAANG Grade Rendering & Accessibility', () => {
+describe('Navbar Component — Rendering & Accessibility', () => {
   const onNavigateMock = vi.fn();
   const onOpenIntakeModalMock = vi.fn();
 

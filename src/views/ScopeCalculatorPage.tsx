@@ -186,35 +186,36 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
       : 'var(--status-fail-text)';
 
   return (
-    <div className="page-wrapper">
-      {/* Breadcrumb */}
-      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
-        <button type="button" onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">Scoping Studio & Feasibility</span>
-      </nav>
-
+    <>
       {/* Hero Header */}
-      <header className="page-hero-header">
+      <section className="section-full theme-dark band-hero">
         <div className="container-expansive">
-          <span className="eyebrow">Interactive System Configurator · Uganda & Remote Delivery</span>
-          <h1 className="hero-heading" style={{ maxWidth: '24ch' }}>
-            Model your system. See the reality.
-          </h1>
-          <p className="hero-subheading" style={{ maxWidth: '68ch' }}>
-            Configure target integration rails, regulatory standards, throughput constraints, and client economic region to inspect milestone-derived timelines, logarithmic risk scores, and download a Statement of Work draft.
-          </p>
+          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
+            <span className="separator">/</span>
+            <span aria-current="page">Scoping Studio &amp; Feasibility</span>
+          </nav>
+
+          <div style={{ maxWidth: '860px' }}>
+            <span className="eyebrow">Interactive System Configurator · Uganda &amp; Remote Delivery</span>
+            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '24ch' }}>
+              Model your system. See the reality.
+            </h1>
+            <p className="lead" style={{ maxWidth: '68ch', marginBottom: 0 }}>
+              Configure target integration rails, regulatory standards, throughput constraints, and client economic region to inspect milestone-derived timelines, logarithmic risk scores, and download a Statement of Work draft.
+            </p>
+          </div>
         </div>
-      </header>
+      </section>
 
       {/* Main Studio Interactive Layout */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px', alignItems: 'start' }}>
             {/* Left Column: Interactive Inputs */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               {/* Client Name Input */}
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <label htmlFor="scope-client-name" style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--warm-white)', marginBottom: '8px' }}>
                   Client / Organization Name (Optional)
                 </label>
@@ -229,7 +230,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               </div>
 
               {/* Archetype Selector */}
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '10px', display: 'inline-block' }}>
                   STEP 01 · SYSTEM ARCHETYPE
                 </span>
@@ -259,7 +260,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               </div>
 
               {/* External Rails */}
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '10px', display: 'inline-block' }}>
                   STEP 02 · INTEGRATION RAILS
                 </span>
@@ -271,10 +272,11 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                     return (
                       <label
                         key={key}
+                        className="surface-inset"
                         style={{
                           padding: '12px 14px',
-                          background: isChecked ? 'rgba(56, 189, 248, 0.08)' : 'var(--bg-secondary)',
-                          border: `1px solid ${isChecked ? 'rgba(56, 189, 248, 0.35)' : 'var(--line)'}`,
+                          background: isChecked ? 'rgba(56, 189, 248, 0.08)' : undefined,
+                          borderColor: isChecked ? 'rgba(56, 189, 248, 0.35)' : undefined,
                           borderRadius: '8px',
                           cursor: 'pointer',
                           display: 'flex',
@@ -303,7 +305,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               </div>
 
               {/* Compliance & Governance */}
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '10px', display: 'inline-block' }}>
                   STEP 03 · REGULATORY & GOVERNANCE
                 </span>
@@ -315,10 +317,11 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                     return (
                       <label
                         key={key}
+                        className="surface-inset"
                         style={{
                           padding: '12px 14px',
-                          background: isChecked ? 'rgba(56, 189, 248, 0.08)' : 'var(--bg-secondary)',
-                          border: `1px solid ${isChecked ? 'rgba(56, 189, 248, 0.35)' : 'var(--line)'}`,
+                          background: isChecked ? 'rgba(56, 189, 248, 0.08)' : undefined,
+                          borderColor: isChecked ? 'rgba(56, 189, 248, 0.35)' : undefined,
                           borderRadius: '8px',
                           cursor: 'pointer',
                           display: 'flex',
@@ -347,7 +350,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               </div>
 
               {/* Throughput Volume */}
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '10px', display: 'inline-block' }}>
                   STEP 04 · TRANSACTION VOLUME
                 </span>
@@ -383,9 +386,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               <div
                 className="card"
                 style={{
-                  background: 'var(--bg-secondary)',
-                  border: '1px solid var(--line-strong)',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                  borderColor: 'var(--line-strong)',
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
@@ -468,7 +469,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px', marginBottom: '20px' }}>
-                  <div style={{ background: 'var(--bg-primary)', padding: '14px', borderRadius: '8px', border: '1px solid var(--line)' }}>
+                  <div className="surface-inset" style={{ padding: '14px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase' }}>
                       Estimated Timeline
                     </span>
@@ -480,7 +481,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                     </span>
                   </div>
 
-                  <div style={{ background: 'var(--bg-primary)', padding: '14px', borderRadius: '8px', border: '1px solid var(--line)' }}>
+                  <div className="surface-inset" style={{ padding: '14px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase' }}>
                       Technical Risk
                     </span>
@@ -493,7 +494,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                   </div>
                 </div>
 
-                <div style={{ marginBottom: '20px', padding: '14px', background: 'var(--bg-primary)', borderRadius: '8px', border: '1px solid var(--line)' }}>
+                <div className="surface-inset" style={{ marginBottom: '20px', padding: '14px', borderRadius: '8px' }}>
                   <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>
                     Planning Investment ({ECONOMIC_REGIONS[regionId].shortLabel} · {currency})
                   </span>
@@ -554,7 +555,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               </div>
 
               {/* 6-Stage Delivery Sequence Preview */}
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
                   <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '6px', display: 'inline-block' }}>
                     SCHEDULE & QUALITY GATES
@@ -586,7 +587,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               </div>
 
               {/* Architectural Controls Preview */}
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '8px', display: 'inline-block' }}>
                   ACTIVE GUARDS
                 </span>
@@ -601,6 +602,6 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };

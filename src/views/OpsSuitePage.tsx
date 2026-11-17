@@ -132,10 +132,9 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
     const result = runReconciliation(updatedTransactions, SAMPLE_OBLIGATIONS);
     setOutcome(result);
     const focusMatch =
-      result.duplicates[0] ||
-      result.exceptions[0] ||
-      result.matches[0] ||
-      null;
+      preset === 'duplicate'
+        ? result.duplicates[0] || result.exceptions[0] || result.matches[0] || null
+        : result.exceptions[0] || result.duplicates[0] || result.matches[0] || null;
     setSelectedMatch(focusMatch);
   };
 
@@ -364,7 +363,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
             </div>
 
             {/* 1-Click Scenario Presets */}
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', padding: '10px 14px', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--line)' }}>
+            <div className="surface-inset" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', padding: '10px 14px', borderRadius: '8px' }}>
               <span className="mono-tag" style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginRight: '4px' }}>
                 EDGE-CASE PRESETS:
               </span>
@@ -418,7 +417,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     marginBottom: '16px',
                   }}
                 >
-                  <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
+                  <div className="card" style={{ padding: '16px' }}>
                     <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
                       Total Transactions
                     </span>
@@ -430,7 +429,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     </span>
                   </div>
 
-                  <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
+                  <div className="card" style={{ padding: '16px' }}>
                     <span style={{ fontSize: '0.78rem', color: 'var(--status-pass-text)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
                       Matched Amount
                     </span>
@@ -442,7 +441,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     </span>
                   </div>
 
-                  <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
+                  <div className="card" style={{ padding: '16px' }}>
                     <span style={{ fontSize: '0.78rem', color: 'var(--status-warn-text)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
                       Proposed / Review
                     </span>
@@ -454,7 +453,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     </span>
                   </div>
 
-                  <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
+                  <div className="card" style={{ padding: '16px' }}>
                     <span style={{ fontSize: '0.78rem', color: 'var(--status-fail-text)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
                       Exceptions &amp; Dups
                     </span>
@@ -466,7 +465,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     </span>
                   </div>
 
-                  <div style={{ padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px' }}>
+                  <div className="card" style={{ padding: '16px' }}>
                     <span style={{ fontSize: '0.78rem', color: 'var(--electric-blue)', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>
                       Refunds & Reversals
                     </span>
@@ -479,7 +478,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', padding: '12px 18px', background: 'var(--bg-secondary)', border: '1px solid var(--line)', borderRadius: '8px', fontSize: '0.84rem' }}>
+                <div className="surface-inset" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', padding: '12px 18px', borderRadius: '8px', fontSize: '0.84rem' }}>
                   <div>
                     <span style={{ color: 'var(--text-muted)' }}>Run ID: </span>
                     <code>{outcome.run_id}</code>
@@ -546,17 +545,40 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                     </thead>
                     <tbody>
                       {transactions.map((tx, idx) => {
-                        const match = outcome?.matches.find((m) => m.transaction.tx_id === tx.tx_id);
-                        if (filterStatus !== 'all' && match?.status !== filterStatus) return null;
+                        const resolvedMatch = outcome
+                          ? outcome.matches.find((m) => m.transaction === tx) ||
+                            outcome.exceptions.find((m) => m.transaction === tx) ||
+                            outcome.duplicates.find((m) => m.transaction === tx) ||
+                            outcome.matches.find((m) => m.transaction.tx_id === tx.tx_id)
+                          : undefined;
+
+                        const rowStatus: string | null = resolvedMatch
+                          ? resolvedMatch.status
+                          : outcome
+                          ? outcome.refunds.includes(tx)
+                            ? 'refund'
+                            : outcome.reversals.includes(tx)
+                            ? 'reversal'
+                            : outcome.unmatched.includes(tx)
+                            ? 'unmatched'
+                            : null
+                          : null;
+
+                        if (filterStatus !== 'all' && rowStatus !== filterStatus) return null;
+
+                        const isSelected =
+                          selectedMatch &&
+                          (selectedMatch.transaction === tx ||
+                            (!resolvedMatch && selectedMatch.transaction.tx_id === tx.tx_id));
 
                         return (
                           <tr
                             key={`${tx.tx_id}-${idx}`}
                             style={{
-                              cursor: match ? 'pointer' : 'default',
-                              background: selectedMatch?.transaction.tx_id === tx.tx_id ? 'rgba(56, 189, 248, 0.08)' : undefined,
+                              cursor: resolvedMatch ? 'pointer' : 'default',
+                              background: isSelected ? 'rgba(56, 189, 248, 0.08)' : undefined,
                             }}
-                            onClick={() => match && setSelectedMatch(match)}
+                            onClick={() => resolvedMatch && setSelectedMatch(resolvedMatch)}
                           >
                             <td className="ops-cell-id" data-label="TX ID">
                               <code>{tx.tx_id}</code>
@@ -576,9 +598,9 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                               {tx.payer_reference || '—'}
                             </td>
                             <td className="ops-cell-status" data-label="Rule Match">
-                              {match ? (
-                                <span className={getBadgeClass(match.status)}>
-                                  {match.status}
+                              {rowStatus ? (
+                                <span className={getBadgeClass(rowStatus)}>
+                                  {rowStatus}
                                 </span>
                               ) : (
                                 <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
@@ -636,7 +658,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
 
                 {/* Match Inspector Panel */}
                 {selectedMatch && (
-                  <div style={{ marginTop: '20px', padding: '16px', background: 'var(--bg-secondary)', border: '1px solid var(--accent-blue)', borderRadius: '10px' }}>
+                  <div className="surface-inset" style={{ marginTop: '20px', padding: '16px', borderColor: 'var(--accent-blue)', borderRadius: '10px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <span className="eyebrow" style={{ margin: 0, fontSize: '0.7rem' }}>Match Inspector</span>
                       <span className={getBadgeClass(selectedMatch.status)}>
@@ -672,23 +694,23 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <span className="card-number">RULE SPECIFICATION</span>
                 <h3>Rules R1 Through R8</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.88rem' }}>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-pass-text)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-pass-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R1: Exact Single Match</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Exact reference match + exact amount = 100% deterministic auto-reconciliation.</p>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-warn-text)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-warn-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R2: Partial Payment Allocation</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Valid reference but incoming amount &lt; due balance. Allocates payment and tracks remaining due variance.</p>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R3: Overpayment Exception</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Incoming amount &gt; obligation. Triggers exception flag and escalates credit balance to human finance desk.</p>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rule R5: Duplicate Webhook Retries</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Identical provider reference and amount processed previously. Flagged as duplicate suspect to prevent double-crediting.</p>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', borderLeft: '3px solid var(--electric-blue)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--electric-blue)' }}>
                     <strong style={{ color: 'var(--warm-white)' }}>Rules R7 & R8: Refunds & Reversals</strong>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Debit events partitioned from credit ingestion pipeline to guarantee audit trail preservation.</p>
                   </div>
@@ -701,7 +723,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <p>
                   Standard JavaScript numbers use IEEE 754 64-bit floating point arithmetic. When summing fractional currencies, binary representation introduces cumulative rounding drift:
                 </p>
-                <div style={{ padding: '14px', background: 'var(--bg-secondary)', borderRadius: '8px', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', marginBottom: '16px' }}>
+                <div className="surface-inset" style={{ padding: '14px', borderRadius: '8px', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', marginBottom: '16px' }}>
                   <code>0.1 + 0.2 = 0.30000000000000004</code>
                 </div>
                 <p>
@@ -731,7 +753,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <p>
                   Customer enters "Tuition Term 1" without specifying the student identification code.
                 </p>
-                <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
+                <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
                   <strong>Action:</strong> Routed to school bursar queue with candidate matches ranked by amount and telephone prefix.
                 </div>
               </div>
@@ -742,7 +764,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <p>
                   Aggregator fires duplicate webhooks with identical external transaction IDs within 60 seconds.
                 </p>
-                <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
+                <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
                   <strong>Action:</strong> Second event quarantined. SHA-256 idempotency fingerprint recorded. No duplicate ledger entry created.
                 </div>
               </div>
@@ -753,7 +775,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <p>
                   Direct bank transfer arrives with generic depositor name and no invoice reference.
                 </p>
-                <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
+                <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
                   <strong>Action:</strong> Placed in unallocated suspense account. Never auto-credited until verified by accounting officer.
                 </div>
               </div>
@@ -812,14 +834,14 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                   return (
                     <div
                       key={t.id}
+                      className="surface-inset"
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         padding: '14px 18px',
-                        background: 'var(--bg-secondary)',
                         borderRadius: '8px',
-                        border: `1px solid ${res ? (res.passed ? 'var(--status-pass-border)' : 'var(--status-fail-border)') : 'var(--line)'}`,
+                        borderColor: res ? (res.passed ? 'var(--status-pass-border)' : 'var(--status-fail-border)') : undefined,
                         flexWrap: 'wrap',
                         gap: '12px',
                       }}

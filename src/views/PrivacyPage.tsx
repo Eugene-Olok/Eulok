@@ -12,29 +12,30 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
   onOpenIntakeModal = openIntakeModal,
 }) => {
   return (
-    <div className="page-wrapper">
-      {/* Breadcrumb */}
-      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
-        <button onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">Privacy Policy & PDPO Compliance</span>
-      </nav>
-
+    <>
       {/* Hero Header */}
-      <header className="page-hero-header">
+      <section className="section-full theme-dark band-hero">
         <div className="container-expansive">
-          <span className="eyebrow">Uganda DPPA 2019 · Statutory Privacy Governance</span>
-          <h1 className="hero-heading" style={{ maxWidth: '24ch' }}>
-            A rigorous, auditable account of website and client data.
-          </h1>
-          <p className="hero-subheading" style={{ maxWidth: '68ch' }}>
-            This policy describes how personal and technical data is collected, processed, retained, and safeguarded under Uganda’s Data Protection and Privacy Act, 2019 and relevant international data governance standards.
-          </p>
-        </div>
-      </header>
+          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
+            <span className="separator">/</span>
+            <span aria-current="page">Privacy Policy &amp; PDPO Compliance</span>
+          </nav>
 
-      {/* Main Content */}
-      <section className="section-padded">
+          <div style={{ maxWidth: '860px' }}>
+            <span className="eyebrow">Uganda DPPA 2019 · Statutory Privacy Governance</span>
+            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '24ch' }}>
+              A rigorous, auditable account of website and client data.
+            </h1>
+            <p className="lead" style={{ maxWidth: '68ch', marginBottom: 0 }}>
+              This policy describes how personal and technical data is collected, processed, retained, and safeguarded under Uganda’s Data Protection and Privacy Act, 2019 and relevant international data governance standards.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Sections 1 & 2 */}
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div style={{ maxWidth: '78ch' }}>
             {/* Section 1: Data Controller & Registration */}
@@ -43,7 +44,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
               <strong>EULOK</strong> is an independent software engineering practice based in Kampala, Uganda, operating remotely worldwide. Under the <em>Data Protection and Privacy Act, 2019</em>, EULOK acts as the <strong>Data Controller</strong> for communications received via our website, email, and WhatsApp scoping channels.
             </p>
-            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--line)', borderRadius: '12px', padding: '20px 24px', marginBottom: '36px' }}>
+            <div className="card" style={{ padding: '20px 24px', marginBottom: '36px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '16px', fontSize: '0.9rem' }}>
                 <div>
                   <span style={{ color: 'var(--accent-blue)', display: 'block', fontSize: '0.78rem', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Operating Jurisdiction</span>
@@ -66,7 +67,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '16px' }}>
               We enforce strict zero-bloat data minimization. We only collect information strictly required to evaluate technical feasibility, formulate delivery proposals, and maintain security:
             </p>
-            <div style={{ display: 'grid', gap: '16px', marginBottom: '36px' }}>
+            <div style={{ display: 'grid', gap: '16px' }}>
               <div className="card" style={{ padding: '20px' }}>
                 <h3 style={{ fontSize: '1.05rem', margin: '0 0 6px', color: 'var(--warm-white)' }}>Project Scoping & Intake Records</h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
@@ -86,7 +87,14 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
+      {/* Sections 3 & 4 */}
+      <section className="section-full theme-dark band-section">
+        <div className="container-expansive">
+          <div style={{ maxWidth: '78ch' }}>
             {/* Section 3: Lawful Basis under Uganda DPPA 2019 */}
             <span className="eyebrow">03 / Statutory Grounds</span>
             <h2>Lawful Basis for Processing</h2>
@@ -105,8 +113,8 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
               Under the DPPA 2019 (Sections 24 through 28), you are entitled to enforceable statutory protections:
             </p>
-            <div className="table-responsive" style={{ marginBottom: '36px' }}>
-              <table className="audit-table">
+            <div className="table-wrapper">
+              <table>
                 <thead>
                   <tr>
                     <th>Statutory Right</th>
@@ -143,7 +151,14 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+      </section>
 
+      {/* Sections 5, 6 & Rights */}
+      <section className="section-full theme-navy band-section">
+        <div className="container-expansive">
+          <div style={{ maxWidth: '78ch' }}>
             {/* Section 5: Cross-Border Transfers */}
             <span className="eyebrow">05 / Cross-Border Transfers (Section 19)</span>
             <h2>International Transfers & Regional Isolation</h2>
@@ -157,7 +172,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             {/* Section 6: Data Retention Schedule */}
             <span className="eyebrow">06 / Data Retention Schedule</span>
             <h2>Explicit Lifespan for Inquiries</h2>
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line)', borderRadius: '12px', padding: '24px', marginBottom: '36px' }}>
+            <div className="card" style={{ padding: '24px', marginBottom: '32px' }}>
               <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.8, margin: 0 }}>
                 <li><strong>Uncommitted Inquiries:</strong> Scoping notes without a signed engagement agreement are expunged within <strong>180 calendar days</strong>.</li>
                 <li><strong>Signed Engagement Documentation:</strong> Retained for <strong>7 years</strong> in compliance with Uganda Revenue Authority (URA) financial record obligations and commercial dispute limitation periods.</li>
@@ -166,10 +181,10 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             </div>
 
             {/* Exercise Rights Box */}
-            <div style={{ background: 'var(--bg-secondary)', padding: '28px', borderRadius: '12px', border: '1px solid var(--line-strong)' }}>
+            <div className="card" style={{ padding: '28px', borderColor: 'var(--line-strong)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
                 <Shield size={22} color="var(--electric-blue)" />
-                <h3 style={{ margin: 0, fontSize: '1.2rem', color: 'var(--text-main)' }}>Exercise Data Subject Rights</h3>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', color: 'var(--warm-white)' }}>Exercise Data Subject Rights</h3>
               </div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem', lineHeight: 1.6, marginBottom: '20px' }}>
                 Submit formal data access, rectification, or deletion requests directly to our designated privacy officer. Requests are logged and answered without charge within statutory timelines.
@@ -188,12 +203,12 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
               </div>
             </div>
 
-            <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginTop: '28px' }}>
+            <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginTop: '28px', marginBottom: 0 }}>
               Version: 2026.11 · Statutory basis: Uganda DPPA 2019 & Regulations 2021.
             </p>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };

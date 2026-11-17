@@ -193,7 +193,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
             }}
           >
             {/* Left: 8-Point Checklist */}
-            <div className="card" style={{ background: 'var(--bg-primary)', padding: 'clamp(20px, 3vw, 28px)' }}>
+            <div className="card" style={{ padding: 'clamp(20px, 3vw, 28px)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
                 <h3 style={{ margin: 0, fontSize: '1.15rem' }}>8 Engineering Safeguard Checks</h3>
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)', fontVariantNumeric: 'tabular-nums' }}>
@@ -214,14 +214,15 @@ export const RescuePage: React.FC<RescuePageProps> = ({
                   return (
                     <label
                       key={check.id}
+                      className={isPassing ? undefined : 'surface-inset'}
                       style={{
                         display: 'flex',
                         alignItems: 'flex-start',
                         gap: '12px',
                         padding: '12px 14px',
                         borderRadius: '8px',
-                        background: isPassing ? 'rgba(34, 197, 94, 0.05)' : 'var(--bg-secondary)',
-                        border: `1px solid ${isPassing ? 'var(--status-pass-border)' : 'var(--line)'}`,
+                        background: isPassing ? 'rgba(34, 197, 94, 0.06)' : undefined,
+                        border: isPassing ? '1px solid var(--status-pass-border)' : undefined,
                         cursor: 'pointer',
                         transition: 'border-color 0.15s ease, background 0.15s ease',
                       }}
@@ -261,7 +262,6 @@ export const RescuePage: React.FC<RescuePageProps> = ({
               <div
                 className="card"
                 style={{
-                  background: 'var(--bg-primary)',
                   border: `1px solid ${postureStyle.border}`,
                   padding: 'clamp(20px, 3vw, 28px)',
                 }}
@@ -284,25 +284,25 @@ export const RescuePage: React.FC<RescuePageProps> = ({
                     marginBottom: '18px',
                   }}
                 >
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--line)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>PASSING</span>
                     <strong style={{ fontSize: '1.2rem', color: 'var(--status-pass-text)', fontVariantNumeric: 'tabular-nums' }}>
                       {diagnostic.passingChecks.length}/8
                     </strong>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--line)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>P0 CRIT</span>
                     <strong style={{ fontSize: '1.2rem', color: diagnostic.p0Count > 0 ? 'var(--status-fail-text)' : 'var(--warm-white)', fontVariantNumeric: 'tabular-nums' }}>
                       {diagnostic.p0Count}
                     </strong>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--line)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>P1 HIGH</span>
                     <strong style={{ fontSize: '1.2rem', color: diagnostic.p1Count > 0 ? 'var(--status-warn-text)' : 'var(--warm-white)', fontVariantNumeric: 'tabular-nums' }}>
                       {diagnostic.p1Count}
                     </strong>
                   </div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--line)' }}>
+                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>P2 OPT</span>
                     <strong style={{ fontSize: '1.2rem', color: 'var(--warm-white)', fontVariantNumeric: 'tabular-nums' }}>
                       {diagnostic.p2Count}
@@ -310,7 +310,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
                   </div>
                 </div>
 
-                <div style={{ padding: '12px 14px', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--line)', marginBottom: '18px' }}>
+                <div className="surface-inset" style={{ padding: '12px 14px', borderRadius: '8px', marginBottom: '18px' }}>
                   <div style={{ fontSize: '0.76rem', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.06em' }}>
                     Recommended Next Engagement
                   </div>
@@ -338,10 +338,9 @@ export const RescuePage: React.FC<RescuePageProps> = ({
                       {diagnostic.remediationPlan.map((item, idx) => (
                         <div
                           key={`${item.priority}-${idx}`}
+                          className="surface-inset"
                           style={{
                             padding: '10px 12px',
-                            background: 'var(--bg-secondary)',
-                            border: '1px solid var(--line)',
                             borderRadius: '8px',
                             fontSize: '0.82rem',
                           }}
@@ -401,7 +400,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
           </div>
 
           <div className="grid-3">
-            <div className="card" style={{ background: 'var(--bg-secondary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>01 / STALLED DELIVERY</span>
               <h3>Unfinished Contractor Projects</h3>
               <p>
@@ -409,7 +408,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>02 / SILENT ERRORS</span>
               <h3>Unreliable Integrations</h3>
               <p>
@@ -417,7 +416,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>03 / FRAGILITY</span>
               <h3>Code Too Risky to Change</h3>
               <p>
@@ -425,7 +424,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>04 / PERFORMANCE</span>
               <h3>Timeout Cascades & Latency</h3>
               <p>
@@ -433,7 +432,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>05 / BLIND SPOTS</span>
               <h3>Missing Documentation & Runbooks</h3>
               <p>
@@ -441,7 +440,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--status-fail-text)', display: 'block', marginBottom: '10px' }}>06 / SECURITY RISK</span>
               <h3>Exposed Secrets & Data Gaps</h3>
               <p>
@@ -530,7 +529,7 @@ export const RescuePage: React.FC<RescuePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line-strong)' }}>
+            <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
               <h3 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>What Software Rescue Delivers</h3>
               <ul style={{ margin: 0, paddingLeft: '18px', color: 'var(--text-subtle)', fontSize: '0.9rem' }}>
                 <li style={{ marginBottom: '8px' }}>Comprehensive architecture diagnostic & risk report</li>

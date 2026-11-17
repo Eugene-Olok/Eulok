@@ -93,7 +93,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                   <span className="badge badge-neutral">Published: 0 (Strict Policy)</span>
                 </div>
 
-                <div className="card" style={{ background: 'var(--bg-primary)', border: '1px solid var(--line-strong)', padding: 'clamp(24px, 4vw, 36px)' }}>
+                <div className="card" style={{ borderColor: 'var(--line-strong)', padding: 'clamp(24px, 4vw, 36px)' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '28px', alignItems: 'start' }}>
                 <div>
                   <span className="badge badge-warn" style={{ marginBottom: '10px' }}>
@@ -131,7 +131,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
               <span className="badge badge-pass">Interactive Software Available</span>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)', border: '1px solid var(--line-strong)', padding: 'clamp(24px, 4vw, 36px)' }}>
+            <div className="card" style={{ borderColor: 'var(--line-strong)', padding: 'clamp(24px, 4vw, 36px)' }}>
               <span className="badge badge-neutral" style={{ color: 'var(--electric-blue)', marginBottom: '12px' }}>
                 FINANCIAL SYSTEMS / PRODUCT 1
               </span>
@@ -270,7 +270,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
             </div>
 
             <div className="grid-3">
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>NOTE 01</span>
                 <h3>Deterministic Calculations</h3>
                 <p>Why floating-point arithmetic causes cumulative ledger drift, and why pure integer minor units are necessary for finance.</p>
@@ -279,7 +279,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                 </button>
               </div>
 
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>NOTE 02</span>
                 <h3>Idempotency in Mobile Money</h3>
                 <p>Handling webhook retries, network jitter, and distributed locks to prevent double credits in cellular environments.</p>
@@ -288,7 +288,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                 </button>
               </div>
 
-              <div className="card" style={{ background: 'var(--bg-primary)' }}>
+              <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>NOTE 03</span>
                 <h3>Software Rescue Triage</h3>
                 <p>How to audit, isolate risks, and stabilize an abandoned or unstable codebase without defaulting to an expensive total rewrite.</p>

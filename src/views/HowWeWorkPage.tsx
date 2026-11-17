@@ -71,7 +71,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {/* Stage 01 */}
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span className="card-number" style={{ margin: 0 }}>01 — DISCOVER</span>
                 <span className="badge badge-neutral">Stage 1</span>
@@ -93,7 +93,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
             </div>
 
             {/* Stage 02 */}
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span className="card-number" style={{ margin: 0 }}>02 — SCOPE</span>
                 <span className="badge badge-neutral">Stage 2</span>
@@ -115,7 +115,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
             </div>
 
             {/* Stage 03 */}
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span className="card-number" style={{ margin: 0 }}>03 — DESIGN</span>
                 <span className="badge badge-neutral">Stage 3</span>
@@ -137,7 +137,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
             </div>
 
             {/* Stage 04 */}
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span className="card-number" style={{ margin: 0 }}>04 — BUILD & VERIFY</span>
                 <span className="badge badge-neutral">Stage 4</span>
@@ -159,7 +159,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
             </div>
 
             {/* Stage 05 */}
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span className="card-number" style={{ margin: 0 }}>05 — DEPLOY & HAND OVER</span>
                 <span className="badge badge-neutral">Stage 5</span>
@@ -181,7 +181,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
             </div>
 
             {/* Stage 06 */}
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span className="card-number" style={{ margin: 0 }}>06 — OPERATE & IMPROVE</span>
                 <span className="badge badge-neutral">Stage 6</span>
@@ -301,7 +301,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
               </ul>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line-strong)' }}>
+            <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
               <h3>Commercial Engagement Models</h3>
               <div style={{ marginBottom: '16px' }}>
                 <strong style={{ color: 'var(--warm-white)', display: 'block', fontSize: '0.95rem' }}>Fixed-Scope Assessment</strong>

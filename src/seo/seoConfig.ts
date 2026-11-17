@@ -378,7 +378,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
       'release gates',
       'deterministic testing',
       'zero defect software',
-      'FAANG grade software standards',
+      'deterministic verification standards',
     ],
     canonicalPath: '/verification',
     ogType: 'website',

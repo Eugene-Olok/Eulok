@@ -49,8 +49,6 @@ export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
         aria-busy="true"
         aria-hidden="true"
         style={{
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--line)',
           borderRadius: '10px',
           padding: '24px',
           display: 'flex',

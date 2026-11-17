@@ -10,6 +10,7 @@ import {
   Link2,
 } from 'lucide-react';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
+import { LiveFinOpsTrendsSection } from '../components/LiveFinOpsTrendsSection';
 
 interface InsightsPageProps {
   onNavigate?: (page: string) => void;
@@ -229,25 +230,34 @@ if (match.status === 'proposed' || match.status === 'exception') {
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '32px' }}>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                className={`button button-small ${selectedCategory === cat ? 'button-primary' : 'button-quiet'}`}
-                onClick={() => handleCategoryChange(cat)}
-                style={{ textTransform: 'capitalize' }}
-              >
-                {cat === 'all' ? 'All Topics' : cat}
-              </button>
-            ))}
+          {/* Category Filter & Live Trends Jump */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginTop: '32px' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`button button-small ${selectedCategory === cat ? 'button-primary' : 'button-quiet'}`}
+                  onClick={() => handleCategoryChange(cat)}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {cat === 'all' ? 'All Topics' : cat}
+                </button>
+              ))}
+            </div>
+
+            <a href="#live-finops-trends" className="button button-quiet button-small">
+              Live Web-Grounded Trends ↓
+            </a>
           </div>
         </div>
       </section>
 
+      {/* Search-Grounded Financial Operations Industry Trends */}
+      <LiveFinOpsTrendsSection />
+
       {/* Articles Grid / List */}
-      <section className="section-full theme-navy" style={{ padding: 'clamp(48px, 6vw, 80px) 0', borderTop: '1px solid var(--line)' }}>
+      <section className="section-full theme-dark" style={{ padding: 'clamp(48px, 6vw, 80px) 0', borderTop: '1px solid var(--line)' }}>
         <div className="container-expansive">
           {isFiltering ? (
             <div style={{ padding: '16px 0' }}>
@@ -263,8 +273,7 @@ if (match.status === 'proposed' || match.status === 'exception') {
                   id={article.id}
                   className="card"
                   style={{
-                    background: 'var(--bg-primary)',
-                    border: isExpanded ? '1px solid var(--electric-blue)' : '1px solid var(--line)',
+                    borderColor: isExpanded ? 'var(--electric-blue)' : undefined,
                     padding: 'clamp(24px, 4vw, 36px)',
                     scrollMarginTop: '92px',
                   }}
@@ -311,7 +320,7 @@ if (match.status === 'proposed' || match.status === 'exception') {
                     {article.summary}
                   </p>
 
-                  <div style={{ padding: '10px 14px', background: 'var(--bg-secondary)', borderRadius: '6px', marginBottom: '16px', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                  <div className="surface-inset" style={{ padding: '10px 14px', borderRadius: '6px', marginBottom: '16px', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
                     <strong>Demonstrates:</strong> {article.demonstrates}
                   </div>
 

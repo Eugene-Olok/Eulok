@@ -21,29 +21,30 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
   }, []);
 
   return (
-    <div className="page-wrapper">
-      {/* Breadcrumb */}
-      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
-        <button onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">Security & RFC 9116 Policy</span>
-      </nav>
-
+    <>
       {/* Hero Header */}
-      <header className="page-hero-header">
+      <section className="section-full theme-dark band-hero">
         <div className="container-expansive">
-          <span className="eyebrow">RFC 9116 Security Disclosure · Vulnerability Policy</span>
-          <h1 className="hero-heading" style={{ maxWidth: '24ch' }}>
-            Security is an architectural discipline, not a badge.
-          </h1>
-          <p className="hero-subheading" style={{ maxWidth: '68ch' }}>
-            We design systems with fail-closed security boundaries: isolation of client credentials, strict perimeter sanitization, deterministic business logic, and transparent vulnerability reporting.
-          </p>
+          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
+            <span className="separator">/</span>
+            <span aria-current="page">Security &amp; RFC 9116 Policy</span>
+          </nav>
+
+          <div style={{ maxWidth: '860px' }}>
+            <span className="eyebrow">RFC 9116 Security Disclosure · Vulnerability Policy</span>
+            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '24ch' }}>
+              Security is an architectural discipline, not a badge.
+            </h1>
+            <p className="lead" style={{ maxWidth: '68ch', marginBottom: 0 }}>
+              We design systems with fail-closed security boundaries: isolation of client credentials, strict perimeter sanitization, deterministic business logic, and transparent vulnerability reporting.
+            </p>
+          </div>
         </div>
-      </header>
+      </section>
 
       {/* Core Controls */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '24px', marginBottom: '48px' }}>
             <div className="card">
@@ -93,26 +94,32 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
               EULOK maintains a transparent, public vulnerability disclosure policy complying with Internet Engineering Task Force (IETF) RFC 9116. Our security contact file is publicly available at:
             </p>
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line)', borderRadius: '8px', padding: '16px 20px', marginBottom: '24px' }}>
+            <div className="surface-panel" style={{ borderRadius: '8px', padding: '16px 20px', marginBottom: '24px' }}>
               <code>{securityTxtUrl}</code>
             </div>
 
             <h3 style={{ fontSize: '1.2rem', marginBottom: '12px' }}>Guidelines for Security Researchers:</h3>
-            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '24px' }}>
+            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 0 }}>
               <li>Send reports to <code>{siteConfig.securityEmail}</code> with reproducible technical steps, proof of concept, and affected endpoints.</li>
               <li>Allow a reasonable window (minimum 30 calendar days) before public disclosure to permit mitigation.</li>
               <li>Do not access, modify, or destroy client data. Do not execute volumetric DDoS attacks against production infrastructure.</li>
               <li>We acknowledge valid submissions within <strong>48 hours</strong> and provide regular remediation updates.</li>
             </ul>
+          </div>
+        </div>
+      </section>
 
-            {/* Cloudflare Edge Hardening */}
+      {/* Edge Hardening */}
+      <section className="section-full theme-dark band-section">
+        <div className="container-expansive">
+          <div style={{ maxWidth: '82ch' }}>
             <span className="eyebrow">Edge Hardening</span>
             <h2>HTTP Response Headers & Content Security Policy</h2>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
               All responses from edge hosting are configured with explicit defense-in-depth HTTP security headers:
             </p>
-            <div className="table-responsive" style={{ marginBottom: '36px' }}>
-              <table className="audit-table">
+            <div className="table-wrapper" style={{ marginBottom: '36px' }}>
+              <table>
                 <thead>
                   <tr>
                     <th>Security Header</th>
@@ -151,7 +158,7 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
             </div>
 
             {/* Intentional CSP Trade-off Disclosure */}
-            <div style={{ background: 'var(--bg-secondary)', padding: '20px 22px', borderRadius: '10px', border: '1px solid var(--line)', marginBottom: '36px' }}>
+            <div className="callout-stripe" style={{ padding: '20px 22px', marginBottom: '36px' }}>
               <span className="mono-tag" style={{ color: 'var(--status-warn-text)', display: 'inline-block', marginBottom: '6px' }}>
                 DELIBERATE ARCHITECTURAL TRADE-OFF
               </span>
@@ -165,8 +172,8 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
             </div>
 
             {/* Report CTA */}
-            <div style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: '12px', border: '1px solid var(--line)' }}>
-              <h3 style={{ margin: 0, marginBottom: '8px' }}>Security Inquiries & Disclosure</h3>
+            <div className="card">
+              <h3 style={{ margin: 0, marginBottom: '8px' }}>Security Inquiries &amp; Disclosure</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '16px' }}>
                 For security audits, incident disclosures, or compliance questionnaires, contact the engineering security coordinator.
               </p>
@@ -183,6 +190,6 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };

@@ -68,9 +68,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             style={{
               maxWidth: '680px',
               width: '100%',
-              background: 'var(--bg-secondary)',
-              border: '1px solid rgba(248, 113, 113, 0.4)',
-              boxShadow: '0 16px 48px rgba(0, 0, 0, 0.5)',
+              borderColor: 'rgba(248, 113, 113, 0.4)',
               padding: 'clamp(28px, 5vw, 44px)',
               borderRadius: '12px',
             }}
@@ -106,9 +104,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
             {this.state.error && (
               <div
+                className="surface-inset"
                 style={{
-                  background: 'var(--bg-primary)',
-                  border: '1px solid var(--line)',
                   borderRadius: '6px',
                   padding: '12px 14px',
                   marginBottom: '24px',

@@ -15,29 +15,30 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const whatsappUrl = 'https://wa.me/256760779160?text=Hello%20EULOK%2C%20I%20would%20like%20to%20discuss%20a%20software%20engineering%20project.';
 
   return (
-    <div className="page-wrapper">
-      {/* Breadcrumb */}
-      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
-        <button onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">Contact & Project Intake</span>
-      </nav>
-
+    <>
       {/* Hero Header */}
-      <header className="page-hero-header">
+      <section className="section-full theme-dark band-hero">
         <div className="container-expansive">
-          <span className="eyebrow">Start a conversation</span>
-          <h1 className="hero-heading" style={{ maxWidth: '24ch' }}>
-            What needs to work better?
-          </h1>
-          <p className="hero-subheading" style={{ maxWidth: '64ch' }}>
-            Tell us what is breaking, slowing your team down, or stopping an operational process from functioning reliably. We will establish whether EULOK is the right technical fit before proposing a scope.
-          </p>
+          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
+            <span className="separator">/</span>
+            <span aria-current="page">Contact &amp; Project Intake</span>
+          </nav>
+
+          <div style={{ maxWidth: '860px' }}>
+            <span className="eyebrow">Start a conversation</span>
+            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '22ch' }}>
+              What needs to work better?
+            </h1>
+            <p className="lead" style={{ maxWidth: '64ch', marginBottom: 0 }}>
+              Tell us what is breaking, slowing your team down, or stopping an operational process from functioning reliably. We will establish whether EULOK is the right technical fit before proposing a scope.
+            </p>
+          </div>
         </div>
-      </header>
+      </section>
 
       {/* Main Form Section: Direct Embedded Scoping Wizard */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '32px', alignItems: 'start' }}>
             {/* Left Col: Interactive Intake Wizard */}
@@ -77,7 +78,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 </div>
 
                 <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid var(--line)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-subtle)', fontSize: '0.84rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.84rem' }}>
                     <Clock size={14} />
                     <span>Based in Kampala, Uganda (UTC+3) · Remote worldwide</span>
                   </div>
@@ -117,24 +118,24 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       <ContactDocSearch onNavigate={onNavigate} />
 
       {/* Alternative Guides */}
-      <section className="section-padded section-alt">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div style={{ maxWidth: '640px' }}>
             <span className="eyebrow">Explore Our Approach</span>
             <h2>Not sure if your problem fits our services?</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>
+            <p style={{ color: 'var(--text-subtle)', marginBottom: '20px' }}>
               Software rescue, custom operational systems, and financial reconciliation represent our primary focus areas. Explore how we structure contracts and verify delivery before committing.
             </p>
             <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-              <button className="button button-quiet" onClick={() => onNavigate('services')}>
+              <button type="button" className="button button-quiet" onClick={() => onNavigate('services')}>
                 <span>Browse Services</span>
                 <ArrowRight size={14} />
               </button>
-              <button className="button button-quiet" onClick={() => onNavigate('work')}>
+              <button type="button" className="button button-quiet" onClick={() => onNavigate('work')}>
                 <span>How We Work</span>
                 <ArrowRight size={14} />
               </button>
-              <button className="button button-quiet" onClick={() => onNavigate('verification')}>
+              <button type="button" className="button button-quiet" onClick={() => onNavigate('verification')}>
                 <span>Release Verification Standard</span>
                 <ArrowRight size={14} />
               </button>
@@ -142,6 +143,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };

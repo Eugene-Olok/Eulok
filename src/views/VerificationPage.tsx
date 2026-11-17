@@ -176,50 +176,34 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
   };
 
   return (
-    <div className="page-wrapper">
-      {/* Breadcrumb Navigation */}
-      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
-        <button onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">Release Verification Methodology</span>
-      </nav>
-
+    <>
       {/* Hero Header */}
-      <header className="page-hero-header">
+      <section className="section-full theme-dark band-hero">
         <div className="container-expansive">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-            <span className="mono-tag" style={{ color: 'var(--electric-blue)' }}>
-              ENGINEERING RIGOR · ACCEPTANCE STANDARDS
-            </span>
+          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
+            <span className="separator">/</span>
+            <span aria-current="page">Release Verification Methodology</span>
+          </nav>
+
+          <div style={{ maxWidth: '860px' }}>
+            <span className="eyebrow">Engineering Rigor · Acceptance Standards</span>
+            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '28ch' }}>
+              Deterministic Release Verification Standard
+            </h1>
+            <p className="lead" style={{ maxWidth: '66ch', marginBottom: '24px' }}>
+              How EULOK verifies software architectures before production release. We reject subjective claims and self-graded checkboxes. Every deliverable is verified through reproducible automated tests, security boundary isolation, accessibility audits, and multi-viewport responsive testing.
+            </p>
+
+            <blockquote className="callout-stripe" style={{ maxWidth: '60ch', margin: 0 }}>
+              <strong>Core Rule:</strong> Models propose. Deterministic systems decide. We never treat model output as proof of correctness. Critical software requires reproducible, auditable evidence.
+            </blockquote>
           </div>
-
-          <h1 className="hero-heading" style={{ maxWidth: '28ch' }}>
-            Deterministic Release Verification Standard
-          </h1>
-          <p className="hero-subheading" style={{ maxWidth: '66ch' }}>
-            How EULOK verifies software architectures before production release. We reject subjective claims and self-graded checkboxes. Every deliverable is verified through reproducible automated tests, security boundary isolation, accessibility audits, and multi-viewport responsive testing.
-          </p>
-
-          <blockquote
-            style={{
-              margin: '24px 0 0',
-              padding: '12px 18px',
-              borderLeft: '3px solid var(--electric-blue)',
-              background: 'var(--bg-secondary)',
-              borderRadius: '0 8px 8px 0',
-              color: 'var(--warm-white)',
-              maxWidth: '60ch',
-              fontSize: '0.95rem',
-              lineHeight: 1.6,
-            }}
-          >
-            <strong>Core Rule:</strong> Models propose. Deterministic systems decide. We never treat model output as proof of correctness. Critical software requires reproducible, auditable evidence.
-          </blockquote>
         </div>
-      </header>
+      </section>
 
       {/* The Five Verification Disciplines */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div style={{ marginBottom: '36px' }}>
             <span className="eyebrow">The EULOK Quality Spine</span>
@@ -237,9 +221,8 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
                   key={pillar.title}
                   className="card"
                   style={{
-                    background: 'var(--bg-primary)',
                     padding: 'clamp(20px, 3.5vw, 36px)',
-                    border: '1px solid var(--line-strong)',
+                    borderColor: 'var(--line-strong)',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '20px' }}>
@@ -277,11 +260,10 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
                     {pillar.criteria.map((item) => (
                       <div
                         key={item.name}
+                        className="surface-inset"
                         style={{
                           padding: '16px',
-                          background: 'var(--bg-secondary)',
                           borderRadius: '8px',
-                          border: '1px solid var(--line)',
                           display: 'flex',
                           flexDirection: 'column',
                           gap: '6px',
@@ -309,7 +291,7 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
       </section>
 
       {/* Handover & Client Audit Governance */}
-      <section className="section-padded section-alt">
+      <section className="section-full theme-dark band-section">
         <div className="container-expansive">
           <div className="grid-2">
             <div>
@@ -326,7 +308,7 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
               </ul>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '12px', display: 'inline-block' }}>
                 DISCUSS AN ENGAGEMENT
               </span>
@@ -350,6 +332,6 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };

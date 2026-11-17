@@ -585,7 +585,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
           </div>
 
           {/* Compiled Brief Preview */}
-          <div style={{ background: 'var(--bg-secondary)', padding: '14px', borderRadius: '8px', marginBottom: '20px', border: '1px solid var(--line)' }}>
+          <div className="surface-inset" style={{ padding: '14px', borderRadius: '8px', marginBottom: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', fontWeight: 600 }}>
                 Structured Project Brief

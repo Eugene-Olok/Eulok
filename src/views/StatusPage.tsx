@@ -101,41 +101,41 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
       : 'High Latency / Cellular Route (250ms+)';
 
   return (
-    <div className="page-wrapper">
-      {/* Breadcrumb Navigation */}
-      <nav className="container-expansive breadcrumb-nav" aria-label="Breadcrumb">
-        <button onClick={() => onNavigate('home')} className="breadcrumb-link">Home</button>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">Edge Architecture & Live Telemetry</span>
-      </nav>
-
+    <>
       {/* Hero Header */}
-      <header className="page-hero-header">
+      <section className="section-full theme-dark band-hero">
         <div className="container-expansive">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-            <span className="live-status-pill" style={{ margin: 0 }}>
-              <span className={`live-status-dot ${probeSuccess ? '' : 'status-dot-warn'}`} />
-              {probeSuccess ? 'Edge Origin Accessible' : 'Probe Reconnecting'}
-            </span>
-          </div>
+          <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
+            <button type="button" onClick={() => onNavigate('home')}>Home</button>
+            <span className="separator">/</span>
+            <span aria-current="page">Edge Architecture &amp; Live Telemetry</span>
+          </nav>
 
-          <h1 className="hero-heading" style={{ maxWidth: '26ch' }}>
-            Edge Architecture & Live Telemetry
-          </h1>
-          <p className="hero-subheading" style={{ maxWidth: '64ch' }}>
-            Real-time edge network telemetry, infrastructure topology, and disaster recovery standards for the EULOK web architecture. Measured directly from your client browser—no fabricated metrics or marketing estimates.
-          </p>
+          <div style={{ maxWidth: '860px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+              <span className="live-status-pill" style={{ margin: 0 }}>
+                <span className={`live-status-dot ${probeSuccess ? '' : 'status-dot-warn'}`} />
+                {probeSuccess ? 'Edge Origin Accessible' : 'Probe Reconnecting'}
+              </span>
+            </div>
+
+            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '26ch' }}>
+              Edge Architecture &amp; Live Telemetry
+            </h1>
+            <p className="lead" style={{ maxWidth: '64ch', marginBottom: 0 }}>
+              Real-time edge network telemetry, infrastructure topology, and disaster recovery standards for the EULOK web architecture. Measured directly from your client browser—no fabricated metrics or marketing estimates.
+            </p>
+          </div>
         </div>
-      </header>
+      </section>
 
       {/* Edge Latency Probe Bar */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div
             className="card"
             style={{
-              background: 'var(--bg-secondary)',
-              border: '1px solid var(--line-strong)',
+              borderColor: 'var(--line-strong)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
@@ -229,7 +229,7 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
       </section>
 
       {/* Production Architecture Specs */}
-      <section className="section-padded section-alt">
+      <section className="section-full theme-dark band-section">
         <div className="container-expansive">
           <div style={{ maxWidth: '780px', marginBottom: '28px' }}>
             <span className="eyebrow">Production Topology</span>
@@ -240,7 +240,7 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
           </div>
 
           <div className="grid-3">
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '8px', display: 'inline-block' }}>
                 BUILD COMPILER
               </span>
@@ -250,7 +250,7 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '8px', display: 'inline-block' }}>
                 EDGE HOSTING
               </span>
@@ -260,7 +260,7 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '8px', display: 'inline-block' }}>
                 SERVERLESS INTAKE
               </span>
@@ -274,7 +274,7 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
       </section>
 
       {/* Incident & Recovery Architecture */}
-      <section className="section-padded">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div className="grid-2">
             <div>
@@ -290,7 +290,7 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
               </ul>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--line-strong)' }}>
+            <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
               <h3 style={{ fontSize: '1.2rem', marginBottom: '12px' }}>Operational Runbooks</h3>
               <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 20px' }}>
                 <li><strong>Disaster Recovery:</strong> Multi-region static fallback with automated roll-forward and roll-backward.</li>
@@ -311,6 +311,6 @@ export const StatusPage: React.FC<StatusPageProps> = ({ onNavigate = navigateTo 
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };

@@ -75,7 +75,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ padding: '12px', background: 'var(--bg-primary)', border: '1px solid var(--line)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', transition: 'border-color 0.2s ease' }}>
+                <div className="surface-panel" style={{ padding: '12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', transition: 'border-color 0.2s ease' }}>
                   <Database size={16} color="var(--accent-blue)" />
                   <div>
                     <strong style={{ fontSize: '0.85rem', display: 'block', color: 'var(--warm-white)' }}>01 / Ingestion Boundary</strong>
@@ -87,7 +87,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   ↓
                 </div>
 
-                <div style={{ padding: '12px', background: 'var(--bg-primary)', border: '1px solid var(--accent-blue)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 0 16px -4px rgba(56, 189, 248, 0.2)' }}>
+                <div className="surface-panel" style={{ padding: '12px', borderColor: 'var(--accent-blue)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 0 16px -4px rgba(56, 189, 248, 0.2)' }}>
                   <Cpu size={16} color="var(--electric-blue)" />
                   <div>
                     <strong style={{ fontSize: '0.85rem', display: 'block', color: 'var(--electric-blue)' }}>02 / Deterministic Processing</strong>
@@ -99,7 +99,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   ↓
                 </div>
 
-                <div style={{ padding: '12px', background: 'var(--bg-primary)', border: '1px solid var(--line)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div className="surface-panel" style={{ padding: '12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <ShieldCheck size={16} color="var(--status-pass-text)" />
                   <div>
                     <strong style={{ fontSize: '0.85rem', display: 'block', color: 'var(--warm-white)' }}>03 / Acceptance & Verification</strong>
@@ -111,7 +111,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   ↓
                 </div>
 
-                <div style={{ padding: '12px', background: 'var(--bg-primary)', border: '1px solid var(--line)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div className="surface-panel" style={{ padding: '12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <GitCommit size={16} color="var(--warm-white)" />
                   <div>
                     <strong style={{ fontSize: '0.85rem', display: 'block', color: 'var(--warm-white)' }}>04 / Auditable Production Handover</strong>
@@ -138,7 +138,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <div className="grid-3">
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="card-number">PRINCIPLE 01</span>
               <h3>Deterministic Business Rules</h3>
               <p>
@@ -146,7 +146,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="card-number">PRINCIPLE 02</span>
               <h3>Explicit Verification & Testing</h3>
               <p>
@@ -154,7 +154,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="card-number">PRINCIPLE 03</span>
               <h3>Human Decision Boundaries</h3>
               <p>
@@ -387,7 +387,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <div className="grid-3">
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', display: 'block', marginBottom: '10px' }}>SECTOR 01</span>
               <h3>Finance & Payments</h3>
               <p>
@@ -398,7 +398,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', display: 'block', marginBottom: '10px' }}>SECTOR 02</span>
               <h3>Schools & Education</h3>
               <p>
@@ -409,7 +409,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', display: 'block', marginBottom: '10px' }}>SECTOR 03</span>
               <h3>SACCOs & Cooperatives</h3>
               <p>
@@ -420,7 +420,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', display: 'block', marginBottom: '10px' }}>SECTOR 04</span>
               <h3>Retail & Distribution</h3>
               <p>
@@ -431,7 +431,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', display: 'block', marginBottom: '10px' }}>SECTOR 05</span>
               <h3>NGOs & Operations Teams</h3>
               <p>
@@ -442,7 +442,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
 
-            <div className="card" style={{ background: 'var(--bg-primary)' }}>
+            <div className="card">
               <span className="mono-tag" style={{ color: 'var(--accent-blue)', display: 'block', marginBottom: '10px' }}>SECTOR 06</span>
               <h3>Technology Businesses</h3>
               <p>
@@ -556,7 +556,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </p>
           </div>
 
-          <div className="card" style={{ padding: 'clamp(28px, 5vw, 48px)', background: 'var(--bg-primary)' }}>
+          <div className="card" style={{ padding: 'clamp(28px, 5vw, 48px)' }}>
             <div className="empty-state-grid">
               <div>
                 <span className="badge badge-neutral" style={{ marginBottom: '12px' }}>

@@ -367,7 +367,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 <div
                   key={service.id}
                   className="card"
-                  style={{ padding: 'clamp(28px, 4vw, 44px)', background: 'var(--bg-secondary)', border: '1px solid var(--line-strong)' }}
+                  style={{ padding: 'clamp(28px, 4vw, 44px)', borderColor: 'var(--line-strong)' }}
                 >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
                   <span className="mono-tag" style={{ color: 'var(--electric-blue)', fontWeight: 700 }}>
@@ -383,7 +383,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                   {service.shortDesc}
                 </p>
 
-                <div style={{ padding: '12px 16px', background: 'var(--bg-primary)', borderLeft: '3px solid var(--accent-blue)', borderRadius: '4px', marginBottom: '24px' }}>
+                <div className="callout-stripe" style={{ marginBottom: '24px' }}>
                   <strong style={{ fontSize: '0.86rem', color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>
                     Who this is for:
                   </strong>

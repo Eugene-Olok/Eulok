@@ -15,11 +15,15 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 });
 
-// Polyfill window.scrollTo
+// Polyfill window.scrollTo & Element.prototype.scrollIntoView
 Object.defineProperty(window, 'scrollTo', {
   writable: true,
   value: () => {},
 });
+
+if (typeof Element !== 'undefined' && !Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => {};
+}
 
 // Polyfill ResizeObserver
 globalThis.ResizeObserver = class ResizeObserver {
