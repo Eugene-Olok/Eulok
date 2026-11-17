@@ -9,6 +9,8 @@ import {
 } from 'lucide-react';
 import {
   TREND_TOPICS,
+  normalizeTrendTopic,
+  sanitizeCustomQuery,
   type GroundedTrendsPayload,
   type TrendTopicId,
 } from '../engine/trendsParser';
@@ -18,6 +20,17 @@ interface TrendsApiResponse extends Partial<GroundedTrendsPayload> {
   ok?: boolean;
   code?: string;
   error?: string;
+  cached?: boolean;
+  latencyMs?: number;
+}
+
+export interface LiveFinOpsTrendsSectionProps {
+  onFilterLocalNotes?: (query: string) => void;
+}
+
+interface TrendsViewData extends GroundedTrendsPayload {
+  cached?: boolean;
+  latencyMs?: number;
 }
 
 const TOPIC_LIST = Object.values(TREND_TOPICS);
@@ -48,16 +61,39 @@ function getImpactAccent(level: 'HIGH' | 'MEDIUM' | 'WATCH'): string {
   return 'var(--status-pass-text)';
 }
 
-export const LiveFinOpsTrendsSection: React.FC = () => {
+function syncUrlSearchParams(topic: TrendTopicId, query: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const url = new URL(window.location.href);
+    if (topic === 'all') {
+      url.searchParams.delete('topic');
+    } else {
+      url.searchParams.set('topic', topic);
+    }
+    const cleaned = sanitizeCustomQuery(query);
+    if (cleaned) {
+      url.searchParams.set('q', cleaned);
+    } else {
+      url.searchParams.delete('q');
+    }
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+  } catch {
+    // Ignore history API issues in constrained frames
+  }
+}
+
+export const LiveFinOpsTrendsSection: React.FC<LiveFinOpsTrendsSectionProps> = ({
+  onFilterLocalNotes,
+}) => {
   const [selectedTopic, setSelectedTopic] = useState<TrendTopicId>('all');
   const [queryInput, setQueryInput] = useState<string>('');
   const [activeQuery, setActiveQuery] = useState<string>('');
-  const [data, setData] = useState<GroundedTrendsPayload | null>(null);
+  const [data, setData] = useState<TrendsViewData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorState, setErrorState] = useState<{ code?: string; message: string } | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const loadTrends = useCallback(async (topic: TrendTopicId, query: string) => {
+  const loadTrends = useCallback(async (topic: TrendTopicId, query: string, refresh = false) => {
     abortControllerRef.current?.abort();
     const controller = new AbortController();
     abortControllerRef.current = controller;
@@ -75,6 +111,7 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
         body: JSON.stringify({
           topic,
           query: query.trim() || undefined,
+          refresh,
         }),
       });
 
@@ -100,6 +137,8 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
         trends: Array.isArray(payload.trends) ? payload.trends : [],
         sources: Array.isArray(payload.sources) ? payload.sources : [],
         searchQueries: Array.isArray(payload.searchQueries) ? payload.searchQueries : [],
+        cached: payload.cached,
+        latencyMs: payload.latencyMs,
       });
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') {
@@ -117,7 +156,20 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    void loadTrends('all', '');
+    let initialTopic: TrendTopicId = 'all';
+    let initialQuery = '';
+
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      initialTopic = normalizeTrendTopic(params.get('topic'));
+      initialQuery = sanitizeCustomQuery(params.get('q'));
+    }
+
+    setSelectedTopic(initialTopic);
+    setQueryInput(initialQuery);
+    setActiveQuery(initialQuery);
+    void loadTrends(initialTopic, initialQuery);
+
     return () => {
       abortControllerRef.current?.abort();
     };
@@ -125,6 +177,7 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
 
   const handleTopicSelect = (topicId: TrendTopicId) => {
     setSelectedTopic(topicId);
+    syncUrlSearchParams(topicId, activeQuery);
     void loadTrends(topicId, activeQuery);
   };
 
@@ -132,20 +185,33 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
     setSelectedTopic(preset.topic);
     setQueryInput(preset.query);
     setActiveQuery(preset.query);
+    syncUrlSearchParams(preset.topic, preset.query);
     void loadTrends(preset.topic, preset.query);
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const cleaned = queryInput.trim();
+    const cleaned = sanitizeCustomQuery(queryInput);
+    setQueryInput(cleaned);
     setActiveQuery(cleaned);
+    syncUrlSearchParams(selectedTopic, cleaned);
     void loadTrends(selectedTopic, cleaned);
   };
 
   const handleResetQuery = () => {
     setQueryInput('');
     setActiveQuery('');
+    syncUrlSearchParams(selectedTopic, '');
     void loadTrends(selectedTopic, '');
+  };
+
+  const handleQueryChipSearch = (query: string) => {
+    const cleaned = sanitizeCustomQuery(query);
+    if (!cleaned) return;
+    setQueryInput(cleaned);
+    setActiveQuery(cleaned);
+    syncUrlSearchParams(selectedTopic, cleaned);
+    void loadTrends(selectedTopic, cleaned);
   };
 
   const isKeyConfigError =
@@ -185,7 +251,7 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
           <button
             type="button"
             className="button button-quiet button-small"
-            onClick={() => loadTrends(selectedTopic, activeQuery)}
+            onClick={() => loadTrends(selectedTopic, activeQuery, true)}
             disabled={isLoading}
             aria-busy={isLoading}
           >
@@ -304,24 +370,29 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
           {/* Quick Grounded Presets */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
             <span className="mono-tag" style={{ fontSize: '0.72rem' }}>Quick searches:</span>
-            {QUICK_SEARCH_PRESETS.map((preset) => (
-              <button
-                key={preset.label}
-                type="button"
-                className="button button-quiet button-small"
-                style={{ minHeight: '30px', padding: '4px 10px', fontSize: '0.76rem' }}
-                onClick={() => handleQuickPreset(preset)}
-              >
-                {preset.label}
-              </button>
-            ))}
+            {QUICK_SEARCH_PRESETS.map((preset) => {
+              const isPresetActive =
+                selectedTopic === preset.topic && activeQuery === preset.query;
+              return (
+                <button
+                  key={preset.label}
+                  type="button"
+                  aria-pressed={isPresetActive}
+                  className={`button button-small ${isPresetActive ? 'button-primary' : 'button-quiet'}`}
+                  style={{ minHeight: '30px', padding: '4px 10px', fontSize: '0.76rem' }}
+                  onClick={() => handleQuickPreset(preset)}
+                >
+                  {preset.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Live Output Container */}
         <div aria-live="polite">
           {isLoading ? (
-            <div className="surface-panel" style={{ padding: '20px' }}>
+            <div className="surface-panel" style={{ padding: '20px' }} data-testid="trends-loading-panel">
               <p style={{ margin: '0 0 14px', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
                 Querying live web sources for current financial operations standards and rail developments…
               </p>
@@ -349,29 +420,45 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
               </p>
               {isKeyConfigError && (
                 <p style={{ margin: 0, fontSize: '0.84rem', color: 'var(--text-muted)', maxWidth: '72ch' }}>
-                  EULOK does not fabricate or simulate external news briefings when live Google Search grounding credentials are invalid or unconfigured. You can inspect verified engineering reference notes below while configuring a valid server <code>GEMINI_API_KEY</code> in workspace <strong>Settings &gt; Secrets</strong>.
+                  EULOK does not fabricate or simulate external news briefings when live Google Search grounding credentials are invalid or unconfigured. You can inspect or search verified engineering reference notes below while configuring a valid server <code>GEMINI_API_KEY</code> in workspace <strong>Settings &gt; Secrets</strong>.
                 </p>
               )}
               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '4px' }}>
                 <button
                   type="button"
                   className="button button-primary button-small"
-                  onClick={() => loadTrends(selectedTopic, activeQuery)}
+                  onClick={() => loadTrends(selectedTopic, activeQuery, true)}
                 >
                   <RefreshCw size={14} />
                   <span>Retry Live Search</span>
                 </button>
-                <a
-                  href="#deterministic-calc"
-                  className="button button-quiet button-small"
-                >
-                  <BookOpen size={14} />
-                  <span>Read Deterministic Engineering Notes ↓</span>
-                </a>
+                {onFilterLocalNotes ? (
+                  <button
+                    type="button"
+                    data-testid="filter-local-notes-btn"
+                    className="button button-quiet button-small"
+                    onClick={() => onFilterLocalNotes(activeQuery || queryInput)}
+                  >
+                    <BookOpen size={14} />
+                    <span>
+                      {(activeQuery || queryInput).trim()
+                        ? `Search "${(activeQuery || queryInput).trim()}" in Engineering Notes ↓`
+                        : 'Browse Engineering Notes Archive ↓'}
+                    </span>
+                  </button>
+                ) : (
+                  <a
+                    href="#notes-archive"
+                    className="button button-quiet button-small"
+                  >
+                    <BookOpen size={14} />
+                    <span>Read Deterministic Engineering Notes ↓</span>
+                  </a>
+                )}
               </div>
             </div>
           ) : data ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }} data-testid="trends-success-panel">
               {/* Grounded Executive Synthesis */}
               <div className="surface-panel" style={{ padding: '20px' }}>
                 <div
@@ -393,6 +480,18 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
                   <span>Updated {formatGeneratedTimestamp(data.generatedAt)}</span>
                   <span aria-hidden="true">·</span>
                   <span>{data.sources.length} cited web sources</span>
+                  {typeof data.cached === 'boolean' && (
+                    <>
+                      <span aria-hidden="true">·</span>
+                      <span>{data.cached ? 'Cached brief' : 'Live web query'}</span>
+                    </>
+                  )}
+                  {typeof data.latencyMs === 'number' && (
+                    <>
+                      <span aria-hidden="true">·</span>
+                      <span>{data.latencyMs}ms</span>
+                    </>
+                  )}
                   {data.customQuery && (
                     <>
                       <span aria-hidden="true">·</span>
@@ -474,7 +573,7 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
                 ))}
               </div>
 
-              {/* Grounded Primary Web Sources & Search Queries */}
+              {/* Grounded Primary Web Sources & Clickable Search Queries */}
               <div className="surface-panel" style={{ padding: '18px 20px' }}>
                 <div
                   style={{
@@ -490,9 +589,20 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
                     Verified Search Grounding Citations
                   </strong>
                   {data.searchQueries.length > 0 && (
-                    <span className="mono-tag" style={{ fontSize: '0.75rem' }}>
-                      Queries: {data.searchQueries.slice(0, 3).join(' · ')}
-                    </span>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px' }}>
+                      <span className="mono-tag" style={{ fontSize: '0.72rem' }}>Queries:</span>
+                      {data.searchQueries.slice(0, 3).map((q) => (
+                        <button
+                          key={q}
+                          type="button"
+                          className="button button-quiet button-small"
+                          style={{ minHeight: '26px', padding: '2px 9px', fontSize: '0.72rem' }}
+                          onClick={() => handleQueryChipSearch(q)}
+                        >
+                          {q}
+                        </button>
+                      ))}
+                    </div>
                   )}
                 </div>
 
@@ -564,4 +674,3 @@ export const LiveFinOpsTrendsSection: React.FC = () => {
     </section>
   );
 };
-

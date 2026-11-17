@@ -256,6 +256,74 @@ function parseJsonCandidate(rawText: string): Record<string, unknown> | null {
   return null;
 }
 
+function stripMarkdownFormatting(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+    .replace(/[*_`>#]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export function parseMarkdownTrendsFallback(
+  rawText: string,
+  topic: TrendTopicId
+): { briefingSummary?: string; trends: GroundedTrendItem[] } {
+  const trimmed = rawText.trim();
+  if (!trimmed) return { trends: [] };
+
+  const sections = trimmed
+    .split(/\n(?=#{2,3}\s+|\d+\.\s+\*\*)/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  const trends: GroundedTrendItem[] = [];
+  let introSummary: string | undefined;
+
+  for (const section of sections) {
+    const headingMatch = section.match(/^(?:#{2,3}\s+|(?:\d+\.\s+))(.+?)(?:\n+([\s\S]+))?$/);
+    if (!headingMatch) {
+      if (!introSummary) {
+        const cleaned = stripMarkdownFormatting(section);
+        if (cleaned.length > 24) introSummary = cleaned.slice(0, 360);
+      }
+      continue;
+    }
+
+    const title = stripMarkdownFormatting(headingMatch[1]).slice(0, 120);
+    const bodyRaw = (headingMatch[2] || '').trim();
+    if (!title || !bodyRaw) continue;
+
+    const lines = bodyRaw
+      .split('\n')
+      .map((l) => l.trim())
+      .filter(Boolean);
+    const takeawayLine = lines.find((l) =>
+      /takeaway|action|engineering|recommendation/i.test(l)
+    );
+    const summaryLines = lines.filter((l) => l !== takeawayLine);
+    const summary = stripMarkdownFormatting(summaryLines.join(' ')).slice(0, 420);
+    if (!summary) continue;
+
+    trends.push({
+      title,
+      category: TREND_TOPICS[topic].label,
+      publishedWindow: 'Live Web Brief',
+      summary,
+      engineeringTakeaway: takeawayLine
+        ? stripMarkdownFormatting(
+            takeawayLine.replace(/^[-*]\s*/, '').replace(/^[^:]+:\s*/, '')
+          )
+        : 'Review cited primary specifications and validate webhook/settlement behavior before rollout.',
+      impactLevel: 'MEDIUM',
+    });
+  }
+
+  return {
+    briefingSummary: introSummary,
+    trends: trends.slice(0, 5),
+  };
+}
+
 export function parseGroundedTrendsResponse(params: {
   rawText: string | undefined;
   groundingMetadata?: RawGroundingMetadata | null;
@@ -298,19 +366,30 @@ export function parseGroundedTrendsResponse(params: {
     }
   }
 
+  let markdownFallbackSummary: string | undefined;
+  if (trends.length === 0 && raw) {
+    const mdParsed = parseMarkdownTrendsFallback(raw, params.topic);
+    if (mdParsed.trends.length > 0) {
+      trends.push(...mdParsed.trends);
+      markdownFallbackSummary = mdParsed.briefingSummary;
+    }
+  }
+
   const briefingSummary =
     parsedObj && typeof parsedObj.briefingSummary === 'string' && parsedObj.briefingSummary.trim()
       ? parsedObj.briefingSummary.trim()
+      : markdownFallbackSummary
+      ? markdownFallbackSummary
       : trends.length > 0
       ? `Search-grounded synthesis across ${trends.length} developments in ${TREND_TOPICS[params.topic].label}.`
-      : raw || 'Search grounding completed without structured trend items.';
+      : stripMarkdownFormatting(raw) || 'Search grounding completed without structured trend items.';
 
   if (trends.length === 0 && raw) {
     trends.push({
       title: `${TREND_TOPICS[params.topic].label} — Search Synthesis`,
       category: TREND_TOPICS[params.topic].label,
       publishedWindow: 'Live Web Synthesis',
-      summary: raw.slice(0, 600),
+      summary: stripMarkdownFormatting(raw).slice(0, 600),
       engineeringTakeaway:
         'Review the cited primary sources below for full protocol and regulatory specifications.',
       impactLevel: 'WATCH',

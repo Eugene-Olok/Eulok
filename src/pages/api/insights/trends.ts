@@ -1,10 +1,13 @@
 import type { APIRoute } from 'astro';
+import { ThinkingLevel } from '@google/genai';
 import {
   createGeminiServerClient,
   GEMINI_TRENDS_MODEL,
+  getGeminiKeyStatus,
 } from '../../../lib/geminiClient';
 import {
   buildTrendsSearchPrompt,
+  type GroundedTrendsPayload,
   normalizeTrendTopic,
   parseGroundedTrendsResponse,
   sanitizeCustomQuery,
@@ -17,6 +20,29 @@ const JSON_HEADERS = {
   'Cache-Control': 'no-store',
   'X-Content-Type-Options': 'nosniff',
 };
+
+const CACHE_TTL_MS = 5 * 60 * 1000;
+const MAX_CACHE_ENTRIES = 32;
+
+const trendsCache = new Map<string, { payload: GroundedTrendsPayload; cachedAt: number }>();
+
+function readCachedTrends(key: string): GroundedTrendsPayload | null {
+  const entry = trendsCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.cachedAt > CACHE_TTL_MS) {
+    trendsCache.delete(key);
+    return null;
+  }
+  return entry.payload;
+}
+
+function writeCachedTrends(key: string, payload: GroundedTrendsPayload): void {
+  if (trendsCache.size >= MAX_CACHE_ENTRIES) {
+    const oldestKey = trendsCache.keys().next().value;
+    if (oldestKey) trendsCache.delete(oldestKey);
+  }
+  trendsCache.set(key, { payload, cachedAt: Date.now() });
+}
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -84,15 +110,24 @@ function getUpstreamErrorDetails(error: unknown): {
   };
 }
 
-async function fetchGroundedTrends(topicRaw?: string | null, queryRaw?: string | null) {
+async function fetchGroundedTrends(
+  topicRaw?: string | null,
+  queryRaw?: string | null,
+  forceRefresh = false
+) {
+  const startedAt = Date.now();
+  const keyStatus = getGeminiKeyStatus();
   const ai = createGeminiServerClient();
+
   if (!ai) {
     return new Response(
       JSON.stringify({
         ok: false,
         code: 'MISSING_API_KEY',
         error:
-          'Server search grounding is unavailable because GEMINI_API_KEY is not configured in the server environment.',
+          keyStatus === 'placeholder'
+            ? 'Server search grounding is unavailable because GEMINI_API_KEY is still set to the workspace placeholder. Configure a valid key in Settings > Secrets.'
+            : 'Server search grounding is unavailable because GEMINI_API_KEY is not configured in the server environment.',
       }),
       { status: 503, headers: JSON_HEADERS }
     );
@@ -100,9 +135,26 @@ async function fetchGroundedTrends(topicRaw?: string | null, queryRaw?: string |
 
   const topic = normalizeTrendTopic(topicRaw);
   const customQuery = sanitizeCustomQuery(queryRaw);
+  const cacheKey = `${topic}:${customQuery.toLowerCase()}`;
+
+  if (!forceRefresh) {
+    const cached = readCachedTrends(cacheKey);
+    if (cached) {
+      return new Response(
+        JSON.stringify({
+          ok: true,
+          cached: true,
+          latencyMs: Date.now() - startedAt,
+          ...cached,
+        }),
+        { status: 200, headers: JSON_HEADERS }
+      );
+    }
+  }
+
   const { systemInstruction, userPrompt } = buildTrendsSearchPrompt(topic, customQuery);
 
-  const maxAttempts = 3;
+  const maxAttempts = 2;
   let lastError: unknown;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -113,7 +165,8 @@ async function fetchGroundedTrends(topicRaw?: string | null, queryRaw?: string |
         config: {
           systemInstruction,
           tools: [{ googleSearch: {} }],
-          abortSignal: AbortSignal.timeout(22000),
+          thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
+          abortSignal: AbortSignal.timeout(30000),
         },
       });
 
@@ -126,9 +179,13 @@ async function fetchGroundedTrends(topicRaw?: string | null, queryRaw?: string |
         model: GEMINI_TRENDS_MODEL,
       });
 
+      writeCachedTrends(cacheKey, payload);
+
       return new Response(
         JSON.stringify({
           ok: true,
+          cached: false,
+          latencyMs: Date.now() - startedAt,
           ...payload,
         }),
         { status: 200, headers: JSON_HEADERS }
@@ -168,7 +225,8 @@ async function fetchGroundedTrends(topicRaw?: string | null, queryRaw?: string |
 export const GET: APIRoute = async ({ url }) => {
   const topic = url.searchParams.get('topic');
   const query = url.searchParams.get('q');
-  return fetchGroundedTrends(topic, query);
+  const refresh = url.searchParams.get('refresh') === '1' || url.searchParams.get('refresh') === 'true';
+  return fetchGroundedTrends(topic, query, refresh);
 };
 
 export const POST: APIRoute = async ({ request }) => {
@@ -176,8 +234,9 @@ export const POST: APIRoute = async ({ request }) => {
     const body = (await request.json().catch(() => ({}))) as {
       topic?: string;
       query?: string;
+      refresh?: boolean;
     };
-    return fetchGroundedTrends(body?.topic, body?.query);
+    return fetchGroundedTrends(body?.topic, body?.query, Boolean(body?.refresh));
   } catch {
     return new Response(
       JSON.stringify({

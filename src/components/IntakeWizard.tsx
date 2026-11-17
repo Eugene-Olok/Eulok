@@ -2,14 +2,8 @@ import React, { useState } from 'react';
 import {
   ArrowRight,
   ArrowLeft,
-  CheckCircle2,
-  Copy,
-  Mail,
-  MessageSquare,
-  ShieldCheck,
   AlertCircle,
-  Clock,
-  Sparkles,
+  Loader2,
 } from 'lucide-react';
 import { generateReferenceId, sanitizeString } from '../engine/intakeValidation';
 import {
@@ -17,6 +11,7 @@ import {
   readStoredIntakePrefill,
   clearStoredIntakePrefill,
 } from '../utils/navigation';
+import { IntakeSuccessMessage } from './IntakeSuccessMessage';
 
 interface IntakeWizardProps {
   initialNeed?: string;
@@ -48,7 +43,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [referenceId, setReferenceId] = useState<string>('');
-  const [copied, setCopied] = useState<boolean>(false);
+  const [isOfflineFallback, setIsOfflineFallback] = useState<boolean>(false);
 
   React.useEffect(() => {
     if (prefill) return;
@@ -110,22 +105,18 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
   const whatsappUrl = `https://wa.me/256760779160?text=${encodeURIComponent(compiledDraft)}`;
   const mailtoUrl = `mailto:hello@eulok.com?subject=${encodeURIComponent(`Project Inquiry [${referenceId || 'NEW'}]: ${systemType}`)}&body=${encodeURIComponent(compiledDraft)}`;
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(compiledDraft);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
-  };
-
-  const handleCopyRef = () => {
-    if (referenceId) {
-      navigator.clipboard.writeText(referenceId);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    }
+  const handleReset = () => {
+    setStep(1);
+    setProblemDescription('');
+    setAttemptedSolutions('');
+    setSubmitError(null);
+    setReferenceId('');
+    setIsOfflineFallback(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setSubmitError(null);
     setIsSubmitting(true);
 
@@ -155,19 +146,34 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
         body: JSON.stringify(payload),
       });
 
+      const data = (await response.json().catch(() => ({}))) as {
+        success?: boolean;
+        referenceId?: string;
+        errors?: string[];
+      };
+
       if (response.ok) {
-        const data = await response.json();
         setReferenceId(data.referenceId || generateReferenceId());
+        setIsOfflineFallback(false);
+        clearStoredIntakePrefill();
         setStep(5);
+      } else if (response.status >= 400 && response.status < 500) {
+        const message =
+          Array.isArray(data.errors) && data.errors.length > 0
+            ? data.errors.join(' ')
+            : 'Please review the submitted details and fix any validation issues.';
+        setSubmitError(message);
       } else {
-        // Fallback: If running in static preview or network glitch, generate client-side reference
-        // and allow user to continue via WhatsApp/Email without data loss.
+        // Fallback: If backend is temporarily unavailable (5xx), issue client-side reference
+        // so the inquiry can continue via WhatsApp/Email without data loss.
         setReferenceId(generateReferenceId());
+        setIsOfflineFallback(true);
         setStep(5);
       }
     } catch {
       // Graceful offline degradation
       setReferenceId(generateReferenceId());
+      setIsOfflineFallback(true);
       setStep(5);
     } finally {
       setIsSubmitting(false);
@@ -474,8 +480,12 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
           </div>
 
           {submitError && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--status-fail-text)', fontSize: '0.84rem', marginBottom: '16px' }}>
-              <AlertCircle size={16} />
+            <div
+              role="alert"
+              data-testid="intake-submit-error"
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--status-fail-text)', fontSize: '0.84rem', marginBottom: '16px' }}
+            >
+              <AlertCircle size={16} style={{ flexShrink: 0 }} />
               <span>{submitError}</span>
             </div>
           )}
@@ -493,12 +503,22 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
 
             <button
               type="submit"
+              data-testid="intake-submit-btn"
               className="button button-primary"
               disabled={isSubmitting || !problemDescription.trim()}
+              aria-busy={isSubmitting}
               style={{ minWidth: '220px' }}
             >
               {isSubmitting ? (
-                <span>Generating Reference...</span>
+                <>
+                  <Loader2
+                    size={16}
+                    className="spin"
+                    aria-hidden="true"
+                    data-testid="intake-submit-loading"
+                  />
+                  <span>Submitting Brief…</span>
+                </>
               ) : (
                 <>
                   <span>Register Scoping Brief</span>
@@ -516,120 +536,19 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
 
       {/* Step 5: Confirmed & Direct Channels */}
       {step === 5 && (
-        <div>
-          <div
-            style={{
-              background: 'rgba(56, 189, 248, 0.08)',
-              border: '1px solid rgba(56, 189, 248, 0.3)',
-              borderRadius: '8px',
-              padding: '20px',
-              marginBottom: '24px',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-              <div>
-                <span className="mono-tag" style={{ color: 'var(--electric-blue)', fontWeight: 700 }}>
-                  SCOPING REFERENCE REGISTERED
-                </span>
-                <div style={{ fontSize: '1.6rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--warm-white)', marginTop: '4px' }}>
-                  {referenceId}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                className="button button-quiet button-small"
-                onClick={handleCopyRef}
-              >
-                {copied ? <CheckCircle2 size={14} color="var(--status-pass-text)" /> : <Copy size={14} />}
-                <span>{copied ? 'Copied ID' : 'Copy Reference'}</span>
-              </button>
-            </div>
-            <p style={{ fontSize: '0.84rem', color: 'var(--text-subtle)', margin: '12px 0 0' }}>
-              Your inquiry has been cataloged under this reference ID. You can now engage directly via WhatsApp or Email with this tracking context.
-            </p>
-          </div>
-
-          <div style={{ marginBottom: '20px' }}>
-            <span style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--warm-white)', display: 'block', marginBottom: '10px' }}>
-              Choose your direct contact channel:
-            </span>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '12px' }}>
-              <a
-                className="button button-primary"
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: '#25D366',
-                  color: '#052e16',
-                  borderColor: '#25D366',
-                  justifyContent: 'center',
-                  padding: '12px 18px',
-                }}
-              >
-                <MessageSquare size={18} fill="#052e16" />
-                <span>Open in WhatsApp</span>
-              </a>
-
-              <a
-                className="button button-quiet"
-                href={mailtoUrl}
-                style={{ justifyContent: 'center', padding: '12px 18px' }}
-              >
-                <Mail size={18} />
-                <span>Open in Email</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Compiled Brief Preview */}
-          <div className="surface-inset" style={{ padding: '14px', borderRadius: '8px', marginBottom: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <span className="mono-tag" style={{ color: 'var(--accent-blue)', fontWeight: 600 }}>
-                Structured Project Brief
-              </span>
-              <button
-                type="button"
-                className="text-link"
-                style={{ fontSize: '0.8rem' }}
-                onClick={handleCopy}
-              >
-                {copied ? '✓ Copied Brief' : 'Copy Full Text'}
-              </button>
-            </div>
-            <pre style={{ margin: 0, padding: '10px', fontSize: '0.82rem', maxHeight: '110px', overflowY: 'auto' }}>
-              <code>{compiledDraft}</code>
-            </pre>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
-            <button
-              type="button"
-              className="text-link"
-              style={{ fontSize: '0.85rem' }}
-              onClick={() => {
-                setStep(1);
-                setProblemDescription('');
-                setAttemptedSolutions('');
-                setReferenceId('');
-              }}
-            >
-              Start Another Inquiry
-            </button>
-
-            {isModal && onCloseModal && (
-              <button
-                type="button"
-                className="button button-quiet button-small"
-                onClick={onCloseModal}
-              >
-                Done
-              </button>
-            )}
-          </div>
-        </div>
+        <IntakeSuccessMessage
+          referenceId={referenceId}
+          need={need}
+          systemType={systemType}
+          budget={budget}
+          compiledDraft={compiledDraft}
+          whatsappUrl={whatsappUrl}
+          mailtoUrl={mailtoUrl}
+          isOfflineFallback={isOfflineFallback}
+          isModal={isModal}
+          onReset={handleReset}
+          onCloseModal={onCloseModal}
+        />
       )}
     </div>
   );

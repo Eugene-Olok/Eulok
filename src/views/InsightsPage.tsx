@@ -8,6 +8,7 @@ import {
   Copy,
   CheckCircle2,
   Link2,
+  Search,
 } from 'lucide-react';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
 import { LiveFinOpsTrendsSection } from '../components/LiveFinOpsTrendsSection';
@@ -35,6 +36,7 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
   onOpenIntakeModal = openIntakeModal,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [noteSearchQuery, setNoteSearchQuery] = useState<string>('');
   const [expandedArticleId, setExpandedArticleId] = useState<string | null>('deterministic-calc');
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
   const [copiedSnippetId, setCopiedSnippetId] = useState<string | null>(null);
@@ -47,6 +49,16 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
     setTimeout(() => {
       setIsFiltering(false);
     }, 180);
+  };
+
+  const handleFilterFromTrends = (query: string) => {
+    setSelectedCategory('all');
+    setNoteSearchQuery(query.trim());
+    if (typeof document !== 'undefined') {
+      setTimeout(() => {
+        document.getElementById('notes-archive')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 40);
+    }
   };
 
   const articles: Article[] = [
@@ -206,9 +218,24 @@ if (match.status === 'proposed' || match.status === 'exception') {
 
   const categories = ['all', 'Financial Engineering', 'Reliability', 'AI Governance', 'Technical Assessment', 'Release Engineering', 'Infrastructure'];
 
-  const filteredArticles = articles.filter(
-    (a) => selectedCategory === 'all' || a.category === selectedCategory
-  );
+  const normalizedNoteQuery = noteSearchQuery.trim().toLowerCase();
+  const filteredArticles = articles.filter((a) => {
+    const matchesCategory = selectedCategory === 'all' || a.category === selectedCategory;
+    if (!matchesCategory) return false;
+    if (!normalizedNoteQuery) return true;
+    const haystack = [
+      a.title,
+      a.category,
+      a.summary,
+      a.demonstrates,
+      ...a.content,
+      a.codeSnippet ?? '',
+    ]
+      .join(' ')
+      .toLowerCase();
+    const terms = normalizedNoteQuery.split(/\s+/).filter(Boolean);
+    return terms.some((term) => haystack.includes(term));
+  });
 
   return (
     <>
@@ -254,14 +281,117 @@ if (match.status === 'proposed' || match.status === 'exception') {
       </section>
 
       {/* Search-Grounded Financial Operations Industry Trends */}
-      <LiveFinOpsTrendsSection />
+      <LiveFinOpsTrendsSection onFilterLocalNotes={handleFilterFromTrends} />
 
       {/* Articles Grid / List */}
-      <section className="section-full theme-dark" style={{ padding: 'clamp(48px, 6vw, 80px) 0', borderTop: '1px solid var(--line)' }}>
+      <section
+        id="notes-archive"
+        className="section-full theme-dark"
+        style={{ padding: 'clamp(48px, 6vw, 80px) 0', borderTop: '1px solid var(--line)', scrollMarginTop: '92px' }}
+      >
         <div className="container-expansive">
+          {/* Local Archive Search Bar */}
+          <div
+            className="surface-panel"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '12px',
+              padding: '14px 16px',
+              marginBottom: '24px',
+            }}
+          >
+            <div style={{ position: 'relative', flex: '1 1 280px', minWidth: 0 }}>
+              <Search
+                size={15}
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  left: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: 'var(--text-muted)',
+                  pointerEvents: 'none',
+                }}
+              />
+              <label
+                htmlFor="notes-archive-search"
+                style={{
+                  position: 'absolute',
+                  width: '1px',
+                  height: '1px',
+                  padding: 0,
+                  margin: '-1px',
+                  overflow: 'hidden',
+                  clip: 'rect(0, 0, 0, 0)',
+                  whiteSpace: 'nowrap',
+                  border: 0,
+                }}
+              >
+                Search engineering notes archive
+              </label>
+              <input
+                id="notes-archive-search"
+                type="search"
+                className="form-input"
+                value={noteSearchQuery}
+                onChange={(e) => setNoteSearchQuery(e.target.value)}
+                placeholder="Search engineering notes, SQL patterns, idempotency, Decimal math, rescue…"
+                style={{
+                  marginTop: 0,
+                  padding: '9px 14px 9px 36px',
+                  fontSize: '0.88rem',
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+              <span
+                className="mono-tag"
+                data-testid="notes-archive-count"
+                style={{ fontSize: '0.76rem', fontVariantNumeric: 'tabular-nums' }}
+              >
+                Showing {filteredArticles.length} of {articles.length} notes
+              </span>
+              {(noteSearchQuery || selectedCategory !== 'all') && (
+                <button
+                  type="button"
+                  className="button button-quiet button-small"
+                  onClick={() => {
+                    setNoteSearchQuery('');
+                    setSelectedCategory('all');
+                  }}
+                >
+                  Reset Filters
+                </button>
+              )}
+            </div>
+          </div>
+
           {isFiltering ? (
             <div style={{ padding: '16px 0' }}>
               <LoadingSkeleton variant="card" count={3} />
+            </div>
+          ) : filteredArticles.length === 0 ? (
+            <div className="card" style={{ padding: '28px', textAlign: 'left' }} data-testid="notes-archive-empty">
+              <h2 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>
+                No Engineering Notes matched &ldquo;{noteSearchQuery}&rdquo;
+              </h2>
+              <p style={{ margin: '0 0 16px', fontSize: '0.92rem', color: 'var(--text-subtle)', maxWidth: '58ch' }}>
+                Try broader engineering keywords like idempotency, reconciliation, Decimal, rescue, or deployment.
+              </p>
+              <button
+                type="button"
+                className="button button-primary button-small"
+                onClick={() => {
+                  setNoteSearchQuery('');
+                  setSelectedCategory('all');
+                }}
+              >
+                Reset Note Filters
+              </button>
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

@@ -35,6 +35,8 @@ export default defineConfig({
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
         'lucide-react',
+        'recharts',
+        'react-is',
       ],
     },
     optimizeDeps: {
@@ -45,6 +47,8 @@ export default defineConfig({
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
         'lucide-react',
+        'recharts',
+        'react-is',
       ],
     },
   },

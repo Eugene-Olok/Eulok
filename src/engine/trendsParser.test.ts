@@ -104,3 +104,37 @@ test('buildTrendsSearchPrompt incorporates custom query when provided', () => {
   assert.match(prompt.userPrompt, /batch invoice signature/);
   assert.match(prompt.systemInstruction, /Google Search grounding/);
 });
+
+test('parseGroundedTrendsResponse extracts multiple structured items from Markdown fallback output', () => {
+  const markdownOutput = [
+    'East African real-time payment networks continue tightening settlement finality windows.',
+    '',
+    '## 1. URA EFRIS Batch Signing Enforcement',
+    'Merchants must include deterministic SHA-256 invoice digests across batch fiscal uploads.',
+    '- Engineering Takeaway: Canonicalize payload key order prior to signature generation.',
+    '',
+    '## 2. Mobile Money Webhook Retry Backoff',
+    'Major aggregators increased retry backoff windows during peak cellular congestion.',
+    '- Engineering Action: Acknowledge duplicate webhooks with HTTP 200 after atomic idempotency claim.',
+  ].join('\n');
+
+  const parsed = parseGroundedTrendsResponse({
+    rawText: markdownOutput,
+    groundingMetadata: {
+      groundingChunks: [
+        { web: { uri: 'https://www.ura.go.ug/efris-api', title: 'URA EFRIS Specification' } },
+      ],
+      webSearchQueries: ['URA EFRIS batch signing'],
+    },
+    topic: 'efris-compliance',
+    model: 'gemini-4-hydrogen',
+  });
+
+  assert.equal(parsed.trends.length, 2);
+  assert.match(parsed.trends[0].title, /URA EFRIS Batch Signing/);
+  assert.match(parsed.trends[0].engineeringTakeaway, /Canonicalize payload key order/);
+  assert.match(parsed.trends[1].engineeringTakeaway, /HTTP 200/);
+  assert.match(parsed.briefingSummary, /East African real-time payment networks/);
+  assert.equal(parsed.sources.length, 1);
+});
+
