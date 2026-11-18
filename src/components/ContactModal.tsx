@@ -142,7 +142,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
         </div>
 
         <p style={{ marginTop: '18px', marginBottom: 0, fontSize: '0.8rem', color: 'var(--muted)' }}>
-          Based in Kampala, Uganda · Available for remote collaboration worldwide.
+          Based in Kampala, Uganda · Serving organizations across Uganda and East Africa.
         </p>
       </div>
     </div>

@@ -6,15 +6,13 @@ import {
   encodeScopeToQuery,
   parseScopeFromQuery,
   ARCHETYPES,
-  CURRENCIES,
-  ECONOMIC_REGIONS,
+  DEPLOYMENT_CONTEXTS,
   simpleHash,
 } from './scopeCalculator.ts';
 
-test('Scope Calculator — Exact milestone arithmetic consistency across all 5 archetypes', () => {
+test('Scope Workbench — Exact milestone arithmetic & 100% effort share consistency across all 5 archetypes', () => {
   const archetypes = Object.keys(ARCHETYPES) as Array<keyof typeof ARCHETYPES>;
   for (const archetypeId of archetypes) {
-    // Low-complexity (no rails, no compliance)
     const bare = calculateScope({
       archetypeId,
       selectedRails: [],
@@ -22,30 +20,32 @@ test('Scope Calculator — Exact milestone arithmetic consistency across all 5 a
       throughputTier: 'standard',
     });
     const bareSum = +bare.milestonePhases.reduce((acc, p) => acc + p.weeks, 0).toFixed(1);
+    const barePctSum = bare.milestonePhases.reduce((acc, p) => acc + p.effortSharePct, 0);
     assert.equal(bare.milestoneTotalWeeks, bareSum);
     assert.equal(bare.estimatedWeeksMin, bareSum, `${archetypeId} min must equal sum of milestones`);
+    assert.equal(barePctSum, 100, `${archetypeId} effort percentages must sum to exactly 100%`);
     assert.ok(bare.estimatedWeeksMax > bare.estimatedWeeksMin);
 
-    // Loaded (rails + compliance + mission critical)
     const loaded = calculateScope({
       archetypeId,
       selectedRails: ['mtn_momo', 'airtel_money', 'ura_efris'],
       complianceRequirements: ['dppa_2019', 'audit_ledger'],
       throughputTier: 'mission_critical',
+      deploymentContextId: 'eac_cross_border',
     });
     const loadedSum = +loaded.milestonePhases.reduce((acc, p) => acc + p.weeks, 0).toFixed(1);
+    const loadedPctSum = loaded.milestonePhases.reduce((acc, p) => acc + p.effortSharePct, 0);
     assert.equal(loaded.milestoneTotalWeeks, loadedSum);
     assert.equal(loaded.estimatedWeeksMin, loadedSum);
+    assert.equal(loadedPctSum, 100);
   }
 });
 
-test('Scope Calculator — Logarithmic risk curve shows diminishing marginal growth & keeps MTN-only configs LOW/MODERATE', () => {
-  // Pure logarithmic diminishing marginal increase check
+test('Scope Workbench — Logarithmic risk curve shows diminishing marginal growth & keeps MTN-only configs LOW/MODERATE', () => {
   const deltaLow = computeLogarithmicRiskScore(2) - computeLogarithmicRiskScore(0);
   const deltaHigh = computeLogarithmicRiskScore(10) - computeLogarithmicRiskScore(8);
   assert.ok(deltaLow >= deltaHigh, 'Logarithmic scaling must exhibit diminishing marginal increments');
 
-  // Every standard archetype with MTN-only integration and NO extra compliance stays LOW or MODERATE (never HIGH/CRITICAL)
   const archetypes = Object.keys(ARCHETYPES) as Array<keyof typeof ARCHETYPES>;
   for (const archetypeId of archetypes) {
     const mtnOnly = calculateScope({
@@ -60,7 +60,6 @@ test('Scope Calculator — Logarithmic risk curve shows diminishing marginal gro
     );
   }
 
-  // Flagship reconciliation spans LOW -> MODERATE -> HIGH -> CRITICAL cleanly
   const bare = calculateScope({
     archetypeId: 'reconciliation',
     selectedRails: [],
@@ -90,125 +89,49 @@ test('Scope Calculator — Logarithmic risk curve shows diminishing marginal gro
     selectedRails: ['mtn_momo', 'airtel_money', 'commercial_banks', 'ura_efris'],
     complianceRequirements: ['dppa_2019', 'audit_ledger', 'double_entry'],
     throughputTier: 'mission_critical',
+    deploymentContextId: 'eac_cross_border',
   });
   assert.equal(missionCritical.riskLevel, 'CRITICAL');
   assert.ok(missionCritical.riskScore > highThroughput.riskScore);
 });
 
-test('Scope Calculator — Regional economic pricing scales significantly between Uganda, East Africa, UK/EU, and USA', () => {
-  const baseInputs = {
-    archetypeId: 'reconciliation' as const,
-    selectedRails: ['mtn_momo', 'airtel_money'],
-    complianceRequirements: ['dppa_2019', 'audit_ledger'],
-    throughputTier: 'standard' as const,
-    currency: 'USD' as const, // Hold display currency constant in USD to isolate regional economic effect
-  };
+test('Scope Workbench — Uganda & East Africa deployment contexts exclude pricing completely', () => {
+  assert.deepEqual(Object.keys(DEPLOYMENT_CONTEXTS), ['uganda_domestic', 'eac_cross_border']);
 
-  const uganda = calculateScope({ ...baseInputs, regionId: 'uganda' });
-  const eastAfrica = calculateScope({ ...baseInputs, regionId: 'east_africa' });
-  const uk = calculateScope({ ...baseInputs, regionId: 'uk' });
-  const europe = calculateScope({ ...baseInputs, regionId: 'europe' });
-  const usa = calculateScope({ ...baseInputs, regionId: 'usa' });
-
-  assert.equal(uganda.economicMultiplier, 1.0);
-  assert.ok(eastAfrica.budgetMinUsd > uganda.budgetMinUsd);
-  assert.ok(uk.budgetMinUsd > eastAfrica.budgetMinUsd);
-  assert.ok(europe.budgetMinUsd >= uk.budgetMinUsd);
-  assert.ok(usa.budgetMinUsd > uganda.budgetMinUsd * 2.5, 'USA market pricing must substantially exceed Uganda local pricing');
-  assert.ok(usa.memorandumMarkdown.includes('United States'));
-
-  // Default currency follows region if currency is omitted
-  const usaDefaultCurrency = calculateScope({
-    archetypeId: 'custom_portal',
-    selectedRails: [],
-    complianceRequirements: [],
-    throughputTier: 'standard',
-    regionId: 'usa',
-  });
-  assert.equal(usaDefaultCurrency.currency, 'USD');
-  assert.ok(usaDefaultCurrency.suggestedTier.startsWith('$'));
-
-  const ukDefaultCurrency = calculateScope({
-    archetypeId: 'custom_portal',
-    selectedRails: [],
-    complianceRequirements: [],
-    throughputTier: 'standard',
-    regionId: 'uk',
-  });
-  assert.equal(ukDefaultCurrency.currency, 'GBP');
-  assert.ok(ukDefaultCurrency.suggestedTier.startsWith('£'));
-});
-
-test('Scope Calculator — Pricing reflects archetype & risk score, not raw duration alone', () => {
-  const websitePortal = calculateScope({
-    archetypeId: 'website',
-    selectedRails: [],
-    complianceRequirements: [],
-    throughputTier: 'standard',
-    currency: 'USD',
-  });
-
-  const rescueMissionCritical = calculateScope({
-    archetypeId: 'rescue',
-    selectedRails: ['mtn_momo', 'commercial_banks'],
-    complianceRequirements: ['audit_ledger'],
-    throughputTier: 'mission_critical',
-    currency: 'USD',
-  });
-
-  assert.ok(rescueMissionCritical.budgetMaxUsd > websitePortal.budgetMaxUsd * 2);
-
-  // Higher-risk reconciliation costs more than low-risk website at comparable baseline
-  const lowRiskPortal = calculateScope({
-    archetypeId: 'website',
-    selectedRails: ['accounting_webhooks'],
-    complianceRequirements: ['dppa_2019'],
-    throughputTier: 'standard',
-    currency: 'USD',
-  });
-  const recon = calculateScope({
+  const uganda = calculateScope({
     archetypeId: 'reconciliation',
-    selectedRails: [],
-    complianceRequirements: [],
-    throughputTier: 'standard',
-    currency: 'USD',
-  });
-  assert.ok(recon.budgetMinUsd > lowRiskPortal.budgetMinUsd);
-});
-
-test('Scope Calculator — Multi-currency support formats UGX (default), USD, KES, EUR, GBP accurately', () => {
-  const currencies = Object.keys(CURRENCIES) as Array<keyof typeof CURRENCIES>;
-  const results = currencies.map((currency) =>
-    calculateScope({
-      archetypeId: 'efris',
-      selectedRails: ['ura_efris'],
-      complianceRequirements: ['dppa_2019'],
-      throughputTier: 'standard',
-      currency,
-      clientName: 'Kampala Traders Ltd',
-    })
-  );
-
-  for (const res of results) {
-    assert.ok(res.budgetMin > 0);
-    assert.ok(res.budgetMax > res.budgetMin);
-    assert.ok(res.memorandumMarkdown.includes('Kampala Traders Ltd'));
-    assert.ok(res.memorandumMarkdown.includes(res.currency));
-  }
-
-  const defaultResult = calculateScope({
-    archetypeId: 'efris',
-    selectedRails: ['ura_efris'],
+    selectedRails: ['mtn_momo', 'ura_efris'],
     complianceRequirements: ['dppa_2019'],
     throughputTier: 'standard',
+    deploymentContextId: 'uganda_domestic',
+    clientName: 'Kampala Cooperative SACCO',
   });
-  assert.equal(defaultResult.regionId, 'uganda');
-  assert.equal(defaultResult.currency, 'UGX');
-  assert.ok(defaultResult.suggestedTier.startsWith('UGX '));
-  assert.ok(Object.keys(ECONOMIC_REGIONS).length === 5);
+
+  const eac = calculateScope({
+    archetypeId: 'reconciliation',
+    selectedRails: ['mtn_momo', 'ura_efris'],
+    complianceRequirements: ['dppa_2019'],
+    throughputTier: 'standard',
+    deploymentContextId: 'eac_cross_border',
+    clientName: 'East Africa Clearing Hub',
+  });
+
+  assert.ok(eac.milestoneTotalWeeks >= uganda.milestoneTotalWeeks);
+  assert.ok(eac.rawRiskLoad > uganda.rawRiskLoad);
+  assert.ok(uganda.failureModes.some((fm) => fm.id === 'fm-momo-retry'));
+  assert.ok(uganda.failureModes.some((fm) => fm.id === 'fm-efris-brownout'));
+  assert.ok(eac.failureModes.some((fm) => fm.id === 'fm-eac-corridor'));
+  assert.equal(uganda.architectureTopology.length, 4);
+  assert.ok(uganda.acceptanceGates.length >= 4);
+
+  // Strict assertion: zero automated price estimates or currency symbols in Markdown output
+  assert.ok(!uganda.memorandumMarkdown.includes('Planning Investment'));
+  assert.ok(!/\$[0-9]|GBP|EUR/.test(uganda.memorandumMarkdown));
+  assert.ok(uganda.memorandumMarkdown.includes('engineering consultation'));
+  assert.ok(uganda.memorandumMarkdown.includes('Kampala Cooperative SACCO'));
 });
 
-test('Scope Calculator — Milestone floor notes are explicitly disclosed when triggered', () => {
+test('Scope Workbench — Milestone floor notes are explicitly disclosed when triggered', () => {
   const website = calculateScope({
     archetypeId: 'website',
     selectedRails: [],
@@ -220,38 +143,37 @@ test('Scope Calculator — Milestone floor notes are explicitly disclosed when t
   assert.ok(floored.every((p) => Boolean(p.floorNote)));
 });
 
-test('Scope Calculator — Deterministic hash stability', () => {
+test('Scope Workbench — Deterministic hash stability', () => {
   const hash1 = simpleHash('reconciliation-airtel_money,mtn_momo-audit_ledger-5');
   const hash2 = simpleHash('reconciliation-airtel_money,mtn_momo-audit_ledger-5');
   assert.equal(hash1, hash2);
   assert.ok(hash1.startsWith('EULOK-SPEC-'));
 });
 
-test('Scope Calculator — Shareable URL query encoding & parsing round-trip fidelity', () => {
+test('Scope Workbench — Shareable URL query encoding & parsing round-trip fidelity (zero pricing params)', () => {
   const inputs = {
     archetypeId: 'efris' as const,
     selectedRails: ['ura_efris', 'mtn_momo'],
     complianceRequirements: ['dppa_2019', 'audit_ledger'],
     throughputTier: 'high' as const,
-    regionId: 'usa' as const,
-    currency: 'USD' as const,
-    clientName: 'East Logistics Co',
+    deploymentContextId: 'eac_cross_border' as const,
+    clientName: 'Rift Logistics Co',
   };
 
   const qs = encodeScopeToQuery(inputs);
   assert.ok(qs.length > 0 && !qs.startsWith('?'));
   assert.ok(qs.includes('arch=efris'));
-  assert.ok(qs.includes('region=usa'));
-  assert.ok(qs.includes('cur=USD'));
+  assert.ok(qs.includes('ctx=eac_cross_border'));
+  assert.ok(!qs.includes('cur='));
+  assert.ok(!qs.includes('region='));
 
   const parsed = parseScopeFromQuery(`?${qs}`);
   assert.equal(parsed.archetypeId, 'efris');
-  assert.deepEqual(parsed.selectedRails, ['mtn_momo', 'ura_efris']); // normalized sorted order
+  assert.deepEqual(parsed.selectedRails, ['mtn_momo', 'ura_efris']);
   assert.deepEqual(parsed.complianceRequirements, ['audit_ledger', 'dppa_2019']);
   assert.equal(parsed.throughputTier, 'high');
-  assert.equal(parsed.regionId, 'usa');
-  assert.equal(parsed.currency, 'USD');
-  assert.equal(parsed.clientName, 'East Logistics Co');
+  assert.equal(parsed.deploymentContextId, 'eac_cross_border');
+  assert.equal(parsed.clientName, 'Rift Logistics Co');
 
   // Empty rails/compliance serialize explicitly as 'none' and restore as empty arrays
   const minimalQs = encodeScopeToQuery({
@@ -259,8 +181,7 @@ test('Scope Calculator — Shareable URL query encoding & parsing round-trip fid
     selectedRails: [],
     complianceRequirements: [],
     throughputTier: 'standard',
-    regionId: 'uganda',
-    currency: 'UGX',
+    deploymentContextId: 'uganda_domestic',
   });
   assert.ok(minimalQs.includes('rails=none'));
   assert.ok(minimalQs.includes('comp=none'));
@@ -269,11 +190,9 @@ test('Scope Calculator — Shareable URL query encoding & parsing round-trip fid
   assert.deepEqual(minimalParsed.complianceRequirements, []);
 
   // Untrusted query injection values are ignored
-  const malicious = parseScopeFromQuery('?arch=hacked&rails=fake_rail,mtn_momo&tier=infinite&region=mars&cur=BTC');
+  const malicious = parseScopeFromQuery('?arch=hacked&rails=fake_rail,mtn_momo&tier=infinite&ctx=mars&cur=USD');
   assert.equal(malicious.archetypeId, undefined);
   assert.deepEqual(malicious.selectedRails, ['mtn_momo']);
   assert.equal(malicious.throughputTier, undefined);
-  assert.equal(malicious.regionId, undefined);
-  assert.equal(malicious.currency, undefined);
+  assert.equal(malicious.deploymentContextId, undefined);
 });
-

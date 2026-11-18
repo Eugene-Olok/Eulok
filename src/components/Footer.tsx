@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Mail, ArrowUpRight, Activity, Sliders } from 'lucide-react';
+import { MessageSquare, Mail, ArrowUpRight } from 'lucide-react';
 import { navigateTo, openIntakeModal } from '../utils/navigation';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -60,7 +60,7 @@ export const Footer: React.FC<FooterProps> = ({
               Independent software engineering for organizations that need systems to survive production.
             </p>
             <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              Kampala, Uganda · Remote worldwide
+              Kampala, Uganda · Serving East Africa (EAC)
             </p>
             <blockquote style={{ margin: '14px 0 0', padding: '6px 12px', borderLeft: '2px solid var(--accent-blue)', color: 'var(--text-subtle)', fontSize: '0.85rem' }}>
               Models propose. Deterministic systems decide.
@@ -89,7 +89,6 @@ export const Footer: React.FC<FooterProps> = ({
               <li><a href="/insights" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('insights'); } }}>Engineering Notes</a></li>
               <li><a href="/services/finance-integrations" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('services/finance-integrations'); } }}>Finance Integrations</a></li>
               <li><a href="/verification" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('verification'); } }}>Release Verification Standard</a></li>
-              <li><a href="/status" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('status'); } }}>Live Edge Telemetry</a></li>
             </ul>
           </div>
 
@@ -141,12 +140,6 @@ export const Footer: React.FC<FooterProps> = ({
             <a href="/security" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('security'); } }}>Security & RFC 9116</a>
             <a href="/accessibility" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('accessibility'); } }}>Accessibility (WCAG 2.2 AA)</a>
             <a href="/standards" onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('standards'); } }}>Delivery Commitments</a>
-            <a
-              href="/status"
-              onClick={(e) => { if (onNavigate) { e.preventDefault(); handleNav('status'); } }}
-            >
-              System Telemetry
-            </a>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
             <ThemeToggle showLabel />

@@ -6,7 +6,6 @@ export interface IntakePrefillContext {
   attemptedSolutions?: string;
   specHash?: string;
   specSummary?: string;
-  preferredCurrency?: 'UGX' | 'USD';
 }
 
 export const INTAKE_PREFILL_STORAGE_KEY = 'eulok:intake_prefill';
@@ -30,7 +29,6 @@ export const ROUTE_PATH_MAP: Record<string, string> = {
   accessibility: '/accessibility',
   'ops-suite': '/ops-suite',
   'scope-calculator': '/scope-calculator',
-  status: '/status',
 };
 
 export function routeToPath(route: string): string {

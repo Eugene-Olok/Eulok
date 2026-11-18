@@ -1,19 +1,19 @@
 # Site Deployment Runbook
 
-Status: active · Owner: founder · Last updated: 2026-11-09
+Status: active · Owner: founder · Last updated: 2026-11-18
 
 ## What's deployed
 
 The production site is the Astro app at the repository root (`src/`), built
-to static output in `dist/`, plus one Cloudflare Pages Function
+with pure static output (`output: 'static'` in `astro.config.mjs`, with no Node
+SSR adapter) directly into `dist/`, plus one Cloudflare Pages Function
 (`functions/api/intake.ts`) that Cloudflare bundles and serves automatically
 because `functions/` sits at the repo root — no separate deploy step is
 needed for it.
 
-There is no custom build or deploy script. Cloudflare Pages' own Git
-integration builds and deploys on every push to `main`; CI
-(`.github/workflows/ci.yml`) only type-checks, tests, and builds to catch
-breakage before it merges — it does not deploy anything.
+There is no custom build or deploy script. GitHub runs CI (`.github/workflows/ci.yml`)
+for linting, unit testing, and static build verification only, while Cloudflare Pages'
+Git integration handles production hosting and deployments on every push to `main`.
 
 **Superseded:** an earlier static-HTML site lived at `business/site/` and
 deployed via `tools/build_site.py` + `scripts/deploy-site.sh`. Neither the

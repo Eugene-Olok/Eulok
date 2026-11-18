@@ -80,7 +80,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid var(--line)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.84rem' }}>
                     <Clock size={14} />
-                    <span>Based in Kampala, Uganda (UTC+3) · Remote worldwide</span>
+                    <span>Based in Kampala, Uganda (UTC+3) · Serving Uganda &amp; East Africa</span>
                   </div>
                 </div>
               </div>

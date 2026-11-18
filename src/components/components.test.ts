@@ -59,7 +59,6 @@ test('Breadcrumb Mapping — Core routes have human-readable labels', () => {
     'insights',
     'verification',
     'scope-calculator',
-    'status',
     'about',
     'contact',
     'standards',
@@ -69,6 +68,7 @@ test('Breadcrumb Mapping — Core routes have human-readable labels', () => {
     'ops-suite',
   ];
 
+  assert.equal(PAGE_LABEL_MAP.status, undefined);
   for (const route of requiredRoutes) {
     assert.ok(PAGE_LABEL_MAP[route], `Route ${route} must have a label in PAGE_LABEL_MAP`);
     assert.ok(PAGE_LABEL_MAP[route].length > 0);

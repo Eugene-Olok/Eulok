@@ -14,7 +14,6 @@ const ROUTE_PRIORITY: Record<string, { changefreq: string; priority: string }> =
   'scope-calculator': { changefreq: 'weekly', priority: '0.85' },
   work: { changefreq: 'weekly', priority: '0.8' },
   'case-studies': { changefreq: 'weekly', priority: '0.8' },
-  status: { changefreq: 'daily', priority: '0.8' },
   insights: { changefreq: 'weekly', priority: '0.75' },
   verification: { changefreq: 'weekly', priority: '0.75' },
   about: { changefreq: 'monthly', priority: '0.7' },

@@ -95,7 +95,7 @@ describe('Navbar Component — Rendering & Accessibility', () => {
     expect(screen.getByText('Reconciliation Demo')).toBeInTheDocument();
     expect(screen.getByText('Scoping Studio (SOW)')).toBeInTheDocument();
     expect(screen.getByText('Release Verification Standard')).toBeInTheDocument();
-    expect(screen.getByText('Edge Telemetry')).toBeInTheDocument();
+    expect(screen.queryByText('Edge Telemetry')).not.toBeInTheDocument();
 
     // Clicking an item triggers navigation
     fireEvent.click(screen.getByText('Reconciliation Demo'));

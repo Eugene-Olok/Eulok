@@ -42,7 +42,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             <span className="eyebrow">01 / Data Controller Identity</span>
             <h2>Who is responsible for your information?</h2>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
-              <strong>EULOK</strong> is an independent software engineering practice based in Kampala, Uganda, operating remotely worldwide. Under the <em>Data Protection and Privacy Act, 2019</em>, EULOK acts as the <strong>Data Controller</strong> for communications received via our website, email, and WhatsApp scoping channels.
+              <strong>EULOK</strong> is an independent software engineering practice based in Kampala, Uganda, serving organizations across Uganda and East Africa. Under the <em>Data Protection and Privacy Act, 2019</em>, EULOK acts as the <strong>Data Controller</strong> for communications received via our website, email, and WhatsApp scoping channels.
             </p>
             <div className="card" style={{ padding: '20px 24px', marginBottom: '36px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '16px', fontSize: '0.9rem' }}>
@@ -163,7 +163,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
             <span className="eyebrow">05 / Cross-Border Transfers (Section 19)</span>
             <h2>International Transfers & Regional Isolation</h2>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
-              Section 19 of the Uganda Data Protection and Privacy Act governs cross-border transfers. EULOK hosts static web assets on globally distributed Cloudflare Pages edge nodes to ensure low latency in Uganda, Europe, North America, and across Africa.
+              Section 19 of the Uganda Data Protection and Privacy Act governs cross-border transfers. EULOK hosts static web assets on Cloudflare Pages edge nodes to deliver low-latency response times across Kampala, East African corridors, and distributed edge PoPs.
             </p>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '36px' }}>
               No confidential client source code, credentials, or proprietary databases are ever synced to unvetted third-party services or consumer AI platforms.

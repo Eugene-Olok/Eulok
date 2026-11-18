@@ -75,7 +75,7 @@ function readEnvBaseUrl(): string | undefined {
 export const siteConfig: SiteConfig = {
   name: 'EULOK',
   legalName: 'EULOK Software Engineering',
-  tagline: 'Independent software engineering for Uganda and worldwide.',
+  tagline: 'Independent software engineering for Uganda and East Africa.',
   defaultBaseUrl: readEnvBaseUrl() || DEFAULT_FALLBACK_BASE_URL,
   contactEmail: 'hello@eulok.com',
   securityEmail: 'security@eulok.com',

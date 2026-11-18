@@ -6,13 +6,9 @@ import {
   Terminal,
   CheckCircle2,
   Sliders,
-  Activity,
   Search,
   MessageSquare,
-  Shield,
-  Layers,
   ChevronRight,
-  Sparkles,
 } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { openCommandPalette } from '../utils/navigation';
@@ -55,7 +51,7 @@ const TOOLS_ITEMS = [
     id: 'scope-calculator',
     label: 'Scoping Studio (SOW)',
     path: '/scope-calculator',
-    desc: 'Deterministic feasibility & milestone estimator',
+    desc: 'Architecture topology, failure modes & milestone workbench',
     icon: Sliders,
     color: 'var(--status-warn-text)',
     tag: 'Interactive',
@@ -68,15 +64,6 @@ const TOOLS_ITEMS = [
     icon: CheckCircle2,
     color: 'var(--status-pass-text)',
     tag: 'Standard',
-  },
-  {
-    id: 'status',
-    label: 'Live Edge Telemetry',
-    path: '/status',
-    desc: 'Real-time client latency & edge infrastructure topology',
-    icon: Activity,
-    color: 'var(--electric-blue)',
-    tag: 'Live',
   },
 ];
 

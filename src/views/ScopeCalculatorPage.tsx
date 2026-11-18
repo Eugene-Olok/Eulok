@@ -7,11 +7,9 @@ import {
   ARCHETYPES,
   INTEGRATION_RAILS,
   COMPLIANCE_ITEMS,
-  CURRENCIES,
-  ECONOMIC_REGIONS,
+  DEPLOYMENT_CONTEXTS,
   type ScopingInputs,
-  type CurrencyCode,
-  type EconomicRegionCode,
+  type DeploymentContextId,
 } from '../engine/scopeCalculator';
 import {
   CheckCircle2,
@@ -19,6 +17,9 @@ import {
   Copy,
   ArrowRight,
   Link2,
+  ShieldAlert,
+  Layers,
+  MessageSquare,
 } from 'lucide-react';
 
 interface ScopeCalculatorPageProps {
@@ -34,8 +35,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
   const [selectedRails, setSelectedRails] = useState<string[]>(['mtn_momo', 'airtel_money']);
   const [compliance, setCompliance] = useState<string[]>(['dppa_2019', 'audit_ledger']);
   const [throughput, setThroughput] = useState<ScopingInputs['throughputTier']>('standard');
-  const [regionId, setRegionId] = useState<EconomicRegionCode>('uganda');
-  const [currency, setCurrency] = useState<CurrencyCode>('UGX');
+  const [deploymentContextId, setDeploymentContextId] = useState<DeploymentContextId>('uganda_domestic');
   const [clientName, setClientName] = useState<string>('');
   const [copied, setCopied] = useState<boolean>(false);
   const [linkCopied, setLinkCopied] = useState<boolean>(false);
@@ -50,13 +50,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
       if (parsed.selectedRails !== undefined) setSelectedRails(parsed.selectedRails);
       if (parsed.complianceRequirements !== undefined) setCompliance(parsed.complianceRequirements);
       if (parsed.throughputTier) setThroughput(parsed.throughputTier);
-      if (parsed.regionId) {
-        setRegionId(parsed.regionId);
-        if (!parsed.currency) {
-          setCurrency(ECONOMIC_REGIONS[parsed.regionId].defaultCurrency);
-        }
-      }
-      if (parsed.currency) setCurrency(parsed.currency);
+      if (parsed.deploymentContextId) setDeploymentContextId(parsed.deploymentContextId);
       if (parsed.clientName) setClientName(parsed.clientName);
     }
     setHydratedFromUrl(true);
@@ -70,18 +64,12 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
       selectedRails,
       complianceRequirements: compliance,
       throughputTier: throughput,
-      regionId,
-      currency,
+      deploymentContextId,
       clientName: clientName.trim() || undefined,
     });
     const nextUrl = `${window.location.pathname}?${query}`;
     window.history.replaceState(null, '', nextUrl);
-  }, [hydratedFromUrl, archetypeId, selectedRails, compliance, throughput, regionId, currency, clientName]);
-
-  const handleSelectRegion = (nextRegion: EconomicRegionCode) => {
-    setRegionId(nextRegion);
-    setCurrency(ECONOMIC_REGIONS[nextRegion].defaultCurrency);
-  };
+  }, [hydratedFromUrl, archetypeId, selectedRails, compliance, throughput, deploymentContextId, clientName]);
 
   const toggleRail = (id: string) => {
     setSelectedRails((prev) =>
@@ -101,27 +89,27 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
       selectedRails,
       complianceRequirements: compliance,
       throughputTier: throughput,
-      regionId,
-      currency,
+      deploymentContextId,
       clientName: clientName.trim() || undefined,
     });
-  }, [archetypeId, selectedRails, compliance, throughput, regionId, currency, clientName]);
+  }, [archetypeId, selectedRails, compliance, throughput, deploymentContextId, clientName]);
 
   const handleCopyMemorandum = () => {
-    navigator.clipboard.writeText(scopingResult.memorandumMarkdown);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(scopingResult.memorandumMarkdown);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    }
   };
 
   const handleCopyShareLink = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && navigator.clipboard) {
       const query = encodeScopeToQuery({
         archetypeId,
         selectedRails,
         complianceRequirements: compliance,
         throughputTier: throughput,
-        regionId,
-        currency,
+        deploymentContextId,
         clientName: clientName.trim() || undefined,
       });
       const shareUrl = `${window.location.origin}${window.location.pathname}?${query}`;
@@ -136,7 +124,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${scopingResult.verificationHash}-memorandum.md`;
+    a.download = `${scopingResult.verificationHash}-architecture-spec.md`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -168,11 +156,9 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
     onOpenIntakeModal({
       need: mappedNeed,
       systemType: mappedSystem,
-      budget: `${scopingResult.suggestedTier} (${scopingResult.regionLabel})`,
       specHash: scopingResult.verificationHash,
-      specSummary: `${scopingResult.archetypeName} · ${scopingResult.estimatedWeeksMin}–${scopingResult.estimatedWeeksMax} wks · ${scopingResult.riskScore}/10 ${scopingResult.riskLevel}`,
-      preferredCurrency: currency === 'USD' ? 'USD' : 'UGX',
-      problemDescription: `Scoping Studio Spec ${scopingResult.verificationHash}${clientName.trim() ? ` for ${clientName.trim()}` : ''}: ${scopingResult.archetypeName} targeted for ${scopingResult.regionLabel}. Timeline: ${scopingResult.estimatedWeeksMin}–${scopingResult.estimatedWeeksMax} weeks. Rails: ${railsNames}. Throughput tier: ${throughput}.`,
+      specSummary: `${scopingResult.archetypeName} · ${scopingResult.deploymentContextLabel} · ${scopingResult.estimatedWeeksMin}–${scopingResult.estimatedWeeksMax} wks · ${scopingResult.riskScore}/10 ${scopingResult.riskLevel}`,
+      problemDescription: `Scoping Workbench Spec ${scopingResult.verificationHash}${clientName.trim() ? ` for ${clientName.trim()}` : ''}: ${scopingResult.archetypeName} configured for ${scopingResult.deploymentContextLabel}. Projected timeline: ${scopingResult.estimatedWeeksMin}–${scopingResult.estimatedWeeksMax} weeks (${scopingResult.failureModes.length} failure modes mitigated). Rails: ${railsNames}. Throughput: ${scopingResult.throughputLabel}. Requesting engineering review & commercial consultation.`,
     });
   };
 
@@ -185,6 +171,13 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
       ? 'var(--status-warn-text)'
       : 'var(--status-fail-text)';
 
+  const severityColor = (severity: 'P0' | 'P1' | 'P2') =>
+    severity === 'P0'
+      ? 'var(--status-fail-text)'
+      : severity === 'P1'
+      ? 'var(--status-warn-text)'
+      : 'var(--electric-blue)';
+
   return (
     <>
       {/* Hero Header */}
@@ -193,16 +186,16 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
           <nav className="breadcrumb" aria-label="Breadcrumb" style={{ marginBottom: '24px' }}>
             <button type="button" onClick={() => onNavigate('home')}>Home</button>
             <span className="separator">/</span>
-            <span aria-current="page">Scoping Studio &amp; Feasibility</span>
+            <span aria-current="page">Scoping Studio &amp; Architecture Workbench</span>
           </nav>
 
-          <div style={{ maxWidth: '860px' }}>
-            <span className="eyebrow">Interactive System Configurator · Uganda &amp; Remote Delivery</span>
+          <div style={{ maxWidth: '880px' }}>
+            <span className="eyebrow">Interactive Architecture Workbench · Uganda &amp; East Africa</span>
             <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '24ch' }}>
-              Model your system. See the reality.
+              Model your system. Inspect every failure boundary.
             </h1>
             <p className="lead" style={{ maxWidth: '68ch', marginBottom: 0 }}>
-              Configure target integration rails, regulatory standards, throughput constraints, and client economic region to inspect milestone-derived timelines, logarithmic risk scores, and download a Statement of Work draft.
+              Configure East African payment rails, tax interfaces, throughput constraints, and regulatory posture to inspect target architecture layers, failure-mode mitigations, logarithmic technical risk, and milestone delivery gates. Commercial pricing is discussed directly after technical review.
             </p>
           </div>
         </div>
@@ -217,7 +210,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               {/* Client Name Input */}
               <div className="card">
                 <label htmlFor="scope-client-name" style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--warm-white)', marginBottom: '8px' }}>
-                  Client / Organization Name (Optional)
+                  Organization Name (Optional)
                 </label>
                 <input
                   id="scope-client-name"
@@ -234,7 +227,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                 <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '10px', display: 'inline-block' }}>
                   STEP 01 · SYSTEM ARCHETYPE
                 </span>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Select Core Domain</h3>
+                <h2 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Select Core Domain</h2>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {Object.entries(ARCHETYPES).map(([key, item]) => {
@@ -262,9 +255,9 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               {/* External Rails */}
               <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '10px', display: 'inline-block' }}>
-                  STEP 02 · INTEGRATION RAILS
+                  STEP 02 · EAST AFRICAN INTEGRATION RAILS
                 </span>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Select Connected Interfaces</h3>
+                <h2 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Select Connected Interfaces</h2>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {Object.entries(INTEGRATION_RAILS).map(([key, rail]) => {
@@ -307,9 +300,9 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               {/* Compliance & Governance */}
               <div className="card">
                 <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '10px', display: 'inline-block' }}>
-                  STEP 03 · REGULATORY & GOVERNANCE
+                  STEP 03 · REGULATORY &amp; AUDIT CONTROLS
                 </span>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Security & Audit Controls</h3>
+                <h2 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Governance &amp; Ledger Guarantees</h2>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {Object.entries(COMPLIANCE_ITEMS).map(([key, comp]) => {
@@ -354,7 +347,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                 <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '10px', display: 'inline-block' }}>
                   STEP 04 · TRANSACTION VOLUME
                 </span>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Operational Throughput Tier</h3>
+                <h2 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Operational Throughput Tier</h2>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
                   {[
@@ -380,15 +373,10 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               </div>
             </div>
 
-            {/* Right Column: Live Output & Verifiable Memorandum */}
+            {/* Right Column: Live Architecture & Technical Feasibility */}
             <div style={{ position: 'sticky', top: '90px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {/* Executive Metrics Card */}
-              <div
-                className="card"
-                style={{
-                  borderColor: 'var(--line-strong)',
-                }}
-              >
+              {/* Executive Metrics & Deployment Context Card */}
+              <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
                   <span className="mono-tag" style={{ color: 'var(--electric-blue)', fontWeight: 700 }}>
                     SPECIFICATION HASH
@@ -398,115 +386,83 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                   </span>
                 </div>
 
-                {/* Target Economy / Region Selector */}
-                <div style={{ marginBottom: '14px' }}>
-                  <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>
-                    Client Economy / Region
-                  </span>
-                  <div
-                    role="group"
-                    aria-label="Select client economic region"
-                    style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}
-                  >
-                    {(Object.values(ECONOMIC_REGIONS)).map((reg) => {
-                      const active = regionId === reg.id;
-                      return (
-                        <button
-                          key={reg.id}
-                          type="button"
-                          onClick={() => handleSelectRegion(reg.id)}
-                          aria-pressed={active}
-                          className={`button button-small ${active ? 'button-primary' : 'button-quiet'}`}
-                          style={{
-                            minHeight: '34px',
-                            padding: '5px 10px',
-                            fontSize: '0.76rem',
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          {reg.shortLabel} ({reg.economicMultiplier}×)
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'block', marginTop: '5px', lineHeight: 1.35 }}>
-                    {ECONOMIC_REGIONS[regionId].marketContext}
-                  </span>
-                </div>
-
-                {/* Currency Switcher */}
+                {/* Deployment Context Selector (Uganda vs EAC) */}
                 <div style={{ marginBottom: '16px' }}>
                   <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>
-                    Display Currency
+                    Deployment Footprint
                   </span>
                   <div
                     role="group"
-                    aria-label="Select planning currency"
-                    style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}
+                    aria-label="Select East Africa deployment footprint"
+                    style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '8px' }}
                   >
-                    {(Object.keys(CURRENCIES) as CurrencyCode[]).map((code) => {
-                      const active = currency === code;
+                    {Object.values(DEPLOYMENT_CONTEXTS).map((ctx) => {
+                      const active = deploymentContextId === ctx.id;
                       return (
                         <button
-                          key={code}
+                          key={ctx.id}
                           type="button"
-                          onClick={() => setCurrency(code)}
+                          onClick={() => setDeploymentContextId(ctx.id)}
                           aria-pressed={active}
                           className={`button button-small ${active ? 'button-primary' : 'button-quiet'}`}
                           style={{
-                            minHeight: '34px',
-                            padding: '5px 11px',
+                            minHeight: '36px',
+                            padding: '6px 12px',
                             fontSize: '0.78rem',
-                            fontFamily: 'var(--font-mono)',
-                            whiteSpace: 'nowrap',
+                            justifyContent: 'center',
                           }}
                         >
-                          {code}
+                          {ctx.shortLabel}
                         </button>
                       );
                     })}
                   </div>
+                  <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)', margin: '6px 0 0', lineHeight: 1.4 }}>
+                    {DEPLOYMENT_CONTEXTS[deploymentContextId].operationalProfile}
+                  </p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px', marginBottom: '20px' }}>
+                {/* Timeline & Risk Readout */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px', marginBottom: '16px' }}>
                   <div className="surface-inset" style={{ padding: '14px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase' }}>
-                      Estimated Timeline
+                      Delivery Timeline
                     </span>
                     <div style={{ fontSize: '1.55rem', fontWeight: 700, color: 'var(--warm-white)', marginTop: '4px', fontVariantNumeric: 'tabular-nums' }}>
                       {scopingResult.estimatedWeeksMin}–{scopingResult.estimatedWeeksMax} <span style={{ fontSize: '0.88rem', fontWeight: 400, color: 'var(--text-muted)' }}>weeks</span>
                     </div>
                     <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'block', marginTop: '4px', lineHeight: 1.35 }}>
-                      Derived from {scopingResult.milestoneTotalWeeks} wks across 6 stages + {scopingResult.contingencyWeeks} {scopingResult.contingencyWeeks === 1 ? 'wk' : 'wks'} UAT/API buffer
+                      {scopingResult.milestoneTotalWeeks} wks across 6 stages + {scopingResult.contingencyWeeks} {scopingResult.contingencyWeeks === 1 ? 'wk' : 'wks'} KYB/UAT buffer
                     </span>
                   </div>
 
                   <div className="surface-inset" style={{ padding: '14px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase' }}>
-                      Technical Risk
+                      Technical Risk Index
                     </span>
                     <div style={{ fontSize: '1.55rem', fontWeight: 700, color: riskBadgeColor, marginTop: '4px', fontVariantNumeric: 'tabular-nums' }}>
                       {scopingResult.riskScore} <span style={{ fontSize: '0.88rem', fontWeight: 400 }}>/ 10 ({scopingResult.riskLevel})</span>
                     </div>
                     <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'block', marginTop: '4px', lineHeight: 1.35 }}>
-                      Logarithmic scale across rails, compliance & throughput
+                      {scopingResult.failureModes.length} explicit failure boundary controls mapped
                     </span>
                   </div>
                 </div>
 
-                <div className="surface-inset" style={{ marginBottom: '20px', padding: '14px', borderRadius: '8px' }}>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>
-                    Planning Investment ({ECONOMIC_REGIONS[regionId].shortLabel} · {currency})
-                  </span>
-                  <div style={{ fontSize: '1.22rem', fontWeight: 700, color: 'var(--warm-white)', fontVariantNumeric: 'tabular-nums' }}>
-                    {scopingResult.suggestedTier}
+                {/* Direct Consultation Disclosure (No Pricing Calculator) */}
+                <div className="surface-inset" style={{ marginBottom: '18px', padding: '12px 14px', borderRadius: '8px', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                  <MessageSquare size={16} color="var(--electric-blue)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                  <div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--warm-white)', marginBottom: '2px' }}>
+                      Core Guarantee &amp; Commercial Scoping
+                    </div>
+                    <p style={{ margin: '0 0 6px', fontSize: '0.76rem', color: 'var(--text-subtle)', lineHeight: 1.45 }}>
+                      {scopingResult.coreGuarantee}
+                    </p>
+                    <p style={{ margin: 0, fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
+                      {scopingResult.consultationNote}
+                    </p>
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--electric-blue)', marginTop: '2px', fontVariantNumeric: 'tabular-nums' }}>
-                    {scopingResult.referenceEquivalent}
-                  </div>
-                  <span style={{ fontSize: '0.73rem', color: 'var(--text-muted)', display: 'block', marginTop: '6px', lineHeight: 1.4 }}>
-                    {scopingResult.pricingBasisNote} Fixed contractual fee is established upon completion of Stage 02 Specification.
-                  </span>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -516,7 +472,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                     onClick={handleProceedToIntake}
                     style={{ width: '100%', justifyContent: 'center' }}
                   >
-                    <span>Proceed to Official Scoping Intake</span>
+                    <span>Discuss Architecture &amp; Commercial Terms</span>
                     <ArrowRight size={16} />
                   </button>
 
@@ -528,7 +484,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                       style={{ justifyContent: 'center', padding: '8px 10px' }}
                     >
                       {copied ? <CheckCircle2 size={14} color="var(--status-pass-text)" /> : <Copy size={14} />}
-                      <span>{copied ? 'Copied SOW' : 'Copy SOW'}</span>
+                      <span>{copied ? 'Copied Spec' : 'Copy Spec'}</span>
                     </button>
 
                     <button
@@ -554,26 +510,93 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                 </div>
               </div>
 
+              {/* Target Architecture Topology */}
+              <div className="card">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <Layers size={16} color="var(--electric-blue)" />
+                  <h3 style={{ margin: 0, fontSize: '1.08rem' }}>Target Architecture Topology</h3>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {scopingResult.architectureTopology.map((layer) => (
+                    <div key={layer.layerId} className="surface-inset" style={{ padding: '10px 12px', borderRadius: '6px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--warm-white)' }}>
+                          {layer.title}
+                        </span>
+                        <span className="mono-tag" style={{ fontSize: '0.68rem', color: 'var(--electric-blue)' }}>
+                          {layer.layerId}
+                        </span>
+                      </div>
+                      <p style={{ margin: '4px 0 4px', fontSize: '0.78rem', color: 'var(--text-subtle)', lineHeight: 1.4 }}>
+                        {layer.responsibility}
+                      </p>
+                      <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+                        Pattern: {layer.pattern}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Failure Modes & Deterministic Mitigations Matrix */}
+              <div className="card" data-testid="failure-modes-panel">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <ShieldAlert size={16} color="var(--status-warn-text)" />
+                    <h3 style={{ margin: 0, fontSize: '1.08rem' }}>Failure-Mode Mitigations</h3>
+                  </div>
+                  <span className="mono-tag" style={{ fontSize: '0.72rem', fontVariantNumeric: 'tabular-nums' }}>
+                    {scopingResult.failureModes.length} Active Controls
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {scopingResult.failureModes.map((fm) => (
+                    <div key={fm.id} className="surface-inset" style={{ padding: '10px 12px', borderRadius: '6px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
+                        <span style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--warm-white)' }}>
+                          {fm.failureMode}
+                        </span>
+                        <span className="mono-tag" style={{ fontSize: '0.68rem', color: severityColor(fm.severity), borderColor: severityColor(fm.severity) }}>
+                          {fm.severity} · {fm.surface}
+                        </span>
+                      </div>
+                      <p style={{ margin: '0 0 4px', fontSize: '0.76rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
+                        <strong>Trigger:</strong> {fm.triggerCondition}
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.76rem', color: 'var(--text-subtle)', lineHeight: 1.4 }}>
+                        <strong>Mitigation:</strong> {fm.deterministicMitigation}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* 6-Stage Delivery Sequence Preview */}
               <div className="card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
                   <span className="mono-tag" style={{ color: 'var(--accent-blue)', marginBottom: '6px', display: 'inline-block' }}>
-                    SCHEDULE & QUALITY GATES
+                    SCHEDULE &amp; EXIT GATES
                   </span>
                   <span className="mono-tag" style={{ fontSize: '0.74rem', color: 'var(--electric-blue)', fontVariantNumeric: 'tabular-nums' }}>
                     Total: {scopingResult.milestoneTotalWeeks} wks
                   </span>
                 </div>
-                <h4 style={{ margin: '0 0 12px', fontSize: '1.1rem' }}>Milestone Progression</h4>
+                <h3 style={{ margin: '0 0 12px', fontSize: '1.08rem' }}>Milestone Effort Allocation</h3>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.84rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.84rem' }}>
                   {scopingResult.milestonePhases.map((phase) => (
-                    <div key={phase.stageNumber} style={{ borderBottom: '1px solid var(--line)', paddingBottom: '8px' }}>
+                    <div key={phase.stageNumber} style={{ borderBottom: '1px solid var(--line)', paddingBottom: '10px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', color: 'var(--warm-white)', fontWeight: 600 }}>
                         <span>{phase.stageName}</span>
-                        <span style={{ color: 'var(--electric-blue)', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>{phase.weeks} {phase.weeks === 1 ? 'wk' : 'wks'}</span>
+                        <span style={{ color: 'var(--electric-blue)', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
+                          {phase.weeks} {phase.weeks === 1 ? 'wk' : 'wks'} ({phase.effortSharePct}%)
+                        </span>
                       </div>
-                      <div style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: '2px' }}>
+                      <div style={{ width: '100%', height: '4px', background: 'var(--line)', borderRadius: '999px', overflow: 'hidden', margin: '6px 0' }}>
+                        <div style={{ width: `${phase.effortSharePct}%`, height: '100%', background: 'var(--electric-blue)' }} />
+                      </div>
+                      <div style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>
                         Gate: {phase.exitGate}
                       </div>
                       {phase.floorNote && (
@@ -586,17 +609,23 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                 </div>
               </div>
 
-              {/* Architectural Controls Preview */}
+              {/* Mandatory Acceptance Gates */}
               <div className="card">
-                <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '8px', display: 'inline-block' }}>
-                  ACTIVE GUARDS
+                <span className="mono-tag" style={{ color: 'var(--status-pass-text)', marginBottom: '8px', display: 'inline-block' }}>
+                  PRODUCTION HANDOVER CRITERIA
                 </span>
-                <h4 style={{ margin: '0 0 10px', fontSize: '1.1rem' }}>Engineering Controls</h4>
-                <ul style={{ margin: 0, paddingLeft: '16px', fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                  {scopingResult.architecturalControls.map((ctrl, i) => (
-                    <li key={i}>{ctrl}</li>
+                <h3 style={{ margin: '0 0 10px', fontSize: '1.08rem' }}>Verification Gates</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {scopingResult.acceptanceGates.map((gate) => (
+                    <div key={gate.code} style={{ fontSize: '0.8rem', lineHeight: 1.45, color: 'var(--text-subtle)' }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--electric-blue)', fontWeight: 600 }}>
+                        {gate.code}
+                      </span>{' '}
+                      <strong style={{ color: 'var(--warm-white)' }}>{gate.gate}:</strong>{' '}
+                      {gate.verificationMethod}
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>

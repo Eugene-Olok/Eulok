@@ -33,7 +33,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="hero-grid">
             {/* Hero Left Column */}
             <div className="animate-fade-up">
-              <span className="eyebrow">INDEPENDENT SOFTWARE ENGINEERING · KAMPALA & REMOTE</span>
+              <span className="eyebrow">INDEPENDENT SOFTWARE ENGINEERING · KAMPALA, UGANDA · EAST AFRICA</span>
               <h1 style={{ maxWidth: '16ch' }}>
                 Software built for the realities of business.
               </h1>
@@ -59,7 +59,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '36px', color: 'var(--text-muted)', fontSize: '0.86rem' }}>
                 <ShieldCheck size={16} color="var(--accent-blue)" style={{ flexShrink: 0 }} />
-                <span>Engineered for Ugandan operational infrastructure. Built for production worldwide.</span>
+                <span>Engineered for Ugandan and East African operational infrastructure. Built for demanding production realities.</span>
               </div>
             </div>
 

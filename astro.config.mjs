@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import node from '@astrojs/node';
 
 const configuredSiteUrl =
   process.env.PUBLIC_SITE_URL ||
@@ -12,9 +11,6 @@ const configuredSiteUrl =
 export default defineConfig({
   site: configuredSiteUrl.replace(/\/+$/, ''),
   output: 'static',
-  adapter: node({
-    mode: 'standalone',
-  }),
   integrations: [react()],
   devToolbar: {
     enabled: false,

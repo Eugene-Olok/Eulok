@@ -150,7 +150,7 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
         },
         {
           name: 'Cloudflare Pages Anycast Network',
-          detail: 'Assets are distributed globally across 300+ edge locations, ensuring sub-100ms first-byte response times worldwide.',
+          detail: 'Assets are distributed across Cloudflare Pages Anycast edge locations, ensuring sub-100ms first-byte response times across Uganda and East Africa.',
           standard: 'Global Anycast Edge',
         },
         {

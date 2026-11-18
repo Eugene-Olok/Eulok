@@ -29,7 +29,7 @@ describe('Footer Component — Rendering & Accessibility Standards', () => {
     ).toBeInTheDocument();
 
     // Geography
-    expect(screen.getByText(/Kampala, Uganda · Remote worldwide/i)).toBeInTheDocument();
+    expect(screen.getByText(/Kampala, Uganda · Serving East Africa \(EAC\)/i)).toBeInTheDocument();
 
     // Core rule blockquote
     expect(
@@ -119,13 +119,13 @@ describe('Footer Component — Rendering & Accessibility Standards', () => {
     const security = screen.getByRole('link', { name: /Security & RFC 9116/i });
     const accessibility = screen.getByRole('link', { name: /Accessibility \(WCAG 2\.2 AA\)/i });
     const standards = screen.getByRole('link', { name: /Delivery Commitments/i });
-    const status = screen.getByRole('link', { name: /System Telemetry/i });
 
     expect(privacy).toBeInTheDocument();
     expect(security).toBeInTheDocument();
     expect(accessibility).toBeInTheDocument();
     expect(standards).toBeInTheDocument();
-    expect(status).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /System Telemetry/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /Live Edge Telemetry/i })).not.toBeInTheDocument();
 
     fireEvent.click(security);
     expect(onNavigateMock).toHaveBeenCalledWith('security');

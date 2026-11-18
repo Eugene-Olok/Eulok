@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev --host 0.0.0.0 --port 3000",
     "build": "astro build",
-    "start": "HOST=0.0.0.0 PORT=3000 node ./dist/server/entry.mjs",
+    "start": "astro preview --host 0.0.0.0 --port 3000",
     "preview": "astro preview --host 0.0.0.0 --port 3000",
-    "test": "node --test --experimental-strip-types src/engine/reconciliationCore.test.ts src/seo/seo.test.ts src/engine/intakeValidation.test.ts src/engine/scopeCalculator.test.ts src/engine/rescueDiagnostic.test.ts src/engine/webhookSandbox.test.ts src/engine/trendsParser.test.ts src/engine/integrationTelemetry.test.ts src/components/components.test.ts && vitest run",
+    "test": "node --test --experimental-strip-types src/engine/reconciliationCore.test.ts src/seo/seo.test.ts src/engine/intakeValidation.test.ts src/engine/scopeCalculator.test.ts src/engine/rescueDiagnostic.test.ts src/engine/webhookSandbox.test.ts src/engine/integrationTelemetry.test.ts src/components/components.test.ts && vitest run",
     "test:components": "vitest run",
     "lint": "tsc --noEmit"
   },

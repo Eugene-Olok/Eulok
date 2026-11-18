@@ -19,10 +19,10 @@ export const FAQ_ITEMS: FAQItem[] = [
     id: 'scope-pricing',
     category: 'Pricing & Scope',
     question: 'How is project scope and pricing determined?',
-    answer: 'We do not bill on open-ended hourly rates without a cap. Every project begins with a deterministic Scope of Work (SOW) defining clear deliverables, dependencies, and exclusions. Payment is structured around verifiable milestones: 40% upon scope agreement, 30% upon passing staging acceptance gates, and 30% upon production deployment and artifact handover.',
+    answer: 'Our Scoping Studio models system architecture, integration rails, failure modes, and milestone timelines without automated price guessing. Commercial pricing is agreed directly during consultation once technical boundaries are reviewed, with milestone schedules structured around discovery sign-off, staging acceptance gates, and production handover.',
     tags: ['pricing', 'cost', 'sow', 'scope', 'milestones', 'rates', 'budget', 'estimate'],
     serviceLink: {
-      label: 'Use Scoping Studio',
+      label: 'Open Architecture Scoping Studio',
       page: 'scope-calculator',
     },
   },

@@ -11,7 +11,6 @@ import {
   Search,
 } from 'lucide-react';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
-import { LiveFinOpsTrendsSection } from '../components/LiveFinOpsTrendsSection';
 
 interface InsightsPageProps {
   onNavigate?: (page: string) => void;
@@ -49,16 +48,6 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
     setTimeout(() => {
       setIsFiltering(false);
     }, 180);
-  };
-
-  const handleFilterFromTrends = (query: string) => {
-    setSelectedCategory('all');
-    setNoteSearchQuery(query.trim());
-    if (typeof document !== 'undefined') {
-      setTimeout(() => {
-        document.getElementById('notes-archive')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 40);
-    }
   };
 
   const articles: Article[] = [
@@ -173,7 +162,7 @@ if (match.status === 'proposed' || match.status === 'exception') {
       demonstrates: 'Performance budgeting, asset minimization, and network tolerance.',
       relatedService: 'services/performance-builds',
       content: [
-        'While modern Silicon Valley web apps routinely ship 5MB JavaScript bundles with dozens of tracking scripts, users in Kampala often browse on 3G mobile connections with metered data plans.',
+        'While bloated modern web applications routinely ship 5MB JavaScript bundles with dozens of tracking scripts, users across Kampala and East Africa often browse on 3G mobile connections with metered data plans.',
         'A website that takes 12 seconds to hydrate will be abandoned. By enforcing strict performance budgets (lean compressed payloads, pre-rendered semantic HTML, modern CSS without heavy runtime overhead), applications load quickly and remain navigable even when connection latency spikes.',
       ],
     },
@@ -257,7 +246,7 @@ if (match.status === 'proposed' || match.status === 'exception') {
             </p>
           </div>
 
-          {/* Category Filter & Live Trends Jump */}
+          {/* Category Filter */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginTop: '32px' }}>
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {categories.map((cat) => (
@@ -272,16 +261,9 @@ if (match.status === 'proposed' || match.status === 'exception') {
                 </button>
               ))}
             </div>
-
-            <a href="#live-finops-trends" className="button button-quiet button-small">
-              Live Web-Grounded Trends ↓
-            </a>
           </div>
         </div>
       </section>
-
-      {/* Search-Grounded Financial Operations Industry Trends */}
-      <LiveFinOpsTrendsSection onFilterLocalNotes={handleFilterFromTrends} />
 
       {/* Articles Grid / List */}
       <section

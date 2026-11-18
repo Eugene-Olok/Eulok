@@ -5,7 +5,7 @@ import {
   AlertCircle,
   Loader2,
 } from 'lucide-react';
-import { generateReferenceId, sanitizeString } from '../engine/intakeValidation';
+import { generateReferenceId, sanitizeString, validateIntakePayload } from '../engine/intakeValidation';
 import {
   type IntakePrefillContext,
   readStoredIntakePrefill,
@@ -31,7 +31,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
   const [step, setStep] = useState<number>(1);
   const [need, setNeed] = useState<string>(prefill?.need || initialNeed || 'Build something new');
   const [systemType, setSystemType] = useState<string>(prefill?.systemType || initialSystem || 'Custom business software');
-  const [budgetCurrency, setBudgetCurrency] = useState<'UGX' | 'USD'>(prefill?.preferredCurrency || 'UGX');
+  const [budgetCurrency, setBudgetCurrency] = useState<'UGX' | 'USD'>('UGX');
   const [budget, setBudget] = useState<string>(prefill?.budget || 'UGX 2M–7.5M');
   const [problemDescription, setProblemDescription] = useState<string>(prefill?.problemDescription || '');
   const [attemptedSolutions, setAttemptedSolutions] = useState<string>(prefill?.attemptedSolutions || '');
@@ -51,7 +51,6 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
     if (stored) {
       if (stored.need) setNeed(stored.need);
       if (stored.systemType) setSystemType(stored.systemType);
-      if (stored.preferredCurrency) setBudgetCurrency(stored.preferredCurrency);
       if (stored.budget) setBudget(stored.budget);
       if (stored.problemDescription) setProblemDescription(stored.problemDescription);
       if (stored.attemptedSolutions) setAttemptedSolutions(stored.attemptedSolutions);
@@ -86,7 +85,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
     USD: [
       { label: '$500–$2,000', note: 'Indicative planning range for bounded diagnostics or focused sites' },
       { label: '$2,000–$8,000', note: 'Multi-system integrations, custom workflow portals, rescue sprints' },
-      { label: '$8,000–$25,000+', note: 'International commercial systems and multi-rail financial infrastructure' },
+      { label: '$8,000–$25,000+', note: 'Regional East African enterprise and donor-funded multi-rail infrastructure' },
       { label: 'Unknown / Early stage', note: 'Need initial discovery and technical scoping first' },
       { label: 'Custom explanation', note: 'Procurement constraints, phased milestone grants' },
     ],
@@ -137,6 +136,13 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
       honeypot: honeypot || undefined,
     };
 
+    const localValidation = validateIntakePayload(payload);
+    if (!localValidation.isValid) {
+      setSubmitError(localValidation.errors.join(' '));
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const response = await fetch('/api/intake', {
         method: 'POST',
@@ -153,8 +159,14 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
       };
 
       if (response.ok) {
-        setReferenceId(data.referenceId || generateReferenceId());
+        setReferenceId(data.referenceId || localValidation.referenceId || generateReferenceId());
         setIsOfflineFallback(false);
+        clearStoredIntakePrefill();
+        setStep(5);
+      } else if (response.status === 404) {
+        // Local Astro static dev/preview does not serve Cloudflare Pages Functions (/functions/api/intake.ts)
+        setReferenceId(localValidation.referenceId || generateReferenceId());
+        setIsOfflineFallback(true);
         clearStoredIntakePrefill();
         setStep(5);
       } else if (response.status >= 400 && response.status < 500) {
@@ -166,13 +178,13 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
       } else {
         // Fallback: If backend is temporarily unavailable (5xx), issue client-side reference
         // so the inquiry can continue via WhatsApp/Email without data loss.
-        setReferenceId(generateReferenceId());
+        setReferenceId(localValidation.referenceId || generateReferenceId());
         setIsOfflineFallback(true);
         setStep(5);
       }
     } catch {
       // Graceful offline degradation
-      setReferenceId(generateReferenceId());
+      setReferenceId(localValidation.referenceId || generateReferenceId());
       setIsOfflineFallback(true);
       setStep(5);
     } finally {

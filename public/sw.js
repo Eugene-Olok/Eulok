@@ -3,13 +3,12 @@
  * Bypasses Vite dev/module paths and self-cleans if invoked on a dev host.
  */
 
-const CACHE_NAME = 'eulok-cache-v2';
+const CACHE_NAME = 'eulok-cache-v3';
 const PRECACHE_URLS = [
   '/',
   '/services',
   '/ops-suite',
   '/scope-calculator',
-  '/status',
   '/verification',
   '/standards',
   '/security',

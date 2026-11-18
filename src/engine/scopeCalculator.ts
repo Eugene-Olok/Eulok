@@ -1,108 +1,47 @@
 /**
- * EULOK Technical Scoping & Architecture Configurator Core
+ * EULOK Technical Architecture & Scoping Workbench Core
  * Deterministic estimation of complexity, milestone-derived timelines,
- * logarithmic technical risk scoring, region/economy-adjusted pricing,
- * multi-currency indicative budgets, and architectural controls.
+ * logarithmic technical risk scoring, Uganda & East Africa deployment rules,
+ * failure-mode mitigation matrices, architecture topology, and acceptance gates.
+ *
+ * Commercial pricing is intentionally excluded and finalized directly during
+ * engineering consultation following technical discovery.
  */
 
-export type CurrencyCode = 'UGX' | 'USD' | 'KES' | 'EUR' | 'GBP';
-export type EconomicRegionCode = 'uganda' | 'east_africa' | 'uk' | 'europe' | 'usa';
+export type DeploymentContextId = 'uganda_domestic' | 'eac_cross_border';
 
-export interface CurrencySpec {
-  code: CurrencyCode;
-  label: string;
-  symbol: string;
-  ratePerUsd: number;
-  roundTo: number;
-}
-
-export interface EconomicRegionSpec {
-  id: EconomicRegionCode;
+export interface DeploymentContextSpec {
+  id: DeploymentContextId;
   label: string;
   shortLabel: string;
-  defaultCurrency: CurrencyCode;
-  economicMultiplier: number; // Relative to Uganda (1.0x) local engineering economy
-  marketContext: string;
+  complexityMultiplier: number;
+  riskWeight: number;
+  operationalProfile: string;
+  networkConstraint: string;
 }
 
-export const CURRENCIES: Record<CurrencyCode, CurrencySpec> = {
-  UGX: {
-    code: 'UGX',
-    label: 'UGX · Uganda Shilling',
-    symbol: 'UGX',
-    ratePerUsd: 3700,
-    roundTo: 100000,
+export const DEPLOYMENT_CONTEXTS: Record<DeploymentContextId, DeploymentContextSpec> = {
+  uganda_domestic: {
+    id: 'uganda_domestic',
+    label: 'Uganda Domestic Operations',
+    shortLabel: 'Uganda Domestic',
+    complexityMultiplier: 1.0,
+    riskWeight: 0.0,
+    operationalProfile:
+      'Single-jurisdiction Kampala & upcountry deployment aligned with MTN/Airtel Uganda rails, URA EFRIS fiscalization, and Uganda DPPA 2019.',
+    networkConstraint:
+      'Optimized for regional 3G/4G cellular jitter with pre-rendered <50KB intake surfaces and offline buffering.',
   },
-  USD: {
-    code: 'USD',
-    label: 'USD · US Dollar',
-    symbol: '$',
-    ratePerUsd: 1,
-    roundTo: 100,
-  },
-  KES: {
-    code: 'KES',
-    label: 'KES · Kenyan Shilling',
-    symbol: 'KES',
-    ratePerUsd: 130,
-    roundTo: 5000,
-  },
-  EUR: {
-    code: 'EUR',
-    label: 'EUR · Euro',
-    symbol: '€',
-    ratePerUsd: 0.92,
-    roundTo: 100,
-  },
-  GBP: {
-    code: 'GBP',
-    label: 'GBP · British Pound',
-    symbol: '£',
-    ratePerUsd: 0.79,
-    roundTo: 100,
-  },
-};
-
-export const ECONOMIC_REGIONS: Record<EconomicRegionCode, EconomicRegionSpec> = {
-  uganda: {
-    id: 'uganda',
-    label: 'Uganda (Kampala / Local Economy)',
-    shortLabel: 'Uganda',
-    defaultCurrency: 'UGX',
-    economicMultiplier: 1.0,
-    marketContext: 'Calibrated to Ugandan local enterprise & SME engineering economics (1.0× baseline).',
-  },
-  east_africa: {
-    id: 'east_africa',
-    label: 'East Africa (Kenya / Regional EAC)',
-    shortLabel: 'East Africa',
-    defaultCurrency: 'KES',
-    economicMultiplier: 1.35,
-    marketContext: 'Calibrated to Nairobi & EAC regional cross-border commercial market rates (1.35× index).',
-  },
-  uk: {
-    id: 'uk',
-    label: 'United Kingdom',
-    shortLabel: 'UK',
-    defaultCurrency: 'GBP',
-    economicMultiplier: 2.4,
-    marketContext: 'Calibrated to UK remote senior delivery & regulatory assurance economics (2.4× index).',
-  },
-  europe: {
-    id: 'europe',
-    label: 'European Union (EEA)',
-    shortLabel: 'EU / EEA',
-    defaultCurrency: 'EUR',
-    economicMultiplier: 2.55,
-    marketContext: 'Calibrated to EU commercial engineering & GDPR/PSD2 compliance economics (2.55× index).',
-  },
-  usa: {
-    id: 'usa',
-    label: 'United States / North America',
-    shortLabel: 'USA',
-    defaultCurrency: 'USD',
-    economicMultiplier: 3.1,
-    marketContext: 'Calibrated to US commercial engineering market economics & SLA liability coverage (3.1× index).',
+  eac_cross_border: {
+    id: 'eac_cross_border',
+    label: 'East Africa Cross-Border (EAC)',
+    shortLabel: 'EAC Cross-Border',
+    complexityMultiplier: 1.18,
+    riskWeight: 0.75,
+    operationalProfile:
+      'Multi-corridor architecture spanning Uganda, Kenya, Tanzania, and Rwanda with isolated currency ledgers (UGX/KES/TZS/RWF) and regional tax rules.',
+    networkConstraint:
+      'Handles asynchronous cross-border clearing windows, corridor-isolated settlement queues, and split regulatory reporting.',
   },
 };
 
@@ -111,8 +50,8 @@ export interface ArchetypeSpec {
   name: string;
   baseWeeks: number;
   baseRiskLoad: number;
-  baseWeeklyRateUsd: number; // Uganda (1.0x) baseline weekly engineering rate in USD equivalent
   desc: string;
+  coreGuarantee: string;
 }
 
 export interface IntegrationRail {
@@ -136,8 +75,7 @@ export interface ScopingInputs {
   selectedRails: string[];
   complianceRequirements: string[];
   throughputTier: 'standard' | 'high' | 'mission_critical';
-  regionId?: EconomicRegionCode;
-  currency?: CurrencyCode;
+  deploymentContextId?: DeploymentContextId;
   clientName?: string;
 }
 
@@ -145,6 +83,7 @@ export interface MilestonePhase {
   stageNumber: number;
   stageName: string;
   weeks: number;
+  effortSharePct: number;
   rawProportionalWeeks: number;
   floorApplied: boolean;
   floorNote?: string;
@@ -152,8 +91,31 @@ export interface MilestonePhase {
   exitGate: string;
 }
 
+export interface FailureModeSpec {
+  id: string;
+  surface: string;
+  failureMode: string;
+  triggerCondition: string;
+  deterministicMitigation: string;
+  severity: 'P0' | 'P1' | 'P2';
+}
+
+export interface TopologyLayer {
+  layerId: string;
+  title: string;
+  responsibility: string;
+  pattern: string;
+}
+
+export interface AcceptanceGateSpec {
+  code: string;
+  gate: string;
+  verificationMethod: string;
+}
+
 export interface ScopingResult {
   archetypeName: string;
+  coreGuarantee: string;
   milestoneTotalWeeks: number;
   estimatedWeeksMin: number;
   estimatedWeeksMax: number;
@@ -161,19 +123,16 @@ export interface ScopingResult {
   rawRiskLoad: number;
   riskScore: number; // 1 to 10 (logarithmically scaled)
   riskLevel: 'LOW' | 'MODERATE' | 'HIGH' | 'CRITICAL';
-  regionId: EconomicRegionCode;
-  regionLabel: string;
-  economicMultiplier: number;
-  currency: CurrencyCode;
-  budgetMin: number;
-  budgetMax: number;
-  budgetMinUsd: number;
-  budgetMaxUsd: number;
-  suggestedTier: string;
-  referenceEquivalent: string;
-  pricingBasisNote: string;
+  deploymentContextId: DeploymentContextId;
+  deploymentContextLabel: string;
+  deploymentContextProfile: string;
+  throughputLabel: string;
+  architectureTopology: TopologyLayer[];
+  failureModes: FailureModeSpec[];
+  acceptanceGates: AcceptanceGateSpec[];
   milestonePhases: MilestonePhase[];
   architecturalControls: string[];
+  consultationNote: string;
   memorandumMarkdown: string;
   verificationHash: string;
 }
@@ -184,47 +143,47 @@ export const ARCHETYPES: Record<ScopingInputs['archetypeId'], ArchetypeSpec> = {
     name: 'Deterministic Financial Reconciliation Engine',
     baseWeeks: 4.5,
     baseRiskLoad: 1.1,
-    baseWeeklyRateUsd: 900,
-    desc: 'High-throughput matching of mobile money, bank statements, and internal invoices with zero floating point drift.',
+    desc: 'High-throughput matching of mobile money, bank statements, and internal invoices with zero floating-point drift.',
+    coreGuarantee: 'Zero-sum integer minor-unit ledger matching with deterministic 8-rule state transitions.',
   },
   efris: {
     id: 'efris',
     name: 'URA EFRIS Fiscalization Gateway',
     baseWeeks: 3.5,
     baseRiskLoad: 1.3,
-    baseWeeklyRateUsd: 780,
     desc: 'Automated electronic invoice signing, fiscal QR code generation, and direct tax authority synchronization.',
+    coreGuarantee: 'Fail-closed invoice dispatch with local signed buffering across upstream tax API brownouts.',
   },
   custom_portal: {
     id: 'custom_portal',
     name: 'Custom Workflow & Operating Portal',
     baseWeeks: 4.0,
     baseRiskLoad: 1.0,
-    baseWeeklyRateUsd: 680,
     desc: 'Secure internal portals replacing error-prone spreadsheets with auditable role-based records.',
+    coreGuarantee: 'Explicit role-based permission boundaries and immutable state-change audit logs.',
   },
   rescue: {
     id: 'rescue',
     name: 'Codebase Rescue & Modernization',
     baseWeeks: 3.5,
     baseRiskLoad: 2.2,
-    baseWeeklyRateUsd: 880,
     desc: 'Stabilizing broken production systems, adding missing test harnesses, and eliminating architectural debt.',
+    coreGuarantee: 'Isolated reproduction harness and characterization test suite before structural refactoring.',
   },
   website: {
     id: 'website',
     name: 'Performance-First Engineering Presence',
     baseWeeks: 2.0,
     baseRiskLoad: 0.4,
-    baseWeeklyRateUsd: 520,
-    desc: 'Sub-second mobile-first web presence pre-rendered with Astro, zero JS tax, and WCAG 2.2 AA accessibility.',
+    desc: 'Sub-second mobile-first web presence pre-rendered for East African cellular grids with WCAG 2.2 AA accessibility.',
+    coreGuarantee: 'Pre-rendered edge-cached HTML under strict payload budgets for 3G/4G resilience.',
   },
 };
 
 export const INTEGRATION_RAILS: Record<string, IntegrationRail> = {
   mtn_momo: {
     id: 'mtn_momo',
-    name: 'MTN Mobile Money (Uganda / Regional)',
+    name: 'MTN Mobile Money (Uganda & EAC)',
     complexityWeeks: 1.0,
     riskWeight: 0.65,
     notes: 'Webhook idempotency, token rotation, sandbox KYB UAT, and callback reconciliation.',
@@ -289,15 +248,15 @@ const STAGE_DEFINITIONS = [
     stageName: 'Stage 01: Discover & Baseline Diagnostic',
     weight: 0.14,
     minFloor: 0.5,
-    deliverables: ['Existing API & data schema audit', 'Operational bottleneck mapping', 'Exclusions contract'],
-    exitGate: 'Written problem statement signed by both parties.',
+    deliverables: ['Existing API & data schema audit', 'Operational bottleneck mapping', 'Scope boundaries & exclusions'],
+    exitGate: 'Written problem statement and system boundary signed by both parties.',
   },
   {
     stageNumber: 2,
     stageName: 'Stage 02: Deterministic Specification',
     weight: 0.14,
     minFloor: 0.5,
-    deliverables: ['Interface contracts (OpenAPI/JSON)', 'Idempotency & state-machine schemas', 'Fixed pricing & acceptance criteria'],
+    deliverables: ['Interface contracts (OpenAPI/JSON)', 'Idempotency & state-machine schemas', 'Architectural boundary & acceptance criteria'],
     exitGate: 'Acceptance checklist agreed with 0 unverified assumptions.',
   },
   {
@@ -305,15 +264,15 @@ const STAGE_DEFINITIONS = [
     stageName: 'Stage 03: Architectural Prototype & Core Rules',
     weight: 0.20,
     minFloor: 0.5,
-    deliverables: ['Decimal precision arithmetic core', 'Sandbox payment simulator', 'Automated test harness'],
-    exitGate: '100% test pass on golden reconciliation test vectors.',
+    deliverables: ['Integer minor-unit arithmetic core', 'Sandbox payment simulator', 'Automated invariant test harness'],
+    exitGate: '100% test pass on golden reconciliation and fault-injection vectors.',
   },
   {
     stageNumber: 4,
     stageName: 'Stage 04: Production Implementation & Integration',
     weight: 0.34,
     minFloor: 1.0,
-    deliverables: ['Working integration adapters (MTN/Airtel/EFRIS)', 'Fail-closed state persistence', 'Security credential isolation'],
+    deliverables: ['Working integration adapters (MTN/Airtel/EFRIS)', 'Fail-closed state persistence', 'Credential & key isolation'],
     exitGate: 'Deterministic release verification gates executed and passed.',
   },
   {
@@ -329,7 +288,7 @@ const STAGE_DEFINITIONS = [
     stageName: 'Stage 06: Full Handover & Sovereign Ownership',
     weight: 0.06,
     minFloor: 0.5,
-    deliverables: ['100% source code repository transfer', 'Infrastructure credentials handover', 'Operating documentation'],
+    deliverables: ['100% source code repository transfer', 'Infrastructure credentials handover', 'Operator runbooks & training'],
     exitGate: 'Client retains sovereign operational autonomy.',
   },
 ] as const;
@@ -344,29 +303,11 @@ export function simpleHash(str: string): string {
   return `EULOK-SPEC-${hex}`;
 }
 
-export function roundToIncrement(value: number, increment: number): number {
-  if (increment <= 0) return Math.round(value);
-  return Math.max(increment, Math.round(value / increment) * increment);
-}
-
-export function formatCurrencyAmount(amount: number, currency: CurrencyCode): string {
-  const spec = CURRENCIES[currency] || CURRENCIES.UGX;
-  const formattedNumber = amount.toLocaleString('en-US');
-  if (spec.code === 'USD' || spec.code === 'EUR' || spec.code === 'GBP') {
-    return `${spec.symbol}${formattedNumber}`;
-  }
-  return `${spec.symbol} ${formattedNumber}`;
-}
-
-export function formatCurrencyRange(minAmount: number, maxAmount: number, currency: CurrencyCode): string {
-  return `${formatCurrencyAmount(minAmount, currency)} – ${formatCurrencyAmount(maxAmount, currency)}`;
-}
-
 /**
  * Logarithmic technical risk scoring:
  * Maps raw additive complexity load onto a 1–10 scale via 1 + k * ln(1 + load)
  * so single-rail baseline builds stay LOW/MODERATE without saturating prematurely,
- * while true multi-rail + compliance + mission-critical loads scale into HIGH/CRITICAL.
+ * while multi-rail + compliance + mission-critical loads scale into HIGH/CRITICAL.
  */
 export function computeLogarithmicRiskScore(rawRiskLoad: number): number {
   const boundedLoad = Math.max(0, rawRiskLoad);
@@ -374,19 +315,243 @@ export function computeLogarithmicRiskScore(rawRiskLoad: number): number {
   return Math.min(10, Math.max(1, Math.round(logScaled)));
 }
 
+function deriveFailureModes(
+  inputs: ScopingInputs,
+  sortedRails: string[],
+  sortedCompliance: string[],
+  deploymentContextId: DeploymentContextId
+): FailureModeSpec[] {
+  const modes: FailureModeSpec[] = [];
+
+  if (inputs.archetypeId === 'reconciliation' || inputs.archetypeId === 'efris') {
+    modes.push({
+      id: 'fm-float-drift',
+      surface: 'Financial Arithmetic Core',
+      failureMode: 'Cumulative Binary Floating-Point Drift',
+      triggerCondition: 'IEEE 754 float rounding across high-volume UGX/KES partial settlements.',
+      deterministicMitigation: 'Enforce strict integer minor-unit (BigInt) arithmetic with zero-sum conservation invariants.',
+      severity: 'P0',
+    });
+  } else if (inputs.archetypeId === 'rescue') {
+    modes.push({
+      id: 'fm-silent-regression',
+      surface: 'Legacy Codebase Boundary',
+      failureMode: 'Silent Regression During Hotfix',
+      triggerCondition: 'Undocumented coupling or shared mutable state triggered during dependency upgrades.',
+      deterministicMitigation: 'Freeze container state, wrap critical endpoints in characterization tests, and isolate mutation paths.',
+      severity: 'P0',
+    });
+  } else if (inputs.archetypeId === 'custom_portal') {
+    modes.push({
+      id: 'fm-rbac-bypass',
+      surface: 'Operator Authorization Layer',
+      failureMode: 'Privilege Escalation or Unaudited Mutation',
+      triggerCondition: 'Direct endpoint calls bypassing client-side role checks or missing state transition guards.',
+      deterministicMitigation: 'Server-enforced RBAC policy gates with fail-closed transition checks and immutable operator attribution.',
+      severity: 'P0',
+    });
+  } else {
+    modes.push({
+      id: 'fm-3g-hydration',
+      surface: 'Edge Delivery & 3G Networks',
+      failureMode: 'Bundle Timeout on Metered Cellular Grids',
+      triggerCondition: 'Heavy client JS hydration stalling on 3G links across Kampala or upcountry districts.',
+      deterministicMitigation: 'Pre-rendered static edge HTML, strict sub-50KB critical payloads, and zero-runtime-overhead CSS.',
+      severity: 'P1',
+    });
+  }
+
+  if (sortedRails.includes('mtn_momo')) {
+    modes.push({
+      id: 'fm-momo-retry',
+      surface: 'MTN Mobile Money Webhook',
+      failureMode: 'Duplicate Credit Under Carrier Retry Storm',
+      triggerCondition: 'Telecom gateway misses HTTP 200 ACK under cellular packet loss and replays identical payload.',
+      deterministicMitigation: 'Atomic SHA-256 idempotency ledger claim (`ON CONFLICT DO NOTHING`) returning safe HTTP 200.',
+      severity: 'P0',
+    });
+  }
+
+  if (sortedRails.includes('airtel_money')) {
+    modes.push({
+      id: 'fm-airtel-oob',
+      surface: 'Airtel Money OpenAPI',
+      failureMode: 'Out-of-Order Callback State Corruption',
+      triggerCondition: 'Delayed pending notification arriving after terminal settlement confirmation.',
+      deterministicMitigation: 'Monotonic finite-state machine rejecting non-forward state transitions with structured audit events.',
+      severity: 'P0',
+    });
+  }
+
+  if (sortedRails.includes('commercial_banks')) {
+    modes.push({
+      id: 'fm-bank-statement',
+      surface: 'Commercial Bank MT940/CAMT.053',
+      failureMode: 'Partial Batch Ingestion & Duplicate Statement Window',
+      triggerCondition: 'Overlapping end-of-day SFTP exports or truncated XML statement batches.',
+      deterministicMitigation: 'Transaction-level fingerprint deduplication paired with opening/closing balance continuity proof.',
+      severity: 'P0',
+    });
+  }
+
+  if (sortedRails.includes('ura_efris')) {
+    modes.push({
+      id: 'fm-efris-brownout',
+      surface: 'URA EFRIS Signing Gateway',
+      failureMode: 'Tax Authority Timeout Blocking Checkout/Dispatch',
+      triggerCondition: 'Upstream EFRIS SOAP/REST latency spike or device key certificate rotation lapse.',
+      deterministicMitigation: 'Signed local offline dispatch queue with bounded backoff plus automated 14-day certificate expiry alerts.',
+      severity: 'P0',
+    });
+  }
+
+  if (sortedRails.includes('accounting_webhooks')) {
+    modes.push({
+      id: 'fm-erp-skew',
+      surface: 'ERP / Accounting Connector',
+      failureMode: 'Chart-of-Accounts Posting Mismatch',
+      triggerCondition: 'Rate-limited ERP API rejecting multi-line journal entries mid-sync.',
+      deterministicMitigation: 'Idempotent journal batching with dead-letter reconciliation queue awaiting operator retry.',
+      severity: 'P1',
+    });
+  }
+
+  if (deploymentContextId === 'eac_cross_border') {
+    modes.push({
+      id: 'fm-eac-corridor',
+      surface: 'EAC Cross-Border Clearing',
+      failureMode: 'Multi-Currency Ledger Contamination',
+      triggerCondition: 'Mixing UGX/KES/TZS/RWF settlement records without explicit corridor & FX snapshot isolation.',
+      deterministicMitigation: 'Strict per-currency ledger partitioning with immutable settlement FX rate timestamping.',
+      severity: 'P0',
+    });
+  }
+
+  if (inputs.throughputTier === 'high' || inputs.throughputTier === 'mission_critical') {
+    modes.push({
+      id: 'fm-backpressure',
+      surface: 'Queue & Worker Pool',
+      failureMode: 'Unbounded Queue Backpressure During Peak Batch',
+      triggerCondition: 'Month-end tuition or SACCO collection spikes saturating synchronous DB connections.',
+      deterministicMitigation: 'Bounded connection pooling, persistent queue admission control, and fail-closed backpressure shedding.',
+      severity: 'P1',
+    });
+  }
+
+  if (sortedCompliance.includes('dppa_2019')) {
+    modes.push({
+      id: 'fm-dppa-retention',
+      surface: 'Privacy & DPPA 2019 Store',
+      failureMode: 'Over-Retained PII Across Audit Logs',
+      triggerCondition: 'Unbounded intake payloads retaining raw personal telephone/email metadata past statutory limits.',
+      deterministicMitigation: 'Pseudonymized ledger references with automated 180-day statutory retention purge schedules.',
+      severity: 'P2',
+    });
+  }
+
+  return modes;
+}
+
+function buildTopology(
+  inputs: ScopingInputs,
+  sortedRails: string[],
+  deploymentContextId: DeploymentContextId
+): TopologyLayer[] {
+  const railLabel =
+    sortedRails.length > 0
+      ? sortedRails.map((r) => INTEGRATION_RAILS[r]?.name.split(' ')[0] || r).join(' · ')
+      : 'Internal Client Portal';
+
+  return [
+    {
+      layerId: '01 · EDGE',
+      title: 'Static Edge & Intake Surface',
+      responsibility:
+        deploymentContextId === 'eac_cross_border'
+          ? 'Region-resilient pre-rendered delivery across Kampala, Nairobi, Kigali, and Dar es Salaam.'
+          : 'Zero-bloat static HTML/CSS delivery across Kampala & upcountry 3G/4G networks.',
+      pattern: 'Cloudflare Pages CDN + strict CSP headers + WCAG 2.2 AA',
+    },
+    {
+      layerId: '02 · INGESTION',
+      title: `Signature & Idempotency Boundary (${railLabel})`,
+      responsibility:
+        'Validates HMAC signatures, normalizes carrier/tax payloads, and drops duplicate retries before execution.',
+      pattern: 'SHA-256 atomic claim + schema validation + fail-closed HTTP gates',
+    },
+    {
+      layerId: '03 · CORE',
+      title: 'Deterministic Execution Core',
+      responsibility:
+        'Executes pure integer minor-unit math, rule prioritization, and explicit state-machine transitions.',
+      pattern: 'Pure TypeScript / SQL transaction boundaries · 0 LLM write authority',
+    },
+    {
+      layerId: '04 · AUDIT',
+      title: 'Exception Queue & Immutable Ledger',
+      responsibility:
+        'Routes ambiguous transactions to human operators and seals every committed mutation with audit hashes.',
+      pattern:
+        inputs.throughputTier === 'mission_critical'
+          ? 'Append-only hash chain + standby replay log + operator sign-off'
+          : 'Append-only audit trail + structured JSON/Markdown evidence export',
+    },
+  ];
+}
+
+function buildAcceptanceGates(
+  inputs: ScopingInputs,
+  sortedRails: string[],
+  sortedCompliance: string[]
+): AcceptanceGateSpec[] {
+  const gates: AcceptanceGateSpec[] = [
+    {
+      code: 'GATE-01',
+      gate: 'Zero-Defect Type & Deterministic Core Invariants',
+      verificationMethod: '100% pass across automated unit, boundary, and golden-vector property tests (`npm run lint && npm test`).',
+    },
+    {
+      code: 'GATE-02',
+      gate: 'Fail-Closed Security & Zero Secrets Leak',
+      verificationMethod: 'Strict secret isolation check, CORS/CSP verification, and authenticated endpoint authorization proof.',
+    },
+    {
+      code: 'GATE-03',
+      gate: 'Low-Bandwidth & WCAG 2.2 AA Accessibility',
+      verificationMethod: 'Headless browser layout, 390px mobile overflow audit, keyboard navigation, and payload budget check.',
+    },
+  ];
+
+  if (sortedRails.length > 0) {
+    gates.push({
+      code: 'GATE-04',
+      gate: 'Webhook Idempotency & Fault-Injection Replay',
+      verificationMethod: `Simulated duplicate retry storms, malformed payloads, and upstream timeout brownouts across ${sortedRails.length} connected rail(s).`,
+    });
+  }
+
+  if (sortedCompliance.includes('double_entry') || inputs.archetypeId === 'reconciliation') {
+    gates.push({
+      code: 'GATE-05',
+      gate: 'Zero-Sum Ledger Conservation Proof',
+      verificationMethod: 'Automated side-by-side parallel run asserting zero minor-unit divergence before production cutover.',
+    });
+  }
+
+  return gates;
+}
+
 export function calculateScope(inputs: ScopingInputs): ScopingResult {
   const archetype = ARCHETYPES[inputs.archetypeId] || ARCHETYPES.custom_portal;
-  const regionId: EconomicRegionCode =
-    inputs.regionId && ECONOMIC_REGIONS[inputs.regionId] ? inputs.regionId : 'uganda';
-  const regionSpec = ECONOMIC_REGIONS[regionId];
-  const currency: CurrencyCode =
-    inputs.currency && CURRENCIES[inputs.currency] ? inputs.currency : regionSpec.defaultCurrency;
-  const currencySpec = CURRENCIES[currency];
+  const deploymentContextId: DeploymentContextId =
+    inputs.deploymentContextId && DEPLOYMENT_CONTEXTS[inputs.deploymentContextId]
+      ? inputs.deploymentContextId
+      : 'uganda_domestic';
+  const contextSpec = DEPLOYMENT_CONTEXTS[deploymentContextId];
 
-  let stageEffortDriverWeeks = archetype.baseWeeks;
-  let rawRiskLoad = archetype.baseRiskLoad;
+  let stageEffortDriverWeeks = archetype.baseWeeks * contextSpec.complexityMultiplier;
+  let rawRiskLoad = archetype.baseRiskLoad + contextSpec.riskWeight;
 
-  // Add rails complexity & integration dependency load
   const sortedRails = [...inputs.selectedRails].sort();
   for (const railId of sortedRails) {
     const rail = INTEGRATION_RAILS[railId];
@@ -396,7 +561,6 @@ export function calculateScope(inputs: ScopingInputs): ScopingResult {
     }
   }
 
-  // Add compliance engineering effort & verification load
   const sortedCompliance = [...inputs.complianceRequirements].sort();
   for (const compId of sortedCompliance) {
     const comp = COMPLIANCE_ITEMS[compId];
@@ -406,7 +570,6 @@ export function calculateScope(inputs: ScopingInputs): ScopingResult {
     }
   }
 
-  // Throughput tier adjustments
   if (inputs.throughputTier === 'high') {
     stageEffortDriverWeeks *= 1.15;
     rawRiskLoad += 2.4;
@@ -415,13 +578,20 @@ export function calculateScope(inputs: ScopingInputs): ScopingResult {
     rawRiskLoad += 6.5;
   }
 
+  const throughputLabel =
+    inputs.throughputTier === 'mission_critical'
+      ? 'Critical (100k+ tx/day)'
+      : inputs.throughputTier === 'high'
+      ? 'High (10k–100k tx/day)'
+      : 'Standard (< 10k tx/day)';
+
   const roundedRawLoad = +rawRiskLoad.toFixed(2);
   const riskScore = computeLogarithmicRiskScore(roundedRawLoad);
   const riskLevel: ScopingResult['riskLevel'] =
     riskScore <= 3 ? 'LOW' : riskScore <= 6 ? 'MODERATE' : riskScore <= 8 ? 'HIGH' : 'CRITICAL';
 
   // 1. Compute 6-stage milestone breakdown in 0.5-week increments with explicit governance floors
-  const milestonePhases: MilestonePhase[] = STAGE_DEFINITIONS.map((stage) => {
+  const rawPhases = STAGE_DEFINITIONS.map((stage) => {
     const rawProportionalWeeks = +(stageEffortDriverWeeks * stage.weight).toFixed(2);
     const roundedHalf = Math.round(rawProportionalWeeks * 2) / 2;
     const weeks = Math.max(stage.minFloor, roundedHalf);
@@ -440,46 +610,32 @@ export function calculateScope(inputs: ScopingInputs): ScopingResult {
     };
   });
 
-  // 2. Derive headline timeline DIRECTLY from the sum of milestone weeks (no independent headline estimate)
-  const milestoneTotalWeeks = +milestonePhases.reduce((sum, phase) => sum + phase.weeks, 0).toFixed(1);
+  // 2. Derive headline timeline DIRECTLY from the sum of milestone weeks
+  const milestoneTotalWeeks = +rawPhases.reduce((sum, phase) => sum + phase.weeks, 0).toFixed(1);
   const estimatedWeeksMin = milestoneTotalWeeks;
 
-  // Contingency buffer is applied purely as a UAT/sandbox range atop milestoneTotalWeeks
+  // Compute exact integer effortSharePct summing to 100
+  const unroundedShares = rawPhases.map((p) => (p.weeks / milestoneTotalWeeks) * 100);
+  const baseShares = unroundedShares.map((s) => Math.floor(s));
+  let remainderPct = 100 - baseShares.reduce((a, b) => a + b, 0);
+  const rankedRemainder = unroundedShares
+    .map((s, idx) => ({ idx, frac: s - Math.floor(s) }))
+    .sort((a, b) => b.frac - a.frac);
+  for (let i = 0; i < rankedRemainder.length && remainderPct > 0; i++) {
+    baseShares[rankedRemainder[i].idx] += 1;
+    remainderPct -= 1;
+  }
+
+  const milestonePhases: MilestonePhase[] = rawPhases.map((p, idx) => ({
+    ...p,
+    effortSharePct: baseShares[idx],
+  }));
+
+  // Contingency buffer applied purely for external UAT/KYB sandbox approvals atop milestoneTotalWeeks
   const bufferRatio = riskScore >= 7 ? 0.25 : riskScore >= 4 ? 0.20 : 0.15;
   const bufferedMax = Math.ceil(milestoneTotalWeeks * (1 + bufferRatio) * 2) / 2;
   const estimatedWeeksMax = Math.max(estimatedWeeksMin + 0.5, bufferedMax);
   const contingencyWeeks = +(estimatedWeeksMax - estimatedWeeksMin).toFixed(1);
-
-  // 3. Economy/Region + Risk + Archetype-aware pricing
-  // Base rate starts from Uganda (1.0x) weekly rate and scales by target client economy multiplier
-  const regionalWeeklyRateUsd = archetype.baseWeeklyRateUsd * regionSpec.economicMultiplier;
-  const riskPriceMultiplier = +(1 + Math.max(0, riskScore - 2) * 0.06).toFixed(2);
-  const baseUsdCost = milestoneTotalWeeks * regionalWeeklyRateUsd * riskPriceMultiplier;
-  const maxSpread = 1.2 + (riskScore >= 7 ? 0.08 : 0);
-
-  const budgetMinUsd = roundToIncrement(baseUsdCost * 0.9, CURRENCIES.USD.roundTo);
-  const budgetMaxUsd = Math.max(
-    budgetMinUsd + 200,
-    roundToIncrement(baseUsdCost * maxSpread, CURRENCIES.USD.roundTo)
-  );
-
-  const budgetMin = roundToIncrement(budgetMinUsd * currencySpec.ratePerUsd, currencySpec.roundTo);
-  const budgetMax = Math.max(
-    budgetMin + currencySpec.roundTo,
-    roundToIncrement(budgetMaxUsd * currencySpec.ratePerUsd, currencySpec.roundTo)
-  );
-
-  const suggestedTier = formatCurrencyRange(budgetMin, budgetMax, currency);
-  const referenceEquivalent =
-    currency === 'USD'
-      ? `≈ ${formatCurrencyRange(
-          roundToIncrement(budgetMinUsd * CURRENCIES.UGX.ratePerUsd, CURRENCIES.UGX.roundTo),
-          roundToIncrement(budgetMaxUsd * CURRENCIES.UGX.ratePerUsd, CURRENCIES.UGX.roundTo),
-          'UGX'
-        )} UGX FX equivalent`
-      : `≈ ${formatCurrencyRange(budgetMinUsd, budgetMaxUsd, 'USD')} USD planning equivalent`;
-
-  const pricingBasisNote = `${regionSpec.label} (${regionSpec.economicMultiplier}× economic index) · ${archetype.name} complexity, ${milestoneTotalWeeks}-week milestone sum, and ${riskScore}/10 (${riskLevel}) logarithmic risk multiplier (×${riskPriceMultiplier}).`;
 
   const architecturalControls: string[] = [
     'Decimal-only math: Zero floating-point rounding errors across currency transactions.',
@@ -493,23 +649,35 @@ export function calculateScope(inputs: ScopingInputs): ScopingResult {
     architecturalControls.push('Cryptographic SHA-256 hash chaining on all immutable state transitions.');
   }
   if (inputs.throughputTier === 'mission_critical') {
-    architecturalControls.push('Multi-region standby queues with automated transaction replay logging.');
+    architecturalControls.push('Multi-zone standby queues with automated transaction replay logging.');
+  }
+  if (deploymentContextId === 'eac_cross_border') {
+    architecturalControls.push('Corridor-isolated FX ledgers separating UGX, KES, TZS, and RWF settlement rules.');
   }
 
-  const rawSeed = `${inputs.archetypeId}-${sortedRails.join(',')}-${sortedCompliance.join(',')}-${inputs.throughputTier}-${milestoneTotalWeeks}-${regionId}-${currency}`;
+  const failureModes = deriveFailureModes(inputs, sortedRails, sortedCompliance, deploymentContextId);
+  const architectureTopology = buildTopology(inputs, sortedRails, deploymentContextId);
+  const acceptanceGates = buildAcceptanceGates(inputs, sortedRails, sortedCompliance);
+
+  const consultationNote =
+    'Commercial pricing, milestone payment schedule, and SLA retainer terms are tailored directly during engineering consultation following Stage 01 technical review.';
+
+  const rawSeed = `${inputs.archetypeId}-${sortedRails.join(',')}-${sortedCompliance.join(',')}-${inputs.throughputTier}-${milestoneTotalWeeks}-${deploymentContextId}`;
   const verificationHash = simpleHash(rawSeed);
 
-  const clientHeader = inputs.clientName ? `Prepared for: ${inputs.clientName}` : 'Technical Scope Memorandum';
+  const clientHeader = inputs.clientName ? `Prepared for: ${inputs.clientName}` : 'Technical Architecture Specification';
 
-  const memorandumMarkdown = `# EULOK Architecture & Scoping Memorandum
+  const memorandumMarkdown = `# EULOK Architecture & Scoping Specification
 ${clientHeader}
-Target Economy: ${regionSpec.label} (${regionSpec.economicMultiplier}× PPP Index)
+Deployment Scope: ${contextSpec.label}
 Reference Hash: ${verificationHash}
 Date: ${new Date().toISOString().split('T')[0]}
 
-## 1. System Archetype
+## 1. System Archetype & Engineering Guarantee
 **${archetype.name}**
 ${archetype.desc}
+- **Core Guarantee:** ${archetype.coreGuarantee}
+- **Operational Profile:** ${contextSpec.operationalProfile}
 
 ## 2. Integrated Rails & Boundaries
 ${sortedRails.length > 0
@@ -521,21 +689,32 @@ ${sortedCompliance.length > 0
   ? sortedCompliance.map((c) => `- **${COMPLIANCE_ITEMS[c]?.name}**: ${COMPLIANCE_ITEMS[c]?.standard}`).join('\n')
   : '- Baseline security and confidential data isolation standards.'}
 
-## 4. Delivery Estimation, Logarithmic Risk & Regional Budget (${currency})
+## 4. Delivery Estimation & Logarithmic Risk Profile
 - **Baseline Milestone Sum (6 Stages):** ${estimatedWeeksMin} calendar weeks (derived directly from sum of stage milestones below)
-- **External Sandbox / UAT Contingency:** +${contingencyWeeks} ${contingencyWeeks === 1 ? 'week' : 'weeks'} (Total range: ${estimatedWeeksMin}–${estimatedWeeksMax} weeks)
-- **Technical Risk Assessment (Logarithmic Scale):** ${riskScore} / 10 (${riskLevel}) [load: ${roundedRawLoad}]
-- **Target Region & Market Economy:** ${regionSpec.label} — ${regionSpec.marketContext}
-- **Planning Investment Bracket (${currency}):** ${suggestedTier} (${referenceEquivalent})
-- **Sizing Basis:** ${pricingBasisNote} Formal contractual fee is fixed upon Stage 02 sign-off.
+- **External KYB / Sandbox Buffer:** +${contingencyWeeks} ${contingencyWeeks === 1 ? 'week' : 'weeks'} (Projected total range: ${estimatedWeeksMin}–${estimatedWeeksMax} weeks)
+- **Technical Risk Score (Logarithmic Scale):** ${riskScore} / 10 (${riskLevel}) [load: ${roundedRawLoad}]
+- **Throughput Tier:** ${throughputLabel}
+- **Commercial Terms:** ${consultationNote}
 
-## 5. Architectural Quality Controls
-${architecturalControls.map((ctrl) => `- ${ctrl}`).join('\n')}
+## 5. Failure Modes & Deterministic Mitigations
+${failureModes
+  .map((fm) => `- **[${fm.severity}] ${fm.failureMode} (${fm.surface}):** Trigger: ${fm.triggerCondition} Mitigation: ${fm.deterministicMitigation}`)
+  .join('\n')}
 
-## 6. Milestone Delivery Sequence
+## 6. Target Architecture Topology
+${architectureTopology
+  .map((layer) => `- **${layer.layerId} — ${layer.title}:** ${layer.responsibility} (*${layer.pattern}*)`)
+  .join('\n')}
+
+## 7. Mandatory Acceptance Verification Gates
+${acceptanceGates
+  .map((gate) => `- **${gate.code} (${gate.gate}):** ${gate.verificationMethod}`)
+  .join('\n')}
+
+## 8. Milestone Delivery Sequence
 ${milestonePhases
   .map(
-    (p) => `### ${p.stageName} (${p.weeks} ${p.weeks === 1 ? 'wk' : 'wks'})${p.floorNote ? ` — *${p.floorNote}*` : ''}
+    (p) => `### ${p.stageName} (${p.weeks} ${p.weeks === 1 ? 'wk' : 'wks'} · ${p.effortSharePct}% effort)${p.floorNote ? ` — *${p.floorNote}*` : ''}
 Deliverables: ${p.deliverables.join(', ')}
 Exit Gate: ${p.exitGate}`
   )
@@ -547,6 +726,7 @@ Exit Gate: ${p.exitGate}`
 
   return {
     archetypeName: archetype.name,
+    coreGuarantee: archetype.coreGuarantee,
     milestoneTotalWeeks,
     estimatedWeeksMin,
     estimatedWeeksMax,
@@ -554,19 +734,16 @@ Exit Gate: ${p.exitGate}`
     rawRiskLoad: roundedRawLoad,
     riskScore,
     riskLevel,
-    regionId,
-    regionLabel: regionSpec.label,
-    economicMultiplier: regionSpec.economicMultiplier,
-    currency,
-    budgetMin,
-    budgetMax,
-    budgetMinUsd,
-    budgetMaxUsd,
-    suggestedTier,
-    referenceEquivalent,
-    pricingBasisNote,
+    deploymentContextId,
+    deploymentContextLabel: contextSpec.label,
+    deploymentContextProfile: contextSpec.operationalProfile,
+    throughputLabel,
+    architectureTopology,
+    failureModes,
+    acceptanceGates,
     milestonePhases,
     architecturalControls,
+    consultationNote,
     memorandumMarkdown,
     verificationHash,
   };
@@ -586,8 +763,7 @@ export function encodeScopeToQuery(inputs: ScopingInputs): string {
     params.set('comp', 'none');
   }
   params.set('tier', inputs.throughputTier);
-  if (inputs.regionId) params.set('region', inputs.regionId);
-  if (inputs.currency) params.set('cur', inputs.currency);
+  if (inputs.deploymentContextId) params.set('ctx', inputs.deploymentContextId);
   if (inputs.clientName?.trim()) params.set('client', inputs.clientName.trim());
   return params.toString();
 }
@@ -628,14 +804,9 @@ export function parseScopeFromQuery(search: string): Partial<ScopingInputs> {
     parsed.throughputTier = tier;
   }
 
-  const region = params.get('region');
-  if (region && region in ECONOMIC_REGIONS) {
-    parsed.regionId = region as EconomicRegionCode;
-  }
-
-  const cur = params.get('cur');
-  if (cur && cur in CURRENCIES) {
-    parsed.currency = cur as CurrencyCode;
+  const ctx = params.get('ctx');
+  if (ctx && ctx in DEPLOYMENT_CONTEXTS) {
+    parsed.deploymentContextId = ctx as DeploymentContextId;
   }
 
   const client = params.get('client');
@@ -645,4 +816,3 @@ export function parseScopeFromQuery(search: string): Partial<ScopingInputs> {
 
   return parsed;
 }
-

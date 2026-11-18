@@ -67,7 +67,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               Engineering for the systems businesses depend on.
             </h1>
             <p className="lead" style={{ maxWidth: '64ch', marginBottom: 0 }}>
-              EULOK is an independent software engineering practice founded by Eugene Olok in Kampala, Uganda, operating remotely worldwide. We build, stabilize, and modernize critical operational systems.
+              EULOK is an independent software engineering practice founded by Eugene Olok in Kampala, Uganda, serving organizations across Uganda and East Africa. We build, stabilize, and modernize critical operational systems.
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 Principal engineer and founder of EULOK. With a background spanning full-stack web architectures, distributed systems, and financial reconciliation workflows, Eugene leads technical discovery, architecture design, and high-stakes implementation.
               </p>
               <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '24px' }}>
-                Based in Kampala, Uganda, EULOK partners with companies in East Africa, the UK, Europe, and North America. Every project receives direct senior engineering oversight—no junior delegating, no offshore black boxes.
+                Based in Kampala, Uganda, EULOK partners with businesses, SACCOs, schools, NGOs, and financial institutions across Uganda and the wider East African Community. Every project receives direct senior engineering oversight—no junior delegating, no offshore black boxes.
               </p>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <button type="button" className="button button-primary button-small" onClick={() => onNavigate('contact')}>
@@ -166,7 +166,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 </li>
                 <li style={{ borderBottom: '1px solid var(--line)', paddingBottom: '12px' }}>
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Location</div>
-                  <div style={{ fontWeight: 600, color: 'var(--warm-white)' }}>Kampala, Uganda (UTC+3) · Remote Worldwide</div>
+                  <div style={{ fontWeight: 600, color: 'var(--warm-white)' }}>Kampala, Uganda (EAT · UTC+3) · East Africa Regional Coverage</div>
                 </li>
                 <li style={{ borderBottom: '1px solid var(--line)', paddingBottom: '12px' }}>
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Contract Structure</div>

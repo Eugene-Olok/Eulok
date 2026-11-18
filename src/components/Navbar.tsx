@@ -8,9 +8,6 @@ import {
   Search,
   ChevronDown,
   Sliders,
-  Activity,
-  Layers,
-  Shield,
 } from 'lucide-react';
 import { routeToPath, navigateTo, openIntakeModal, openCommandPalette } from '../utils/navigation';
 import { ThemeToggle } from './ThemeToggle';
@@ -38,7 +35,7 @@ const PRIMARY_NAV_ITEMS: NavItem[] = [
   { id: 'about', label: 'About', path: '/about' },
 ];
 
-const TOOLS_PAGES = ['ops-suite', 'scope-calculator', 'verification', 'status'];
+const TOOLS_PAGES = ['ops-suite', 'scope-calculator', 'verification'];
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentPage = 'home',
@@ -219,7 +216,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Interactive</span>
                       </div>
                       <div className="nav-dropdown-item-desc">
-                        Technical feasibility, risk scoring & milestone estimator.
+                        Architecture topology, failure modes &amp; milestone workbench.
                       </div>
                     </div>
                   </button>
@@ -238,24 +235,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                       </div>
                       <div className="nav-dropdown-item-desc">
                         Deterministic release verification & architectural acceptance criteria.
-                      </div>
-                    </div>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="nav-dropdown-item"
-                    tabIndex={toolsDropdownOpen ? 0 : -1}
-                    onClick={() => handleNavClick('status')}
-                  >
-                    <Activity size={17} color="var(--electric-blue)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                    <div>
-                      <div className="nav-dropdown-item-title">
-                        <span>Edge Telemetry</span>
-                        <span className="mono-tag" style={{ fontSize: '0.68rem', padding: '1px 5px' }}>Live</span>
-                      </div>
-                      <div className="nav-dropdown-item-desc">
-                        Real-time client latency & edge infrastructure topology.
                       </div>
                     </div>
                   </button>

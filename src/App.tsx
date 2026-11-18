@@ -23,7 +23,6 @@ import { PrivacyPage } from './views/PrivacyPage';
 import { AccessibilityPage } from './views/AccessibilityPage';
 import { OpsSuitePage } from './views/OpsSuitePage';
 import { ScopeCalculatorPage } from './views/ScopeCalculatorPage';
-import { StatusPage } from './views/StatusPage';
 
 import { SEOHead } from './seo/SEOHead.tsx';
 import { applyTheme, getInitialTheme } from './utils/themeManager';
@@ -123,8 +122,6 @@ export const App: React.FC = () => {
             onOpenIntakeModal={() => setIsIntakeModalOpen(true)}
           />
         );
-      case 'status':
-        return <StatusPage onNavigate={handleNavigate} />;
       case 'about':
         return (
           <AboutPage

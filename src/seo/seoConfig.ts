@@ -10,7 +10,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     pageId: 'home',
     title: 'EULOK — Independent Software Engineering',
     description:
-      'Independent software engineering for Uganda and worldwide. High-performance web apps, payment APIs, software rescue, and deterministic reconciliation.',
+      'Independent software engineering for Uganda and East Africa. High-performance web apps, payment APIs, software rescue, and deterministic reconciliation.',
     keywords: [
       'software engineering Uganda',
       'deterministic reconciliation',
@@ -90,7 +90,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
             name: siteConfig.name,
             url: SITE_URL,
           },
-          areaServed: 'Worldwide',
+          areaServed: ['Uganda', 'Kenya', 'Tanzania', 'Rwanda', 'East Africa'],
           hasOfferCatalog: {
             '@type': 'OfferCatalog',
             name: 'Engineering Services',
@@ -263,7 +263,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     keywords: [
       'engineering process',
       '6 stage delivery model',
-      'fixed price software delivery',
+      'milestone software delivery',
       'verifiable development lifecycle',
       'software specifications',
     ],
@@ -426,12 +426,12 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     pageId: 'contact',
     title: 'Direct Project Intake & Inquiries — EULOK',
     description:
-      'Initiate project intake with senior engineering leadership. Get fixed-scope estimates, architecture reviews, and production systems guidance today.',
+      'Initiate project intake with senior engineering leadership in Kampala. Request architecture reviews, feasibility scopes, and technical consultation today.',
     keywords: [
       'hire software engineer Uganda',
       'project intake form',
       'software architecture consultation',
-      'fixed scope software quote',
+      'East Africa software consultation',
       'contact EULOK',
     ],
     canonicalPath: '/contact',
@@ -453,12 +453,12 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     pageId: 'standards',
     title: 'Delivery Commitments & SLAs — EULOK Systems',
     description:
-      'Our binding engineering covenants: 100% source code ownership, deterministic test suites, strict confidentiality, and transparent fixed-price quotes.',
+      'Our binding engineering covenants: 100% source code ownership, deterministic test suites, strict confidentiality, and East African cellular resilience.',
     keywords: [
       'software engineering standards',
       'delivery SLA',
       'source code ownership',
-      'fixed price guarantee',
+      'Uganda engineering SLA',
       'client confidentiality agreement',
     ],
     canonicalPath: '/standards',
@@ -507,7 +507,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     pageId: 'privacy',
     title: 'Privacy Notice & DPPA Compliance — EULOK',
     description:
-      'Our comprehensive privacy commitments under the Uganda Data Protection & Privacy Act 2019 and global data privacy standards for all client systems.',
+      'Our comprehensive privacy commitments under the Uganda Data Protection & Privacy Act 2019 and East African data protection standards for client systems.',
     keywords: [
       'privacy notice Uganda',
       'DPPA 2019 compliance',
@@ -590,12 +590,12 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     pageId: 'scope-calculator',
     title: 'Scoping Studio & Feasibility — EULOK Systems',
     description:
-      'Model custom software architectures, integration rails, and delivery timelines. Calculate risk scores and generate verifiable engineering contracts.',
+      'Model East African software architectures, MoMo & EFRIS rails, failure modes, and timelines. Calculate risk scores and export technical specifications.',
     keywords: [
       'software scoping calculator',
       'architecture feasibility tool',
       'technical statement of work',
-      'fixed scope software pricing',
+      'East Africa system architecture',
       'fintech development timeline',
     ],
     canonicalPath: '/scope-calculator',
@@ -611,34 +611,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
       applicationCategory: 'BusinessApplication',
       operatingSystem: 'All',
       description:
-        'Interactive system modeling and risk calculator delivering deterministic delivery estimates and signed SOW documents.',
-    },
-  },
-
-  status: {
-    pageId: 'status',
-    title: 'Live System Health & Status — EULOK Platform',
-    description:
-      'Real-time edge telemetry, client latency measurements, component architecture topologies, and disaster recovery SLA disclosures for the EULOK platform.',
-    keywords: [
-      'system status',
-      'edge telemetry',
-      'live uptime EULOK',
-      'zero budget production architecture',
-      'service health monitor',
-    ],
-    canonicalPath: '/status',
-    ogType: 'website',
-    ogImage: DEFAULT_OG_IMAGE,
-    ogImageAlt: 'EULOK Live System Health & Edge Telemetry Dashboard',
-    twitterCard: 'summary_large_image',
-    robots: 'index, follow',
-    structuredData: {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      name: 'EULOK Platform Health & Live Edge Telemetry',
-      description:
-        'Transparent edge telemetry, engine availability, and disaster recovery SLA disclosures.',
+        'Interactive system modeling and risk calculator delivering deterministic architecture specifications, failure-mode matrices, and milestone gates.',
     },
   },
 

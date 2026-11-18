@@ -15,7 +15,6 @@ export const PAGE_LABEL_MAP: Record<string, string> = {
   insights: 'Engineering Notes',
   verification: 'Release Verification Standard',
   'scope-calculator': 'Scoping Studio',
-  status: 'System Health & Telemetry',
   about: 'About EULOK',
   contact: 'Project Intake & Contact',
   standards: 'Delivery Commitments',

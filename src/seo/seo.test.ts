@@ -32,9 +32,9 @@ test('SEO Config — Complete route coverage', () => {
     'accessibility',
     'ops-suite',
     'scope-calculator',
-    'status',
   ];
 
+  assert.equal(SEO_PAGE_CONFIGS.status, undefined);
   for (const route of expectedRoutes) {
     const config = SEO_PAGE_CONFIGS[route];
     assert.ok(config, `Expected route "${route}" to be defined in SEO_PAGE_CONFIGS`);
