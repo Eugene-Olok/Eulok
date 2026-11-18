@@ -64,7 +64,7 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
               className="form-input"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search topics (e.g. 'MoMo', 'pricing', 'EFRIS', 'ownership', 'rescue', 'timeline')..."
+              placeholder="Search topics (e.g. 'MoMo', 'scope', 'EFRIS', 'ownership', 'rescue', 'timeline')..."
               style={{
                 width: '100%',
                 marginTop: 0,

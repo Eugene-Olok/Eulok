@@ -112,6 +112,8 @@ test('SEO Manager — buildSEOTags generates all required social cards and struc
   assert.equal(metaMap.get('property:og:url'), `${SITE_URL}/services/reconciliation`);
   assert.equal(metaMap.get('property:og:site_name'), SITE_NAME);
   assert.ok(metaMap.get('property:og:image'));
+  assert.equal(metaMap.get('property:og:image:width'), '1200');
+  assert.equal(metaMap.get('property:og:image:height'), '630');
   assert.ok(metaMap.get('property:og:image:alt'));
 
   // Twitter

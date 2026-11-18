@@ -281,7 +281,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
             Deterministic Financial Reconciliation
           </h1>
           <p className="lead" style={{ maxWidth: '68ch' }}>
-            A client-facing demonstration of EULOK’s mathematical reconciliation core. We match mobile-money collections (MTN MoMo, Airtel Money) and bank transfers against internal accounts receivable ledgers with zero probabilistic LLM guesswork.
+            A client-facing demonstration of EULOK’s mathematical reconciliation core. We match mobile-money collections (MTN MoMo, Airtel Money) and bank transfers against internal accounts receivable ledgers with deterministic integer precision.
           </p>
         </header>
 

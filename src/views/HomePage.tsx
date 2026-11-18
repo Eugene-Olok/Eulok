@@ -91,7 +91,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <Cpu size={16} color="var(--electric-blue)" />
                   <div>
                     <strong style={{ fontSize: '0.85rem', display: 'block', color: 'var(--electric-blue)' }}>02 / Deterministic Processing</strong>
-                    <span style={{ fontSize: '0.76rem', color: 'var(--text-subtle)' }}>Exact decimal math · Idempotency · Zero-LLM matching</span>
+                    <span style={{ fontSize: '0.76rem', color: 'var(--text-subtle)' }}>Exact decimal math · Idempotency · Deterministic matching</span>
                   </div>
                 </div>
 
@@ -130,10 +130,10 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div style={{ maxWidth: '780px', marginBottom: '48px' }}>
             <span className="eyebrow">Engineering Position</span>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
-              Models propose. Deterministic systems decide.
+              Explicit specifications. Deterministic execution.
             </h2>
             <p className="lead">
-              We separate probabilistic AI assistance from authoritative business logic. AI can draft code, discover patterns, and propose transformations; but critical transactions, access boundaries, and financial balances require deterministic systems and explicit verification.
+              Every critical transaction rule, access boundary, and financial calculation is engineered explicitly in deterministic code and verified by automated test suites—never informal guesswork or unchecked assumptions.
             </p>
           </div>
 
@@ -150,7 +150,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <span className="card-number">PRINCIPLE 02</span>
               <h3>Explicit Verification & Testing</h3>
               <p>
-                We do not treat a compile pass or model assertion as proof of correctness. Changes pass automated unit, integration, accessibility, and security test gates before production release.
+                We do not treat a compile pass or informal assertion as proof of correctness. Changes pass automated unit, integration, accessibility, and security test gates before production release.
               </p>
             </div>
 
@@ -484,7 +484,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </span>
               <h3>Deterministic Mobile-Money Reconciliation</h3>
               <p>
-                Our core reconciliation engine operates with mathematical certainty using Decimal-based arithmetic. It processes input payment streams against receivables obligations, classifying exact matches, partial allocations, duplicate transactions, and isolating refunds and reversals without model guesswork.
+                Our core reconciliation engine operates with mathematical certainty using Decimal-based arithmetic. It processes input payment streams against receivables obligations, classifying exact matches, partial allocations, duplicate transactions, and isolating refunds and reversals with deterministic rule precision.
               </p>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '16px' }}>
                 <span className="badge badge-pass">R1: Exact Match</span>
@@ -599,7 +599,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid-3">
             <div className="card">
               <h3>Evidence over Adjectives</h3>
-              <p>No vague promises of "cutting-edge AI". Every performance, accessibility, or reliability claim is backed by reproducible automated checks.</p>
+              <p>No vague promises or unverified buzzwords. Every performance, accessibility, or reliability claim is backed by reproducible automated checks.</p>
             </div>
             <div className="card">
               <h3>Written Scope & Exclusions</h3>
@@ -607,7 +607,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
             <div className="card">
               <h3>Security by Design</h3>
-              <p>Client credentials and source code are isolated. Sensitive financial data is never routed to unapproved or free inference providers.</p>
+              <p>Client credentials and source code are strictly isolated. Sensitive financial records never leave authorized client environments.</p>
             </div>
             <div className="card">
               <h3>Automated Verification Gates</h3>

@@ -484,7 +484,7 @@ function buildTopology(
       title: 'Deterministic Execution Core',
       responsibility:
         'Executes pure integer minor-unit math, rule prioritization, and explicit state-machine transitions.',
-      pattern: 'Pure TypeScript / SQL transaction boundaries · 0 LLM write authority',
+      pattern: 'Pure TypeScript / SQL transaction boundaries · Explicit operator approval',
     },
     {
       layerId: '04 · AUDIT',
@@ -721,7 +721,7 @@ Exit Gate: ${p.exitGate}`
   .join('\n\n')}
 
 ---
-*Governed by EULOK Delivery Commitments: "Models propose. Deterministic systems decide."*
+*Governed by EULOK Delivery Commitments: Explicit specifications, deterministic execution, and sovereign ownership.*
 `;
 
   return {

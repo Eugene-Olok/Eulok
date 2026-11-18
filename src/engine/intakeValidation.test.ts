@@ -2,11 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { validateIntakePayload, sanitizeString } from './intakeValidation.ts';
 
-test('Intake Validation — Valid payload with required fields', () => {
+test('Intake Validation — Valid payload with targetTimeline and attached scoping spec metadata', () => {
   const result = validateIntakePayload({
     need: 'Build something new',
     systemType: 'Financial reconciliation system',
-    budget: '$2,000–$5,000',
+    targetTimeline: 'Near-term build (2–6 weeks)',
+    specHash: 'SPEC-9A2F1C',
+    specSummary: 'Mobile-Money & Bank Reconciliation · Uganda Domestic · 6–9 wks · 6/10 HIGH',
     problemDescription: 'Need to reconcile MTN MoMo payments against bank statements.',
     clientEmail: 'lead@example.com',
     clientPhone: '+256700000000',
@@ -16,6 +18,8 @@ test('Intake Validation — Valid payload with required fields', () => {
   assert.equal(result.errors.length, 0);
   assert.ok(result.referenceId?.startsWith('EULOK-'));
   assert.equal(result.sanitizedPayload?.need, 'Build something new');
+  assert.equal(result.sanitizedPayload?.targetTimeline, 'Near-term build (2–6 weeks)');
+  assert.equal(result.sanitizedPayload?.specHash, 'SPEC-9A2F1C');
   assert.equal(result.sanitizedPayload?.clientEmail, 'lead@example.com');
 });
 
@@ -23,7 +27,7 @@ test('Intake Validation — Bot honeypot rejects spam', () => {
   const result = validateIntakePayload({
     need: 'Build something new',
     systemType: 'Custom business software',
-    budget: '$500–$2,000',
+    targetTimeline: 'Immediate / Critical (< 2 weeks)',
     problemDescription: 'Legitimate looking problem',
     honeypot: 'http://spam-link.ru',
   });
@@ -46,7 +50,7 @@ test('Intake Validation — Validates email format properly', () => {
     clientEmail: 'not-an-email',
   });
   assert.equal(invalidResult.isValid, false);
-  assert.ok(invalidResult.errors.some(e => e.includes('email address is invalid')));
+  assert.ok(invalidResult.errors.some((e) => e.includes('email address is invalid')));
 
   const validResult = validateIntakePayload({
     need: 'Build something new',
@@ -55,6 +59,21 @@ test('Intake Validation — Validates email format properly', () => {
     clientEmail: 'engineer@organization.org',
   });
   assert.equal(validResult.isValid, true);
+  assert.equal(validResult.sanitizedPayload?.targetTimeline, 'To be agreed during consultation');
+});
+
+test('Intake Validation — Ignores unsafe specHash formats while preserving core submission', () => {
+  const result = validateIntakePayload({
+    need: 'Connect existing systems',
+    systemType: 'Payment & API integration',
+    specHash: '<script>alert(1)</script>',
+    specSummary: 'Valid <b>summary</b>',
+    problemDescription: 'Need EFRIS signing service.',
+  });
+
+  assert.equal(result.isValid, true);
+  assert.equal(result.sanitizedPayload?.specHash, undefined);
+  assert.equal(result.sanitizedPayload?.specSummary, 'Valid bsummary/b');
 });
 
 test('Intake Sanitizer — Strips angle brackets to prevent injection', () => {

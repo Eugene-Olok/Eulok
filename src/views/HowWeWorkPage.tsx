@@ -212,7 +212,7 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
             <span className="eyebrow">Deterministic Quality Gates</span>
             <h2>What Must Pass Before Release</h2>
             <p className="lead">
-              We display pass states only when deterministic evidence exists and is current. An agent assertion or compilation pass is not proof of production readiness.
+              We display pass states only when deterministic evidence exists and is current. An informal assertion or compilation pass is not proof of production readiness.
             </p>
           </div>
 

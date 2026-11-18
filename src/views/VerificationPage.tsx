@@ -32,7 +32,7 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
   const pillars: VerificationPillar[] = [
     {
       title: 'Deterministic Invariant Testing',
-      subtitle: 'Pure logic verified against mathematical truth with zero model hallucinations',
+      subtitle: 'Pure logic verified against mathematical invariants and deterministic test vectors',
       icon: Cpu,
       criteria: [
         {
@@ -196,7 +196,7 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
             </p>
 
             <blockquote className="callout-stripe" style={{ maxWidth: '60ch', margin: 0 }}>
-              <strong>Core Rule:</strong> Models propose. Deterministic systems decide. We never treat model output as proof of correctness. Critical software requires reproducible, auditable evidence.
+              <strong>Core Rule:</strong> Explicit verification over assumptions. We never treat informal assertions or unverified outputs as proof of correctness. Critical software requires reproducible, auditable evidence.
             </blockquote>
           </div>
         </div>

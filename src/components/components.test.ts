@@ -139,10 +139,10 @@ test('Contact FAQ Filter — Case-insensitivity tests (UPPERCASE, lowercase, Mix
   assert.equal(upper.length, mixed.length);
   assert.ok(upper.length > 0);
 
-  const upperPricing = filterFaqs('PRICING');
-  const lowerPricing = filterFaqs('pricing');
-  assert.equal(upperPricing.length, lowerPricing.length);
-  assert.ok(upperPricing.length > 0);
+  const upperScope = filterFaqs('SCOPE');
+  const lowerScope = filterFaqs('scope');
+  assert.equal(upperScope.length, lowerScope.length);
+  assert.ok(upperScope.length > 0);
 });
 
 

@@ -1,5 +1,5 @@
 import { navigateTo, openIntakeModal, type IntakePrefillContext } from '../utils/navigation';
-import React, { useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import {
   Send,
   RotateCcw,
@@ -17,7 +17,14 @@ import {
   type WebhookScenarioId,
   type WebhookSimulationResult,
 } from '../engine/webhookSandbox';
-import { FinancePerformanceDashboard } from '../components/FinancePerformanceDashboard';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { LoadingSkeleton } from '../components/LoadingSkeleton';
+
+const LazyFinancePerformanceDashboard = React.lazy(() =>
+  import('../components/FinancePerformanceDashboard').then((mod) => ({
+    default: mod.FinancePerformanceDashboard,
+  }))
+);
 
 interface FinanceIntegrationsPageProps {
   onNavigate?: (page: string) => void;
@@ -58,6 +65,11 @@ export const FinanceIntegrationsPage: React.FC<FinanceIntegrationsPageProps> = (
 }) => {
   const [selectedScenarioId, setSelectedScenarioId] = useState<WebhookScenarioId>('valid_momo_settlement');
   const [processedKeys, setProcessedKeys] = useState<string[]>(INITIAL_PRE_COMMITTED_KEYS);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
   const [ledgerCount, setLedgerCount] = useState<number>(0);
   const [queuedCount, setQueuedCount] = useState<number>(0);
   const [rejectedCount, setRejectedCount] = useState<number>(0);
@@ -376,13 +388,33 @@ export const FinanceIntegrationsPage: React.FC<FinanceIntegrationsPageProps> = (
         </div>
       </section>
 
-      <FinancePerformanceDashboard
-        sandboxOverlay={{
-          ledgerCommits: ledgerCount,
-          queuedRetries: queuedCount,
-          rejectedSignatures: rejectedCount,
-        }}
-      />
+      <ErrorBoundary>
+        {hasMounted ? (
+          <Suspense
+            fallback={
+              <section className="section-full theme-navy band-section" id="performance-telemetry">
+                <div className="container-expansive">
+                  <LoadingSkeleton variant="card" count={2} />
+                </div>
+              </section>
+            }
+          >
+            <LazyFinancePerformanceDashboard
+              sandboxOverlay={{
+                ledgerCommits: ledgerCount,
+                queuedRetries: queuedCount,
+                rejectedSignatures: rejectedCount,
+              }}
+            />
+          </Suspense>
+        ) : (
+          <section className="section-full theme-navy band-section" id="performance-telemetry">
+            <div className="container-expansive">
+              <LoadingSkeleton variant="card" count={2} />
+            </div>
+          </section>
+        )}
+      </ErrorBoundary>
 
       {/* Uganda Context */}
       <section className="section-full theme-dark band-section">

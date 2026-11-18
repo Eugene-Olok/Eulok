@@ -1,17 +1,20 @@
 /**
  * EULOK Intake & Inquiry Validation Core
- * Zero-budget, deterministic serverless validation and bot protection.
+ * Serverless edge, deterministic validation, specification capture, and bot protection.
  */
 
 export interface IntakePayload {
   need: string;
   systemType: string;
-  budget: string;
+  targetTimeline: string;
   problemDescription: string;
   attemptedSolutions?: string;
+  specHash?: string;
+  specSummary?: string;
   clientEmail?: string;
   clientPhone?: string;
   honeypot?: string; // Bot trap: must be empty for human submissions
+  turnstileToken?: string;
 }
 
 export interface ValidationResult {
@@ -21,7 +24,10 @@ export interface ValidationResult {
   referenceId?: string;
 }
 
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+const EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+
+const CURRENCY_OR_MONEY_PATTERN = /(\b(?:UGX|USD|KES|TZS|RWF)\b|\$[0-9])/i;
 
 export function sanitizeString(val: string): string {
   return val
@@ -64,8 +70,17 @@ export function validateIntakePayload(payload: unknown): ValidationResult {
     errors.push('System type is required.');
   }
 
-  // 4. Validate Budget
-  const budget = typeof raw.budget === 'string' ? sanitizeString(raw.budget) : 'To be determined';
+  // 4. Validate Target Timeline (accepts targetTimeline; ignores legacy money strings gracefully)
+  const rawTimeline =
+    typeof raw.targetTimeline === 'string'
+      ? sanitizeString(raw.targetTimeline)
+      : typeof raw.timeline === 'string'
+      ? sanitizeString(raw.timeline)
+      : '';
+  const targetTimeline =
+    rawTimeline && !CURRENCY_OR_MONEY_PATTERN.test(rawTimeline)
+      ? rawTimeline.slice(0, 120)
+      : 'To be agreed during consultation';
 
   // 5. Validate Problem Description
   const problemDesc = typeof raw.problemDescription === 'string' ? sanitizeString(raw.problemDescription) : '';
@@ -73,7 +88,21 @@ export function validateIntakePayload(payload: unknown): ValidationResult {
     errors.push('Problem description exceeds maximum allowed length of 5000 characters.');
   }
 
-  // 6. Validate Client Email if provided
+  // 6. Validate optional attached Scoping Workbench context
+  let specHash: string | undefined = undefined;
+  if (typeof raw.specHash === 'string' && raw.specHash.trim().length > 0) {
+    const cleanHash = sanitizeString(raw.specHash).slice(0, 64);
+    if (/^[A-Za-z0-9_-]{4,64}$/.test(cleanHash)) {
+      specHash = cleanHash;
+    }
+  }
+
+  let specSummary: string | undefined = undefined;
+  if (typeof raw.specSummary === 'string' && raw.specSummary.trim().length > 0) {
+    specSummary = sanitizeString(raw.specSummary).slice(0, 300);
+  }
+
+  // 7. Validate Client Email if provided
   let clientEmail: string | undefined = undefined;
   if (raw.clientEmail && typeof raw.clientEmail === 'string' && raw.clientEmail.trim().length > 0) {
     const cleanEmail = raw.clientEmail.trim();
@@ -84,7 +113,7 @@ export function validateIntakePayload(payload: unknown): ValidationResult {
     }
   }
 
-  // 7. Validate Client Phone if provided
+  // 8. Validate Client Phone if provided
   let clientPhone: string | undefined = undefined;
   if (raw.clientPhone && typeof raw.clientPhone === 'string' && raw.clientPhone.trim().length > 0) {
     const cleanPhone = sanitizeString(raw.clientPhone);
@@ -95,6 +124,12 @@ export function validateIntakePayload(payload: unknown): ValidationResult {
     }
   }
 
+  // 9. Optional Turnstile client token sanitization
+  let turnstileToken: string | undefined = undefined;
+  if (typeof raw.turnstileToken === 'string' && raw.turnstileToken.trim().length > 0) {
+    turnstileToken = raw.turnstileToken.trim().slice(0, 2048);
+  }
+
   if (errors.length > 0) {
     return { isValid: false, errors };
   }
@@ -102,11 +137,15 @@ export function validateIntakePayload(payload: unknown): ValidationResult {
   const sanitizedPayload: IntakePayload = {
     need,
     systemType,
-    budget,
+    targetTimeline,
     problemDescription: problemDesc || 'To be clarified during initial discovery session.',
-    attemptedSolutions: typeof raw.attemptedSolutions === 'string' ? sanitizeString(raw.attemptedSolutions) : undefined,
+    attemptedSolutions:
+      typeof raw.attemptedSolutions === 'string' ? sanitizeString(raw.attemptedSolutions) : undefined,
+    specHash,
+    specSummary,
     clientEmail,
     clientPhone,
+    turnstileToken,
   };
 
   return {

@@ -156,6 +156,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
     onOpenIntakeModal({
       need: mappedNeed,
       systemType: mappedSystem,
+      targetTimeline: `${scopingResult.estimatedWeeksMin}–${scopingResult.estimatedWeeksMax} weeks (from Scoping Studio)`,
       specHash: scopingResult.verificationHash,
       specSummary: `${scopingResult.archetypeName} · ${scopingResult.deploymentContextLabel} · ${scopingResult.estimatedWeeksMin}–${scopingResult.estimatedWeeksMax} wks · ${scopingResult.riskScore}/10 ${scopingResult.riskLevel}`,
       problemDescription: `Scoping Workbench Spec ${scopingResult.verificationHash}${clientName.trim() ? ` for ${clientName.trim()}` : ''}: ${scopingResult.archetypeName} configured for ${scopingResult.deploymentContextLabel}. Projected timeline: ${scopingResult.estimatedWeeksMin}–${scopingResult.estimatedWeeksMax} weeks (${scopingResult.failureModes.length} failure modes mitigated). Rails: ${railsNames}. Throughput: ${scopingResult.throughputLabel}. Requesting engineering review & commercial consultation.`,

@@ -63,7 +63,7 @@ export const Footer: React.FC<FooterProps> = ({
               Kampala, Uganda · Serving East Africa (EAC)
             </p>
             <blockquote style={{ margin: '14px 0 0', padding: '6px 12px', borderLeft: '2px solid var(--accent-blue)', color: 'var(--text-subtle)', fontSize: '0.85rem' }}>
-              Models propose. Deterministic systems decide.
+              Explicit specifications. Deterministic execution.
             </blockquote>
           </div>
 

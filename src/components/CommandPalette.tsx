@@ -224,9 +224,9 @@ export const CommandPalette: React.FC = () => {
     {
       id: 'note-human-boundaries',
       title: 'Note: Fail-Closed Boundaries & Human Approval',
-      subtitle: 'Models propose, deterministic systems decide — halting high-stakes writes',
+      subtitle: 'Halting high-stakes automated writes at explicit human sign-off gates',
       category: 'Engineering Notes',
-      keywords: ['fail closed', 'human approval', 'governance', 'ai'],
+      keywords: ['fail closed', 'human approval', 'governance', 'automation'],
       action: () => navigateTo('insights#human-approval-boundaries'),
       icon: <BookOpen size={16} color="var(--electric-blue)" />,
     },

@@ -30,7 +30,7 @@ export const GET: APIRoute = ({ site, url }) => {
       ? resolveSiteBaseUrl(candidateOrigin)
       : resolveSiteBaseUrl();
 
-  const lastmod = '2026-11-16';
+  const lastmod = '2026-11-18';
   const urls = Object.values(SEO_PAGE_CONFIGS)
     .filter((cfg) => cfg.pageId !== 'notFound')
     .map((cfg) => {

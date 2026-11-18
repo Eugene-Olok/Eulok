@@ -21,6 +21,8 @@ interface IntakeWizardProps {
   onCloseModal?: () => void;
 }
 
+const DEFAULT_TIMELINE = 'Near-term build (2–6 weeks)';
+
 export const IntakeWizard: React.FC<IntakeWizardProps> = ({
   initialNeed,
   initialSystem,
@@ -31,8 +33,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
   const [step, setStep] = useState<number>(1);
   const [need, setNeed] = useState<string>(prefill?.need || initialNeed || 'Build something new');
   const [systemType, setSystemType] = useState<string>(prefill?.systemType || initialSystem || 'Custom business software');
-  const [budgetCurrency, setBudgetCurrency] = useState<'UGX' | 'USD'>('UGX');
-  const [budget, setBudget] = useState<string>(prefill?.budget || 'UGX 2M–7.5M');
+  const [targetTimeline, setTargetTimeline] = useState<string>(prefill?.targetTimeline || DEFAULT_TIMELINE);
   const [problemDescription, setProblemDescription] = useState<string>(prefill?.problemDescription || '');
   const [attemptedSolutions, setAttemptedSolutions] = useState<string>(prefill?.attemptedSolutions || '');
   const [attachedSpecHash, setAttachedSpecHash] = useState<string | undefined>(prefill?.specHash);
@@ -51,7 +52,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
     if (stored) {
       if (stored.need) setNeed(stored.need);
       if (stored.systemType) setSystemType(stored.systemType);
-      if (stored.budget) setBudget(stored.budget);
+      if (stored.targetTimeline) setTargetTimeline(stored.targetTimeline);
       if (stored.problemDescription) setProblemDescription(stored.problemDescription);
       if (stored.attemptedSolutions) setAttemptedSolutions(stored.attemptedSolutions);
       if (stored.specHash) setAttachedSpecHash(stored.specHash);
@@ -70,35 +71,22 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
     { label: 'Custom business software', desc: 'Internal portals, dashboards, member ledgers' },
     { label: 'Business website', desc: 'High-performance, mobile-first digital presence' },
     { label: 'Financial reconciliation system', desc: 'Match transactions against bank/MoMo statements' },
-    { label: 'Payment & API integration', desc: 'Mobile money, EFRIS, or accounting connectors' },
+    { label: 'Payment & API integration', desc: 'Mobile money, URA EFRIS, or accounting connectors' },
     { label: 'Spreadsheet to database migration', desc: 'Safe schema design, data validation and audit log' },
   ];
 
-  const budgetOptionsByCurrency = {
-    UGX: [
-      { label: 'UGX 2M–7.5M', note: 'Focused presence builds, bounded diagnostics, or targeted adapters' },
-      { label: 'UGX 7.5M–18.5M', note: 'Custom workflow portals, URA EFRIS gateways, rescue sprints' },
-      { label: 'UGX 18.5M–55M+', note: 'Multi-rail reconciliation cores and full operational systems' },
-      { label: 'Unknown / Early stage', note: 'Need initial discovery and technical scoping first' },
-      { label: 'Custom explanation', note: 'Procurement constraints or phased milestone schedules' },
-    ],
-    USD: [
-      { label: '$500–$2,000', note: 'Indicative planning range for bounded diagnostics or focused sites' },
-      { label: '$2,000–$8,000', note: 'Multi-system integrations, custom workflow portals, rescue sprints' },
-      { label: '$8,000–$25,000+', note: 'Regional East African enterprise and donor-funded multi-rail infrastructure' },
-      { label: 'Unknown / Early stage', note: 'Need initial discovery and technical scoping first' },
-      { label: 'Custom explanation', note: 'Procurement constraints, phased milestone grants' },
-    ],
-  };
-
-  const budgetOptions = [
-    ...(attachedSpecHash && prefill?.budget
-      ? [{ label: prefill.budget, note: `Imported from Scoping Spec ${attachedSpecHash}` }]
+  const timelineOptions = [
+    ...(attachedSpecHash && prefill?.targetTimeline
+      ? [{ label: prefill.targetTimeline, note: `Imported from Scoping Spec ${attachedSpecHash}` }]
       : []),
-    ...budgetOptionsByCurrency[budgetCurrency],
+    { label: 'Immediate / Critical (< 2 weeks)', note: 'Urgent production incident triage or stabilization sprint' },
+    { label: 'Near-term build (2–6 weeks)', note: 'Focused presence platform, URA EFRIS adapter, or rescue delivery' },
+    { label: 'Structured rollout (6–12 weeks)', note: 'Multi-rail reconciliation core or full custom operational portal' },
+    { label: 'Phased East Africa rollout', note: 'Cross-border deployment across Uganda, Kenya, Tanzania, or Rwanda' },
+    { label: 'Exploratory / Technical scoping first', note: 'Evaluate feasibility and sandbox readiness before scheduling' },
   ];
 
-  const compiledDraft = `Hello EULOK,\n\nI would like to discuss a software engineering engagement:\n\nReference: ${referenceId || 'PENDING'}\n${attachedSpecHash ? `Attached Spec: ${attachedSpecHash}${attachedSpecSummary ? ` (${attachedSpecSummary})` : ''}\n` : ''}1. Project Need: ${need}\n2. System Type: ${systemType}\n3. Budget Indication: ${budget}\n4. Operational Problem: ${problemDescription.trim() || 'To be discussed during discovery.'}\n5. What was already tried: ${attemptedSolutions.trim() || 'None recorded yet.'}\n${clientEmail ? `6. Contact Email: ${clientEmail.trim()}\n` : ''}${clientPhone ? `7. Contact Phone: ${clientPhone.trim()}\n` : ''}\nPlease let me know your thoughts and availability for a focused scoping discussion.`;
+  const compiledDraft = `Hello EULOK,\n\nI would like to discuss a software engineering engagement:\n\nReference: ${referenceId || 'PENDING'}\n${attachedSpecHash ? `Attached Spec: ${attachedSpecHash}${attachedSpecSummary ? ` (${attachedSpecSummary})` : ''}\n` : ''}1. Project Need: ${need}\n2. System Type: ${systemType}\n3. Target Timeline: ${targetTimeline}\n4. Operational Problem: ${problemDescription.trim() || 'To be discussed during discovery.'}\n5. What was already tried: ${attemptedSolutions.trim() || 'None recorded yet.'}\n${clientEmail ? `6. Contact Email: ${clientEmail.trim()}\n` : ''}${clientPhone ? `7. Contact Phone: ${clientPhone.trim()}\n` : ''}\nCommercial terms will be reviewed directly after technical scoping. Please let me know your availability.`;
 
   // Encoded WhatsApp URL without printing the number anywhere in text
   const whatsappUrl = `https://wa.me/256760779160?text=${encodeURIComponent(compiledDraft)}`;
@@ -106,6 +94,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
 
   const handleReset = () => {
     setStep(1);
+    setTargetTimeline(DEFAULT_TIMELINE);
     setProblemDescription('');
     setAttemptedSolutions('');
     setSubmitError(null);
@@ -128,7 +117,9 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
     const payload = {
       need,
       systemType,
-      budget,
+      targetTimeline,
+      specHash: attachedSpecHash,
+      specSummary: attachedSpecSummary,
       problemDescription: sanitizeString(problemDescription),
       attemptedSolutions: sanitizeString(attemptedSolutions),
       clientEmail: clientEmail.trim() || undefined,
@@ -201,13 +192,13 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
           <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', marginBottom: '4px' }}>
             {step === 1 && 'What is the goal?'}
             {step === 2 && 'What type of system?'}
-            {step === 3 && 'Approximate planning budget'}
+            {step === 3 && 'Target timeline & rollout'}
             {step === 4 && 'Describe the operational problem'}
             {step === 5 && 'Inquiry Registered & Reference Created'}
           </h2>
           <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
             {step <= 4
-              ? `Step ${step} of 4 — Scoping information helps us assess feasibility before making commitments.`
+              ? `Step ${step} of 4 — Scoping context helps us assess architecture fit before direct commercial review.`
               : 'Deterministic tracking reference generated. Direct channels open below.'}
           </p>
         </div>
@@ -311,6 +302,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
 
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '24px' }}>
             <button
+              type="button"
               className="button button-primary"
               onClick={() => setStep(2)}
             >
@@ -345,6 +337,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
             <button
+              type="button"
               className="button button-quiet"
               onClick={() => setStep(1)}
             >
@@ -352,6 +345,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
               <span>Back</span>
             </button>
             <button
+              type="button"
               className="button button-primary"
               onClick={() => setStep(3)}
             >
@@ -362,36 +356,20 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
         </div>
       )}
 
-      {/* Step 3: Budget Range */}
+      {/* Step 3: Target Timeline & Rollout Context (Zero pricing/money prompts) */}
       {step === 3 && (
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '14px' }}>
-            <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0, maxWidth: '46ch' }}>
-              Indicative planning range helps us scope an appropriate starting increment. It is not a binding quote.
-            </p>
-            <div role="group" aria-label="Budget currency view" style={{ display: 'flex', gap: '6px' }}>
-              {(['UGX', 'USD'] as const).map((cur) => (
-                <button
-                  key={cur}
-                  type="button"
-                  onClick={() => setBudgetCurrency(cur)}
-                  aria-pressed={budgetCurrency === cur}
-                  className={`button button-small ${budgetCurrency === cur ? 'button-primary' : 'button-quiet'}`}
-                  style={{ padding: '4px 10px', minHeight: '32px', fontSize: '0.76rem' }}
-                >
-                  {cur}
-                </button>
-              ))}
-            </div>
-          </div>
+          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '14px', maxWidth: '52ch' }}>
+            Select your preferred delivery window across Uganda or East Africa. Commercial terms are agreed directly after technical review.
+          </p>
 
           <div style={{ marginBottom: '20px' }}>
-            {budgetOptions.map((opt) => (
+            {timelineOptions.map((opt) => (
               <button
                 key={opt.label}
                 type="button"
-                className={`wizard-option-btn ${budget === opt.label ? 'selected' : ''}`}
-                onClick={() => setBudget(opt.label)}
+                className={`wizard-option-btn ${targetTimeline === opt.label ? 'selected' : ''}`}
+                onClick={() => setTargetTimeline(opt.label)}
               >
                 <div>
                   <div style={{ color: 'var(--warm-white)', fontWeight: 700 }}>{opt.label}</div>
@@ -399,13 +377,14 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                     {opt.note}
                   </div>
                 </div>
-                <ArrowRight size={16} color={budget === opt.label ? 'var(--electric-blue)' : 'var(--text-muted)'} />
+                <ArrowRight size={16} color={targetTimeline === opt.label ? 'var(--electric-blue)' : 'var(--text-muted)'} />
               </button>
             ))}
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
             <button
+              type="button"
               className="button button-quiet"
               onClick={() => setStep(2)}
             >
@@ -413,6 +392,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
               <span>Back</span>
             </button>
             <button
+              type="button"
               className="button button-primary"
               onClick={() => setStep(4)}
             >
@@ -552,7 +532,8 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
           referenceId={referenceId}
           need={need}
           systemType={systemType}
-          budget={budget}
+          targetTimeline={targetTimeline}
+          specHash={attachedSpecHash}
           compiledDraft={compiledDraft}
           whatsappUrl={whatsappUrl}
           mailtoUrl={mailtoUrl}

@@ -153,13 +153,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       shortDesc: 'Automate routine hand-offs and document generation while keeping consequential approvals with humans.',
       deliverables: [
         'Automated document extraction and parsing pipelines',
-        'CRM, invoice, and spreadsheet synchronization bots',
+        'CRM, invoice, and spreadsheet synchronization workflows',
         'Notification routing with duplicate prevention',
         'Human-in-the-loop exception review queue',
         'Operational metrics and execution audit logs',
       ],
       engineering: [
-        'Strict separation: probabilistic model proposals vs deterministic actions',
+        'Strict separation: automated drafts vs deterministic execution gates',
         'Idempotent processing with duplicate key hashes',
         'Bounded retry logic with exponential backoff and jitter',
         'Explicit manual review thresholds for high-risk data',
@@ -209,7 +209,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         'Cryptographically fingerprinted audit reports for compliance',
       ],
       engineering: [
-        'Pure zero-LLM matching logic running in sub-millisecond time',
+        'Pure deterministic matching logic running in sub-millisecond time',
         'Fixed-point Decimal math avoiding IEEE 754 floating-point errors',
         'Immutable outcome ledger preserving original source records',
         'Automated golden-set verification tests',

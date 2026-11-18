@@ -4,7 +4,7 @@
 
 export interface FAQItem {
   id: string;
-  category: 'Pricing & Scope' | 'Integrations' | 'Security & Ownership' | 'Rescue & Reliability' | 'Delivery';
+  category: 'Scope & Consultation' | 'Integrations' | 'Security & Ownership' | 'Rescue & Reliability' | 'Delivery';
   question: string;
   answer: string;
   tags: string[];
@@ -17,10 +17,10 @@ export interface FAQItem {
 export const FAQ_ITEMS: FAQItem[] = [
   {
     id: 'scope-pricing',
-    category: 'Pricing & Scope',
-    question: 'How is project scope and pricing determined?',
-    answer: 'Our Scoping Studio models system architecture, integration rails, failure modes, and milestone timelines without automated price guessing. Commercial pricing is agreed directly during consultation once technical boundaries are reviewed, with milestone schedules structured around discovery sign-off, staging acceptance gates, and production handover.',
-    tags: ['pricing', 'cost', 'sow', 'scope', 'milestones', 'rates', 'budget', 'estimate'],
+    category: 'Scope & Consultation',
+    question: 'How are project scope and commercial terms structured?',
+    answer: 'Our Scoping Studio models system architecture, East African integration rails, failure modes, and milestone timelines without automated price guessing. Commercial terms are agreed directly during consultation once technical boundaries are reviewed, with milestone schedules structured around discovery sign-off, staging acceptance gates, and production handover.',
+    tags: ['commercial', 'consultation', 'sow', 'scope', 'milestones', 'engagement', 'estimate'],
     serviceLink: {
       label: 'Open Architecture Scoping Studio',
       page: 'scope-calculator',
@@ -30,7 +30,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     id: 'momo-reconciliation',
     category: 'Integrations',
     question: 'How do you handle Mobile Money (MTN MoMo & Airtel) reconciliation?',
-    answer: 'Our reconciliation core executes formal matching rules R1 through R8 with exact integer arithmetic, matching carrier transactions against receivables obligations. It handles duplicate webhook retries, isolates refunds and reversals, and preserves an immutable audit trail without model guessing.',
+    answer: 'Our reconciliation core executes formal matching rules R1 through R8 with exact integer arithmetic, matching carrier transactions against receivables obligations. It handles duplicate webhook retries, isolates refunds and reversals, and preserves an immutable audit trail with deterministic precision.',
     tags: ['momo', 'mtn', 'airtel', 'reconciliation', 'mobile money', 'payments', 'idempotency', 'ledger'],
     serviceLink: {
       label: 'Explore Reconciliation Demo',
@@ -74,7 +74,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     id: 'data-confidentiality',
     category: 'Security & Ownership',
     question: 'How is confidential client data protected during scoping and intake?',
-    answer: 'We operate strictly within the Uganda Data Protection and Privacy Act 2019 (DPPA) and ISO/IEC 27001 data isolation principles. Confidential client source code and restricted financial data are never ingested into free or unapproved model providers. Passwords and live tokens should never be submitted via initial intake web forms.',
+    answer: 'We operate strictly within the Uganda Data Protection and Privacy Act 2019 (DPPA) and ISO/IEC 27001 data isolation principles. Confidential client source code and restricted financial data remain inside isolated client environments and are never shared with unauthorized third-party services. Passwords and live tokens should never be submitted via initial intake web forms.',
     tags: ['confidentiality', 'privacy', 'security', 'dppa', 'nda', 'pii', 'credentials', 'tokens'],
     serviceLink: {
       label: 'Security & RFC 9116 Policy',
@@ -85,7 +85,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     id: 'acceptance-gates',
     category: 'Delivery',
     question: 'What is the EULOK Release Verification Standard?',
-    answer: 'Before any system is handed over or declared complete, it must satisfy our deterministic verification framework covering performance budgets (sub-second mobile FCP), full WCAG 2.2 AA accessibility, fail-closed security headers, input sanitization, and automated regression test suites.',
+    answer: 'Before any system is handed over or declared complete, it must satisfy our deterministic verification framework covering performance thresholds (sub-second mobile FCP), full WCAG 2.2 AA accessibility, fail-closed security headers, input sanitization, and automated regression test suites.',
     tags: ['gates', 'verification', 'testing', 'qa', 'acceptance', 'wcag', 'performance', 'lighthouse'],
     serviceLink: {
       label: 'Inspect Release Verification Standard',
@@ -118,7 +118,7 @@ export const FAQ_ITEMS: FAQItem[] = [
 
 export const FAQ_CATEGORIES = [
   'All',
-  'Pricing & Scope',
+  'Scope & Consultation',
   'Integrations',
   'Security & Ownership',
   'Rescue & Reliability',

@@ -14,9 +14,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   const principles = [
     {
       num: '01',
-      title: 'Models propose. Deterministic systems decide.',
+      title: 'Explicit specifications. Deterministic execution.',
       icon: Terminal,
-      desc: 'AI can draft code, analyze data patterns, and formulate hypotheses. But consequential business operations, ledger updates, and release decisions must be validated by deterministic tests and human approvals.',
+      desc: 'Consequential business operations, ledger updates, permissions, and software releases are governed by explicit state machines, deterministic automated tests, and accountable human approvals.',
     },
     {
       num: '02',

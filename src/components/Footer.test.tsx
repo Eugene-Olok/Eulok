@@ -33,7 +33,7 @@ describe('Footer Component — Rendering & Accessibility Standards', () => {
 
     // Core rule blockquote
     expect(
-      screen.getByText(/Models propose\. Deterministic systems decide\./i)
+      screen.getByText(/Explicit specifications\. Deterministic execution\./i)
     ).toBeInTheDocument();
   });
 

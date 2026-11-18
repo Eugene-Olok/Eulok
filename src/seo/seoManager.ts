@@ -82,6 +82,8 @@ export function buildSEOTags(
     { attributeName: 'property', attributeValue: 'og:url', content: canonicalUrl },
     { attributeName: 'property', attributeValue: 'og:site_name', content: SITE_NAME || siteConfig.name },
     { attributeName: 'property', attributeValue: 'og:image', content: ogImage },
+    { attributeName: 'property', attributeValue: 'og:image:width', content: '1200' },
+    { attributeName: 'property', attributeValue: 'og:image:height', content: '630' },
     { attributeName: 'property', attributeValue: 'og:image:alt', content: ogImageAlt },
 
     // Twitter

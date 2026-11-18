@@ -53,9 +53,9 @@ export const ReconciliationServicePage: React.FC<ReconciliationServicePageProps>
         <div className="container-expansive">
           <div style={{ maxWidth: '72ch' }}>
             <span className="eyebrow">Interactive Engine</span>
-            <h2>Try Product 1: The Reconciliation Agent</h2>
+            <h2>Try Product 1: The Reconciliation Engine</h2>
             <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '24px' }}>
-              We provide a deterministic, zero-LLM reconciliation engine for mobile money payments, bank files, and obligations ledger. It executes rules R1 through R8 with mathematical precision.
+              We provide a deterministic reconciliation engine for mobile money payments, bank files, and obligations ledger. It executes rules R1 through R8 with mathematical precision.
             </p>
             <button
               type="button"

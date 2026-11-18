@@ -1,7 +1,7 @@
 export interface IntakePrefillContext {
   need?: string;
   systemType?: string;
-  budget?: string;
+  targetTimeline?: string;
   problemDescription?: string;
   attemptedSolutions?: string;
   specHash?: string;

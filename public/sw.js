@@ -3,17 +3,22 @@
  * Bypasses Vite dev/module paths and self-cleans if invoked on a dev host.
  */
 
-const CACHE_NAME = 'eulok-cache-v3';
+const CACHE_NAME = 'eulok-cache-v4';
 const PRECACHE_URLS = [
   '/',
   '/services',
+  '/case-studies',
+  '/work',
+  '/rescue',
   '/ops-suite',
   '/scope-calculator',
   '/verification',
   '/standards',
   '/security',
   '/privacy',
+  '/contact',
   '/manifest.webmanifest',
+  '/icon-192.png',
 ];
 
 function isDevHost() {

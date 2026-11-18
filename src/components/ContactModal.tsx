@@ -10,12 +10,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
   const [problem, setProblem] = useState('');
   const [tried, setTried] = useState('');
   const [deadline, setDeadline] = useState('');
-  const [budget, setBudget] = useState('');
+  const [regionSystems, setRegionSystems] = useState('');
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
-  const compiledMessage = `Hello Company OS,\n\nI'd like to discuss a project:\n\n*Problem / Need:* ${problem || 'Not specified yet'}\n*What we've tried:* ${tried || 'Not specified'}\n*Timeline / Deadline:* ${deadline || 'Flexible'}\n*Budget range:* ${budget || 'To be assessed'}\n\nPlease let me know your thoughts and next steps.`;
+  const compiledMessage = `Hello EULOK,\n\nI'd like to discuss a project:\n\n*Problem / Need:* ${problem || 'Not specified yet'}\n*What we've tried:* ${tried || 'Not specified'}\n*Timeline / Deadline:* ${deadline || 'Flexible'}\n*Deployment region & systems:* ${regionSystems || 'Uganda / East Africa'}\n\nPlease let me know your thoughts and next steps.`;
 
   const whatsappUrl = `https://wa.me/256760779160?text=${encodeURIComponent(compiledMessage)}`;
 
@@ -49,7 +49,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
         </div>
 
         <p style={{ color: 'var(--muted)', fontSize: '0.92rem', marginBottom: '20px' }}>
-          WhatsApp is our direct enquiry channel. Describe the workflow bottleneck below. Please do not submit passwords, live transaction credentials, or confidential production keys.
+          WhatsApp is our direct enquiry channel. Describe the workflow bottleneck below. Commercial terms are agreed directly once we assess scope. Never submit passwords or live credentials.
         </p>
 
         <div className="form-group">
@@ -95,16 +95,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             />
           </div>
           <div>
-            <label className="form-label" htmlFor="modal-budget">
-              Budget Range (UGX or USD)
+            <label className="form-label" htmlFor="modal-region-systems">
+              Target Region &amp; Systems
             </label>
             <input
-              id="modal-budget"
+              id="modal-region-systems"
               type="text"
               className="form-input"
-              placeholder="e.g. 5M - 15M UGX"
-              value={budget}
-              onChange={(e) => setBudget(e.target.value)}
+              placeholder="e.g. Uganda · MTN MoMo, URA EFRIS"
+              value={regionSystems}
+              onChange={(e) => setRegionSystems(e.target.value)}
             />
           </div>
         </div>

@@ -1,16 +1,28 @@
 {
   "name": "EULOK — Independent Software Engineering",
   "short_name": "EULOK",
-  "description": "Production software engineering, deterministic financial reconciliation, and payment APIs.",
+  "description": "Independent software engineering for Uganda and East Africa: deterministic reconciliation, URA EFRIS & MoMo APIs, and software rescue.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0c10",
-  "theme_color": "#0a0c10",
+  "background_color": "#090E17",
+  "theme_color": "#090E17",
   "orientation": "portrait-primary",
   "icons": [
     {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
       "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "64x64 48x48 32x32 16x16",
       "type": "image/x-icon"
     }
   ],

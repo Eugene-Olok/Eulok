@@ -166,7 +166,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
               Section 19 of the Uganda Data Protection and Privacy Act governs cross-border transfers. EULOK hosts static web assets on Cloudflare Pages edge nodes to deliver low-latency response times across Kampala, East African corridors, and distributed edge PoPs.
             </p>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '36px' }}>
-              No confidential client source code, credentials, or proprietary databases are ever synced to unvetted third-party services or consumer AI platforms.
+              No confidential client source code, credentials, or proprietary databases are ever shared with unvetted third-party services.
             </p>
 
             {/* Section 6: Data Retention Schedule */}

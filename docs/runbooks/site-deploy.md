@@ -47,7 +47,9 @@ human with dashboard access** — nothing in this repo can change it.
 | Variable | Required | Effect if absent |
 | --- | --- | --- |
 | `ZOHO_WEBHOOK_URL` | no | Form still validates, generates a reference ID, and returns success — it just doesn't forward the inquiry anywhere. Set this once a CRM webhook exists. |
-| `NOTIFY_EMAIL` | no | Currently unused by the handler; reserved for a future email-notification path. Safe to leave unset. |
+| `NOTIFY_EMAIL` | no | Included in the forwarded intake envelope when present (`notifyEmail`). Safe to leave unset. |
+| `TURNSTILE_SECRET_KEY` | no | When set, `/api/intake` verifies Cloudflare Turnstile human tokens fail-closed (`403` on failure). When unset, relies on the off-screen honeypot and deterministic field validation. |
+| `INTAKE_ARCHIVE` | no (KV binding) | Optional Cloudflare KV namespace binding. When `ZOHO_WEBHOOK_URL` returns non-2xx or throws, failed intake envelopes are automatically persisted under `dead-letter:<referenceId>` for 30 days. |
 
 Set these as **Production** (and Preview, if you want preview deploys to
 forward too — there's no secret-leak risk here the way there was with the

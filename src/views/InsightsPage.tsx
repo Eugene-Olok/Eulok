@@ -57,12 +57,12 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
       category: 'Financial Engineering',
       readTime: '6 min read',
       date: '2026-10-18',
-      summary: 'Why IEEE 754 binary floating-point math causes cumulative ledger drift, and why money calculations must use pure Decimal fixed-point logic with zero-LLM matching.',
+      summary: 'Why IEEE 754 binary floating-point math causes cumulative ledger drift, and why money calculations must use pure Decimal fixed-point logic with deterministic rule matching.',
       demonstrates: 'Financial engineering, numerical stability, and audit invariants.',
       relatedService: 'services/reconciliation',
       content: [
         'In computing, standard numbers are represented using binary floating point (IEEE 754). While ideal for graphics and scientific simulations, floating-point math cannot represent many decimal fractions (such as 0.1 or 0.05) exactly in base-2 binary.',
-        'In a financial reconciliation workflow processing 50,000 mobile-money collections, rounding approximations accumulate into hundreds of thousands of shillings in ledger drift. Worse, when automated bots or LLMs are tasked with "guessing" transaction matches, they invent associations that do not exist.',
+        'In a financial reconciliation workflow processing 50,000 mobile-money collections, rounding approximations accumulate into hundreds of thousands of shillings in ledger drift. Worse, when fuzzy heuristics are tasked with "guessing" transaction matches, they invent associations that do not exist.',
         'EULOK enforces two strict invariants for financial systems: (1) All currency arithmetic uses arbitrary-precision Decimal or integer minor units, and (2) Reconciliation matching is 100% deterministic with an immutable audit hash.',
       ],
       codeSnippet: `// Flawed: Standard JavaScript/Python float math
@@ -100,15 +100,15 @@ if (claimed.rowCount === 0) {
     {
       id: 'human-approval-boundaries',
       title: 'Designing Human Approval into Automation: Fail-Closed Boundaries',
-      category: 'AI Governance',
+      category: 'Automation Governance',
       readTime: '7 min read',
       date: '2026-10-09',
-      summary: 'Why autonomous agents must never authorize irreversible financial operations, and how to build architectural control boundaries where failure fails closed.',
+      summary: 'Why automated workflow pipelines built for clients must never authorize irreversible financial operations, and how to enforce fail-closed human approval boundaries.',
       demonstrates: 'Safety architecture, permission controls, and audit trails.',
       relatedService: 'services/finance-integrations',
       content: [
-        'A popular misconception in generative AI adoption is that autonomous agents should make consequential business decisions—such as releasing funds, altering contract scope, or refunding transactions.',
-        'At EULOK, our core architecture principle is: Models propose. Deterministic systems decide. Models may synthesize documents, propose transaction matches, or format intake briefs; but any action that carries financial, legal, or security consequences halts at an explicit human sign-off boundary.',
+        'When organizations adopt workflow automation, a common architectural mistake is granting automated pipelines unilateral authority to make consequential decisions—such as releasing funds, altering contract scope, or refunding transactions.',
+        'In client automation systems we engineer, proposal and execution are strictly separated: automated workflows may prepare drafts, queue candidate matches, or synchronize records, but any action carrying financial, legal, or security consequences halts at an explicit human sign-off boundary.',
         'If a parameter is ambiguous or an external check times out, the system fails closed (blocks execution) rather than assuming a default pass state.',
       ],
       codeSnippet: `// Fail-closed exception gate for unreferenced or mismatched amounts
@@ -205,7 +205,7 @@ if (match.status === 'proposed' || match.status === 'exception') {
     setTimeout(() => setCopiedLinkId(null), 2000);
   };
 
-  const categories = ['all', 'Financial Engineering', 'Reliability', 'AI Governance', 'Technical Assessment', 'Release Engineering', 'Infrastructure'];
+  const categories = ['all', 'Financial Engineering', 'Reliability', 'Automation Governance', 'Technical Assessment', 'Release Engineering', 'Infrastructure'];
 
   const normalizedNoteQuery = noteSearchQuery.trim().toLowerCase();
   const filteredArticles = articles.filter((a) => {

@@ -29,6 +29,19 @@ export const IntakeModalWrapper: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
@@ -44,15 +57,6 @@ export const IntakeModalWrapper: React.FC = () => {
         onClick={(e) => e.stopPropagation()}
         style={{ maxWidth: '780px', width: '92%' }}
       >
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
-          <button
-            className="button button-quiet button-small"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close modal"
-          >
-            ✕ Close
-          </button>
-        </div>
         <IntakeWizard
           key={modalKey}
           isModal={true}

@@ -10,7 +10,8 @@ export interface IntakeSuccessMessageProps {
   referenceId: string;
   need: string;
   systemType: string;
-  budget: string;
+  targetTimeline: string;
+  specHash?: string;
   compiledDraft: string;
   whatsappUrl: string;
   mailtoUrl: string;
@@ -24,7 +25,8 @@ export const IntakeSuccessMessage: React.FC<IntakeSuccessMessageProps> = ({
   referenceId,
   need,
   systemType,
-  budget,
+  targetTimeline,
+  specHash,
   compiledDraft,
   whatsappUrl,
   mailtoUrl,
@@ -166,9 +168,12 @@ export const IntakeSuccessMessage: React.FC<IntakeSuccessMessageProps> = ({
         </div>
         <div className="surface-inset" style={{ padding: '8px 12px', borderRadius: '8px' }}>
           <span className="mono-tag" style={{ display: 'block', fontSize: '0.7rem', marginBottom: '2px' }}>
-            PLANNING BUDGET
+            TARGET TIMELINE
           </span>
-          <strong style={{ fontSize: '0.84rem', color: 'var(--warm-white)' }}>{budget}</strong>
+          <strong style={{ fontSize: '0.84rem', color: 'var(--warm-white)' }}>
+            {targetTimeline}
+            {specHash ? ` · ${specHash}` : ''}
+          </strong>
         </div>
       </div>
 

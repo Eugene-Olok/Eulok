@@ -63,13 +63,13 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({
             <div className="card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
                 <Cpu size={20} color="var(--accent-blue)" />
-                <h3 style={{ margin: 0, fontSize: '1.15rem' }}>AI Isolation Boundaries</h3>
+                <h3 style={{ margin: 0, fontSize: '1.15rem' }}>Data &amp; Logic Isolation</h3>
               </div>
               <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, margin: 0 }}>
-                <li>Client source code and proprietary logic are never routed to free or unapproved consumer AI tools.</li>
-                <li>Restricted data (PII, live financial ledgers, banking secrets) is strictly barred from model prompts.</li>
-                <li>Probabilistic AI models are never granted authority over financial transactions or access controls.</li>
-                <li>Models propose; deterministic systems and human engineers verify.</li>
+                <li>Client source code and proprietary logic remain strictly isolated inside dedicated project repositories.</li>
+                <li>Restricted data (PII, live financial ledgers, banking secrets) never leaves authorized client environments.</li>
+                <li>Financial transactions and access controls are governed solely by deterministic, auditable code.</li>
+                <li>Automated workflows require explicit human sign-off before committing irreversible operations.</li>
               </ul>
             </div>
 
