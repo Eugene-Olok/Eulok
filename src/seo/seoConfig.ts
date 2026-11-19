@@ -134,7 +134,7 @@ export const SEO_PAGE_CONFIGS: Record<string, PageSEOConfig> = {
     pageId: 'services/performance-builds',
     title: 'Performance Builds & Systems — EULOK',
     description:
-      'High-performance web architecture, zero-bloat React builds, and sub-second latency engineering engineered for maximum speed, uptime, and reliability.',
+      'High-performance web architecture and sub-second latency engineering for Ugandan and East African organizations, built for speed.',
     keywords: [
       'high performance web apps',
       'React optimization',

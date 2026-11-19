@@ -39,7 +39,7 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
             Find answers to common technical &amp; scope questions
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0, maxWidth: '64ch' }}>
-            Filter our operational policies, pricing models, carrier integrations, and verification standards in real time.
+            Filter our operational policies, engagement scopes, East African carrier integrations, and delivery standards in real time.
           </p>
         </div>
 
@@ -171,8 +171,16 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
                     aria-expanded={isExpanded}
                   >
                     <div>
-                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '6px' }}>
-                        <span className="badge badge-neutral" style={{ fontSize: '0.72rem' }}>
+                      <div style={{ marginBottom: '6px' }}>
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.72rem',
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            color: 'var(--electric-blue)',
+                          }}
+                        >
                           {item.category}
                         </span>
                       </div>
@@ -193,21 +201,15 @@ export const ContactDocSearch: React.FC<ContactDocSearchProps> = ({
                       </p>
 
                       <div style={{ marginTop: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                          {item.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="surface-inset"
-                              style={{
-                                fontSize: '0.74rem',
-                                color: 'var(--text-muted)',
-                                padding: '2px 7px',
-                                borderRadius: '4px',
-                              }}
-                            >
-                              #{tag}
-                            </span>
-                          ))}
+                        <div
+                          style={{
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.74rem',
+                            color: 'var(--text-muted)',
+                            letterSpacing: '0.02em',
+                          }}
+                        >
+                          {item.tags.map((tag) => `#${tag}`).join(' · ')}
                         </div>
 
                         {item.serviceLink && (

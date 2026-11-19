@@ -276,7 +276,7 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
         </nav>
 
         <header style={{ marginBottom: '40px' }}>
-          <span className="eyebrow">Interactive Engineering Demonstration · Product 1</span>
+          <span className="eyebrow">Interactive Engineering Demonstration · Ledger Core</span>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)', marginBottom: '16px' }}>
             Deterministic Financial Reconciliation
           </h1>
@@ -694,24 +694,39 @@ export const OpsSuitePage: React.FC<OpsSuitePageProps> = ({ onNavigate = navigat
                 <span className="card-number">RULE SPECIFICATION</span>
                 <h3>Rules R1 Through R8</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.88rem' }}>
-                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-pass-text)' }}>
-                    <strong style={{ color: 'var(--warm-white)' }}>Rule R1: Exact Single Match</strong>
+                  <div className="surface-inset" style={{ padding: '12px 14px', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                      <strong style={{ color: 'var(--warm-white)' }}>Rule R1: Exact Single Match</strong>
+                      <span className="mono-tag" style={{ fontSize: '0.7rem', color: 'var(--status-pass-text)' }}>R1 · EXACT</span>
+                    </div>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Exact reference match + exact amount = 100% deterministic auto-reconciliation.</p>
                   </div>
-                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-warn-text)' }}>
-                    <strong style={{ color: 'var(--warm-white)' }}>Rule R2: Partial Payment Allocation</strong>
+                  <div className="surface-inset" style={{ padding: '12px 14px', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                      <strong style={{ color: 'var(--warm-white)' }}>Rule R2: Partial Payment Allocation</strong>
+                      <span className="mono-tag" style={{ fontSize: '0.7rem', color: 'var(--status-warn-text)' }}>R2 · PARTIAL</span>
+                    </div>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Valid reference but incoming amount &lt; due balance. Allocates payment and tracks remaining due variance.</p>
                   </div>
-                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
-                    <strong style={{ color: 'var(--warm-white)' }}>Rule R3: Overpayment Exception</strong>
+                  <div className="surface-inset" style={{ padding: '12px 14px', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                      <strong style={{ color: 'var(--warm-white)' }}>Rule R3: Overpayment Exception</strong>
+                      <span className="mono-tag" style={{ fontSize: '0.7rem', color: 'var(--status-fail-text)' }}>R3 · OVERPAY</span>
+                    </div>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Incoming amount &gt; obligation. Triggers exception flag and escalates credit balance to human finance desk.</p>
                   </div>
-                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--status-fail-text)' }}>
-                    <strong style={{ color: 'var(--warm-white)' }}>Rule R5: Duplicate Webhook Retries</strong>
+                  <div className="surface-inset" style={{ padding: '12px 14px', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                      <strong style={{ color: 'var(--warm-white)' }}>Rule R5: Duplicate Webhook Retries</strong>
+                      <span className="mono-tag" style={{ fontSize: '0.7rem', color: 'var(--status-fail-text)' }}>R5 · DUPLICATE</span>
+                    </div>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Identical provider reference and amount processed previously. Flagged as duplicate suspect to prevent double-crediting.</p>
                   </div>
-                  <div className="surface-inset" style={{ padding: '10px', borderRadius: '6px', borderLeft: '3px solid var(--electric-blue)' }}>
-                    <strong style={{ color: 'var(--warm-white)' }}>Rules R7 & R8: Refunds & Reversals</strong>
+                  <div className="surface-inset" style={{ padding: '12px 14px', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                      <strong style={{ color: 'var(--warm-white)' }}>Rules R7 & R8: Refunds & Reversals</strong>
+                      <span className="mono-tag" style={{ fontSize: '0.7rem', color: 'var(--electric-blue)' }}>R7/R8 · REFUND</span>
+                    </div>
                     <p style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Debit events partitioned from credit ingestion pipeline to guarantee audit trail preservation.</p>
                   </div>
                 </div>

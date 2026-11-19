@@ -3,7 +3,7 @@ import { navigateTo, openIntakeModal } from '../utils/navigation';
 import { getInitialTheme, toggleTheme } from '../utils/themeManager';
 import {
   Search,
-  Sparkles,
+  ArrowRight,
   Sliders,
   Activity,
   ShieldCheck,
@@ -120,7 +120,7 @@ export const CommandPalette: React.FC = () => {
       category: 'Tools & Simulators',
       keywords: ['intake', 'hire', 'proposal', 'consultation', 'wizard'],
       action: () => openIntakeModal(),
-      icon: <Sparkles size={16} color="var(--electric-blue)" />,
+      icon: <ArrowRight size={16} color="var(--electric-blue)" />,
     },
     {
       id: 'all-services',

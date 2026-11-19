@@ -1,5 +1,6 @@
 import { navigateTo, openIntakeModal } from '../utils/navigation';
 import React from 'react';
+import { EditorialVisual } from '../components/EditorialVisual';
 
 interface PerformanceBuildsPageProps {
   onNavigate?: (page: string) => void;
@@ -23,14 +24,26 @@ export const PerformanceBuildsPage: React.FC<PerformanceBuildsPageProps> = ({
             <span aria-current="page">Performance builds</span>
           </nav>
 
-          <div style={{ maxWidth: '860px' }}>
-            <span className="eyebrow">Websites · Business systems · Reliability</span>
-            <h1 style={{ fontSize: 'clamp(2.3rem, 5.2vw, 4.2rem)', marginBottom: '20px', maxWidth: '22ch' }}>
-              Build for the people who use and maintain it.
-            </h1>
-            <p className="lead" style={{ maxWidth: '64ch', marginBottom: 0 }}>
-              Fast, accessible web experiences and fit-for-purpose business software, designed around users, operating constraints and a clear definition of done.
-            </p>
+          <div className="split-feature-grid" style={{ gap: 'clamp(28px, 4vw, 48px)' }}>
+            <div>
+              <span className="eyebrow">Websites · Business systems · Low-Bandwidth Speed</span>
+              <h1 style={{ fontSize: 'clamp(2.3rem, 5vw, 4rem)', marginBottom: '20px' }}>
+                Built for Ugandan mobile grids and real operations.
+              </h1>
+              <p className="lead" style={{ maxWidth: '60ch', marginBottom: 0 }}>
+                Fast, accessible websites and custom business portals engineered to load reliably over 3G/4G networks and remain clean for your team to own.
+              </p>
+            </div>
+
+            <EditorialVisual
+              webpSrc="/images/studio-craft.webp"
+              fallbackSrc="/images/studio-craft.jpg"
+              alt="Clean precision hardware reflecting performance-focused software engineering"
+              aspectRatio="4/3"
+              priority
+              kicker="PERFORMANCE BUILDS"
+              caption="Pre-rendered pages and clean operational portals verified down to 320px viewports."
+            />
           </div>
         </div>
       </section>
@@ -38,23 +51,29 @@ export const PerformanceBuildsPage: React.FC<PerformanceBuildsPageProps> = ({
       {/* 01 Digital Presence */}
       <section className="section-full theme-navy band-section" id="business-websites">
         <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">01 / Digital presence</span>
-            <h2>Business websites that make the next step clear.</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '18px' }}>
-              We create mobile-first websites that explain the offer, answer buyer questions and make it straightforward to enquire. Performance and accessibility are part of implementation, not decoration added at the end.
-            </p>
-            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.75, marginBottom: '18px' }}>
-              <li>Responsive company, service and product websites.</li>
-              <li>Semantic page structure, meaningful metadata and crawlable content.</li>
-              <li>Optimized media when used; no unnecessary third-party widgets.</li>
-              <li>Accessible navigation, visible keyboard focus, readable contrast and clear hierarchy.</li>
-              <li>Direct contact paths and analytics when appropriately configured.</li>
-              <li>Handover notes for content, hosting, deployment and future changes.</li>
-            </ul>
-            <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
-              We agree pages, content responsibilities, revision limits, acceptance criteria and ownership before implementation.
-            </p>
+          <div className="governance-grid">
+            <div>
+              <span className="eyebrow">01 / Digital presence</span>
+              <h2>Business websites that make the next step clear.</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '18px' }}>
+                We engineer mobile-first websites that explain what you offer, load rapidly on East African cellular links, and guide qualified visitors smoothly into WhatsApp or project inquiry channels.
+              </p>
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
+                Page structure, content ownership, acceptance criteria, and full repository handover are agreed cleanly before engineering begins.
+              </p>
+            </div>
+
+            <div className="card" style={{ padding: '24px' }}>
+              <h3 style={{ fontSize: '1.08rem', margin: '0 0 12px' }}>Website Delivery Scope</h3>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0, fontSize: '0.92rem' }}>
+                <li>Responsive company, service, and institutional sites verified from 320px to 1440px.</li>
+                <li>Semantic markup, canonical SEO metadata, and social share cards.</li>
+                <li>Compressed visual assets without heavy third-party script bloat.</li>
+                <li>Accessible keyboard navigation, clear focus states, and readable contrast.</li>
+                <li>Direct WhatsApp, email, and structured inquiry workflows.</li>
+                <li>Deployment runbooks and maintenance documentation.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -62,96 +81,102 @@ export const PerformanceBuildsPage: React.FC<PerformanceBuildsPageProps> = ({
       {/* 02 Business Operations */}
       <section className="section-full theme-dark band-section" id="custom-systems">
         <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">02 / Business operations</span>
-            <h2>Custom systems for workflows off-the-shelf tools do not fit.</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '18px' }}>
-              When spreadsheets, manual approvals or disconnected tools become a source of errors, a focused internal system may help. We scope the smallest application that fits the workflow rather than defaulting to a large platform.
-            </p>
-            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.75, marginBottom: '18px' }}>
-              <li>Internal portals and operational dashboards.</li>
-              <li>Validated forms, role-based access and auditable state changes.</li>
-              <li>Inventory, booking, records and administrative workflows where requirements are clear.</li>
-              <li>Data migration with reconciliation, backups and sign-off.</li>
-              <li>API integration and reporting based on agreed definitions.</li>
-            </ul>
-            <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
-              Regulated financial or healthcare decisions, native mobile apps and complex multi-tenant products require separate feasibility, risk and capability assessment.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 03 Software Rescue */}
-      <section className="section-full theme-navy band-section" id="rescue-and-care">
-        <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">03 / Software rescue</span>
-            <h2>Stabilise what exists before deciding to replace it.</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '18px' }}>
-              For unreliable or abandoned software, we start with an evidence-backed assessment: reproduce failures, inspect architecture and dependencies, identify operational risks and propose prioritised remediation. A rebuild is one option, not the default.
-            </p>
-            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.75, marginBottom: '28px' }}>
-              <li>Codebase and architecture assessment.</li>
-              <li>Bug reproduction, regression tests and production issue triage.</li>
-              <li>Dependency and configuration review with actionable remediation.</li>
-              <li>Release process, deployment and rollback improvements.</li>
-              <li>Incremental modernisation with explicit acceptance criteria.</li>
-            </ul>
-
-            <div className="callout-stripe">
-              <h3 id="care" style={{ fontSize: '1.15rem', marginBottom: '8px' }}>Ongoing engineering care</h3>
-              <p style={{ color: 'var(--text-muted)', lineHeight: 1.65, margin: 0, fontSize: '0.92rem' }}>
-                Maintenance is a separate scoped agreement covering defined updates, small fixes, monitoring or backup checks where configured, and a stated response window. It does not imply 24/7 response, guaranteed uptime or an enterprise SLA.
+          <div className="governance-grid">
+            <div>
+              <span className="eyebrow">02 / Business operations</span>
+              <h2>Custom systems where spreadsheets break down.</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '18px' }}>
+                When manual approvals, shared spreadsheets, and fragmented files create stock drift or audit gaps, a focused internal portal replaces guesswork with structured roles and clean records.
               </p>
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
+                Regulated financial rails, multi-tenant platforms, and offline-first field sync undergo explicit feasibility design prior to commitment.
+              </p>
+            </div>
+
+            <div className="card" style={{ padding: '24px' }}>
+              <h3 style={{ fontSize: '1.08rem', margin: '0 0 12px' }}>Custom Portal Capabilities</h3>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0, fontSize: '0.92rem' }}>
+                <li>Role-based portals for schools, SACCOs, clinics, and distribution teams.</li>
+                <li>Validated data entry with auditable change histories.</li>
+                <li>Inventory, member billing, dispatch, and reporting workflows.</li>
+                <li>Controlled migration from legacy Excel or CSV ledgers with backups.</li>
+                <li>Structured integration adapters into local payment and tax endpoints.</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Engineering Acceptance */}
-      <section className="section-full theme-dark band-section">
+      {/* 03 Software Rescue & Care */}
+      <section className="section-full theme-navy band-section" id="rescue-and-care">
         <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">Engineering acceptance</span>
-            <h2>Performance is measured—not promised by adjective.</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '16px' }}>
-              Each project receives checks appropriate to its risk and architecture. Where a performance budget is useful, we agree the metric, method, conditions and threshold before implementation. Lab results, real-user Core Web Vitals and synthetic availability checks are different evidence types.
-            </p>
-            <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
-              Accessibility targets are scoped against WCAG 2.2 AA and verified with automated checks plus manual review appropriate to the engagement. No compliance certification is implied.
-            </p>
+          <div className="governance-grid">
+            <div>
+              <span className="eyebrow">03 / Software rescue</span>
+              <h2>Stabilize what exists before deciding to replace it.</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '20px' }}>
+                For stalled or brittle production systems, we inspect the codebase and infrastructure, reproduce active failures, protect data integrity, and map prioritized fixes before recommending any rebuild.
+              </p>
+              <div className="callout-panel">
+                <h3 id="care" style={{ fontSize: '1.08rem', marginBottom: '8px' }}>Ongoing Engineering Care</h3>
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.65, margin: 0, fontSize: '0.9rem' }}>
+                  Post-launch maintenance operates under an explicit scope covering dependency updates, backup checks, security patches, and agreed response windows.
+                </p>
+              </div>
+            </div>
+
+            <div className="card" style={{ padding: '24px', alignSelf: 'start' }}>
+              <h3 style={{ fontSize: '1.08rem', margin: '0 0 12px' }}>Stabilization Deliverables</h3>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0, fontSize: '0.92rem' }}>
+                <li>Architecture, dependency, and security hygiene review.</li>
+                <li>Failure reproduction paired with automated regression safeguards.</li>
+                <li>Database backup verification and clean staging environment setup.</li>
+                <li>Repeatable release and rollback runbooks for your operations team.</li>
+                <li>Incremental hardening under clear milestone acceptance.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Typical Deliverables */}
-      <section className="section-full theme-navy band-section">
+      {/* Engineering Acceptance & Deliverables */}
+      <section className="section-full theme-dark band-section">
         <div className="container-expansive">
-          <div style={{ maxWidth: '680px', marginBottom: '28px' }}>
-            <span className="eyebrow">Typical deliverables</span>
-            <h2>Clear outputs and ownership</h2>
+          <div className="governance-grid" style={{ marginBottom: '48px' }}>
+            <div>
+              <span className="eyebrow">Engineering Acceptance</span>
+              <h2>Performance is measured, not claimed.</h2>
+            </div>
+            <div>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '12px' }}>
+                Every engagement sets verifiable payload budgets and WCAG 2.2 AA accessibility targets tested across actual mobile and desktop screen sizes before sign-off.
+              </p>
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
+                Clients receive full code ownership alongside clear operational runbooks and honest disclosure of system constraints.
+              </p>
+            </div>
           </div>
+
           <div className="grid-3">
             <article className="card">
               <span className="card-number">01 / CODE</span>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Working implementation</h3>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Working Implementation</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: 1.6 }}>
-                Changes that meet agreed requirements and acceptance criteria.
+                Production source code built to agreed architectural boundaries and acceptance criteria.
               </p>
             </article>
             <article className="card">
               <span className="card-number">02 / EVIDENCE</span>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Verification evidence</h3>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Verification Evidence</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: 1.6 }}>
-                Test results, known limitations and checks that could not be run.
+                Automated test outcomes, viewport reflow checks, and documented boundary behaviors.
               </p>
             </article>
             <article className="card">
               <span className="card-number">03 / OWNERSHIP</span>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Handover</h3>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Full Handover</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: 1.6 }}>
-                Deployment, access, operating and maintenance notes with responsibilities stated.
+                Deployment scripts, access rotation checklists, and operating documentation with zero vendor lock-in.
               </p>
             </article>
           </div>
@@ -159,21 +184,25 @@ export const PerformanceBuildsPage: React.FC<PerformanceBuildsPageProps> = ({
       </section>
 
       {/* Next Step */}
-      <section className="section-full theme-dark band-section">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
-          <div style={{ maxWidth: '68ch' }}>
-            <span className="eyebrow">Next step</span>
-            <h2>Choose the smallest useful starting point.</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '24px' }}>
-              Tell us whether you need a website, workflow system, repair or continued care. We establish constraints and scope before making a commitment.
-            </p>
-            <button
-              type="button"
-              className="button button-primary"
-              onClick={onOpenIntakeModal}
-            >
-              Discuss a build or rescue <span aria-hidden="true">↗</span>
-            </button>
+          <div className="cta-banner-grid">
+            <div>
+              <span className="eyebrow">Next step</span>
+              <h2>Choose the smallest useful starting point.</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, margin: 0 }}>
+                Tell us whether you need a business site, operational portal, or system rescue. We clarify constraints before recommending a scope.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                className="button button-primary"
+                onClick={onOpenIntakeModal}
+              >
+                Discuss a build or rescue <span aria-hidden="true">↗</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>

@@ -64,10 +64,10 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               </span>
               <h3 style={{ marginBottom: '12px' }}>Deterministic Quality Gates</h3>
               <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, margin: 0 }}>
-                <li>Scope changes require written classification: In Scope, Change Order, or Out of Scope.</li>
-                <li>Automated tests, contract tests, and boundary checks accompany every pull request.</li>
-                <li>Exceptions and edge cases surfaced explicitly; false green status never tolerated.</li>
-                <li>Consequential financial calculations and ledger updates retain human review checkpoints.</li>
+                <li>Scope updates require written review and mutual sign-off before adjusting schedules.</li>
+                <li>Automated tests, contract tests, and boundary checks accompany every release.</li>
+                <li>Exceptions and edge cases surface explicitly into auditable review queues.</li>
+                <li>Consequential financial calculations and ledger updates retain human approval gates.</li>
               </ul>
             </div>
 
@@ -94,47 +94,47 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
           <div className="grid-2" style={{ alignItems: 'center' }}>
             <div>
               <span className="eyebrow">Performance Architecture</span>
-              <h2>Low-Bandwidth &amp; Emerging Network Resilience</h2>
+              <h2>Built for Ugandan &amp; East African Cellular Networks</h2>
               <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7 }}>
-                Software built for emerging markets cannot rely on unmetered fiber or $1,200 smartphones. We engineer for actual network conditions in Kampala, Nairobi, and across regional cellular grids (MTN, Airtel).
+                Business software in East Africa cannot assume unmetered fiber or flagship hardware. We engineer around daily network conditions in Kampala, Nairobi, Kigali, and regional MTN and Airtel cellular corridors.
               </p>
-              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6, margin: 0 }}>
-                <li><strong>Static-First Astro Architecture:</strong> Pages pre-render to raw HTML and CSS at build time. Zero bloated hydration client JavaScript required to read content.</li>
-                <li><strong>Lean Critical Payloads:</strong> Pre-rendered semantic HTML and optimized CSS keep first paint responsive even on throttle-capped 3G connections.</li>
-                <li><strong>Entry-Level Hardware Friendly:</strong> Tested down to 320px/360px viewports on widely deployed Android devices without memory exhaustion or reflow jank.</li>
-                <li><strong>Stateless Edge Infrastructure:</strong> Distributed on Cloudflare’s global edge nodes with instant local cache hits, bypassing congested international transit.</li>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                <li><strong>Instant Content Rendering:</strong> Pages render meaningful text and controls immediately over 3G/4G connections without heavy download waterfalls.</li>
+                <li><strong>Lean Transfer Payloads:</strong> Compressed assets keep initial page weights light for staff working on metered mobile data bundles.</li>
+                <li><strong>Mobile Handset Ergonomics:</strong> Interfaces are tested from 320px entry-level smartphones up to widescreen displays without horizontal scrolling.</li>
+                <li><strong>Regional Edge Distribution:</strong> Static assets serve cleanly from distributed edge nodes near East African internet exchanges.</li>
               </ul>
             </div>
 
             <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
                 <Wifi size={22} color="var(--electric-blue)" />
-                <h3 style={{ margin: 0, fontSize: '1.25rem' }}>Network Constraints Policy</h3>
+                <h3 style={{ margin: 0, fontSize: '1.25rem' }}>Regional Resilience Benchmarks</h3>
               </div>
               <div className="table-wrapper" style={{ margin: '12px 0 0' }}>
                 <table style={{ fontSize: '0.86rem' }}>
                   <thead>
                     <tr>
-                      <th>Constraint</th>
+                      <th>Operational Factor</th>
                       <th>Production Standard</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><strong>Network Latency</strong></td>
-                      <td>Functional at 350ms+ RTT cellular latency</td>
+                      <td><strong>Cellular Latency</strong></td>
+                      <td>Responsive over high-RTT (350ms+) mobile networks</td>
                     </tr>
                     <tr>
-                      <td><strong>Initial Page Weight</strong></td>
-                      <td>Pre-rendered HTML/CSS shell; lean compressed assets (under 180 KB transfer limit)</td>
+                      <td><strong>Core Transfer Weight</strong></td>
+                      <td>Compressed pre-rendered HTML &amp; styles for metered 3G/4G bundles</td>
                     </tr>
                     <tr>
-                      <td><strong>Font Loading</strong></td>
-                      <td>Font-display: swap with zero FOIT (flash of invisible text)</td>
+                      <td><strong>Typography Readability</strong></td>
+                      <td>Immediate system-fallback rendering with zero invisible-text delays</td>
                     </tr>
                     <tr>
-                      <td><strong>Client Runtime</strong></td>
-                      <td>Zero framework tax on read-only marketing routes</td>
+                      <td><strong>Network Interruptions</strong></td>
+                      <td>Fail-closed queues preserving submissions when connectivity drops</td>
                     </tr>
                   </tbody>
                 </table>

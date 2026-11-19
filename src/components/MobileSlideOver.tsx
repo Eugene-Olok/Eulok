@@ -30,7 +30,7 @@ interface NavItem {
 
 const PRIMARY_ITEMS: NavItem[] = [
   { id: 'services', label: 'Services Overview', path: '/services' },
-  { id: 'rescue', label: 'Rescue Software', path: '/rescue', badge: 'High Priority' },
+  { id: 'rescue', label: 'Rescue Software', path: '/rescue' },
   { id: 'work', label: 'How We Work', path: '/work' },
   { id: 'case-studies', label: 'Work & Evidence', path: '/case-studies' },
   { id: 'insights', label: 'Engineering Notes', path: '/insights' },
@@ -261,7 +261,15 @@ export const MobileSlideOver: React.FC<MobileSlideOverProps> = ({
                             <Icon size={16} color={tool.color} />
                             <span className="slideover-tool-title">{tool.label}</span>
                           </div>
-                          <span className="mono-tag" style={{ fontSize: '0.64rem', padding: '1px 5px' }}>
+                          <span
+                            style={{
+                              fontFamily: 'var(--font-mono)',
+                              fontSize: '0.64rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.06em',
+                              color: 'var(--text-muted)',
+                            }}
+                          >
                             {tool.tag}
                           </span>
                         </div>

@@ -196,7 +196,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
               Model your system. Inspect every failure boundary.
             </h1>
             <p className="lead" style={{ maxWidth: '68ch', marginBottom: 0 }}>
-              Configure East African payment rails, tax interfaces, throughput constraints, and regulatory posture to inspect target architecture layers, failure-mode mitigations, logarithmic technical risk, and milestone delivery gates. Commercial pricing is discussed directly after technical review.
+              Configure East African payment rails, tax interfaces, throughput constraints, and regulatory posture to inspect target architecture layers, failure-mode mitigations, logarithmic technical risk, and milestone delivery gates. Commercial terms are finalized directly after technical review.
             </p>
           </div>
         </div>
@@ -350,7 +350,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
                 </span>
                 <h2 style={{ fontSize: '1.2rem', marginBottom: '14px' }}>Operational Throughput Tier</h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                <div className="scope-throughput-grid">
                   {[
                     { id: 'standard', label: 'Standard', desc: '< 10k tx/day' },
                     { id: 'high', label: 'High', desc: '10k–100k tx/day' },
@@ -375,7 +375,7 @@ export const ScopeCalculatorPage: React.FC<ScopeCalculatorPageProps> = ({
             </div>
 
             {/* Right Column: Live Architecture & Technical Feasibility */}
-            <div style={{ position: 'sticky', top: '90px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div className="scope-sticky-col" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {/* Executive Metrics & Deployment Context Card */}
               <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>

@@ -166,19 +166,25 @@ export const FinanceIntegrationsPage: React.FC<FinanceIntegrationsPageProps> = (
       {/* Problems We Address */}
       <section className="section-full theme-navy band-section">
         <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">Problems we address</span>
-            <h2>Reduce manual hand-offs without hiding failure.</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '18px' }}>
-              When teams re-enter transactions in multiple systems, status drifts and exceptions become hard to explain. We design integrations around explicit states, traceable events and recovery paths when dependencies fail.
-            </p>
-            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0 }}>
-              <li>Payment collection and transaction-status checks where provider access and onboarding permit.</li>
-              <li>API and webhook integrations with appropriate authorization and verification.</li>
-              <li>CRM, invoicing, accounting and operational data synchronization.</li>
-              <li>Duplicate prevention, bounded retries and idempotent processing where supported.</li>
-              <li>Exception queues, reconciliation reports and audit-friendly references.</li>
-            </ul>
+          <div className="governance-grid">
+            <div>
+              <span className="eyebrow">Problems we address</span>
+              <h2>Eliminate manual re-entry without hiding failures.</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, margin: 0 }}>
+                When operations staff copy transactions between mobile-money portals, accounting software, and POS systems, records fall out of sync. We architect integrations with explicit states, cryptographic signatures, and clean recovery queues.
+              </p>
+            </div>
+
+            <div className="card" style={{ padding: '24px' }}>
+              <h3 style={{ fontSize: '1.08rem', margin: '0 0 12px' }}>Core Integration Safeguards</h3>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0, fontSize: '0.92rem' }}>
+                <li>MTN MoMo &amp; Airtel Money collection and disbursement adapters.</li>
+                <li>Signed URA EFRIS fiscalization workflows with offline store-and-forward queuing.</li>
+                <li>CRM, invoicing, ERP, and accounting ledger synchronization.</li>
+                <li>Distributed idempotency keys preventing duplicate credits on network retries.</li>
+                <li>Auditable exception queues and clean manual replay controls.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -416,118 +422,107 @@ export const FinanceIntegrationsPage: React.FC<FinanceIntegrationsPageProps> = (
         )}
       </ErrorBoundary>
 
-      {/* Uganda Context */}
-      <section className="section-full theme-dark band-section">
+      {/* Uganda & EAC Context + Workflow Automation */}
+      <section className="section-full theme-dark band-section" id="workflow-automation">
         <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">Uganda context</span>
-            <h2>EFRIS and mobile-money workflows</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '16px' }}>
-              We can assess an integration path for an existing invoicing or accounting system and relevant URA EFRIS interfaces. Feasibility depends on current URA requirements, client authorization, available interfaces and onboarding. EULOK does not claim URA accreditation or provide tax advice.
-            </p>
-            <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
-              Mobile-money integration depends on the specific provider product, live-access approval, commercial terms and technical documentation. A sandbox result is not represented as proof of production readiness.
-            </p>
-          </div>
-        </div>
-      </section>
+          <div className="governance-grid">
+            <div className="card" style={{ padding: '26px' }}>
+              <span className="eyebrow">Uganda &amp; East Africa Context</span>
+              <h2 style={{ fontSize: '1.6rem' }}>URA EFRIS &amp; mobile-money workflows</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '14px', fontSize: '0.94rem' }}>
+                We engineer resilient bridges between your POS, ERP, or billing portal and URA EFRIS interfaces, dependent on client authorization and URA onboarding. EULOK provides engineering integration rather than tax advisory.
+              </p>
+              <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, margin: 0, fontSize: '0.92rem' }}>
+                Carrier integration timelines follow MTN MoMo, Airtel Money, and commercial bank onboarding approvals, verified in live staging rather than assumed from sandbox calls.
+              </p>
+            </div>
 
-      {/* Workflow Automation */}
-      <section className="section-full theme-navy band-section" id="workflow-automation">
-        <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">Related service</span>
-            <h2>Workflow automation with control points</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '18px' }}>
-              Routine work can be automated around an integration: route a follow-up, notify the responsible person, update a CRM record, prepare a report or hand off a document. Decisions with financial, legal or operational consequences retain explicit human approval unless a separately approved control model says otherwise.
-            </p>
-            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0 }}>
-              <li>Defined trigger and preconditions.</li>
-              <li>Duplicate-safe actions and bounded retry behavior.</li>
-              <li>Visible success, failure and exception states.</li>
-              <li>Human review and documented manual recovery.</li>
-            </ul>
+            <div className="card" style={{ padding: '26px' }}>
+              <span className="eyebrow">Controlled Automation</span>
+              <h2 style={{ fontSize: '1.6rem' }}>Workflow automation with approval gates</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '14px', fontSize: '0.94rem' }}>
+                Routine routing, document preparation, and ledger syncing run automatically while high-stakes disbursements and adjustments halt cleanly for accountable operator sign-off.
+              </p>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', lineHeight: 1.7, margin: 0, fontSize: '0.9rem' }}>
+                <li>Explicit event triggers and idempotent duplicate guards.</li>
+                <li>Bounded backoff retries with dead-letter exception queues.</li>
+                <li>Traceable transaction references for end-of-day audit.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Typical Deliverables */}
-      <section className="section-full theme-dark band-section">
+      <section className="section-full theme-navy band-section">
         <div className="container-expansive">
           <div style={{ maxWidth: '680px', marginBottom: '28px' }}>
             <span className="eyebrow">Typical deliverables</span>
-            <h2>What an engagement can produce</h2>
+            <h2>What an integration engagement delivers</h2>
           </div>
           <div className="grid-3">
             <article className="card">
               <span className="card-number">01 / DESIGN</span>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Integration design</h3>
+              <h3 style={{ fontSize: '1.22rem', marginBottom: '10px' }}>Integration Design</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: 1.6 }}>
-                System map, event/state model, permissions, dependencies and failure modes.
+                System topology, webhook state diagrams, failure modes, and permission boundaries.
               </p>
             </article>
             <article className="card">
               <span className="card-number">02 / IMPLEMENTATION</span>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Tested adapters</h3>
+              <h3 style={{ fontSize: '1.22rem', marginBottom: '10px' }}>Tested Adapters</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: 1.6 }}>
-                Provider-specific code with contract tests and sandbox evidence where available.
+                Carrier and fiscal API adapters verified with HMAC signature and replay test suites.
               </p>
             </article>
             <article className="card">
               <span className="card-number">03 / OPERATIONS</span>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Operational visibility</h3>
+              <h3 style={{ fontSize: '1.22rem', marginBottom: '10px' }}>Operational Visibility</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, lineHeight: 1.6 }}>
-                Traceable identifiers, exception reporting and a defined recovery procedure.
+                End-to-end correlation IDs, exception queues, and documented manual replay runbooks.
               </p>
             </article>
           </div>
-          <p style={{ marginTop: '20px', marginBottom: 0, color: 'var(--text-subtle)', fontSize: '0.92rem' }}>
-            Exact deliverables and acceptance criteria are agreed in writing before implementation.
-          </p>
         </div>
       </section>
 
-      {/* Boundaries */}
-      <section className="section-full theme-navy band-section">
-        <div className="container-expansive">
-          <div style={{ maxWidth: '72ch' }}>
-            <span className="eyebrow">Boundaries</span>
-            <h2>What must be established first</h2>
-            <ul style={{ paddingLeft: '20px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0 }}>
-              <li>Client owns or is authorised to access every system and account in scope.</li>
-              <li>Provider documentation, credentials, sandbox/live access and onboarding are confirmed.</li>
-              <li>Data sensitivity, retention, permissions and audit requirements are documented.</li>
-              <li>Financial records are not silently overwritten; correction and reconciliation paths are agreed.</li>
-              <li>Production readiness is assessed separately from a demo or sandbox call.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Next Step */}
+      {/* Boundaries & Next Step */}
       <section className="section-full theme-dark band-section">
         <div className="container-expansive">
-          <div style={{ maxWidth: '68ch' }}>
-            <span className="eyebrow">Next step</span>
-            <h2>Map the systems before choosing the integration.</h2>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '24px' }}>
-              Describe the systems involved, where information is re-entered and what happens when a transaction fails or arrives twice.
-            </p>
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <button
-                type="button"
-                className="button button-primary"
-                onClick={() => onOpenIntakeModal({ need: 'Connect payments or business tools' })}
-              >
-                Discuss an integration <span aria-hidden="true">↗</span>
-              </button>
-              <button
-                type="button"
-                className="button button-quiet"
-                onClick={() => onNavigate('services/reconciliation')}
-              >
-                Related: payment reconciliation →
-              </button>
+          <div className="governance-grid">
+            <div className="card" style={{ padding: '26px' }}>
+              <span className="eyebrow">Prerequisites</span>
+              <h2 style={{ fontSize: '1.5rem' }}>What must be established first</h2>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-muted)', lineHeight: 1.75, margin: 0, fontSize: '0.92rem' }}>
+                <li>Client holds authorized ownership for every target merchant or bank account.</li>
+                <li>Provider onboarding, sandbox credentials, and documentation are confirmed.</li>
+                <li>Audit trails, data retention, and exception ownership rules are agreed in writing.</li>
+                <li>Production cutover is verified separately from carrier sandbox endpoints.</li>
+              </ul>
+            </div>
+
+            <div className="card" style={{ padding: '26px', borderColor: 'var(--line-strong)', alignSelf: 'start' }}>
+              <span className="eyebrow">Next Step</span>
+              <h2 style={{ fontSize: '1.5rem' }}>Map the rails before building the adapter.</h2>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '22px' }}>
+                Tell us which systems need to synchronize and what fails when carrier callbacks time out or arrive twice.
+              </p>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <button
+                  type="button"
+                  className="button button-primary"
+                  onClick={() => onOpenIntakeModal({ need: 'Connect payments or business tools' })}
+                >
+                  Discuss an integration <span aria-hidden="true">↗</span>
+                </button>
+                <button
+                  type="button"
+                  className="button button-quiet"
+                  onClick={() => onNavigate('services/reconciliation')}
+                >
+                  Related: payment reconciliation →
+                </button>
+              </div>
             </div>
           </div>
         </div>

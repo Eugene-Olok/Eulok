@@ -64,104 +64,104 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
       criteria: [
         {
           name: 'Zero Client-Side Credentials',
-          detail: 'API keys, webhook secrets, and private signing tokens are never bundled in client code; verified via automated Gitleaks static analysis.',
+          detail: 'API keys, webhook secrets, and private signing tokens are excluded from client bundles and verified through automated secret scanning.',
           standard: 'Credential Isolation',
         },
         {
           name: 'Strict Environment Failsafes',
-          detail: 'Endpoints and functions fail closed if critical environment variables are absent; zero fallback default secrets allowed in codebase.',
+          detail: 'Serverless routes fail closed if required environment variables are absent, with zero fallback default secrets in source control.',
           standard: 'Fail-Closed Defaults',
         },
         {
           name: 'RFC 9116 Vulnerability Disclosure',
-          detail: 'Institutional security contact protocol and PGP disclosure keys published under standard /.well-known/security.txt endpoints.',
+          detail: 'Public vulnerability reporting instructions are published at /.well-known/security.txt.',
           standard: 'RFC 9116 Validated',
         },
         {
           name: 'Statutory Data Protection',
-          detail: 'Client intake and operational data comply with the Uganda Data Protection and Privacy Act 2019 with explicit retention schedules.',
+          detail: 'Client intake and operational records follow Uganda Data Protection and Privacy Act 2019 retention schedules.',
           standard: 'DPPA 2019 Conformance',
         },
       ],
     },
     {
       title: 'Responsive & Multi-Viewport Engineering',
-      subtitle: 'Verified fluid layouts across actual physical screen widths without horizontal scroll',
+      subtitle: 'Verified fluid layouts across actual phone, tablet, and desktop widths without horizontal scroll',
       icon: Smartphone,
       criteria: [
         {
           name: '320px Viewport Integrity',
-          detail: 'Layouts reflow cleanly down to 320px (compact budget Android standard) without horizontal overflow or clipped typography.',
+          detail: 'Layouts reflow cleanly down to 320px compact mobile screens without horizontal overflow or clipped typography.',
           standard: 'Zero Horizontal Overflow',
         },
         {
           name: 'Fluid Typography & Spacing',
-          detail: 'Font sizes and container gutters use CSS clamp() tokens, preventing abrupt reflow jumps across tablet and mobile breakpoints.',
+          detail: 'Font sizes and layout spacing adapt smoothly across phone, tablet, and widescreen breakpoints.',
           standard: 'Fluid Token Scales',
         },
         {
           name: 'Safe-Area & Fixed Element Insets',
-          detail: 'Interactive floating controls respect hardware safe-area insets (iOS home bar, Android gesture zones) and never obscure underlying content.',
+          detail: 'Floating drawers and overlays respect hardware safe-area insets and never obscure primary reading flows.',
           standard: 'Unobstructed Viewports',
         },
         {
           name: 'Touch Target Compliance',
-          detail: 'Interactive buttons, menu toggles, and form inputs provide a minimum 44×44px hit target for reliable mobile ergonomics.',
+          detail: 'Interactive buttons, menu toggles, and inputs provide generous 44×44px minimum tap areas on mobile devices.',
           standard: '≥ 44px Touch Targets',
         },
       ],
     },
     {
       title: 'Accessibility & Usability (WCAG 2.2 AA)',
-      subtitle: 'Inclusive digital surfaces engineered for keyboard navigation and assistive screen readers',
+      subtitle: 'Inclusive digital interfaces engineered for keyboard navigation and assistive screen readers',
       icon: Eye,
       criteria: [
         {
           name: 'Full Keyboard Navigability',
-          detail: 'All interactive elements, drawers, and modal dialogs are reachable via Tab/Shift+Tab, with Escape keys bound to close operations.',
+          detail: 'All menus, drawers, and interactive tools operate seamlessly via Tab/Shift+Tab and Escape dismissal.',
           standard: 'Keyboard Operable',
         },
         {
           name: 'Visible Focus Indicators',
-          detail: 'High-contrast 2px focus outlines (:focus-visible) render consistently across all actionable buttons and links in both dark and light modes.',
+          detail: 'High-contrast focus outlines render consistently across interactive buttons and links in both dark and light modes.',
           standard: 'Visible Focus Rings',
         },
         {
-          name: 'Contrast Ratios & Editorial Color',
-          detail: 'Body copy exceeds 4.5:1 contrast against backdrops; large display headers exceed 3:1. Color is never the sole conveyer of status.',
+          name: 'Verified Contrast Ratios',
+          detail: 'Body copy exceeds 4.5:1 contrast against surfaces; display headers exceed 3:1, paired with non-color cues.',
           standard: '≥ 4.5:1 Body Contrast',
         },
         {
           name: 'Accessible Dialog Traps & Semantics',
-          detail: 'Modals and slide-over drawers implement proper aria-modal="true", role="dialog", and focus restoration on dismissal.',
+          detail: 'Drawers and modals implement accessible dialog roles, semantic headings, and focus restoration on dismissal.',
           standard: 'WAI-ARIA Conforming',
         },
       ],
     },
     {
       title: 'Production Edge Architecture',
-      subtitle: 'Serverless, pre-rendered global Anycast distribution with atomic release cutovers',
+      subtitle: 'Serverless, pre-rendered regional delivery with clean atomic releases',
       icon: Server,
       criteria: [
         {
-          name: '100% Pre-rendered Static Pages',
-          detail: 'Core marketing and documentation pages compile to static HTML/CSS. Content is fully readable without executing client-side JavaScript.',
-          standard: 'Astro 5 SSG Compilation',
+          name: 'Pre-Rendered Core Pages',
+          detail: 'Core marketing and documentation pages deliver clean pre-rendered HTML and CSS readable immediately over cellular networks.',
+          standard: 'Instant HTML First Paint',
         },
         {
-          name: 'Cloudflare Pages Anycast Network',
-          detail: 'Assets are distributed across Cloudflare Pages Anycast edge locations, ensuring sub-100ms first-byte response times across Uganda and East Africa.',
-          standard: 'Global Anycast Edge',
+          name: 'Regional Anycast Delivery',
+          detail: 'Static web payloads cache close to users across Kampala, Nairobi, and East African mobile corridors.',
+          standard: 'Low-Latency Edge Cache',
         },
         {
           name: 'Immutable Atomic Deployments',
-          detail: 'Each production deployment is tied to an immutable git commit hash, allowing instant roll-forward or rollback without downtime.',
-          standard: 'Atomic Git Cutover',
+          detail: 'Production deployments tie directly to clean repository releases allowing instant rollback without downtime.',
+          standard: 'Atomic Release Cutover',
         },
         {
-          name: 'Stateless Edge Functions',
-          detail: 'Inquiry processing routes (/api/intake) execute in isolated edge V8 isolates with zero permanent database credential exposure.',
-          standard: 'Stateless Edge V8',
+          name: 'Stateless Form & Routing Boundaries',
+          detail: 'Project inquiry handlers run cleanly at the edge without exposing sensitive backend credentials.',
+          standard: 'Stateless Edge Isolation',
         },
       ],
     },
@@ -195,51 +195,45 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
               How EULOK verifies software architectures before production release. We reject subjective claims and self-graded checkboxes. Every deliverable is verified through reproducible automated tests, security boundary isolation, accessibility audits, and multi-viewport responsive testing.
             </p>
 
-            <blockquote className="callout-stripe" style={{ maxWidth: '60ch', margin: 0 }}>
-              <strong>Core Rule:</strong> Explicit verification over assumptions. We never treat informal assertions or unverified outputs as proof of correctness. Critical software requires reproducible, auditable evidence.
+            <blockquote className="callout-panel" style={{ maxWidth: '60ch', margin: 0 }}>
+              <strong>Core Rule:</strong> Explicit verification over assumptions. Every critical system requires reproducible, auditable acceptance evidence prior to launch.
             </blockquote>
           </div>
         </div>
       </section>
 
-      {/* The Five Verification Disciplines */}
+      {/* The Five Verification Disciplines (Open Hierarchy, Zero Nested Cards-within-Cards) */}
       <section className="section-full theme-navy band-section">
         <div className="container-expansive">
-          <div style={{ marginBottom: '36px' }}>
+          <div style={{ marginBottom: '12px' }}>
             <span className="eyebrow">The EULOK Quality Spine</span>
             <h2>Five Architectural Verification Disciplines</h2>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '64ch', lineHeight: 1.6 }}>
-              Production software must survive hostile network environments, unexpected edge cases, and continuous operation. We test deliverables against five core dimensions:
+            <p style={{ color: 'var(--text-muted)', maxWidth: '64ch', lineHeight: 1.6, marginBottom: 0 }}>
+              Production software must survive hostile network conditions, carrier retries, and continuous daily operation. Every deliverable passes five verification disciplines:
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {pillars.map((pillar, pIdx) => {
               const Icon = pillar.icon;
               return (
-                <div
-                  key={pillar.title}
-                  className="card"
-                  style={{
-                    padding: 'clamp(20px, 3.5vw, 36px)',
-                    borderColor: 'var(--line-strong)',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '20px' }}>
+                <div key={pillar.title} className="pillar-section">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px', marginBottom: '16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                       <div
                         style={{
-                          width: '42px',
-                          height: '42px',
+                          width: '40px',
+                          height: '40px',
                           borderRadius: '8px',
                           background: 'rgba(56, 189, 248, 0.1)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           border: '1px solid rgba(56, 189, 248, 0.25)',
+                          flexShrink: 0,
                         }}
                       >
-                        <Icon size={20} color="var(--electric-blue)" />
+                        <Icon size={19} color="var(--electric-blue)" />
                       </div>
                       <div>
                         <span className="card-number" style={{ margin: 0 }}>DISCIPLINE 0{pIdx + 1}</span>
@@ -248,11 +242,11 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
                     </div>
 
                     <span className="mono-tag" style={{ color: 'var(--text-muted)' }}>
-                      MANDATORY RELEASE GATE
+                      RELEASE GATE
                     </span>
                   </div>
 
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '24px', maxWidth: '68ch' }}>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem', marginBottom: '22px', maxWidth: '68ch' }}>
                     {pillar.subtitle}
                   </p>
 
@@ -260,24 +254,23 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({
                     {pillar.criteria.map((item) => (
                       <div
                         key={item.name}
-                        className="surface-inset"
+                        className="card"
                         style={{
-                          padding: '16px',
-                          borderRadius: '8px',
+                          padding: '20px',
                           display: 'flex',
                           flexDirection: 'column',
-                          gap: '6px',
+                          gap: '8px',
                         }}
                       >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '6px' }}>
-                          <strong style={{ fontSize: '0.94rem', color: 'var(--warm-white)', minWidth: 0, flex: '1 1 auto' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '8px' }}>
+                          <strong style={{ fontSize: '0.96rem', color: 'var(--warm-white)' }}>
                             {item.name}
                           </strong>
-                          <span className="badge badge-accent" style={{ fontSize: '0.68rem', padding: '1px 6px', flexShrink: 0 }}>
+                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--electric-blue)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                             {item.standard}
                           </span>
                         </div>
-                        <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>
+                        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.55 }}>
                           {item.detail}
                         </p>
                       </div>

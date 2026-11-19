@@ -69,136 +69,76 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div className="grid-2" style={{ gap: '24px' }}>
             {/* Stage 01 */}
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span className="card-number" style={{ margin: 0 }}>01 — DISCOVER</span>
-                <span className="badge badge-neutral">Stage 1</span>
-              </div>
+              <span className="card-number">01 — DISCOVER</span>
               <h3>Understand the business problem</h3>
               <p>
-                We investigate what is failing today, who uses the process, what systems are touched, what has already been attempted, and what operational constraints matter. If the problem is ambiguous, we recommend a bounded assessment rather than guessing.
+                We investigate what is failing today, who uses the workflow, which systems interact, and what regional network or regulatory constraints apply.
               </p>
-              <div className="grid-2" style={{ marginTop: '16px', fontSize: '0.88rem' }}>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Deliverables:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Initial requirements, existing-system diagnostic, stakeholder map, constraints and unknowns list.</span>
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Exit Condition:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Problem and intended business outcome are sufficiently understood and documented.</span>
-                </div>
+              <div style={{ marginTop: 'auto', paddingTop: '14px', borderTop: '1px solid var(--line)', fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+                <strong style={{ color: 'var(--warm-white)' }}>Exit Gate:</strong> Operational constraints, existing-system findings, and target outcomes agreed.
               </div>
             </div>
 
             {/* Stage 02 */}
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span className="card-number" style={{ margin: 0 }}>02 — SCOPE</span>
-                <span className="badge badge-neutral">Stage 2</span>
-              </div>
-              <h3>Define the work before implementation</h3>
+              <span className="card-number">02 — SCOPE</span>
+              <h3>Define the work before building</h3>
               <p>
-                We document deliverables, measurable acceptance criteria, explicit exclusions, dependencies, and commercial terms in writing. Unknowns remain visible until resolved; changes are not silently absorbed.
+                Deliverables, measurable acceptance criteria, technical assumptions, and exclusions are agreed in writing before engineering begins.
               </p>
-              <div className="grid-2" style={{ marginTop: '16px', fontSize: '0.88rem' }}>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Deliverables:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Scope specification, acceptance criteria, exclusions list, technical assumptions, fixed cost/timeline estimate.</span>
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Exit Condition:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Both lead engineer and client approve written terms and commercial scope.</span>
-                </div>
+              <div style={{ marginTop: 'auto', paddingTop: '14px', borderTop: '1px solid var(--line)', fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+                <strong style={{ color: 'var(--warm-white)' }}>Exit Gate:</strong> Written specification and milestone schedule approved by both parties.
               </div>
             </div>
 
             {/* Stage 03 */}
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span className="card-number" style={{ margin: 0 }}>03 — DESIGN</span>
-                <span className="badge badge-neutral">Stage 3</span>
-              </div>
-              <h3>Design the system before committing code</h3>
+              <span className="card-number">03 — DESIGN</span>
+              <h3>Architect data and failure boundaries</h3>
               <p>
-                We draft interface contracts, normalized database schemas, security boundaries, and user journeys. We establish how the software fails closed when dependencies drop out.
+                We design relational schemas, webhook authentication, user journeys, and fail-closed exception queues before committing production code.
               </p>
-              <div className="grid-2" style={{ marginTop: '16px', fontSize: '0.88rem' }}>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Deliverables:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>System architecture map, data schema, user journeys, security controls, integration API contracts.</span>
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Exit Condition:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Architecture and boundary contracts validated against project constraints.</span>
-                </div>
+              <div style={{ marginTop: 'auto', paddingTop: '14px', borderTop: '1px solid var(--line)', fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+                <strong style={{ color: 'var(--warm-white)' }}>Exit Gate:</strong> System topology and integration contracts validated against operational limits.
               </div>
             </div>
 
             {/* Stage 04 */}
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span className="card-number" style={{ margin: 0 }}>04 — BUILD & VERIFY</span>
-                <span className="badge badge-neutral">Stage 4</span>
-              </div>
-              <h3>Implement in controlled increments with automated tests</h3>
+              <span className="card-number">04 — BUILD &amp; VERIFY</span>
+              <h3>Implement with automated test coverage</h3>
               <p>
-                Code is written cleanly with high test coverage, strict type safety, and security reviews. Failures are treated as first-class citizens, accounting for timeouts, duplicates, and ambiguous records.
+                Features ship in reviewable increments verified against deterministic unit suites, duplicate-event simulations, and mobile reflow checks.
               </p>
-              <div className="grid-2" style={{ marginTop: '16px', fontSize: '0.88rem' }}>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Deliverables:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Working software increments, automated unit & integration tests, security checks, review evidence.</span>
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Exit Condition:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>All agreed automated acceptance gates pass with zero regressions.</span>
-                </div>
+              <div style={{ marginTop: 'auto', paddingTop: '14px', borderTop: '1px solid var(--line)', fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+                <strong style={{ color: 'var(--warm-white)' }}>Exit Gate:</strong> All acceptance tests and release verification gates pass cleanly.
               </div>
             </div>
 
             {/* Stage 05 */}
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span className="card-number" style={{ margin: 0 }}>05 — DEPLOY & HAND OVER</span>
-                <span className="badge badge-neutral">Stage 5</span>
-              </div>
-              <h3>Release responsibly with documented ownership</h3>
+              <span className="card-number">05 — DEPLOY &amp; HAND OVER</span>
+              <h3>Release cleanly with full ownership</h3>
               <p>
-                Deployment is carried out according to documented runbooks. We provide deployment artifacts, configuration guides, operating instructions, and an honest disclosure of limits.
+                Production launches follow repeatable runbooks with clean repository transfer, credential rotation, and transparent operational guides.
               </p>
-              <div className="grid-2" style={{ marginTop: '16px', fontSize: '0.88rem' }}>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Deliverables:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Production deployment, configuration documentation, operating runbooks, source repository ownership transfer.</span>
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Exit Condition:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Deliverables verified against agreed acceptance criteria and signed off by client.</span>
-                </div>
+              <div style={{ marginTop: 'auto', paddingTop: '14px', borderTop: '1px solid var(--line)', fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+                <strong style={{ color: 'var(--warm-white)' }}>Exit Gate:</strong> Deliverables verified on production staging and signed off by your team.
               </div>
             </div>
 
             {/* Stage 06 */}
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span className="card-number" style={{ margin: 0 }}>06 — OPERATE & IMPROVE</span>
-                <span className="badge badge-neutral">Stage 6</span>
-              </div>
-              <h3>Continuous stability under an explicit care boundary</h3>
+              <span className="card-number">06 — OPERATE &amp; IMPROVE</span>
+              <h3>Maintain stability under clear support windows</h3>
               <p>
-                Where contracted, we provide ongoing monitoring, security patch management, bug fixes, and incremental enhancements under explicit service windows.
+                Where retained, we handle security patches, dependency updates, backup verification, and targeted enhancements inside agreed SLAs.
               </p>
-              <div className="grid-2" style={{ marginTop: '16px', fontSize: '0.88rem' }}>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Deliverables:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Scheduled maintenance, security updates, incident resolution, performance monitoring reports.</span>
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>Exit Condition:</strong>
-                  <span style={{ color: 'var(--text-muted)' }}>Contractual maintenance and support obligations fulfilled.</span>
-                </div>
+              <div style={{ marginTop: 'auto', paddingTop: '14px', borderTop: '1px solid var(--line)', fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+                <strong style={{ color: 'var(--warm-white)' }}>Exit Gate:</strong> Scheduled maintenance and support commitments fulfilled cleanly.
               </div>
             </div>
           </div>
@@ -243,39 +183,39 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
                   <td><span className="badge badge-neutral">Blocking Gate</span></td>
                 </tr>
                 <tr>
-                  <th scope="row">Browser &amp; E2E</th>
-                  <td>Critical user journeys, responsive reflow, form validation</td>
-                  <td>Playwright headless Chromium across mobile &amp; desktop viewports</td>
-                  <td>Clean runtime console, zero horizontal overflow (320px–1440px)</td>
-                  <td><span className="badge badge-neutral">Pre-Release Check</span></td>
+                  <th scope="row">Browser &amp; Responsive</th>
+                  <td>Critical user flows, mobile reflow, form validation</td>
+                  <td>Headless multi-device testing (320px mobile to 1440px desktop)</td>
+                  <td>Clean console and zero horizontal overflow</td>
+                  <td>Pre-Release Check</td>
                 </tr>
                 <tr>
                   <th scope="row">Accessibility</th>
-                  <td>Keyboard navigation, contrast, landmarks, focus rings</td>
-                  <td>Automated axe-core checks + manual keyboard walkthrough</td>
-                  <td>WCAG 2.2 AA contrast &amp; focus targets verified</td>
-                  <td><span className="badge badge-neutral">Pre-Release Check</span></td>
+                  <td>Keyboard navigation, contrast ratios, focus indicators</td>
+                  <td>Automated conformance audit &amp; manual keyboard walkthrough</td>
+                  <td>WCAG 2.2 AA contrast &amp; target size compliance</td>
+                  <td>Pre-Release Check</td>
                 </tr>
                 <tr>
                   <th scope="row">Security &amp; Secrets</th>
-                  <td>Gitleaks secret scanning, credential isolation, dependency audit</td>
-                  <td>Static analysis, npm audit, zero tokens in Git</td>
-                  <td>0 high/critical vulnerabilities, 0 exposed keys</td>
-                  <td><span className="badge badge-neutral">Blocking Gate</span></td>
+                  <td>Secret scanning, credential isolation, dependency hygiene</td>
+                  <td>Repository secret verification &amp; vulnerability audit</td>
+                  <td>Zero exposed tokens or unpatched critical CVEs</td>
+                  <td>Blocking Gate</td>
                 </tr>
                 <tr>
                   <th scope="row">Performance</th>
-                  <td>Payload budget, Core Web Vitals (LCP, INP, CLS)</td>
-                  <td>Compressed asset budget inspection &amp; network throttling checks</td>
-                  <td>Pre-rendered HTML/CSS first paint; lean compressed payload budget</td>
-                  <td><span className="badge badge-neutral">Release Budget</span></td>
+                  <td>Payload budget and mobile load latency</td>
+                  <td>Asset compression audit on 3G/4G network profiles</td>
+                  <td>Pre-rendered HTML/CSS shell within transfer limits</td>
+                  <td>Release Budget</td>
                 </tr>
                 <tr>
-                  <th scope="row">Release Verification</th>
-                  <td>Live production smoke test, DNS canonicals, SSL</td>
-                  <td>HTTP header inspection, live endpoint health probes</td>
-                  <td>Confirmed HTTP 200 routing, accurate canonicals &amp; security.txt</td>
-                  <td><span className="badge badge-neutral">Post-Deploy Probe</span></td>
+                  <th scope="row">Production Verification</th>
+                  <td>Live domain routing, HTTPS headers, security contacts</td>
+                  <td>Post-deploy route &amp; endpoint verification probes</td>
+                  <td>Verified HTTP 200 routing, canonicals &amp; RFC 9116 contact</td>
+                  <td>Post-Deploy Check</td>
                 </tr>
               </tbody>
             </table>
@@ -283,44 +223,45 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({
         </div>
       </section>
 
-      {/* Commercial Terms & Surprise Prevention */}
+      {/* Delivery Commitments & Engagement Cadence */}
       <section className="section-full theme-dark" style={{ padding: 'clamp(64px, 8vw, 96px) 0', borderTop: '1px solid var(--line)' }}>
         <div className="container-expansive">
-          <div className="grid-2">
+          <div className="governance-grid">
             <div>
               <span className="eyebrow">Clear Commitments</span>
               <h2>Designed to prevent avoidable surprises.</h2>
               <p>
-                Surprises in software engineering happen when scope expands silently, edge cases are ignored until launch day, or pricing terms are left ambiguous. We address these at the outset:
+                Software projects stall when edge cases are deferred until launch week or technical boundaries stay unspoken. We keep accountability visible from day one:
               </p>
-              <ul style={{ paddingLeft: '18px', color: 'var(--text-subtle)' }}>
-                <li style={{ marginBottom: '10px' }}><strong>Scope stays visible:</strong> Any new feature request is scoped and quoted as a formal Change Order rather than silently expanding deadlines.</li>
-                <li style={{ marginBottom: '10px' }}><strong>Failures are first-class:</strong> We design for dropped mobile signals, duplicate webhooks, and unexpected data formats.</li>
-                <li style={{ marginBottom: '10px' }}><strong>Money-moving logic gets care:</strong> Financial code is isolated and tested against golden datasets with exact Decimal units.</li>
-                <li><strong>Ownership is absolute:</strong> When an engagement closes, you own the code and runbooks. No vendor lock-in.</li>
+              <ul style={{ paddingLeft: '18px', color: 'var(--text-subtle)', lineHeight: 1.7 }}>
+                <li style={{ marginBottom: '10px' }}><strong>Written scope &amp; mutual sign-off:</strong> Feature additions are reviewed and agreed before shifting release dates.</li>
+                <li style={{ marginBottom: '10px' }}><strong>Resilient failure handling:</strong> We design explicitly for dropped cellular signals, duplicate callbacks, and malformed exports.</li>
+                <li style={{ marginBottom: '10px' }}><strong>Money-moving logic gets care:</strong> Financial code runs on exact integer units tested against golden datasets.</li>
+                <li><strong>Complete ownership transfer:</strong> Your team leaves with clean source code, runbooks, and zero lock-in.</li>
               </ul>
             </div>
 
-            <div className="card" style={{ borderColor: 'var(--line-strong)' }}>
-              <h3>Commercial Engagement Models</h3>
+            <div className="card" style={{ borderColor: 'var(--line-strong)', alignSelf: 'start' }}>
+              <span className="card-number">ENGAGEMENT CADENCE</span>
+              <h3 style={{ marginBottom: '16px' }}>Structured Around Real Discovery</h3>
               <div style={{ marginBottom: '16px' }}>
-                <strong style={{ color: 'var(--warm-white)', display: 'block', fontSize: '0.95rem' }}>Fixed-Scope Assessment</strong>
-                <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: 0 }}>
-                  A bounded 1–2 week technical diagnostic covering architecture, code rescue, or feasibility scoping. Ideal when the root cause is still unknown.
+                <strong style={{ color: 'var(--warm-white)', display: 'block', fontSize: '0.95rem' }}>Targeted Technical Diagnostic</strong>
+                <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.55 }}>
+                  A bounded 1–2 week assessment for rescuing stalled systems or verifying integration feasibility before committing a larger build.
                 </p>
               </div>
 
               <div style={{ marginBottom: '16px' }}>
-                <strong style={{ color: 'var(--warm-white)', display: 'block', fontSize: '0.95rem' }}>Milestone-Based Build</strong>
-                <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: 0 }}>
-                  Structured milestone deliveries with payments tied to observable acceptance criteria. Neither side proceeds until the prior milestone is verified.
+                <strong style={{ color: 'var(--warm-white)', display: 'block', fontSize: '0.95rem' }}>Milestone-Verified Delivery</strong>
+                <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.55 }}>
+                  Engineering organized into observable staging milestones—moving forward only when acceptance tests pass.
                 </p>
               </div>
 
               <div>
-                <strong style={{ color: 'var(--warm-white)', display: 'block', fontSize: '0.95rem' }}>Ongoing Engineering Care</strong>
-                <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: 0 }}>
-                  A monthly retainer covering security patches, monitoring, dependency maintenance, and agreed developer hours for iterative improvements.
+                <strong style={{ color: 'var(--warm-white)', display: 'block', fontSize: '0.95rem' }}>Direct Commercial Consultation</strong>
+                <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.55 }}>
+                  Commercial terms and schedules are discussed transparently after reviewing your systems and constraints.
                 </p>
               </div>
 

@@ -1,6 +1,7 @@
 import { navigateTo, openIntakeModal } from '../utils/navigation';
 import React from 'react';
 import { ArrowRight, CheckCircle2, Shield, Terminal, Scale, Lock, RefreshCw, Eye } from 'lucide-react';
+import { EditorialVisual } from '../components/EditorialVisual';
 
 interface AboutPageProps {
   onNavigate?: (page: string) => void;
@@ -76,25 +77,36 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       {/* Point of View */}
       <section className="section-full theme-navy band-section">
         <div className="container-expansive">
-          <div style={{ maxWidth: '68ch' }}>
-            <span className="eyebrow">Point of View</span>
-            <h2>Software should make important work clearer and more dependable.</h2>
-            <p className="lead" style={{ marginBottom: '20px' }}>
-              Software must not add another layer of fragility and uncertainty to a business. We start with the actual business workflow, trace where errors originate, and engineer the most reliable solution that fulfills the need.
-            </p>
-            <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '20px' }}>
-              Often this means building a tailored operational portal or automated reconciliation engine. Just as often, it means diagnosing an abandoned codebase, stabilizing fragile webhook integrations, or proving that a multimillion-dollar rewrite is unnecessary.
-            </p>
-            <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '28px' }}>
-              <button type="button" className="button button-primary" onClick={onOpenIntakeModal}>
-                <span>Discuss a project</span>
-                <ArrowRight size={14} />
-              </button>
-              <button type="button" className="button button-quiet" onClick={() => onNavigate('work')}>
-                <span>Our 6-stage delivery model</span>
-                <ArrowRight size={14} />
-              </button>
+          <div className="split-feature-grid">
+            <div>
+              <span className="eyebrow">Point of View</span>
+              <h2>Software should make important work clearer and more dependable.</h2>
+              <p className="lead" style={{ marginBottom: '20px' }}>
+                Software must not add another layer of fragility and uncertainty to a business. We start with the actual business workflow, trace where errors originate, and engineer the most reliable solution that fulfills the need.
+              </p>
+              <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '20px' }}>
+                Often this means building a tailored operational portal or automated reconciliation engine. Just as often, it means diagnosing an abandoned codebase, stabilizing fragile webhook integrations, or proving that a costly rewrite is unnecessary.
+              </p>
+              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '28px' }}>
+                <button type="button" className="button button-primary" onClick={onOpenIntakeModal}>
+                  <span>Discuss a project</span>
+                  <ArrowRight size={14} />
+                </button>
+                <button type="button" className="button button-quiet" onClick={() => onNavigate('work')}>
+                  <span>Our 6-stage delivery model</span>
+                  <ArrowRight size={14} />
+                </button>
+              </div>
             </div>
+
+            <EditorialVisual
+              webpSrc="/images/studio-craft.webp"
+              fallbackSrc="/images/studio-craft.jpg"
+              alt="Clean hardware and engineering desk representing precision architecture work"
+              aspectRatio="4/3"
+              kicker="ENGINEERING DISCIPLINE"
+              caption="Architecture designed clearly on paper and verified in code before production cutover."
+            />
           </div>
         </div>
       </section>
@@ -182,21 +194,21 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
       </section>
 
-      {/* Honest Publication Standard Section */}
+      {/* Evidence-First Publication Standard Section */}
       <section className="section-full theme-dark band-section">
         <div className="container-expansive">
           <div className="card" style={{ padding: 'clamp(24px, 4vw, 40px)', borderColor: 'var(--line-strong)' }}>
             <div style={{ maxWidth: '68ch' }}>
               <span className="eyebrow">Publication Standard</span>
-              <h2>Evidence over marketing claims.</h2>
+              <h2>Verifiable architecture over unverified claims.</h2>
               <p style={{ color: 'var(--text-subtle)', lineHeight: 1.7, marginBottom: '16px' }}>
-                We do not fabricate client logos, invent unverified testimonials, or inflate metric percentages. Client case studies are published only with explicit written authorization and reproducible performance benchmarks.
+                Client case studies are published only with explicit written authorization and reproducible production benchmarks. Confidentiality remains strict across every engagement.
               </p>
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '24px' }}>
-                In the meantime, you can explore our synthetic demonstrations and live technical benchmarks in the case studies archive.
+                You can test our interactive technical demonstrations and architecture notes directly in the Work &amp; Evidence archive.
               </p>
               <button type="button" className="button button-quiet button-small" onClick={() => onNavigate('case-studies')}>
-                <span>View demonstrations &amp; benchmarks</span>
+                <span>Explore demonstrations &amp; benchmarks</span>
                 <ArrowRight size={14} />
               </button>
             </div>

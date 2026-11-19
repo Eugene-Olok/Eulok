@@ -10,7 +10,7 @@ import {
   Layers,
   ShieldCheck,
 } from 'lucide-react';
-import { LoadingSkeleton } from '../components/LoadingSkeleton';
+import { EditorialVisual } from '../components/EditorialVisual';
 
 interface ServicesPageProps {
   onNavigate?: (page: string) => void;
@@ -39,32 +39,23 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   const [filterGoal, setFilterGoal] = useState<string>('all');
   const [filterSystem, setFilterSystem] = useState<string>('all');
   const [filterIndustry, setFilterIndustry] = useState<string>('all');
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
 
   const handleFilterGoalChange = (val: string) => {
-    setIsFiltering(true);
     setFilterGoal(val);
-    setTimeout(() => setIsFiltering(false), 120);
   };
 
   const handleFilterSystemChange = (val: string) => {
-    setIsFiltering(true);
     setFilterSystem(val);
-    setTimeout(() => setIsFiltering(false), 120);
   };
 
   const handleFilterIndustryChange = (val: string) => {
-    setIsFiltering(true);
     setFilterIndustry(val);
-    setTimeout(() => setIsFiltering(false), 120);
   };
 
   const handleResetFilters = () => {
-    setIsFiltering(true);
     setFilterGoal('all');
     setFilterSystem('all');
     setFilterIndustry('all');
-    setTimeout(() => setIsFiltering(false), 120);
   };
 
   const services: ServiceItem[] = [
@@ -240,30 +231,42 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             <span aria-current="page">Services</span>
           </nav>
 
-          <div style={{ maxWidth: '860px' }}>
-            <span className="eyebrow">SERVICES · FROM ARCHITECTURE TO RELIABLE OPERATIONS</span>
-            <h1 style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.4rem)', marginBottom: '20px' }}>
-              Engineering for the problems that matter.
-            </h1>
-            <p className="lead" style={{ maxWidth: '64ch' }}>
-              From a new business website to a critical financial workflow, EULOK builds and improves software around real operational requirements. We assess existing constraints and recommend the smallest solution that meets the need safely.
-            </p>
+          <div className="split-feature-grid" style={{ gap: 'clamp(28px, 4vw, 48px)' }}>
+            <div>
+              <span className="eyebrow">SERVICES · UGANDA &amp; EAST AFRICA PRACTICE</span>
+              <h1 style={{ fontSize: 'clamp(2.4rem, 5.2vw, 4.2rem)', marginBottom: '20px' }}>
+                Engineering for the systems that matter.
+              </h1>
+              <p className="lead" style={{ maxWidth: '60ch' }}>
+                From fast business websites to URA EFRIS tax interfaces and financial reconciliation, EULOK builds and repairs software around real East African operational constraints.
+              </p>
 
-            <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '30px' }}>
-              <button
-                className="button button-primary"
-                onClick={onOpenIntakeModal}
-              >
-                <span>Discuss a project</span>
-                <ArrowRight size={16} />
-              </button>
-              <button
-                className="button button-quiet"
-                onClick={() => onNavigate('rescue')}
-              >
-                Rescue a stalled project
-              </button>
+              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '28px' }}>
+                <button
+                  className="button button-primary"
+                  onClick={onOpenIntakeModal}
+                >
+                  <span>Discuss a project</span>
+                  <ArrowRight size={16} />
+                </button>
+                <button
+                  className="button button-quiet"
+                  onClick={() => onNavigate('rescue')}
+                >
+                  Rescue a stalled project
+                </button>
+              </div>
             </div>
+
+            <EditorialVisual
+              webpSrc="/images/rails-topology.webp"
+              fallbackSrc="/images/rails-topology.jpg"
+              alt="Structured dark architectural conduits representing interconnected digital rails"
+              aspectRatio="4/3"
+              priority
+              kicker="SYSTEMS ARCHITECTURE"
+              caption="Payment corridors, business portals, API adapters, and legacy code recovery."
+            />
           </div>
         </div>
       </section>
@@ -355,25 +358,17 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       {/* Six Detailed Service Sections */}
       <section className="section-full theme-dark" style={{ padding: 'clamp(64px, 8vw, 96px) 0' }}>
         <div className="container-expansive">
-          {isFiltering ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <LoadingSkeleton variant="card" />
-              <LoadingSkeleton variant="card" />
-              <LoadingSkeleton variant="card" />
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
-              {filteredServices.map((service) => (
-                <div
-                  key={service.id}
-                  className="card"
-                  style={{ padding: 'clamp(28px, 4vw, 44px)', borderColor: 'var(--line-strong)' }}
-                >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
+            {filteredServices.map((service) => (
+              <div
+                key={service.id}
+                className="card"
+                style={{ padding: 'clamp(28px, 4vw, 44px)', borderColor: 'var(--line-strong)' }}
+              >
+                <div style={{ marginBottom: '12px' }}>
                   <span className="mono-tag" style={{ color: 'var(--electric-blue)', fontWeight: 700 }}>
                     {service.number}
                   </span>
-                  <span className="badge badge-neutral">Stage: {service.stage}</span>
                 </div>
 
                 <h2 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', marginBottom: '12px' }}>
@@ -383,9 +378,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                   {service.shortDesc}
                 </p>
 
-                <div className="callout-stripe" style={{ marginBottom: '24px' }}>
+                <div className="callout-panel" style={{ marginBottom: '24px' }}>
                   <strong style={{ fontSize: '0.86rem', color: 'var(--warm-white)', display: 'block', marginBottom: '4px' }}>
-                    Who this is for:
+                    Designed for:
                   </strong>
                   <span style={{ fontSize: '0.9rem', color: 'var(--text-subtle)' }}>
                     {service.audience}
@@ -434,9 +429,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               </div>
             ))}
           </div>
-        )}
-      </div>
-    </section>
+        </div>
+      </section>
 
       {/* Service Comparison Matrix */}
       <section className="section-full theme-warm-light" style={{ padding: 'clamp(64px, 8vw, 96px) 0' }}>

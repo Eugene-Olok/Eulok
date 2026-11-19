@@ -89,6 +89,14 @@ const forbiddenPatterns = [
   /Models propose\. Deterministic systems decide\./i,
   /consumer AI platforms/i,
   /inference providers/i,
+  /budget planning range/i,
+  /pricing models/i,
+  /Deliberate Empty State/i,
+  /formal Change Order/i,
+  /Product 1/i,
+  /Gitleaks/i,
+  /revision limits/i,
+  /\bFAANG\b/i,
 ];
 
 function walkFiles(dir) {

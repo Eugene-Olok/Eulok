@@ -15,6 +15,7 @@ import {
   AlertOctagon,
   Lock,
 } from 'lucide-react';
+import { EditorialVisual } from '../components/EditorialVisual';
 
 interface HomePageProps {
   onNavigate?: (page: string) => void;
@@ -121,6 +122,58 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
             </div>
           </div>
+
+          {/* Regional Architecture & Visual Showcase */}
+          <div className="split-feature-grid animate-fade-in delay-200" style={{ marginTop: 'clamp(36px, 5vw, 56px)' }}>
+            <EditorialVisual
+              webpSrc="/images/hero-studio.webp"
+              fallbackSrc="/images/hero-studio.jpg"
+              alt="Architectural view of a modern software engineering studio in Kampala, Uganda at dusk"
+              aspectRatio="16/9"
+              priority
+              kicker="KAMPALA · EAST AFRICA"
+              caption="Built for Ugandan mobile-money rails, intermittent cellular corridors, and verifiable production handovers."
+            />
+
+            <div className="kpi-strip-grid" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
+              <div className="card" style={{ padding: '20px' }}>
+                <span className="card-number">PAYMENT RAILS</span>
+                <strong style={{ display: 'block', fontSize: '1.15rem', color: 'var(--warm-white)', marginBottom: '4px' }}>
+                  MTN &amp; Airtel MoMo
+                </strong>
+                <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                  Idempotent webhooks &amp; multi-rail settlement matching
+                </span>
+              </div>
+              <div className="card" style={{ padding: '20px' }}>
+                <span className="card-number">TAX &amp; COMPLIANCE</span>
+                <strong style={{ display: 'block', fontSize: '1.15rem', color: 'var(--warm-white)', marginBottom: '4px' }}>
+                  URA EFRIS &amp; DPPA
+                </strong>
+                <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                  Signed fiscal receipting &amp; Ugandan statutory data hygiene
+                </span>
+              </div>
+              <div className="card" style={{ padding: '20px' }}>
+                <span className="card-number">FIELD RESILIENCE</span>
+                <strong style={{ display: 'block', fontSize: '1.15rem', color: 'var(--warm-white)', marginBottom: '4px' }}>
+                  3G &amp; 320px Tested
+                </strong>
+                <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                  Lean pre-rendered delivery across compact mobile handsets
+                </span>
+              </div>
+              <div className="card" style={{ padding: '20px' }}>
+                <span className="card-number">HANDOVER POLICY</span>
+                <strong style={{ display: 'block', fontSize: '1.15rem', color: 'var(--warm-white)', marginBottom: '4px' }}>
+                  100% Client IP
+                </strong>
+                <span style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                  Complete source repositories, tests &amp; operating runbooks
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -187,10 +240,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <div className="grid-3">
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span className="card-number" style={{ margin: 0 }}>01 / BUILD</span>
-                <span className="badge badge-neutral">Presence</span>
-              </div>
+              <span className="card-number">01 / DIGITAL PRESENCE</span>
               <h3>Business websites</h3>
               <p>
                 For businesses needing a professional, high-performing online presence that communicates clearly, performs on low-bandwidth connections, and converts visitors into enquiries.
@@ -205,10 +255,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span className="card-number" style={{ margin: 0 }}>02 / BUILD</span>
-                <span className="badge badge-neutral">Operations</span>
-              </div>
+              <span className="card-number">02 / INTERNAL SYSTEMS</span>
               <h3>Custom software</h3>
               <p>
                 For organizations replacing fragile spreadsheets and manual paperwork with purpose-built internal portals, operational dashboards, and auditable record systems.
@@ -223,11 +270,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span className="card-number" style={{ margin: 0 }}>03 / RECOVER</span>
-                <span className="badge badge-neutral">Stabilization</span>
-              </div>
-              <h3>Software rescue & care</h3>
+              <span className="card-number">03 / STABILIZATION</span>
+              <h3>Software rescue &amp; care</h3>
               <p>
                 For businesses with stalled, unreliable, or difficult-to-maintain software. We audit architecture, triage regressions, establish test safeguards, and modernize incrementally.
               </p>
@@ -241,11 +285,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span className="card-number" style={{ margin: 0 }}>04 / AUTOMATE</span>
-                <span className="badge badge-neutral">Productivity</span>
-              </div>
-              <h3>AI & workflow automation</h3>
+              <span className="card-number">04 / PRODUCTIVITY</span>
+              <h3>AI &amp; workflow automation</h3>
               <p>
                 For operations teams eliminating repetitive data entry and administrative hand-offs while enforcing guardrails and preserving human review on high-risk actions.
               </p>
@@ -259,10 +300,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span className="card-number" style={{ margin: 0 }}>05 / CONNECT</span>
-                <span className="badge badge-neutral">Integrations</span>
-              </div>
+              <span className="card-number">05 / CONNECTIVITY</span>
               <h3>Integrations and APIs</h3>
               <p>
                 For organizations connecting payment providers, URA EFRIS interfaces, CRMs, and accounting platforms with idempotent webhook processing and clear recovery paths.
@@ -277,10 +315,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <span className="card-number" style={{ margin: 0 }}>06 / OPERATE</span>
-                <span className="badge badge-neutral">Financial Core</span>
-              </div>
+              <span className="card-number">06 / FINANCIAL CORE</span>
               <h3>Financial reconciliation</h3>
               <p>
                 For finance teams matching mobile-money collections (MTN, Airtel), bank statements, and internal invoices. Isolates duplicates, overpayments, and refunds automatically.
@@ -480,18 +515,18 @@ export const HomePage: React.FC<HomePageProps> = ({
             {/* Bento Card 1: Reconciliation Core */}
             <div className="card bento-span-8">
               <span className="mono-tag" style={{ color: 'var(--electric-blue)', marginBottom: '8px' }}>
-                PRODUCT 1 · VERIFIED ALGORITHM
+                FLAGSHIP CAPABILITY · LEDGER CORE
               </span>
               <h3>Deterministic Mobile-Money Reconciliation</h3>
               <p>
-                Our core reconciliation engine operates with mathematical certainty using Decimal-based arithmetic. It processes input payment streams against receivables obligations, classifying exact matches, partial allocations, duplicate transactions, and isolating refunds and reversals with deterministic rule precision.
+                Our core reconciliation engine operates with mathematical certainty using exact integer arithmetic. It processes input payment streams against receivables obligations, classifying exact matches, partial allocations, duplicate transactions, and isolating refunds and reversals with deterministic rule precision.
               </p>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '16px' }}>
-                <span className="badge badge-pass">R1: Exact Match</span>
-                <span className="badge badge-pass">R2: Reference Allocation</span>
-                <span className="badge badge-warn">R5: Duplicate Detection</span>
-                <span className="badge badge-fail">R6: Conflicting IDs</span>
-                <span className="badge badge-neutral">R7/R8: Refund Isolation</span>
+              <div className="meta-inline" style={{ marginTop: '16px', color: 'var(--text-subtle)' }}>
+                <span>R1 Exact Match</span>
+                <span>R2 Reference Allocation</span>
+                <span>R5 Duplicate Guard</span>
+                <span>R6 Conflicting IDs</span>
+                <span>R7/R8 Refund Isolation</span>
               </div>
             </div>
 
@@ -545,43 +580,46 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 07: CASE STUDIES & PUBLICATION STANDARD */}
+      {/* 07: VERIFIED ARCHITECTURES & PUBLICATION STANDARD */}
       <section className="section-full theme-navy" style={{ padding: 'clamp(64px, 8vw, 100px) 0', borderTop: '1px solid var(--line)' }}>
         <div className="container-expansive">
           <div style={{ maxWidth: '780px', marginBottom: '40px' }}>
-            <span className="eyebrow">Case Studies & Evidence</span>
-            <h2>Evidence earned in production, not designed in Figma.</h2>
+            <span className="eyebrow">Work &amp; Evidence</span>
+            <h2>Evidence demonstrated openly, verified in production.</h2>
             <p className="lead">
-              We publish case studies only after verified completion, client approval, and independent verification of stated results.
+              Client work is published only with explicit written authorization and verified outcomes. In the meantime, inspect our interactive architecture demonstrations and technical specifications directly.
             </p>
           </div>
 
-          <div className="card" style={{ padding: 'clamp(28px, 5vw, 48px)' }}>
+          <div className="card" style={{ padding: 'clamp(28px, 5vw, 44px)' }}>
             <div className="empty-state-grid">
               <div>
-                <span className="badge badge-neutral" style={{ marginBottom: '12px' }}>
-                  Publication Status
-                </span>
-                <h3 style={{ fontSize: '1.6rem' }}>Deliberate Empty State</h3>
+                <span className="card-number">CONFIDENTIALITY &amp; PROOF</span>
+                <h3 style={{ fontSize: '1.55rem' }}>Inspect Working Architecture</h3>
                 <p style={{ color: 'var(--text-muted)' }}>
-                  Case studies are published exclusively upon client-signed acceptance and non-disclosure approval. Scope and date, not scope and spin.
+                  Test how EULOK handles East African payment rails, failure recovery, and deterministic matching logic before commissioning a build.
                 </p>
               </div>
 
               <div>
                 <p>
-                  Many software agencies fabricate customer logos, glowing testimonials, and before-and-after conversion percentages. At EULOK, our policy prohibits publishing unverified client claims.
+                  Client case studies enter the public archive only after production sign-off, explicit disclosure consent, and verifiable before-and-after operational baselines.
                 </p>
-                <p>
-                  Until client-approved production case studies are published, we make our technical demonstrations, engineering notes, and verification standards available for review.
-                </p>
-                <button
-                  className="button button-quiet button-small"
-                  onClick={() => onNavigate('case-studies')}
-                  style={{ marginTop: '8px' }}
-                >
-                  View Case Study Criteria & Demonstration Table →
-                </button>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '16px' }}>
+                  <button
+                    className="button button-primary button-small"
+                    onClick={() => onNavigate('case-studies')}
+                  >
+                    <span>Explore Technical Demonstrations</span>
+                    <ArrowRight size={14} />
+                  </button>
+                  <button
+                    className="button button-quiet button-small"
+                    onClick={() => onNavigate('scope-calculator')}
+                  >
+                    Open Scoping Studio →
+                  </button>
+                </div>
               </div>
             </div>
           </div>

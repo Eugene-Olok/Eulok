@@ -10,7 +10,6 @@ import {
   Link2,
   Search,
 } from 'lucide-react';
-import { LoadingSkeleton } from '../components/LoadingSkeleton';
 
 interface InsightsPageProps {
   onNavigate?: (page: string) => void;
@@ -37,17 +36,11 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [noteSearchQuery, setNoteSearchQuery] = useState<string>('');
   const [expandedArticleId, setExpandedArticleId] = useState<string | null>('deterministic-calc');
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
   const [copiedSnippetId, setCopiedSnippetId] = useState<string | null>(null);
   const [copiedLinkId, setCopiedLinkId] = useState<string | null>(null);
 
   const handleCategoryChange = (cat: string) => {
-    if (cat === selectedCategory) return;
-    setIsFiltering(true);
     setSelectedCategory(cat);
-    setTimeout(() => {
-      setIsFiltering(false);
-    }, 180);
   };
 
   const articles: Article[] = [
@@ -242,7 +235,7 @@ if (match.status === 'proposed' || match.status === 'exception') {
               Engineering Notes &amp; Insights
             </h1>
             <p className="lead" style={{ maxWidth: '64ch' }}>
-              In-depth explanations of the architectural decisions, financial correctness rules, and reliability boundaries behind our systems. No generic marketing fluff—real technical supply lines.
+              Architectural decisions, financial correctness rules, and reliability boundaries engineered for Uganda and East Africa&apos;s production constraints.
             </p>
           </div>
 
@@ -352,11 +345,7 @@ if (match.status === 'proposed' || match.status === 'exception') {
             </div>
           </div>
 
-          {isFiltering ? (
-            <div style={{ padding: '16px 0' }}>
-              <LoadingSkeleton variant="card" count={3} />
-            </div>
-          ) : filteredArticles.length === 0 ? (
+          {filteredArticles.length === 0 ? (
             <div className="card" style={{ padding: '28px', textAlign: 'left' }} data-testid="notes-archive-empty">
               <h2 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>
                 No Engineering Notes matched &ldquo;{noteSearchQuery}&rdquo;
@@ -391,50 +380,45 @@ if (match.status === 'proposed' || match.status === 'exception') {
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '10px' }}>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-                      <span className="badge badge-neutral" style={{ color: 'var(--electric-blue)' }}>
+                    <div className="meta-inline">
+                      <span style={{ color: 'var(--electric-blue)', textTransform: 'uppercase', letterSpacing: '0.06em', fontFamily: 'var(--font-mono)', fontSize: '0.74rem' }}>
                         {article.category}
                       </span>
-                      <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                         <Clock size={13} />
                         {article.readTime}
                       </span>
-                      <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                         <Calendar size={13} />
                         {article.date}
                       </span>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <button
-                        type="button"
-                        className="button button-quiet button-small"
-                        onClick={() => handleCopyArticleLink(article.id)}
-                        style={{ minHeight: '28px', padding: '4px 10px', fontSize: '0.74rem' }}
-                      >
-                        {copiedLinkId === article.id ? (
-                          <CheckCircle2 size={13} color="var(--status-pass-text)" />
-                        ) : (
-                          <Link2 size={13} />
-                        )}
-                        <span>{copiedLinkId === article.id ? 'Link Copied' : 'Copy link'}</span>
-                      </button>
-                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                        EULOK
-                      </span>
-                    </div>
+                    <button
+                      type="button"
+                      className="button button-quiet button-small"
+                      onClick={() => handleCopyArticleLink(article.id)}
+                      style={{ minHeight: '28px', padding: '4px 10px', fontSize: '0.74rem' }}
+                    >
+                      {copiedLinkId === article.id ? (
+                        <CheckCircle2 size={13} color="var(--status-pass-text)" />
+                      ) : (
+                        <Link2 size={13} />
+                      )}
+                      <span>{copiedLinkId === article.id ? 'Link Copied' : 'Copy link'}</span>
+                    </button>
                   </div>
 
                   <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)', marginBottom: '12px' }}>
                     {article.title}
                   </h2>
-                  <p className="lead" style={{ fontSize: '1rem', color: 'var(--text-subtle)', marginBottom: '16px' }}>
+                  <p className="lead" style={{ fontSize: '1rem', color: 'var(--text-subtle)', marginBottom: '12px' }}>
                     {article.summary}
                   </p>
 
-                  <div className="surface-inset" style={{ padding: '10px 14px', borderRadius: '6px', marginBottom: '16px', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-                    <strong>Demonstrates:</strong> {article.demonstrates}
-                  </div>
+                  <p style={{ marginBottom: '16px', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+                    <strong style={{ color: 'var(--warm-white)' }}>Focus:</strong> {article.demonstrates}
+                  </p>
 
                   {/* Expanded Content View */}
                   {isExpanded && (

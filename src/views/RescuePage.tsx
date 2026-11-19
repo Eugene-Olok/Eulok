@@ -277,12 +277,8 @@ export const RescuePage: React.FC<RescuePageProps> = ({
                 </h3>
 
                 <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-                    gap: '8px',
-                    marginBottom: '18px',
-                  }}
+                  className="rescue-kpi-grid"
+                  style={{ marginBottom: '18px' }}
                 >
                   <div className="surface-inset" style={{ padding: '10px', borderRadius: '8px' }}>
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>PASSING</span>

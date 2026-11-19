@@ -47,7 +47,7 @@ export const WORK_CATEGORIES: WorkCategory[] = [
 export const TECHNICAL_DEMONSTRATIONS: TechnicalDemonstrationItem[] = [
   {
     id: 'momo-reconciliation',
-    tag: 'FINANCIAL SYSTEMS / PRODUCT 1',
+    tag: 'FINANCIAL SYSTEMS / LEDGER CORE',
     title: 'Mobile-Money Reconciliation Architecture',
     summary:
       'A deterministic rule engine for comparing incoming payment collections against authoritative financial obligations.',
@@ -94,7 +94,7 @@ export const TECHNICAL_DEMONSTRATIONS: TechnicalDemonstrationItem[] = [
     problem:
       'Organizations inherit heavy single-page bundles that stall on mid-range mobile phones in Kampala or Nairobi, or unstable codebases lacking tests, documentation, and clear deployment runbooks.',
     engineeringApproach: [
-      'Static-first Astro build output eliminating runtime hydration overhead on read-only pages',
+      'Static-first pre-rendering eliminating runtime hydration overhead on 3G/4G cellular connections',
       '8-point deterministic rescue diagnostic scoring P0, P1, and P2 remediation priorities',
       'Clean boundary separation decoupling core business rules from UI and framework glue',
       'Full client repository and operational runbook ownership with zero vendor lock-in',
